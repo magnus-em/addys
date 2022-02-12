@@ -1,4 +1,4 @@
-<%- include('../partials/head') %>
+<%- layout('layouts/boilerplate') %>
     <!-- Page Header -->
     <div class="container content-space-2 content-space-lg-3">
         <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
@@ -6,6 +6,11 @@
             <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
                 <h2 class="h1">All Addys</h2>
             </div>
+            <form action="/addys">
+                <div class=" mb-3">
+                    <button type="submit" class="btn btn-primary btn-lg">Back</button>
+                </div>
+            </form>
             <div class="container content-space-1">
                 <div class="page-header">
                     <!-- Media -->
@@ -21,7 +26,8 @@
                                         <i class="bi-geo-alt-fill text-primary me-1"></i>
                                         <%= addy.city %>
                                     </li>
-                                    <li class="list-inline-item">descriptor 3</li>
+                                    <li class="list-inline-item">ID: <%= addy._id %>
+                                    </li>
                                     <li class="list-inline-item">descriptor 4</li>
                                 </ul>
                             </div>
@@ -32,6 +38,11 @@
                                     <a class="btn btn-primary btn-sm" href="/addys/<%= addy._id %>/edit">
                                         <i class="bi-pencil-fill me-1"></i> Edit
                                     </a>
+                                    <form action="/addys/<%= addy._id %>?_method=DELETE" method="post">
+                                        <button class="btn btn-danger btn-sm">
+                                            <i class="bi-trash me-1"></i> Delete
+                                        </button>
+                                    </form>
 
                                 </div>
                             </div>
@@ -45,4 +56,3 @@
         </div>
         <!-- End Page Header -->
     </div>
-    <%- include('../partials/foot') %>

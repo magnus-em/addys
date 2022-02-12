@@ -3,8 +3,8 @@ const methodOverride = require('method-override')
 const mongoose  = require('mongoose');
 const app = express();
 const path = require('path');
+const ejsMate = require('ejs-mate')
 const Addy = require('./models/addy')
-
 // mongoose.connect('mongodb://localhost:27017/addyApp')
 
 
@@ -20,16 +20,12 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
-
-
-
-
-
-
 //set EJS
+app.engine('ejs',ejsMate)
 app.set('view engine','ejs');
 app.set('views', path.join(__dirname,'views'));
 
+app.use(express.urlencoded({extended:true}));
 
 //static asset
 app.use('/public', express.static('public'));
@@ -49,10 +45,33 @@ app.get('/addys', async (req,res) => {
     res.render('addys/index', {addys});
 })
 
+
+// delete
+app.delete('/addys/:id', async (req,res) => {
+    const {id} = req.params;
+    const addy = await Addy.findByIdAndDelete(id)
+    console.log('delete addy: ',addy)
+    res.redirect('/addys')
+})
+
+//new addy form
+app.get('/addys/new', (req,res) => {
+    res.render('addys/new')
+})
+
+app.post('/addys', async (req,res) => {
+    const addy = new Addy(req.body.addy)
+    console.log(addy)
+    await addy.save()
+    res.redirect(`/addys/${addy._id}`)
+})
+
+
+
 // show details for specific addy
 app.get('/addys/:id', async (req,res) => {
     const {id} = req.params;
-    const addy = await Addy.findById(id)
+    const addy = await Addy.findById(id) 
     console.log(addy)
     if (!addy) {
         res.render('addys/notfound');
@@ -61,7 +80,14 @@ app.get('/addys/:id', async (req,res) => {
 })
 
 app.patch('/addys/:id', async (req,res) => {
-    res.redirect('/')
+    const {id} = req.params;
+    const {title, city} = req.body;
+    const addy = await Addy.findById(id)
+    addy.title = title;
+    addy.city = city;
+    addy.save()
+    console.log(title, city, id, addy)
+    res.render('addys/details', {addy})
 })
 
 app.get('/addys/:id/edit', async (req,res) => {
@@ -70,11 +96,11 @@ app.get('/addys/:id/edit', async (req,res) => {
     res.render('addys/edit', {addy})
 })
 
-app.get('/createaddy', async (req,res) => {
-    const newAddy = new Addy({tite:'Seattle #1',city:'seattle',tier:1,state:'wa'})
-    await newAddy.save();
-    res.send(newA)
+app.use((req,res) => {
+    res.status(404).render('notfound')
 })
+
+
 
 const port = process.env.PORT || 3001
 app.listen(port,() => {

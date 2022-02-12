@@ -1,4 +1,4 @@
-<%- include('../partials/head') %> 
+<%- layout('layouts/boilerplate') %>
 <div class="container content-space-2 content-space-lg-3">
     <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
         <!-- Heading -->
@@ -8,7 +8,7 @@
         <!-- Card -->
 <div class="card">
     <div class="card-header border-bottom">
-      <h5 class="card-header-title">Password</h5>
+      <h5 class="card-header-title">Enter details</h5>
     </div>
   
     <!-- Body -->
@@ -16,17 +16,14 @@
       <!-- Form -->
       <form action="/addys/<%=addy._id%>?_method=PATCH" method="post">
        
-        <!-- Form -->
         <div class="row mb-4">
           <label for="title" class="col-sm-3 col-form-label form-label">Title</label>
   
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="newPassword" id="title" placeholder="<%= addy.title %>"">
+            <input type="text" class="form-control" name="title" id="title" placeholder="<%= addy.title %>">
           </div>
         </div>
-        <!-- End Form -->
 
-         <!-- Form -->
          <div class="row mb-4">
             <label for="city" class="col-sm-3 col-form-label form-label">City</label>
     
@@ -34,7 +31,6 @@
               <input type="text" class="form-control" name="city" id="city" placeholder="<%= addy.city %>">
             </div>
           </div>
-          <!-- End Form -->
         <div class="d-flex justify-content-end gap-3">
           <a class="btn btn-white" href="/addys/<%= addy._id %> ">Cancel</a>
           <button type="submit" class="btn btn-primary">Update</button>
@@ -47,4 +43,3 @@
   <!-- End Card -->
     </div>
 </div>
- <%- include('../partials/foot') %> 

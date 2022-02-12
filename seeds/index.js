@@ -16,7 +16,7 @@ db.once("open", () => {
 
 const seedDb = async () => {
     await Addy.deleteMany({});
-    for (let i=0;i<100;i++) {
+    for (let i=0;i<20;i++) {
         const rand1 = Math.floor(Math.random()*1000)
         const rand2 = Math.floor(Math.random()*titles.length)
         const c = new Addy({city:cities[rand1].city, title:titles[rand2], state:cities[rand1].state})

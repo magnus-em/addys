@@ -1,5 +1,4 @@
-<%- include('../partials/head') %> 
-<!-- Careers -->
+<%- layout('layouts/boilerplate') %>
 <div class="container content-space-2 content-space-lg-3">
     <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
       <!-- Heading -->
@@ -7,7 +6,11 @@
         <h2 class="h1">All Addys</h2>
       </div>
       <!-- End Heading -->
-  
+      <form action="/addys/new">
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary btn-lg">New addy</button>
+        </div>
+      </form>
       <!-- List Striped -->
       <ul class="list-group list-group-lg">
 
@@ -42,4 +45,3 @@
     </div>
   </div>
   <!-- End Careers -->
-<%- include('../partials/foot') %> 
