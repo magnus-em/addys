@@ -41,44 +41,4 @@
   </footer>
   <!-- ========== END FOOTER ========== -->
 
-
-<!-- JS Global Compulsory -->
-<script src="/public/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- JS Front -->
-<script src="/public/assets/js/hs.core.js"></script>
-
-<script src="/public/assets/vendor/hs-header/dist/hs-header.min.js"></script>
-<script src="/public/assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.js"></script>
-<!-- JS Front -->
-<script src="/public/assets/js/hs.bs-dropdown.js"></script>
-
-<!-- JS Plugins Init. -->
-<script>
-  (function() {
-    // INITIALIZATION OF BOOTSTRAP DROPDOWN
-    // =======================================================
-    HSBsDropdown.init()
-  })()
-</script>
-
-<!-- JS Plugins Init. -->
-<script>
-    (function () {
-        // INITIALIZATION OF HEADER
-        // =======================================================
-        new HSHeader('#header').init()
-
-
-        // INITIALIZATION OF MEGA MENU
-        // =======================================================
-        new HSMegaMenu('.js-mega-menu', {
-            desktop: {
-                position: 'left'
-            }
-        })
-    })()
-</script>
-</body>
-
-</html>
+<%- include('./footEssential') %> 

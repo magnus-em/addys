@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const addy = new schema({
-    title: String,
+    title: {type:String, required:true},
     subscriberCount: Number,
     tier: Number,
     city: String,

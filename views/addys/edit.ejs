@@ -14,13 +14,15 @@
     <!-- Body -->
     <div class="card-body">
       <!-- Form -->
-      <form action="/addys/<%=addy._id%>?_method=PATCH" method="post">
+      <form action="/addys/<%=addy._id%>?_method=PATCH" method="post" class='needs-validation' novalidate>
        
         <div class="row mb-4">
           <label for="title" class="col-sm-3 col-form-label form-label">Title</label>
   
           <div class="col-sm-9">
-            <input type="text" class="form-control" name="title" id="title" placeholder="<%= addy.title %>">
+            <input type="text" class="form-control" name="title" id="title" placeholder="<%= addy.title %>"required>
+            <div class="invalid-feedback">Invalid feedback</div>
+            <div class="valid-feedback">Valid feedback</div>
           </div>
         </div>
 
@@ -28,7 +30,9 @@
             <label for="city" class="col-sm-3 col-form-label form-label">City</label>
     
             <div class="col-sm-9">
-              <input type="text" class="form-control" name="city" id="city" placeholder="<%= addy.city %>">
+              <input type="text" class="form-control" name="city" id="city" placeholder="<%= addy.city %>" required>
+              <div class="invalid-feedback">Invalid feedback</div>
+              <div class="valid-feedback">Valid feedback</div>
             </div>
           </div>
         <div class="d-flex justify-content-end gap-3">
