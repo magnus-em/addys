@@ -11,6 +11,7 @@ const Joi = require('joi')
 
 const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
+// mongodb://localhost:27017/mydbname
 
 mongoose.connect(uri)
 
@@ -58,6 +59,22 @@ app.get('/', (req, res) => {
 })
 app.get('/index', (req, res) => {
     res.render('home');
+})
+
+app.get('/faq', (req,res) => {
+    res.render('faq')
+})
+
+app.get('/terms', (req,res) => {
+    res.render('terms')
+})
+
+app.get('/privacy', (req,res) => {
+    res.render('privacy')
+})
+
+app.get('/contact',(req,res) => {
+    res.render('contact')
 })
 
 // show all addys
@@ -109,9 +126,9 @@ app.get('/addys/:id', catchAsync(async (req, res, next) => {
     res.render('addys/details', { addy })
 }))
 
-app.patch('/addys/:id', catchAsync(async (req, res, next) => {
+app.patch('/addys/:id', validateAddy, catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const { title, city } = req.body;
+    const { title, city } = req.body.addy;
     const addy = await Addy.findById(id)
     if (!addy) {
         throw new ExpressError('no addy with that id', 404)

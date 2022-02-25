@@ -1,4 +1,25 @@
 
+<!-- JS Global Compulsory hs-builder:build-delete -->
+<script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- JS Implementing Plugins -->
+<!-- bundlejs:vendor [.] -->
+<script src="/public/assets/vendor/hs-header/dist/hs-header.min.js"></script>
+<script src="/public/assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.js"></script>
+<script src="/public/assets/vendor/hs-show-animation/dist/hs-show-animation.min.js"></script>
+<script src="/public/assets/vendor/hs-go-to/dist/hs-go-to.min.js"></script>
+<script src="/node_modules/aos/dist/aos.js"></script>
+<script src="/node_modules/typed.js/lib/typed.min.js"></script>
+<script src="/public/assets/vendor/hs-scrollspy/dist/hs-scrollspy.min.js"></script>
+<script src="/node_modules/leaflet/dist/leaflet.js"></script>
+<script src="/node_modules/swiper/swiper-bundle.min.js"></script>
+
+<!-- JS Front -->
+<!-- bundlejs:theme [.] -->
+<script src="/public/assets/js/hs.core.js"></script>
+<script src="/public/assets/js/hs.bs-validation.js"></script>
+<script src="/public/assets/js/hs.typed.js"></script>
+<script src="/public/assets/js/hs.leaflet.js"></script>
 <!-- JS Global Compulsory -->
 <script src="/public/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -57,6 +78,47 @@
                 position: 'left'
             }
         })
+
+        // INITIALIZATION OF SWIPER
+      // =======================================================
+      var swiper = new Swiper('.js-swiper-hero-clients',{
+        slidesPerView: 2,
+        breakpoints: {
+          380: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 15,
+          },
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 15,
+          },
+        },
+      });
+
+      // Card Grid
+      var swiper = new Swiper('.js-swiper-card-blocks',{
+        slidesPerView: 1,
+        pagination: {
+          el: '.js-swiper-card-blocks-pagination',
+          dynamicBullets: true,
+          clickable: true,
+        },
+        breakpoints: {
+          580: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          992: {
+            slidesPerView: 3,
+            spaceBetween: 15,
+          },
+        },
+      });
+      
     })()
 </script>
 </body>
