@@ -11,8 +11,6 @@ const Joi = require('joi')
 
 const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 
-// mongodb://localhost:27017/mydbname
-
 mongoose.connect(uri)
 
 
@@ -75,6 +73,10 @@ app.get('/privacy', (req,res) => {
 
 app.get('/contact',(req,res) => {
     res.render('contact')
+})
+
+app.get('/requirements',(req,res) => {
+    res.render('requirements')
 })
 
 // show all addys
