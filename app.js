@@ -6,6 +6,7 @@ const path = require('path');
 const ejsMate = require('ejs-mate')
 const Addy = require('./models/addy');
 const Package = require('./models/package')
+const Review = require('./models/review')
 const catchAsync = require('./utils/catchAsync')
 const validateAddy = require('./utils/validateAddy')
 const ExpressError = require('./utils/ExpressError')
@@ -59,6 +60,23 @@ app.get('/contact',(req,res) => {
 
 app.get('/requirements',(req,res) => {
     res.render('requirements')
+})
+
+app.get('/addys/:id/reviews/new', async (req,res) => {
+    const {id} = req.params;
+    const addy = await Addy.findById(id);
+    res.render('reviews/new', {addy})
+})
+app.post('/addys/:id/reviews', async (req,res) => {
+    const {id} = req.params;
+    const review = new Review(req.body)
+    await review.save()
+    console.log(review)
+    const addy = await Addy.findById(id).populate('packages').populate('reviews');
+    await addy.reviews.push(review)
+    await addy.save();
+    console.log(addy)
+    res.render('addys/details', {addy})
 })
 
 app.get('/packages/new',(req,res) => {
@@ -156,7 +174,7 @@ app.put('/addys', validateAddy, catchAsync(async (req, res, next) => {
 // show details for specific addy
 app.get('/addys/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const addy = await Addy.findById(id).populate('packages')
+    const addy = await Addy.findById(id).populate('reviews').populate('packages')
     console.log('THE ADDY: '+ addy)
     if (!addy) {
         throw new ExpressError('No Addy with that ID', 404)

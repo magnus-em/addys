@@ -31,6 +31,9 @@
 <!-- JS Front -->
 <script src="/public/assets/js/hs.bs-dropdown.js"></script>
 
+<script src="/node_modules/nouislider/dist/nouislider.min.js"></script>
+<script src="/public/assets/js/hs.nouislider.js"></script>
+
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
@@ -121,5 +124,25 @@
       
     })()
 </script>
+<script>
+  (function() {
+    // INITIALIZATION OF LEAFLET
+    // =======================================================
+    const leaflet = HSCore.components.HSLeaflet.init(document.getElementById('map'))
+
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+      id: 'mapbox/light-v9'
+    }).addTo(leaflet)
+  });
+</script>
+<script>
+  (function() {
+    // INITIALIZATION OF NOUISLIDER
+    // =======================================================
+    HSCore.components.HSNoUISlider.init('.js-nouislider')
+  });
+</script>
+Copy
+
 </body>
 </html>

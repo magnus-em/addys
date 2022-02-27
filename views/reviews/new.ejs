@@ -1,0 +1,60 @@
+<%- layout('layouts/boilerplate') %>
+  <!-- Page Header -->
+  <div class="container content-space-t-3 pb-3 mb-5">
+    <div class="row align-items-lg-center">
+      <div class="col-lg mb-2 mb-lg-0">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="/addys">Addys</a></li>
+            <li class="breadcrumb-item"><a href="/addys/<%= addy._id %> "><%= addy.address1 %></a></li>
+            <li class="breadcrumb-item active" aria-current="page">New review</li>
+          </ol>
+        </nav>
+        <!-- End Breadcrumb -->
+      </div>
+      <!-- End Col -->
+
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- Post a Comment -->
+<div class="container content-space-2">
+  <!-- Heading -->
+  <div class="w-md-75 w-lg-50 text-center mx-md-auto mb-5 mb-md-9">
+    <h2>Post a review</h2>
+  </div>
+  <!-- End Heading -->
+
+  <div class="row justify-content-lg-center">
+    <div class="col-lg-8">
+      <!-- Card -->
+      <div class="card card-lg border shadow-none">
+        <div class="card-body">
+          <form action="/addys/<%= addy._id %>/reviews"method="post">
+            <div class="d-grid gap-4">
+
+              <label for="customRange1" class="form-label">Review</label>
+              <input type="range" name="rating" class="form-range" min="1" max="5" id="customRange1">
+             
+              <!-- Form -->
+              <span class="d-block">
+                <label class="form-label" for="blogContactsFormComment">Comment</label>
+                <textarea class="form-control form-control-lg" id="blogContactsFormComment" name="body" placeholder="Leave your comment here..." aria-label="Leave your comment here..." rows="5"></textarea>
+              </span>
+              <!-- End Form -->
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- End Card -->
+    </div>
+    <!-- End Col -->
+  </div>
+  <!-- End Row -->
+</div>
+<!-- End Post a Comment -->
