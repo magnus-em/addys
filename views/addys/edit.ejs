@@ -1,49 +1,51 @@
 <%- layout('layouts/boilerplate') %>
-<div class="container content-space-2 content-space-lg-3">
+  <div class="container content-space-2 content-space-lg-3">
     <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
-        <!-- Heading -->
-        <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
-            <h2 class="h1">Edit Addy</h2>
-        </div>
-        <!-- Card -->
-<div class="card">
-    <div class="card-header border-bottom">
-      <h5 class="card-header-title">Enter details</h5>
-    </div>
-  
-    <!-- Body -->
-    <div class="card-body">
-      <!-- Form -->
-      <form action="/addys/<%=addy._id%>?_method=PATCH" method="post" class='needs-validation' novalidate>
-       
-        <div class="row mb-4">
-          <label for="title" class="col-sm-3 col-form-label form-label">Title</label>
-  
-          <div class="col-sm-9">
-            <input type="text" class="form-control" name="addy[title]" id="title" placeholder="<%= addy.title %>"required>
-            <div class="invalid-feedback">Invalid feedback</div>
-            <div class="valid-feedback">Valid feedback</div>
-          </div>
+      <!-- Heading -->
+      <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
+        <h2 class="h1">Edit Addy</h2>
+      </div>
+      <!-- Card -->
+      <div class="card">
+        <div class="card-header border-bottom">
+          <h5 class="card-header-title">Enter details</h5>
         </div>
 
-         <div class="row mb-4">
-            <label for="city" class="col-sm-3 col-form-label form-label">City</label>
-    
-            <div class="col-sm-9">
-              <input type="text" class="form-control" name="addy[city]" id="city" placeholder="<%= addy.city %>" required>
-              <div class="invalid-feedback">Invalid feedback</div>
-              <div class="valid-feedback">Valid feedback</div>
+        <!-- Body -->
+        <div class="card-body">
+          <!-- Form -->
+          <form action="/addys/<%=addy._id%>?_method=PATCH" method="post" class='needs-validation' novalidate>
+
+            <div class="row mb-4">
+              <label for="title" class="col-sm-3 col-form-label form-label">Title</label>
+
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="addy[title]" id="title" placeholder="<%= addy.title %>"
+                  required>
+                <div class="invalid-feedback">Invalid feedback</div>
+                <div class="valid-feedback">Valid feedback</div>
+              </div>
             </div>
-          </div>
-        <div class="d-flex justify-content-end gap-3">
-          <a class="btn btn-white" href="/addys/<%= addy._id %> ">Cancel</a>
-          <button type="submit" class="btn btn-primary">Update</button>
+
+            <div class="row mb-4">
+              <label for="city" class="col-sm-3 col-form-label form-label">City</label>
+
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="addy[city]" id="city" placeholder="<%= addy.city %>"
+                  required>
+                <div class="invalid-feedback">Invalid feedback</div>
+                <div class="valid-feedback">Valid feedback</div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-end gap-3">
+              <a class="btn btn-white" href="/addys/<%= addy._id %> ">Cancel</a>
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+          </form>
+          <!-- End Form -->
         </div>
-      </form>
-      <!-- End Form -->
+        <!-- End Body -->
+      </div>
+      <!-- End Card -->
     </div>
-    <!-- End Body -->
   </div>
-  <!-- End Card -->
-    </div>
-</div>

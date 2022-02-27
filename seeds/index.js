@@ -2,10 +2,12 @@ const mongoose  = require('mongoose');
 const Addy = require('../models/addy')
 const cities = require('./cities')
 const titles = require('./seedHelpers')
+const addresses = require('./addresses.json').addresses
 
 
-const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/devDb?retryWrites=true&w=majority';
 mongoose.connect(uri)
+
 
 
 const db = mongoose.connection;
@@ -17,10 +19,14 @@ db.once("open", () => {
 const seedDb = async () => {
     await Addy.deleteMany({});
     for (let i=0;i<20;i++) {
-        const rand1 = Math.floor(Math.random()*1000)
-        const rand2 = Math.floor(Math.random()*titles.length)
-        const c = new Addy({city:cities[rand1].city, title:titles[rand2], state:cities[rand1].state})
-        console.log(c.header)
+        const a = addresses[Math.floor(Math.random() * addresses.length)]
+        const c = new Addy({
+            address1: a.address1,
+            city: a.city,
+            state: a.state,
+            zip: a.postalCode
+        })
+        console.log(c.address1)
         c.save()
     }
 

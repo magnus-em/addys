@@ -5,11 +5,12 @@ const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate')
 const Addy = require('./models/addy');
+const Package = require('./models/package')
 const catchAsync = require('./utils/catchAsync')
+const validateAddy = require('./utils/validateAddy')
 const ExpressError = require('./utils/ExpressError')
-const Joi = require('joi')
 
-const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/devDb?retryWrites=true&w=majority';
 
 mongoose.connect(uri)
 
@@ -32,25 +33,6 @@ app.use('/public', express.static('public'));
 
 app.use(methodOverride('_method'));
 
-function validateAddy(req,res,next) {
-    const addySchema = Joi.object({
-        addy: Joi.object({
-            title: Joi.string().required(),
-            city: Joi.string().required()
-    })})
-
-    const {error, value} = addySchema.validate(req.body)
-    console.log(addySchema.validate(req.body))
-    console.dir("joi error " + error)
-    console.dir('joi value ' + value)
-    if (error) {
-        console.log('*****prerror')
-        console.log(error.details)
-        throw new ExpressError(error.details[0].message, 404)
-    } else {
-        next()
-    }
-}
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -79,6 +61,42 @@ app.get('/requirements',(req,res) => {
     res.render('requirements')
 })
 
+app.get('/packages/new',(req,res) => {
+    res.render('packages/new')
+})
+
+app.post('/packages', catchAsync(async (req,res,next) => {
+    const package = new Package(req.body.package) // normally you would want to verify this with Joi 
+    await package.save()
+    res.redirect('/packages')
+}))
+
+app.get('/packages',catchAsync(async(req,res,next) => {
+    const packages = await Package.find({})
+    if (!packages) {
+        throw new ExpressError('could not retrieve any packages',404)
+    }
+    res.render('packages/index',{packages})
+}))
+
+app.get('/packages/:id',catchAsync(async (req,res,next) => {
+    const { id } = req.params;
+    const package = await Package.findById(id)
+    if (!package) {
+        throw new ExpressError('no package with that ID', 404)
+    }
+    res.render('packages/details',{package})
+}))
+
+app.delete('/addys/:addyId/packages/:packageId', catchAsync(async (req,res,next) => {
+    const {packageId, addyId} = req.params;
+    const package = await Package.findByIdAndDelete(packageId)
+    const addy = await Addy.findByIdAndUpdate(addyId, {$pull: {packages: packageId}}).populate('packages')
+    // console.log('package deleted: ' + package)
+    res.render('addys/details', {addy})
+
+}))
+
 // show all addys
 app.get('/addys', catchAsync(async (req, res, next) => {
     const addys = await Addy.find({})
@@ -88,9 +106,25 @@ app.get('/addys', catchAsync(async (req, res, next) => {
     res.render('addys/index', { addys });
 }))
 
-app.get('/reshipper', (req,res) => {
+app.get('/reshipper', catchAsync(async(req,res, next) => {
     res.render('reshipper')
+}))
+
+app.get('/addys/:id/packages/new', (req,res) => {
+    const {id} = req.params
+    res.render('packages/new', {id})
 })
+
+app.post('/addys/:id/packages', catchAsync(async(req,res,next) => {
+    const {id} = req.params
+    const addy = await Addy.findById(id).populate('packages')
+    const package = new Package(req.body.package)
+    await addy.packages.push(package)
+    package.addy = addy;
+    await addy.save()
+    await package.save()
+    res.render('addys/details', {addy})
+}))
 
 
 // delete
@@ -101,9 +135,10 @@ app.delete('/addys/:id', catchAsync(async (req, res, next) => {
     if (!addy) {
         throw new ExpressError('no addy with that id', 404)
     }
-    console.log('delete addy: ', addy)
     res.redirect('/addys')
 }))
+
+
 
 //new addy form
 app.get('/addys/new', (req, res) => {
@@ -121,9 +156,10 @@ app.put('/addys', validateAddy, catchAsync(async (req, res, next) => {
 // show details for specific addy
 app.get('/addys/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
-    const addy = await Addy.findById(id)
+    const addy = await Addy.findById(id).populate('packages')
+    console.log('THE ADDY: '+ addy)
     if (!addy) {
-        throw new new ExpressError('No Addy with that ID', 404)
+        throw new ExpressError('No Addy with that ID', 404)
     }
     res.render('addys/details', { addy })
 }))

@@ -1,5 +1,5 @@
 <%- layout('layouts/boilerplate') %>
-<div class="container content-space-2 content-space-lg-3">
+  <div class="container content-space-2 content-space-lg-3">
     <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
       <!-- Heading -->
       <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
@@ -14,32 +14,38 @@
       <!-- List Striped -->
       <ul class="list-group list-group-lg">
 
-        <% for (let a of addys) { %> 
-            <li class="list-group-item">
-                <div class="row">
-                  <div class="col-sm-4 mb-2 mb-sm-0">
-                    <span class="h6"><%= a.title %> </span>
-                  </div>
-                  <!-- End Col -->
-        
-                  <div class="col-sm-2 mb-2 mb-sm-0">
-                    <span><%= a.city %> </span>
-                  </div>
-                  <!-- End Col -->
-        
-                  <div class="col-sm-4 mb-2 mb-sm-0">
-                    <span><%= a._id %> </span>
-                  </div>
-                  <!-- End Col -->
-        
-                  <div class="col-sm-2 text-sm-end">
-                    <a href="/addys/<%= a._id %> ">Details <i class="bi-chevron-right small ms-1 small ms-1"></i></a>
-                  </div>
-                  <!-- End Col -->
-                </div>
-                <!-- End Row -->
-              </li>
-        <% }%>
+        <% for (let a of addys) { %>
+          <li class="list-group-item">
+            <div class="row">
+              <div class="col-sm-4 mb-2 mb-sm-0">
+                <span class="h6">
+                  <%= a.address1 %>
+                </span>
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-2 mb-2 mb-sm-0">
+                <span>
+                  <%= a.city + ', ' + a.state %>
+                </span>
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-4 mb-2 mb-sm-0">
+                <span>
+                  Packages: <b><%= a.packages.length %></b>
+                </span>
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-2 text-sm-end">
+                <a href="/addys/<%= a._id %> ">Details <i class="bi-chevron-right small ms-1 small ms-1"></i></a>
+              </div>
+              <!-- End Col -->
+            </div>
+            <!-- End Row -->
+          </li>
+          <% }%>
       </ul>
       <!-- End List Striped -->
     </div>

@@ -4,7 +4,7 @@
         <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
             <!-- Heading -->
             <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
-                <h2 class="h1">All Addys</h2>
+                <h2 class="h1">Addy details</h2>
             </div>
             <form action="/addys">
                 <div class=" mb-3">
@@ -18,7 +18,7 @@
                         <div class="row">
                             <div class="col-lg mb-3 mb-lg-0">
                                 <h1 class="page-header-title h2">
-                                    <%= addy.title %>
+                                    <%= addy.address1 %>
                                 </h1>
 
                                 <ul class="list-inline list-separator">
@@ -53,6 +53,51 @@
                 </div>
                 <!-- End Media -->
             </div>
+            <!-- Heading -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">Packages</h4>
+                <a class="link" href="/addys/<%= addy._id %>/packages/new">Add package <i
+                        class="bi-chevron-right small ms-1"></i></a>
+            </div>
+            <!-- End Heading -->
+
+            <div class="row gx-3 mx-n2">
+                <% for (let p of addy.packages) { %>
+
+                    <div class="col-sm-6 col-md-4 mb-3">
+                        <!-- Card -->
+                        <div class="card card-bordered card-transition h-100">
+                            <a class="card-body" href="../demo-app-marketplace/app-overview.html">
+                                <div class="d-flex">
+
+                                    <div class="flex-grow-1 ms-3">
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="card-title mb-0">
+                                                <%= p.tracking %>
+                                            </h5>
+
+                                        </div>
+                                        <p class="card-text text-body small">
+                                            <%= p.shipper%>
+                                        </p>
+                                    </div>
+                                    <div class="flex-shrink-0">
+                                        <form action="/addys/<%=addy._id%>/packages/<%= p._id %>?_method=DELETE"
+                                            method="post">
+                                            <button class="btn btn-danger btn-sm mx-1">
+                                                <i class="bi-trash me-1"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </a>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                    <!-- End Col -->
+                    <% } %>
+            </div>
+            <!-- End Row -->
         </div>
-        <!-- End Page Header -->
     </div>
