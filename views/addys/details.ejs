@@ -7,7 +7,9 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0">
                         <li class="breadcrumb-item"><a href="/addys">Addys</a></li>
-                        <li class="breadcrumb-item active" aria-current="page"><%= addy.address1 %> </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <%= addy.address1 %>
+                        </li>
                     </ol>
                 </nav>
                 <!-- End Breadcrumb -->
@@ -63,7 +65,7 @@
                             <a class="nav-link" href="#propertyOverviewNavThree" id="propertyOverviewNavThree-tab"
                                 data-bs-toggle="tab" data-bs-target="#propertyOverviewNavThree" role="tab"
                                 aria-controls="propertyOverviewNavThree" aria-selected="false"
-                                style="min-width: 7rem;">Additional</a>
+                                style="min-width: 7rem;">Map</a>
                         </li>
 
 
@@ -238,7 +240,7 @@
 
             <div class="col-lg-4">
                 <!-- Sticky Block -->
-                <div id="stickyBlockStartPoint" style="">
+                <div id="stickyBlockStartPoint">
                     <div class="js-sticky-block hs-kill-sticky" data-hs-sticky-block-options="{
                  &quot;parentSelector&quot;: &quot;#stickyBlockStartPoint&quot;,
                  &quot;breakpoint&quot;: &quot;lg&quot;,
@@ -246,7 +248,7 @@
                  &quot;endPoint&quot;: &quot;#stickyBlockEndPoint&quot;,
                  &quot;stickyOffsetTop&quot;: 24,
                  &quot;stickyOffsetBottom&quot;: 0
-               }" style="">
+               }">
                         <!-- Card -->
                         <div class="card card-bordered">
                             <div class="card-body">
@@ -325,7 +327,7 @@
                             <div class="d-flex justify-content-center">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0">
-                                        <span class="display-4 text-white">4.8</span>
+                                        <span class="display-4 text-white"><%= Math.round(addy.avgRating*10)/10 %></span>
                                     </div>
 
                                     <div class="flex-grow-1 ms-3">
@@ -343,7 +345,7 @@
                                                 width="16">
                                         </div>
                                         <!-- End Rating -->
-                                        <span class="text-white">12 reviews</span>
+                                        <span class="text-white"><%= addy.totalReviews %> reviews</span>
                                     </div>
                                 </div>
                             </div>
@@ -364,14 +366,14 @@
 
                             <div class="col-7">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="100"
+                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[5]/addy.totalReviews*100)%>%;" aria-valuenow="100"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <!-- End Col -->
 
                             <div class="col-2 text-end">
-                                <span>9</span>
+                                <span><%= addy.totalRating[5] %> </span>
                             </div>
                             <!-- End Col -->
                         </a>
@@ -385,14 +387,14 @@
 
                             <div class="col-7">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="53"
+                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[4]/addy.totalReviews*100)%>%;" aria-valuenow="53"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <!-- End Col -->
 
                             <div class="col-2 text-end">
-                                <span>3</span>
+                                <span><%= addy.totalRating[4] %> </span>
                             </div>
                             <!-- End Col -->
                         </a>
@@ -406,14 +408,14 @@
 
                             <div class="col-7">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="20"
+                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[3]/addy.totalReviews*100)%>%;" aria-valuenow="20"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <!-- End Col -->
 
                             <div class="col-2 text-end">
-                                <span>0</span>
+                                <span><%= addy.totalRating[3] %> </span>
                             </div>
                             <!-- End Col -->
                         </a>
@@ -427,14 +429,14 @@
 
                             <div class="col-7">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0"
+                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[2]/addy.totalReviews*100)%>%;" aria-valuenow="0"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <!-- End Col -->
 
                             <div class="col-2 text-end">
-                                <span>0</span>
+                                <span><%= addy.totalRating[2] %> </span>
                             </div>
                             <!-- End Col -->
                         </a>
@@ -448,14 +450,14 @@
 
                             <div class="col-7">
                                 <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="1"
+                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[1]/addy.totalReviews*100)%>%;" aria-valuenow="1"
                                         aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                             </div>
                             <!-- End Col -->
 
                             <div class="col-2 text-end">
-                                <span>0</span>
+                                <span><%= addy.totalRating[1] %></span>
                             </div>
                             <!-- End Col -->
                         </a>
@@ -477,143 +479,62 @@
                     <!-- Comment -->
                     <ul class="list-comment list-comment-divider mb-5">
 
-                        <% for (let r of addy.reviews) { %> 
-                        <!-- Item -->
-                        <li class="list-comment-item">
-                            <div class="d-flex gap-1 mb-3">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                            </div>
-
-                            <!-- Media -->
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="flex-shrink-0">
-                                    <img class="avatar avatar-sm avatar-circle"
-                                        src="/public/assets/img/160x160/img1.jpg" alt="Image Description">
+                        <% for (let r of addy.reviews) { %>
+                            <!-- Item -->
+                            <li class="list-comment-item">
+                                <div class="d-flex gap-1 mb-3">
+                                    <% for (let i = 0;i<r.rating;i++) { %> 
+                                    <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
+                                    <% } %> 
                                 </div>
 
-                                <div class="flex-grow-1 ms-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Review: <%= r.rating %> </h5>
-                                        <span class="d-block small text-muted">April 3, 2019</span>
+                                <!-- Media -->
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="flex-shrink-0">
+                                        <img class="avatar avatar-sm avatar-circle"
+                                            src="/public/assets/img/160x160/img1.jpg" alt="Image Description">
+                                    </div>
+
+                                    <div class="flex-grow-1 ms-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h5 class="mb-0">user8172</h5>
+                                            <span class="d-block small text-muted">January 2, 2022</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- End Media -->
+                                <!-- End Media -->
 
-                            <div class="mb-5">
-                                <p><%= r.body %> </p>
-                            </div>
-
-                            <div class="mb-2">
-                                <span class="text-dark fw-semi-bold">Kray boy</span>
-                                <span>- Verified client</span>
-                            </div>
-
-
-                        </li>
-                        <!-- End Item -->
-
-                        <% } %> 
-
-                        <!-- Item -->
-                        <li class="list-comment-item">
-                            <div class="d-flex gap-1 mb-3">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                            </div>
-
-                            <!-- Media -->
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="flex-shrink-0">
-                                    <img class="avatar avatar-sm avatar-circle"
-                                        src="/public/assets/img/160x160/img1.jpg" alt="Image Description">
+                                <div class="mb-5">
+                                    <p>
+                                        <%= r.body %>
+                                    </p>
                                 </div>
 
-                                <div class="flex-grow-1 ms-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Hailey</h5>
-                                        <span class="d-block small text-muted">January 19, 2019</span>
-                                    </div>
+                                <div class="mb-2">
+                                    <span class="text-dark fw-semi-bold">Verified client</span>
+                                    <!-- <span>- Verified client</span> -->
+                                    <form class="d-inline"action="/addys/<%= addy._id %>/reviews/<%= r._id %>?_method=DELETE"
+                                        method="post">
+                                        <button type="submit" class="btn btn-ghost-danger d-inline">
+                                            <i class="bi-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
-                            </div>
-                            <!-- End Media -->
-
-                            <div class="mb-5">
-                                <p>Worked perfectly. Price is a little high.</p>
-                            </div>
-
-                            <div class="mb-2">
-                                <span class="text-dark fw-semi-bold">Hailey</span>
-                                <span>- Verified client</span>
-                            </div>
+                                
 
 
-                        </li>
-                        <!-- End Item -->
 
-                        <!-- Item -->
-                        <li class="list-comment-item">
-                            <div class="d-flex gap-1 mb-3">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                            </div>
+                            </li>
+                            <!-- End Item -->
 
-                            <!-- Media -->
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="flex-shrink-0">
-                                    <img class="avatar avatar-sm avatar-circle"
-                                        src="/public/assets/img/160x160/img1.jpg" alt="Image Description">
-                                </div>
+                            <% } %>
 
-                                <div class="flex-grow-1 ms-3">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="mb-0">Chrizelle</h5>
-                                        <span class="d-block small text-muted">December 21, 2018</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Media -->
-
-                            <div class="mb-5">
-                                <p>Love this service</p>
-                            </div>
-
-                            <div class="mb-2">
-                                <span class="text-dark fw-semi-bold">Chrizelle</span>
-                                <span>- Verified client</span>
-                            </div>
-
-                            <!-- Media -->
-                            <!-- <div class="d-flex align-items-center">
-                      <span class="small me-2">Was this helpful?</span>
-    
-                      <div class="d-flex gap-2">
-                        <a class="btn btn-white btn-xs" href="javascript:;">
-                          <i class="bi-hand-thumbs-up me-1"></i> Yes <span>(0)</span>
-                        </a>
-                        <a class="btn btn-white btn-xs" href="javascript:;">
-                          <i class="bi-hand-thumbs-down me-1"></i> No <span>(0)</span>
-                        </a>
-                      </div>
-                    </div> -->
-                            <!-- End Media -->
-                        </li>
-                        <!-- End Item -->
                     </ul>
                     <!-- End Comment -->
 
                     <div class="d-sm-flex justify-content-sm-end gap-2">
-                        <a type="button" href="/addys/<%= addy._id %>/reviews/new" class="btn btn-primary btn-transition rounded-pill">Write a
+                        <a type="button" href="/addys/<%= addy._id %>/reviews/new"
+                            class="btn btn-primary btn-transition rounded-pill">Write a
                             review</a>
                     </div>
                 </div>

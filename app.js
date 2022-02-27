@@ -8,19 +8,21 @@ const Addy = require('./models/addy');
 const Package = require('./models/package')
 const Review = require('./models/review')
 const catchAsync = require('./utils/catchAsync')
-const validateAddy = require('./utils/validateAddy')
+const {validateAddy, validateReview} = require('./utils/validations')
 const ExpressError = require('./utils/ExpressError')
 
 const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/devDb?retryWrites=true&w=majority';
 
 mongoose.connect(uri)
 
-
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", () => {
     console.log("Database connected");
 });
+
+
+
 
 //set EJS
 app.engine('ejs', ejsMate)
@@ -67,17 +69,25 @@ app.get('/addys/:id/reviews/new', async (req,res) => {
     const addy = await Addy.findById(id);
     res.render('reviews/new', {addy})
 })
-app.post('/addys/:id/reviews', async (req,res) => {
-    const {id} = req.params;
-    const review = new Review(req.body)
-    await review.save()
+app.post('/addys/:id/reviews', validateReview, async (req,res) => {
+    const addy = await Addy.findById(req.params.id);
+    const review = new Review(req.body.review)
+    console.log('NEW REVIEW')
     console.log(review)
-    const addy = await Addy.findById(id).populate('packages').populate('reviews');
-    await addy.reviews.push(review)
+    addy.reviews.push(review)
+    await review.save()
     await addy.save();
-    console.log(addy)
-    res.render('addys/details', {addy})
+    // res.render('addys/details', {addy})
+    res.redirect(`/addys/${addy._id}/`)
 })
+
+app.delete('/addys/:addyId/reviews/:reviewId', catchAsync(async(req,res) => {
+    const {addyId, reviewId} = req.params;
+    await Review.findByIdAndDelete(reviewId);
+    await Addy.findByIdAndUpdate(addyId,{$pull: {reviews: reviewId}})
+    res.redirect(`/addys/${addyId}/`)
+
+}))
 
 app.get('/packages/new',(req,res) => {
     res.render('packages/new')
@@ -86,6 +96,8 @@ app.get('/packages/new',(req,res) => {
 app.post('/packages', catchAsync(async (req,res,next) => {
     const package = new Package(req.body.package) // normally you would want to verify this with Joi 
     await package.save()
+    console.log('NEW PACKAGE')
+    console.log(package)
     res.redirect('/packages')
 }))
 
@@ -141,6 +153,8 @@ app.post('/addys/:id/packages', catchAsync(async(req,res,next) => {
     package.addy = addy;
     await addy.save()
     await package.save()
+    console.log('NEW PACKAGE')
+    console.log(package)
     res.render('addys/details', {addy})
 }))
 
@@ -166,6 +180,8 @@ app.get('/addys/new', (req, res) => {
 app.put('/addys', validateAddy, catchAsync(async (req, res, next) => {
     const addy = new Addy(req.body.addy)
     await addy.save()
+    console.log('NEW DOCUMENT')
+    console.log(addy)
     res.redirect(`/addys/${addy._id}`)
 }))
 

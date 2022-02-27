@@ -31,16 +31,19 @@
       <!-- Card -->
       <div class="card card-lg border shadow-none">
         <div class="card-body">
-          <form action="/addys/<%= addy._id %>/reviews"method="post">
+          <form action="/addys/<%= addy._id %>/reviews"method="post" novalidate class="needs-validation">
             <div class="d-grid gap-4">
 
-              <label for="customRange1" class="form-label">Review</label>
-              <input type="range" name="rating" class="form-range" min="1" max="5" id="customRange1">
+              <label for="rating" class="form-label">Review</label>
+              <input type="range" name="review[rating]" class="form-range" min="1" max="5" id="customRratingange1">
              
               <!-- Form -->
               <span class="d-block">
                 <label class="form-label" for="blogContactsFormComment">Comment</label>
-                <textarea class="form-control form-control-lg" id="blogContactsFormComment" name="body" placeholder="Leave your comment here..." aria-label="Leave your comment here..." rows="5"></textarea>
+                <textarea class="form-control form-control-lg" id="blogContactsFormComment" name="review[body]" 
+                placeholder="Leave your comment here..." aria-label="Leave your comment here..." rows="5" required></textarea>
+                <div class="invalid-feedback">Required</div>
+                <div class="valid-feedback">Looks good</div>
               </span>
               <!-- End Form -->
 
