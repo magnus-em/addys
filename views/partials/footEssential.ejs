@@ -3,6 +3,8 @@
 <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- JS Implementing Plugins -->
+<script src="/public/assets/vendor/hs-toggle-password/dist/js/hs-toggle-password.js"></script>
+
 <!-- bundlejs:vendor [.] -->
 <script src="/public/assets/vendor/hs-header/dist/hs-header.min.js"></script>
 <script src="/public/assets/vendor/hs-mega-menu/dist/hs-mega-menu.min.js"></script>
@@ -142,7 +144,19 @@
     HSCore.components.HSNoUISlider.init('.js-nouislider')
   });
 </script>
-Copy
 
+<!-- JS Plugins Init. -->
+<script>
+  (function() {
+    // INITIALIZATION OF BOOTSTRAP VALIDATION
+    // =======================================================
+    HSBsValidation.init('.js-validate')
+
+
+    // INITIALIZATION OF TOGGLE PASSWORD
+    // =======================================================
+    new HSTogglePassword('.js-toggle-password')
+  })()
+</script>
 </body>
 </html>

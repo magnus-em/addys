@@ -1,247 +1,252 @@
 <%- layout('layouts/boilerplate') %>
-    <!-- Page Header -->
-    <div class="container content-space-t-3 pb-3 mb-5">
-        <div class="row align-items-lg-center">
-            <div class="col-lg mb-2 mb-lg-0">
-                <!-- Breadcrumb -->
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mb-0">
-                        <li class="breadcrumb-item"><a href="/addys">Addys</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">
-                            <%= addy.address1 %>
-                        </li>
-                    </ol>
-                </nav>
-                <!-- End Breadcrumb -->
-            </div>
-            <!-- End Col -->
+    <main id="content" role="main">
+        <!-- Page Header -->
+        <div class="container content-space-t-3 pb-3 mb-5">
+            <%- include('../partials/flash') %>
 
-        </div>
-        <!-- End Row -->
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mb-9 mb-lg-0">
-                <div class="row justify-content-lg-between mb-7">
-                    <div class="col-12 col-sm-6 mb-5 mb-sm-0">
-                        <h1 class="h2 mb-0">
-                            <%= addy.address1 %>
-                        </h1>
-                        <span class="d-block text-dark mb-3">
-                            <%= addy.city %>, <%= addy.state %>
-                        </span>
-
+                <div class="row align-items-lg-center">
+                    <div class="col-lg mb-2 mb-lg-0">
+                        <!-- Breadcrumb -->
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-0">
+                                <li class="breadcrumb-item"><a href="/addys">Addys</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <%= addy.address1 %>
+                                </li>
+                            </ol>
+                        </nav>
+                        <!-- End Breadcrumb -->
                     </div>
-
+                    <!-- End Col -->
 
                 </div>
                 <!-- End Row -->
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mb-9 mb-lg-0">
+                    <div class="row justify-content-lg-between mb-7">
+                        <div class="col-12 col-sm-6 mb-5 mb-sm-0">
+                            <h1 class="h2 mb-0">
+                                <%= addy.address1 %>
+                            </h1>
+                            <span class="d-block text-dark mb-3">
+                                <%= addy.city %>, <%= addy.state %>
+                            </span>
 
-                <!-- Nav Scroller -->
-                <div class="js-nav-scroller hs-nav-scroller-horizontal">
-                    <span class="hs-nav-scroller-arrow-prev" style="display: none;">
-                        <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-                            <i class="bi-chevron-left"></i>
-                        </a>
-                    </span>
-
-                    <span class="hs-nav-scroller-arrow-next" style="display: none;">
-                        <a class="hs-nav-scroller-arrow-link" href="javascript:;">
-                            <i class="bi-chevron-right"></i>
-                        </a>
-                    </span>
-
-                    <!-- Nav -->
-                    <ul class="nav nav-segment nav-fill mb-7" id="propertyOverviewNavTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="#propertyOverviewNavOne" id="propertyOverviewNavOne-tab"
-                                data-bs-toggle="tab" data-bs-target="#propertyOverviewNavOne" role="tab"
-                                aria-controls="propertyOverviewNavOne" aria-selected="true"
-                                style="min-width: 7rem;">Details</a>
-                        </li>
-
-
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" href="#propertyOverviewNavThree" id="propertyOverviewNavThree-tab"
-                                data-bs-toggle="tab" data-bs-target="#propertyOverviewNavThree" role="tab"
-                                aria-controls="propertyOverviewNavThree" aria-selected="false"
-                                style="min-width: 7rem;">Map</a>
-                        </li>
-
-
-                    </ul>
-                    <!-- End Nav -->
-                </div>
-                <!-- End Nav Scroller -->
-
-                <!-- Tab Content -->
-                <div class="tab-content">
-                    <div class="tab-pane fade show active" id="propertyOverviewNavOne" role="tabpanel"
-                        aria-labelledby="propertyOverviewNavOne-tab">
-                        <div class="mb-4">
-                            <h4>Addy details</h4>
                         </div>
-
-                        <div class="row justify-content-md-between">
-                            <div class="col-md-5">
-                                <dl class="row">
-                                    <dt class="col-6">Since:</dt>
-                                    <dd class="col-6">January 2022</dd>
-
-                                    <dt class="col-6">Property type:</dt>
-                                    <dd class="col-6">House</dd>
-
-                                    <dt class="col-6">Carriers supported:</dt>
-                                    <dd class="col-6">UPS, FedEx, USPS</dd>
-                                </dl>
-                                <!-- End Row -->
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-md-5">
-                                <dl class="row">
-                                    <dt class="col-6">Avg dropoff:</dt>
-                                    <dd class="col-6">3 days</dd>
-
-                                    <dt class="col-6">Weight max:</dt>
-                                    <dd class="col-6">20 lbs</dd>
-
-                                    <dt class="col-6">Storage:</dt>
-                                    <dd class="col-6">No</dd>
-                                </dl>
-                                <!-- End Row -->
-                            </div>
-                            <!-- End Col -->
-                        </div>
-                        <!-- End Row -->
-
-
-
-
-
-
-
 
 
                     </div>
+                    <!-- End Row -->
+
+                    <!-- Nav Scroller -->
+                    <div class="js-nav-scroller hs-nav-scroller-horizontal">
+                        <span class="hs-nav-scroller-arrow-prev" style="display: none;">
+                            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                                <i class="bi-chevron-left"></i>
+                            </a>
+                        </span>
+
+                        <span class="hs-nav-scroller-arrow-next" style="display: none;">
+                            <a class="hs-nav-scroller-arrow-link" href="javascript:;">
+                                <i class="bi-chevron-right"></i>
+                            </a>
+                        </span>
+
+                        <!-- Nav -->
+                        <ul class="nav nav-segment nav-fill mb-7" id="propertyOverviewNavTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link active" href="#propertyOverviewNavOne"
+                                    id="propertyOverviewNavOne-tab" data-bs-toggle="tab"
+                                    data-bs-target="#propertyOverviewNavOne" role="tab"
+                                    aria-controls="propertyOverviewNavOne" aria-selected="true"
+                                    style="min-width: 7rem;">Details</a>
+                            </li>
 
 
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" href="#propertyOverviewNavThree" id="propertyOverviewNavThree-tab"
+                                    data-bs-toggle="tab" data-bs-target="#propertyOverviewNavThree" role="tab"
+                                    aria-controls="propertyOverviewNavThree" aria-selected="false"
+                                    style="min-width: 7rem;">Map</a>
+                            </li>
 
-                    <div class="tab-pane fade" id="propertyOverviewNavThree" role="tabpanel"
-                        aria-labelledby="propertyOverviewNavThree-tab">
 
+                        </ul>
+                        <!-- End Nav -->
+                    </div>
+                    <!-- End Nav Scroller -->
 
+                    <!-- Tab Content -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="propertyOverviewNavOne" role="tabpanel"
+                            aria-labelledby="propertyOverviewNavOne-tab">
+                            <div class="mb-4">
+                                <h4>Addy details</h4>
+                            </div>
 
+                            <div class="row justify-content-md-between">
+                                <div class="col-md-5">
+                                    <dl class="row">
+                                        <dt class="col-6">Since:</dt>
+                                        <dd class="col-6">January 2022</dd>
 
+                                        <dt class="col-6">Property type:</dt>
+                                        <dd class="col-6">House</dd>
 
-
-                        <div class="container content-space-1">
-                            <div class="page-header">
-                                <!-- Media -->
-                                <div class="flex-grow-1 ms-4 my-5">
-                                    <div class="row">
-                                        <div class="col-lg mb-3 mb-lg-0">
-                                            <h1 class="page-header-title h2">
-                                                <%= addy.address1 %>
-                                            </h1>
-
-                                            <ul class="list-inline list-separator">
-                                                <li class="list-inline-item">
-                                                    <i class="bi-geo-alt-fill text-primary me-1"></i>
-                                                    <%= addy.city %>
-                                                </li>
-                                                <li class="list-inline-item">ID: <%= addy._id %>
-                                                </li>
-                                                <li class="list-inline-item">descriptor 4</li>
-                                            </ul>
-                                        </div>
-                                        <!-- End Col -->
-
-                                        <div class="col-lg-auto align-self-lg-end text-lg-right">
-                                            <div class="d-flex gap-2">
-                                                <a class="btn btn-primary btn-sm" href="/addys/<%= addy._id %>/edit">
-                                                    <i class="bi-pencil-fill me-1"></i> Edit
-                                                </a>
-                                                <form action="/addys/<%= addy._id %>?_method=DELETE" method="post">
-                                                    <button class="btn btn-danger btn-sm">
-                                                        <i class="bi-trash me-1"></i> Delete
-                                                    </button>
-                                                </form>
-
-                                            </div>
-                                        </div>
-                                        <!-- End Col -->
-                                    </div>
+                                        <dt class="col-6">Carriers supported:</dt>
+                                        <dd class="col-6">UPS, FedEx, USPS</dd>
+                                    </dl>
                                     <!-- End Row -->
                                 </div>
-                            </div>
-                            <!-- End Media -->
-                        </div>
+                                <!-- End Col -->
 
+                                <div class="col-md-5">
+                                    <dl class="row">
+                                        <dt class="col-6">Avg dropoff:</dt>
+                                        <dd class="col-6">3 days</dd>
 
-                        <!-- Heading -->
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h4 class="mb-0">Packages</h4>
-                            <a class="link" href="/addys/<%= addy._id %>/packages/new">Add package <i
-                                    class="bi-chevron-right small ms-1"></i></a>
-                        </div>
-                        <!-- End Heading -->
+                                        <dt class="col-6">Weight max:</dt>
+                                        <dd class="col-6">20 lbs</dd>
 
-                        <div class="row gx-3 mx-n2">
-                            <% for (let p of addy.packages) { %>
-
-                                <div class="col-sm-6 col-md-4 mb-3">
-                                    <!-- Card -->
-                                    <div class="card card-bordered card-transition h-100">
-                                        <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
-                                            <div class="d-flex">
-
-                                                <div class="flex-grow-1 ms-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <h5 class="card-title mb-0">
-                                                            <%= p.tracking %>
-                                                        </h5>
-
-                                                    </div>
-                                                    <p class="card-text text-body small">
-                                                        <%= p.shipper%>
-                                                    </p>
-                                                </div>
-                                                <div class="flex-shrink-0">
-                                                    <form
-                                                        action="/addys/<%=addy._id%>/packages/<%= p._id %>?_method=DELETE"
-                                                        method="post">
-                                                        <button class="btn btn-danger btn-sm mx-1">
-                                                            <i class="bi-trash me-1"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!-- End Card -->
+                                        <dt class="col-6">Storage:</dt>
+                                        <dd class="col-6">No</dd>
+                                    </dl>
+                                    <!-- End Row -->
                                 </div>
                                 <!-- End Col -->
-                                <% } %>
+                            </div>
+                            <!-- End Row -->
+
+
+
+
+
+
+
+
+
                         </div>
 
-                        <!-- End Gmap -->
+
+
+                        <div class="tab-pane fade" id="propertyOverviewNavThree" role="tabpanel"
+                            aria-labelledby="propertyOverviewNavThree-tab">
+
+
+
+
+
+
+                            <div class="container content-space-1">
+                                <div class="page-header">
+                                    <!-- Media -->
+                                    <div class="flex-grow-1 ms-4 my-5">
+                                        <div class="row">
+                                            <div class="col-lg mb-3 mb-lg-0">
+                                                <h1 class="page-header-title h2">
+                                                    <%= addy.address1 %>
+                                                </h1>
+
+                                                <ul class="list-inline list-separator">
+                                                    <li class="list-inline-item">
+                                                        <i class="bi-geo-alt-fill text-primary me-1"></i>
+                                                        <%= addy.city %>
+                                                    </li>
+                                                    <li class="list-inline-item">ID: <%= addy._id %>
+                                                    </li>
+                                                    <li class="list-inline-item">descriptor 4</li>
+                                                </ul>
+                                            </div>
+                                            <!-- End Col -->
+
+                                            <div class="col-lg-auto align-self-lg-end text-lg-right">
+                                                <div class="d-flex gap-2">
+                                                    <a class="btn btn-primary btn-sm"
+                                                        href="/addys/<%= addy._id %>/edit">
+                                                        <i class="bi-pencil-fill me-1"></i> Edit
+                                                    </a>
+                                                    <form action="/addys/<%= addy._id %>?_method=DELETE" method="post">
+                                                        <button class="btn btn-danger btn-sm">
+                                                            <i class="bi-trash me-1"></i> Delete
+                                                        </button>
+                                                    </form>
+
+                                                </div>
+                                            </div>
+                                            <!-- End Col -->
+                                        </div>
+                                        <!-- End Row -->
+                                    </div>
+                                </div>
+                                <!-- End Media -->
+                            </div>
+
+
+                            <!-- Heading -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="mb-0">Packages</h4>
+                                <a class="link" href="/addys/<%= addy._id %>/packages/new">Add package <i
+                                        class="bi-chevron-right small ms-1"></i></a>
+                            </div>
+                            <!-- End Heading -->
+
+                            <div class="row gx-3 mx-n2">
+                                <% for (let p of addy.packages) { %>
+
+                                    <div class="col-sm-6 col-md-4 mb-3">
+                                        <!-- Card -->
+                                        <div class="card card-bordered card-transition h-100">
+                                            <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                                <div class="d-flex">
+
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <div class="d-flex align-items-center">
+                                                            <h5 class="card-title mb-0">
+                                                                <%= p.tracking %>
+                                                            </h5>
+
+                                                        </div>
+                                                        <p class="card-text text-body small">
+                                                            <%= p.shipper%>
+                                                        </p>
+                                                    </div>
+                                                    <div class="flex-shrink-0">
+                                                        <form
+                                                            action="/addys/<%=addy._id%>/packages/<%= p._id %>?_method=DELETE"
+                                                            method="post">
+                                                            <button class="btn btn-danger btn-sm mx-1">
+                                                                <i class="bi-trash me-1"></i>
+                                                            </button>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <!-- End Card -->
+                                    </div>
+                                    <!-- End Col -->
+                                    <% } %>
+                            </div>
+
+                            <!-- End Gmap -->
+                        </div>
+
+
                     </div>
+                    <!-- End Tab Content -->
+
 
 
                 </div>
-                <!-- End Tab Content -->
+                <!-- End Col -->
 
-
-
-            </div>
-            <!-- End Col -->
-
-            <div class="col-lg-4">
-                <!-- Sticky Block -->
-                <div id="stickyBlockStartPoint">
-                    <div class="js-sticky-block hs-kill-sticky" data-hs-sticky-block-options="{
+                <div class="col-lg-4">
+                    <!-- Sticky Block -->
+                    <div id="stickyBlockStartPoint">
+                        <div class="js-sticky-block hs-kill-sticky" data-hs-sticky-block-options="{
                  &quot;parentSelector&quot;: &quot;#stickyBlockStartPoint&quot;,
                  &quot;breakpoint&quot;: &quot;lg&quot;,
                  &quot;startPoint&quot;: &quot;#stickyBlockStartPoint&quot;,
@@ -249,297 +254,306 @@
                  &quot;stickyOffsetTop&quot;: 24,
                  &quot;stickyOffsetBottom&quot;: 0
                }">
+                            <!-- Card -->
+                            <div class="card card-bordered">
+                                <div class="card-body">
+                                    <!-- Media -->
+                                    <div class="d-flex align-items-center mb-4">
+                                        <div class="flex-shrink-0">
+                                            <img class="avatar avatar-circle" src="/public/assets/oc-mailbox.svg"
+                                                alt="Image Description">
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h4 class="card-title">Open mailbox</h4>
+                                        </div>
+                                    </div>
+                                    <!-- End Media -->
+
+                                    <!-- Form -->
+                                    <form data-dashlane-rid="76e2bf4e0ca33cdf" data-form-type="contact">
+                                        <select class="form-select mb-2" data-form-type="other">
+                                            <option selected="" disabled="">Est. package volume</option>
+                                            <option value="aboutProperty1">1-5</option>
+                                            <option value="aboutProperty2">5-10</option>
+                                            <option value="aboutProperty3">10-20</option>
+                                            <option value="aboutProperty3">20-30</option>
+                                            <option value="aboutProperty3">30+</option>
+                                        </select>
+
+
+
+
+
+                                        <div class="d-grid">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dashlane-rid="4d2a382ea5eb1a43" data-dashlane-label="true"
+                                                data-form-type="action">Get started</button>
+                                        </div>
+                                    </form>
+                                    <!-- End Form -->
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Sticky Block -->
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Row -->
+
+            <!-- Sticky Block End Point -->
+            <div id="stickyBlockEndPoint"></div>
+
+
+        </div>
+
+
+        <div class="container">
+            <hr class="my-10">
+        </div>
+
+        <div id="review-section" class="container content-space-b-2 content-space-b-lg-3">
+            <div class="row">
+                <div class="col-md-4 mb-7 mb-md-0">
+                    <div class="border-bottom pb-4 mb-4">
                         <!-- Card -->
-                        <div class="card card-bordered">
+                        <div class="card bg-primary mb-3">
                             <div class="card-body">
                                 <!-- Media -->
-                                <div class="d-flex align-items-center mb-4">
-                                    <div class="flex-shrink-0">
-                                        <img class="avatar avatar-circle" src="/public/assets/oc-mailbox.svg"
-                                            alt="Image Description">
-                                    </div>
-                                    <div class="flex-grow-1 ms-3">
-                                        <h4 class="card-title">Open mailbox</h4>
-                                    </div>
-                                </div>
-                                <!-- End Media -->
-
-                                <!-- Form -->
-                                <form data-dashlane-rid="76e2bf4e0ca33cdf" data-form-type="contact">
-                                    <select class="form-select mb-2" data-form-type="other">
-                                        <option selected="" disabled="">Est. package volume</option>
-                                        <option value="aboutProperty1">1-5</option>
-                                        <option value="aboutProperty2">5-10</option>
-                                        <option value="aboutProperty3">10-20</option>
-                                        <option value="aboutProperty3">20-30</option>
-                                        <option value="aboutProperty3">30+</option>
-                                    </select>
-
-
-
-                                    <div class="mb-2">
-                                        <label for="questionPropertyOverviewContactForm"
-                                            class="form-label visually-hidden">Property
-                                            question</label>
-                                        <textarea class="form-control" id="questionPropertyOverviewContactForm"
-                                            placeholder="Any comments for Addy reshipper"
-                                            aria-label="I would like more information about ..." rows="4"
-                                            data-dashlane-rid="bba997f02aa254e3" data-form-type="other"></textarea>
-                                    </div>
-
-                                    <div class="d-grid">
-                                        <button type="button" class="btn btn-primary"
-                                            data-dashlane-rid="4d2a382ea5eb1a43" data-dashlane-label="true"
-                                            data-form-type="action">Get started</button>
-                                    </div>
-                                </form>
-                                <!-- End Form -->
-                            </div>
-                            <!-- End Card -->
-                        </div>
-                    </div>
-                </div>
-                <!-- End Sticky Block -->
-            </div>
-            <!-- End Col -->
-        </div>
-        <!-- End Row -->
-
-        <!-- Sticky Block End Point -->
-        <div id="stickyBlockEndPoint"></div>
-
-
-    </div>
-
-
-    <div class="container">
-        <hr class="my-10">
-    </div>
-
-    <div id="review-section" class="container content-space-b-2 content-space-b-lg-3">
-        <div class="row">
-            <div class="col-md-4 mb-7 mb-md-0">
-                <div class="border-bottom pb-4 mb-4">
-                    <!-- Card -->
-                    <div class="card bg-primary mb-3">
-                        <div class="card-body">
-                            <!-- Media -->
-                            <div class="d-flex justify-content-center">
-                                <div class="d-flex align-items-center">
-                                    <div class="flex-shrink-0">
-                                        <span class="display-4 text-white"><%= Math.round(addy.avgRating*10)/10 %></span>
-                                    </div>
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <!-- Rating -->
-                                        <div class="d-flex gap-1 small">
-                                            <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating"
-                                                width="16">
-                                            <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating"
-                                                width="16">
-                                            <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating"
-                                                width="16">
-                                            <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating"
-                                                width="16">
-                                            <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating"
-                                                width="16">
+                                <div class="d-flex justify-content-center">
+                                    <div class="d-flex align-items-center">
+                                        <div class="flex-shrink-0">
+                                            <span class="display-4 text-white">
+                                                <%= Math.round(addy.avgRating*10)/10 %>
+                                            </span>
                                         </div>
-                                        <!-- End Rating -->
-                                        <span class="text-white"><%= addy.totalReviews %> reviews</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Media -->
-                        </div>
-                    </div>
-                    <!-- End Card -->
 
-                    <h3>Rating breakdown</h3>
+                                        <div class="flex-grow-1 ms-3">
+                                            <!-- Rating -->
+                                            <div class="d-flex gap-1 small">
+                                                <% for (let i=0;i<Math.ceil(addy.avgRating);i++) { %>
+                                                    <img src="/public/assets/svg/illustrations/star.svg"
+                                                        alt="Review rating" width="16">
+                                                    <% } %>
 
-                    <!-- Ratings -->
-                    <div class="d-grid gap-1">
-                        <a class="row align-items-center" href="#" style="max-width: 25rem;">
-                            <div class="col-3">
-                                <span class="text-dark">5 stars</span>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-7">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[5]/addy.totalReviews*100)%>%;" aria-valuenow="100"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-2 text-end">
-                                <span><%= addy.totalRating[5] %> </span>
-                            </div>
-                            <!-- End Col -->
-                        </a>
-                        <!-- End Row -->
-
-                        <a class="row align-items-center" href="#" style="max-width: 25rem;">
-                            <div class="col-3">
-                                <span class="text-dark">4 stars</span>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-7">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[4]/addy.totalReviews*100)%>%;" aria-valuenow="53"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-2 text-end">
-                                <span><%= addy.totalRating[4] %> </span>
-                            </div>
-                            <!-- End Col -->
-                        </a>
-                        <!-- End Row -->
-
-                        <a class="row align-items-center" href="#" style="max-width: 25rem;">
-                            <div class="col-3">
-                                <span class="text-dark">3 stars</span>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-7">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[3]/addy.totalReviews*100)%>%;" aria-valuenow="20"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-2 text-end">
-                                <span><%= addy.totalRating[3] %> </span>
-                            </div>
-                            <!-- End Col -->
-                        </a>
-                        <!-- End Row -->
-
-                        <a class="row align-items-center" href="#" style="max-width: 25rem;">
-                            <div class="col-3">
-                                <span class="text-dark">2 stars</span>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-7">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[2]/addy.totalReviews*100)%>%;" aria-valuenow="0"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-2 text-end">
-                                <span><%= addy.totalRating[2] %> </span>
-                            </div>
-                            <!-- End Col -->
-                        </a>
-                        <!-- End Row -->
-
-                        <a class="row align-items-center" href="#" style="max-width: 25rem;">
-                            <div class="col-3">
-                                <span class="text-dark">1 star</span>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-7">
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: <%=Math.floor(addy.totalRating[1]/addy.totalReviews*100)%>%;" aria-valuenow="1"
-                                        aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                            </div>
-                            <!-- End Col -->
-
-                            <div class="col-2 text-end">
-                                <span><%= addy.totalRating[1] %></span>
-                            </div>
-                            <!-- End Col -->
-                        </a>
-                        <!-- End Row -->
-                    </div>
-                    <!-- End Ratings -->
-                </div>
-
-                <h4 class="display-4 text-primary">100%</h4>
-                <p class="small">of clients recommend this addy</p>
-            </div>
-            <!-- End Col -->
-
-            <div class="col-md-8">
-                <div class="ps-md-4">
-
-                    <!-- End Heading -->
-
-                    <!-- Comment -->
-                    <ul class="list-comment list-comment-divider mb-5">
-
-                        <% for (let r of addy.reviews) { %>
-                            <!-- Item -->
-                            <li class="list-comment-item">
-                                <div class="d-flex gap-1 mb-3">
-                                    <% for (let i = 0;i<r.rating;i++) { %> 
-                                    <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating" width="16">
-                                    <% } %> 
-                                </div>
-
-                                <!-- Media -->
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="flex-shrink-0">
-                                        <img class="avatar avatar-sm avatar-circle"
-                                            src="/public/assets/img/160x160/img1.jpg" alt="Image Description">
-                                    </div>
-
-                                    <div class="flex-grow-1 ms-3">
-                                        <div class="d-flex justify-content-between align-items-center">
-                                            <h5 class="mb-0">user8172</h5>
-                                            <span class="d-block small text-muted">January 2, 2022</span>
+                                            </div>
+                                            <!-- End Rating -->
+                                            <span class="text-white">
+                                                <%= addy.totalReviews %> reviews
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End Media -->
+                            </div>
+                        </div>
+                        <!-- End Card -->
 
-                                <div class="mb-5">
-                                    <p>
-                                        <%= r.body %>
-                                    </p>
+                        <h3>Rating breakdown</h3>
+
+                        <!-- Ratings -->
+                        <div class="d-grid gap-1">
+                            <a class="row align-items-center" href="#" style="max-width: 25rem;">
+                                <div class="col-3">
+                                    <span class="text-dark">5 stars</span>
                                 </div>
+                                <!-- End Col -->
 
-                                <div class="mb-2">
-                                    <span class="text-dark fw-semi-bold">Verified client</span>
-                                    <!-- <span>- Verified client</span> -->
-                                    <form class="d-inline"action="/addys/<%= addy._id %>/reviews/<%= r._id %>?_method=DELETE"
-                                        method="post">
-                                        <button type="submit" class="btn btn-ghost-danger d-inline">
-                                            <i class="bi-trash"></i>
-                                        </button>
-                                    </form>
+                                <div class="col-7">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: <%=Math.floor(addy.totalRating[5]/addy.totalReviews*100)%>%;"
+                                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
                                 </div>
-                                
+                                <!-- End Col -->
+
+                                <div class="col-2 text-end">
+                                    <span>
+                                        <%= addy.totalRating[5] %>
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </a>
+                            <!-- End Row -->
+
+                            <a class="row align-items-center" href="#" style="max-width: 25rem;">
+                                <div class="col-3">
+                                    <span class="text-dark">4 stars</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-7">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: <%=Math.floor(addy.totalRating[4]/addy.totalReviews*100)%>%;"
+                                            aria-valuenow="53" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-2 text-end">
+                                    <span>
+                                        <%= addy.totalRating[4] %>
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </a>
+                            <!-- End Row -->
+
+                            <a class="row align-items-center" href="#" style="max-width: 25rem;">
+                                <div class="col-3">
+                                    <span class="text-dark">3 stars</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-7">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: <%=Math.floor(addy.totalRating[3]/addy.totalReviews*100)%>%;"
+                                            aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-2 text-end">
+                                    <span>
+                                        <%= addy.totalRating[3] %>
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </a>
+                            <!-- End Row -->
+
+                            <a class="row align-items-center" href="#" style="max-width: 25rem;">
+                                <div class="col-3">
+                                    <span class="text-dark">2 stars</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-7">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: <%=Math.floor(addy.totalRating[2]/addy.totalReviews*100)%>%;"
+                                            aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-2 text-end">
+                                    <span>
+                                        <%= addy.totalRating[2] %>
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </a>
+                            <!-- End Row -->
+
+                            <a class="row align-items-center" href="#" style="max-width: 25rem;">
+                                <div class="col-3">
+                                    <span class="text-dark">1 star</span>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-7">
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar"
+                                            style="width: <%=Math.floor(addy.totalRating[1]/addy.totalReviews*100)%>%;"
+                                            aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                                <!-- End Col -->
+
+                                <div class="col-2 text-end">
+                                    <span>
+                                        <%= addy.totalRating[1] %>
+                                    </span>
+                                </div>
+                                <!-- End Col -->
+                            </a>
+                            <!-- End Row -->
+                        </div>
+                        <!-- End Ratings -->
+                    </div>
+
+                    <h4 class="display-4 text-primary">100%</h4>
+                    <p class="small">of clients recommend this addy</p>
+                </div>
+                <!-- End Col -->
+
+                <div class="col-md-8">
+                    <div class="ps-md-4">
+                        <!-- End Heading -->
+
+                        <!-- Comment -->
+                        <ul class="list-comment list-comment-divider mb-5">
+
+                            <% for (let i=addy.reviews.length-1; i>=0;i--) { %>
+                                <% let r=addy.reviews[i] %>
+                                    <!-- Item -->
+                                    <li class="list-comment-item">
+                                        <div class="d-flex gap-1 mb-3">
+                                            <% for (let i=0;i<r.rating;i++) { %>
+                                                <img src="/public/assets/svg/illustrations/star.svg" alt="Review rating"
+                                                    width="16">
+                                                <% } %>
+                                        </div>
+
+                                        <!-- Media -->
+                                        <div class="d-flex align-items-center mb-3">
+                                            <div class="flex-shrink-0">
+                                                <img class="avatar avatar-sm avatar-circle"
+                                                    src="/public/assets/img/160x160/img1.jpg" alt="Image Description">
+                                            </div>
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="mb-0">user8172</h5>
+                                                    <span class="d-block small text-muted">January 2, 2022</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Media -->
+
+                                        <div class="mb-5">
+                                            <p>
+                                                <%= r.body %>
+                                            </p>
+                                        </div>
+
+                                        <div class="mb-2">
+                                            <span class="text-dark fw-semi-bold">Verified client</span>
+                                            <!-- <span>- Verified client</span> -->
+                                            <form class="d-inline"
+                                                action="/addys/<%= addy._id %>/reviews/<%= r._id %>?_method=DELETE"
+                                                method="post">
+                                                <button type="submit" class="btn btn-ghost-danger d-inline">
+                                                    <i class="bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
 
 
 
-                            </li>
-                            <!-- End Item -->
 
-                            <% } %>
+                                    </li>
+                                    <!-- End Item -->
 
-                    </ul>
-                    <!-- End Comment -->
+                                    <% } %>
 
-                    <div class="d-sm-flex justify-content-sm-end gap-2">
-                        <a type="button" href="/addys/<%= addy._id %>/reviews/new"
-                            class="btn btn-primary btn-transition rounded-pill">Write a
-                            review</a>
+                        </ul>
+                        <!-- End Comment -->
+
+                        <div class="d-sm-flex justify-content-sm-end gap-2">
+                            <a type="button" href="/addys/<%= addy._id %>/reviews/new"
+                                class="btn btn-primary btn-transition rounded-pill">Write a
+                                review</a>
+                        </div>
                     </div>
                 </div>
+                <!-- End Col -->
             </div>
-            <!-- End Col -->
+            <!-- End Row -->
         </div>
-        <!-- End Row -->
-    </div>
+    </main>

@@ -4,12 +4,15 @@ const mongoose = require('mongoose');
 const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate')
-const Addy = require('./models/addy');
 const Package = require('./models/package')
-const Review = require('./models/review')
 const catchAsync = require('./utils/catchAsync')
-const {validateAddy, validateReview} = require('./utils/validations')
 const ExpressError = require('./utils/ExpressError')
+const addyRoutes = require('./routes/addys')
+const packageRoutes = require('./routes/packages')
+const reviewRoutes = require('./routes/reviews')
+const userRoutes = require('./routes/users')
+const session = require('express-session')
+const flash = require('connect-flash')
 
 const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/devDb?retryWrites=true&w=majority';
 
@@ -21,20 +24,44 @@ db.once("open", () => {
     console.log("Database connected");
 });
 
-
-
-
 //set EJS
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// to get data out of post requests body
 app.use(express.urlencoded({ extended: true }));
 
-//static asset
+const sessionConfig = {
+    secret: 'demosecret', 
+    resave: 'false', 
+    saveUninitialized: 'false',
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000*60*60*24,
+        maxAge: 100*60*60*24
+    }
+}
+app.use(session(sessionConfig))
+app.use(flash())
+
+//specify static asset path
 app.use('/public', express.static('public'));
 
+//method override for html forms
 app.use(methodOverride('_method'));
+
+//save any req.flash messages to res.locals (local variables available to views)
+app.use((req,res,next) => {
+    res.locals.success = req.flash('success');
+    res.locals.error = req.flash('error')
+    next();
+})
+
+app.use('/addys',addyRoutes)
+app.use('/',packageRoutes)
+app.use('/addys/:addyId/reviews',reviewRoutes)
+app.use('/', userRoutes)
 
 
 app.get('/', (req, res) => {
@@ -43,182 +70,23 @@ app.get('/', (req, res) => {
 app.get('/index', (req, res) => {
     res.render('home');
 })
-
 app.get('/faq', (req,res) => {
     res.render('faq')
 })
-
 app.get('/terms', (req,res) => {
     res.render('terms')
 })
-
 app.get('/privacy', (req,res) => {
     res.render('privacy')
 })
-
 app.get('/contact',(req,res) => {
     res.render('contact')
 })
-
 app.get('/requirements',(req,res) => {
     res.render('requirements')
 })
-
-app.get('/addys/:id/reviews/new', async (req,res) => {
-    const {id} = req.params;
-    const addy = await Addy.findById(id);
-    res.render('reviews/new', {addy})
-})
-app.post('/addys/:id/reviews', validateReview, async (req,res) => {
-    const addy = await Addy.findById(req.params.id);
-    const review = new Review(req.body.review)
-    console.log('NEW REVIEW')
-    console.log(review)
-    addy.reviews.push(review)
-    await review.save()
-    await addy.save();
-    // res.render('addys/details', {addy})
-    res.redirect(`/addys/${addy._id}/`)
-})
-
-app.delete('/addys/:addyId/reviews/:reviewId', catchAsync(async(req,res) => {
-    const {addyId, reviewId} = req.params;
-    await Review.findByIdAndDelete(reviewId);
-    await Addy.findByIdAndUpdate(addyId,{$pull: {reviews: reviewId}})
-    res.redirect(`/addys/${addyId}/`)
-
-}))
-
-app.get('/packages/new',(req,res) => {
-    res.render('packages/new')
-})
-
-app.post('/packages', catchAsync(async (req,res,next) => {
-    const package = new Package(req.body.package) // normally you would want to verify this with Joi 
-    await package.save()
-    console.log('NEW PACKAGE')
-    console.log(package)
-    res.redirect('/packages')
-}))
-
-app.get('/packages',catchAsync(async(req,res,next) => {
-    const packages = await Package.find({})
-    if (!packages) {
-        throw new ExpressError('could not retrieve any packages',404)
-    }
-    res.render('packages/index',{packages})
-}))
-
-app.get('/packages/:id',catchAsync(async (req,res,next) => {
-    const { id } = req.params;
-    const package = await Package.findById(id)
-    if (!package) {
-        throw new ExpressError('no package with that ID', 404)
-    }
-    res.render('packages/details',{package})
-}))
-
-app.delete('/addys/:addyId/packages/:packageId', catchAsync(async (req,res,next) => {
-    const {packageId, addyId} = req.params;
-    const package = await Package.findByIdAndDelete(packageId)
-    const addy = await Addy.findByIdAndUpdate(addyId, {$pull: {packages: packageId}}).populate('packages')
-    // console.log('package deleted: ' + package)
-    res.render('addys/details', {addy})
-
-}))
-
-// show all addys
-app.get('/addys', catchAsync(async (req, res, next) => {
-    const addys = await Addy.find({})
-    if (!addys) {
-        throw new ExpressError('could not retreive any addys', 404)
-    }
-    res.render('addys/index', { addys });
-}))
-
 app.get('/reshipper', catchAsync(async(req,res, next) => {
     res.render('reshipper')
-}))
-
-app.get('/addys/:id/packages/new', (req,res) => {
-    const {id} = req.params
-    res.render('packages/new', {id})
-})
-
-app.post('/addys/:id/packages', catchAsync(async(req,res,next) => {
-    const {id} = req.params
-    const addy = await Addy.findById(id).populate('packages')
-    const package = new Package(req.body.package)
-    await addy.packages.push(package)
-    package.addy = addy;
-    await addy.save()
-    await package.save()
-    console.log('NEW PACKAGE')
-    console.log(package)
-    res.render('addys/details', {addy})
-}))
-
-
-// delete
-app.delete('/addys/:id', catchAsync(async (req, res, next) => {
-
-    const { id } = req.params;
-    const addy = await Addy.findByIdAndDelete(id)
-    if (!addy) {
-        throw new ExpressError('no addy with that id', 404)
-    }
-    res.redirect('/addys')
-}))
-
-
-
-//new addy form
-app.get('/addys/new', (req, res) => {
-    res.render('addys/new')
-})
-
-app.put('/addys', validateAddy, catchAsync(async (req, res, next) => {
-    const addy = new Addy(req.body.addy)
-    await addy.save()
-    console.log('NEW DOCUMENT')
-    console.log(addy)
-    res.redirect(`/addys/${addy._id}`)
-}))
-
-
-
-// show details for specific addy
-app.get('/addys/:id', catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const addy = await Addy.findById(id).populate('reviews').populate('packages')
-    console.log('THE ADDY: '+ addy)
-    if (!addy) {
-        throw new ExpressError('No Addy with that ID', 404)
-    }
-    res.render('addys/details', { addy })
-}))
-
-app.patch('/addys/:id', validateAddy, catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const { title, city } = req.body.addy;
-    const addy = await Addy.findById(id)
-    if (!addy) {
-        throw new ExpressError('no addy with that id', 404)
-    }
-    addy.title = title;
-    addy.city = city;
-    addy.save()
-    console.log(title, city, id, addy)
-    res.render('addys/details', { addy })
-}))
-
-app.get('/addys/:id/edit', catchAsync(async (req, res, next) => {
-    const { id } = req.params;
-    const addy = await Addy.findById(id)
-    if (!addy) {
-        throw new ExpressError('no addy with that id', 404)
-    }
-    res.render('addys/edit', { addy })
 }))
 
 app.use((err, req, res, next) => {
@@ -226,17 +94,15 @@ app.use((err, req, res, next) => {
     console.log('MESSAGE: ' + message)
     param = {message}
     res.status(status).render('error', {param})
-
 })
 
-app.all('*', (req,res) => {
-    res.status(404).render('notfound')
-})
+// app.all('*', (req,res) => {
+//     res.status(404).render('notfound')
+// })
 
 app.use((req, res) => {
     res.status(404).render('notfound')
 })
-
 
 const port = process.env.PORT || 3001
 app.listen(port, () => {

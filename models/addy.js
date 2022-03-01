@@ -27,7 +27,6 @@ const addySchema = new Schema({
 addySchema.post('findOneAndDelete', async function(addy) {
     if (addy.packages.length) {
         const res = await Package.deleteMany({_id: {$in : addy.packages}})
-        console.log(res)
     }
     if (addy.reviews.length) {
         const res = await Review.deleteMany({_id: {$in: addy.reviews}})
@@ -38,6 +37,9 @@ addySchema.virtual('totalReviews').get(function() {
     return this.reviews.length;
 })
 addySchema.virtual('avgRating').get(function() {
+    if (this.reviews.length==0){
+        return 0;
+    }
     let i = 0
     for (let r of this.reviews) {
         i+=r.rating;
@@ -48,7 +50,6 @@ addySchema.virtual('avgRating').get(function() {
 addySchema.virtual('totalRating').get(function() {
     let one=0,two=0,three=0,four=0,five = 0;
     for (let r of this.reviews) {
-        console.log(r.rating);
         switch (r.rating){
             case 1:
                 one = 1;
