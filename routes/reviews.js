@@ -3,36 +3,16 @@ const Addy = require('../models/addy')
 const Review = require('../models/review')
 const Package = require('../models/package')
 const {validateReview, validateAddy} = require('../utils/validations')
-const {isLoggedIn} = require('../utils/middleware')
+const {isLoggedIn, isAuthor} = require('../utils/middleware')
+const reviews = require('../controllers/reviews')
 
 const catchAsync = require('../utils/catchAsync')
 const router = express.Router({mergeParams: true});
 
-router.get('/new', isLoggedIn, async (req,res) => {
-    const {addyId} = req.params;
-    console.log(addyId)
-    const addy = await Addy.findById(addyId);
-    res.render('reviews/new', {addy})
-})
+router.get('/new', isLoggedIn, reviews.renderNewForm)
 
-router.post('/', isLoggedIn, validateReview, async (req,res) => {
-    const addy = await Addy.findById(req.params.addyId);
-    const review = new Review(req.body.review)
-    console.log('NEW REVIEW')
-    console.log(review)
-    addy.reviews.push(review)
-    await review.save()
-    await addy.save();
-    req.flash('success','Posted review')
-    res.redirect(`/addys/${addy._id}/`)
-})
+router.post('/', isLoggedIn, validateReview, reviews.createReview)
 
-router.delete('/:reviewId', isLoggedIn, catchAsync(async(req,res) => {
-    const {addyId, reviewId} = req.params;
-    await Review.findByIdAndDelete(reviewId);
-    await Addy.findByIdAndUpdate(addyId,{$pull: {reviews: reviewId}})
-    req.flash('success','Deleted review')
-    res.redirect(`/addys/${addyId}/`)
-}))
+router.delete('/:reviewId', isAuthor, reviews.deleteReview)
 
 module.exports = router;

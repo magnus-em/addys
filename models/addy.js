@@ -10,6 +10,10 @@ const addySchema = new Schema({
     city: String,
     state: String,
     zip: String,
+    forwarder: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     packages: [
         {
             type: Schema.Types.ObjectId, 

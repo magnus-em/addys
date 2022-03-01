@@ -15,32 +15,32 @@
       <!-- List Striped -->
       <ul class="list-group list-group-lg">
 
-        <% for (let a of addys) { %>
+        <% for (let i=addys.length-1; i>=0;i--) { %>
           <li class="list-group-item">
             <div class="row">
               <div class="col-sm-4 mb-2 mb-sm-0">
                 <span class="h6">
-                  <%= a.address1 %>
+                  <%= addys[i].address1 %>
                 </span>
               </div>
               <!-- End Col -->
 
               <div class="col-sm-2 mb-2 mb-sm-0">
                 <span>
-                  <%= a.city + ', ' + a.state %>
+                  <%= addys[i].city + ', ' + addys[i].state %>
                 </span>
               </div>
               <!-- End Col -->
 
               <div class="col-sm-4 mb-2 mb-sm-0">
                 <span>
-                  Packages: <b><%= a.packages.length %></b>
+                  Packages: <b><%= addys[i].packages.length %></b>
                 </span>
               </div>
               <!-- End Col -->
 
               <div class="col-sm-2 text-sm-end">
-                <a href="/addys/<%= a._id %> ">Details <i class="bi-chevron-right small ms-1 small ms-1"></i></a>
+                <a href="/addys/<%= addys[i]._id %> ">Details <i class="bi-chevron-right small ms-1 small ms-1"></i></a>
               </div>
               <!-- End Col -->
             </div>

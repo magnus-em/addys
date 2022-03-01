@@ -1,5 +1,6 @@
 const mongoose  = require('mongoose');
 const Addy = require('../models/addy')
+const Review = require('../models/review')
 const cities = require('./cities')
 const titles = require('./seedHelpers')
 const addresses = require('./addresses.json').addresses
@@ -21,15 +22,27 @@ const seedDb = async () => {
     for (let i=0;i<20;i++) {
         const a = addresses[Math.floor(Math.random() * addresses.length)]
         const c = new Addy({
+            forwarder: '621db3ad79ddb92f6f25da8b',
             address1: a.address1,
             city: a.city,
             state: a.state,
             zip: a.postalCode
         })
         console.log(c.address1)
-        c.save()
+        await c.save()
     }
-
+    console.log('Done')
+    process.exit()
 }
 
-seedDb();
+const clearReviews = async () => {
+    await Review.deleteMany({})
+    console.log('Done')
+    process.exit()
+}
+
+clearReviews();
+// seedDb();
+
+
+
