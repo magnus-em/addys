@@ -104,11 +104,17 @@
                     </li>
                     <!-- End Blog -->
 
+                    <% if(!user) { %> 
                      <!-- Button -->
                      <li class="nav-item">
-                         <a class="btn btn-primary btn-transition" href="/users/login">Log in</a>
+                         <a class="btn btn-primary btn-transition" href="/login">Log in</a>
                      </li>
                      <!-- End Button -->
+                     <% } else { %> 
+                        <li class="nav-item">
+                            <a class="btn btn-outline-primary btn-transition" href="/logout">Log out</a>
+                        </li>
+                    <% } %> 
                  </ul>
              </div>
          </div>

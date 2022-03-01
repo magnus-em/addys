@@ -3,12 +3,13 @@ const Addy = require('../models/addy')
 const Review = require('../models/review')
 const Package = require('../models/package')
 const {validateReview, validateAddy} = require('../utils/validations')
+const {isLoggedIn} = require('../utils/middleware')
 const catchAsync = require('../utils/catchAsync')
 const router = express.Router();
 
 
 //post new package tied to specific addy
-router.post('/addys/:id/packages', catchAsync(async(req,res,next) => {
+router.post('/addys/:id/packages', isLoggedIn, catchAsync(async(req,res,next) => {
     const {id} = req.params
     const addy = await Addy.findById(id).populate('packages')
     const package = new Package(req.body.package)
@@ -43,7 +44,7 @@ router.get('/packages/:id',catchAsync(async (req,res,next) => {
 }))
 
 //delete package under specific addy
-router.delete('/addys/:addyId/packages/:packageId', catchAsync(async (req,res,next) => {
+router.delete('/addys/:addyId/packages/:packageId', isLoggedIn, catchAsync(async (req,res,next) => {
     const {packageId, addyId} = req.params;
     const package = await Package.findByIdAndDelete(packageId)
     const addy = await Addy.findByIdAndUpdate(addyId, {$pull: {packages: packageId}}).populate('packages').populate('reviews')
@@ -52,7 +53,7 @@ router.delete('/addys/:addyId/packages/:packageId', catchAsync(async (req,res,ne
 }))
 
 // get form to create new package tied to addy
-router.get('/addys/:id/packages/new', (req,res) => {
+router.get('/addys/:id/packages/new', isLoggedIn, (req,res) => {
     const {id} = req.params
     res.render('packages/new', {id})
 })

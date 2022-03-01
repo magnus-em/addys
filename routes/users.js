@@ -1,70 +1,54 @@
 const express = require("express");
 const User = require('../models/user')
 const catchAsync = require('../utils/catchAsync')
-const bcrypt = require('bcryptjs')
+const passport = require('passport')
 
 const router = express.Router();
 
 
 
-router.get('/users/login', catchAsync(async(req,res,next) => {
-    if (req.session.user_id) {
-        return res.redirect('/users/info')
-    }
+router.get('/login', catchAsync(async(req,res,next) => {
     res.render('users/login')
 }))
 
-router.get('/users/signup',(req,res) => {
-    res.render('users/signup')
+router.get('/register',(req,res) => {
+    res.render('users/register')
 })
 
 
-
-router.post('/logout', (req,res) => {
-    req.session.user_id = null;
-    res.redirect('/')
-})
-
-router.post('/users/signup', async (req,res) => {
-    const {email,password} = req.body
-    const hash = await bcrypt.hash(password, 12)
-    const user = new User({
-        email,
-        password: hash
-    })
-    await user.save();
-    req.session.user_id = user._id;
-    req.flash('success',`Saved user to DB: email: ${email} password: ${hash}`)
-    res.redirect('/users/info')
-    // res.send(`${email}   ${hash}`)
-})
-
-router.post('/users/login',async (req,res) => {
-    const {email,password} = req.body
-    const user = await User.findOne({email});
-    if (!user) {
-        req.flash('error', 'Info does not match a user')
-        res.redirect('/users/login')    
+router.post('/register', catchAsync(async (req,res,next) => {
+    try {
+        const {email,username,password} = req.body
+        const user = new User({email,username})
+        const registeredUser = await User.register(user, password)
+        req.login(registeredUser, err => {
+            if (err) return next(err);
+        })
+        req.flash('success', 'Account created')
+        res.redirect('/register')
+    } catch (err) {
+        req.flash('error',err.message)
+        res.redirect('/register')
     }
-    if (await bcrypt.compare(password, user.password)){
-        req.flash('success','Logged in')
-        req.session.user_id = user._id
-        res.redirect('/users/info')
-    } else {
-        req.flash('error', 'Info does not match a user')
-        res.redirect('/users/login')
-    }
+}))
+
+router.post('/login', passport.authenticate('local',{failureFlash: true, failureRedirect: '/login'}),async (req,res) => {
+    // const {email,password} = req.body
+    req.flash('success', 'welcome back')
+    const redirectUrl = req.session.returnTo || '/addys'
+    delete req.session.returnTo
+    res.redirect(redirectUrl)
 })
 
-router.use((req,res,next) => {
-    if (req.session.user_id) {
-        return next()
-    }
-    res.redirect('users/login')
-})
 
 router.get('/users/info',(req,res) => {
     res.render('users/info')
+})
+
+router.get('/logout',(req,res) => {
+    req.logout()
+    req.flash('success','Logged out')
+    res.redirect('/login')
 })
 
 module.exports = router;

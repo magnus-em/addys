@@ -13,14 +13,24 @@
       <!-- End Heading -->
   
       <!-- Form -->
-      <form action="/users/signup" method="post" class="js-validate needs-validation" novalidate>
+      <form action="/register" method="post" class="js-validate needs-validation" novalidate>
+
+         <!-- Form -->
+         <div class="mb-3">
+          <label class="form-label" for="username">Your username</label>
+          <input type="text" class="form-control form-control-lg" name="username" id="username" placeholder="Has to be unique" aria-label="username" required>
+          <span class="invalid-feedback">Please enter a valid username.</span>
+        </div>
+        <!-- End Form -->
+
         <!-- Form -->
         <div class="mb-3">
           <label class="form-label" for="signupSimpleSignupEmail">Your email</label>
-          <input type="email" class="form-control form-control-lg" name="email" id="signupSimpleSignupEmail" placeholder="email@site.com" aria-label="email@site.com" required>
+          <input type="email" class="form-control form-control-lg" name="email" id="signupSimpleSignupEmail" placeholder="We won't spam" aria-label="email@site.com" required>
           <span class="invalid-feedback">Please enter a valid email address.</span>
         </div>
         <!-- End Form -->
+        
   
         <!-- Form -->
         <div class="mb-3">
@@ -30,8 +40,8 @@
             <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupSimpleSignupPassword" placeholder="8+ characters required" aria-label="8+ characters required" required
                     data-hs-toggle-password-options='{
                        "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
-                       "defaultClass": "bi-eye-slash",
-                       "showClass": "bi-eye",
+                       "defaultClass": "bi-eye",
+                       "showClass": "bi-eye-slash",
                        "classChangeTarget": ".js-toggle-passowrd-show-icon-1"
                      }'>
             <a class="js-toggle-password-target-1 input-group-append input-group-text" href="javascript:;">
@@ -52,8 +62,8 @@
                    data-hs-validation-equal-field="#signupSimpleSignupPassword"
                     data-hs-toggle-password-options='{
                      "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
-                     "defaultClass": "bi-eye-slash",
-                     "showClass": "bi-eye",
+                     "defaultClass": "bi-eye",
+                     "showClass": "bi-eye-slash",
                      "classChangeTarget": ".js-toggle-passowrd-show-icon-2"
                    }'>
              <a class="js-toggle-password-target-2 input-group-append input-group-text" href="javascript:;">
@@ -61,7 +71,7 @@
             </a>
           </div>
   
-          <span class="invalid-feedback">Password does not match the confirm password.</span>
+          <span class="invalid-feedback">Passwords don't match.</span>
         </div>
         <!-- End Form -->
   
@@ -78,7 +88,7 @@
         </div>
   
         <div class="text-center">
-          <p>Already have an account? <a class="link" href="/users/login">Log in here</a></p>
+          <p>Already have an account? <a class="link" href="/login">Log in here</a></p>
         </div>
       </form>
       <!-- End Form -->

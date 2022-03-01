@@ -1,6 +1,7 @@
 const express = require("express");
 const Addy = require('../models/addy')
 const {validateAddy} = require('../utils/validations')
+const {isLoggedIn} = require('../utils/middleware')
 const catchAsync = require('../utils/catchAsync')
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.delete('/:id', catchAsync(async (req, res, next) => {
 }))
 
 //get new addy form
-router.get('/new', (req, res) => {
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('addys/new')
 })
 
