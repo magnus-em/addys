@@ -14,18 +14,11 @@ router.route('/')
 //get new addy form
 router.get('/new', isLoggedIn, addys.renderNewform)
 
+router.route('/:id')
+    .get(addys.showAddy)
+    .patch(isForwarder, validateAddy, addys.updateAddy)
+    .delete(isForwarder, addys.deleteAddy)
 
-
-// show details for specific addy
-router.get('/:id', addys.showAddy)
-
-//update specific addy
-router.patch('/:id', isForwarder, validateAddy, addys.updateAddy)
-
-// delete specific addy
-router.delete('/:id', isForwarder, addys.deleteAddy)
-
-//get edit form for specific addy
 router.get('/:id/edit', isForwarder, addys.renderEditForm)
 
 module.exports = router;
