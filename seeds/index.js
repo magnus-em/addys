@@ -22,7 +22,7 @@ const seedDb = async () => {
     for (let i=0;i<20;i++) {
         const a = addresses[Math.floor(Math.random() * addresses.length)]
         const c = new Addy({
-            forwarder: '621db3ad79ddb92f6f25da8b',
+            forwarder: '621fc7972853265f908b691b',
             address1: a.address1,
             city: a.city,
             state: a.state,
@@ -32,17 +32,15 @@ const seedDb = async () => {
         await c.save()
     }
     console.log('Done')
-    process.exit()
 }
 
 const clearReviews = async () => {
     await Review.deleteMany({})
     console.log('Done')
-    process.exit()
 }
 
 clearReviews();
-// seedDb();
+seedDb();
 
 
 

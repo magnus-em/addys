@@ -20,5 +20,7 @@ router.get('/logout', users.logout)
 
 router.get('/users/info',users.showUser)
 
+router.get('/inbox', users.inbox)
+
 
 module.exports = router;

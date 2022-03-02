@@ -112,7 +112,7 @@
         <div class="col-lg-9">
           <div class="row align-items-center mb-5">
             <div class="col-sm mb-3 mb-sm-0">
-              <h3 class="mb-0"><%=addys.length%> addys in the <span class="fw-normal">US</span></h3>
+              <h3 class="mb-0"><%=addys.length%> addys <span class="fw-normal">in the US</span></h3>
             </div>
 
             <div class="col-sm-auto">
@@ -137,9 +137,9 @@
 
             <div class="col mb-5">
               <!-- Card -->
-              <div class="card card-bordered h-100">
+              <div class="card card-bordered card-transition h-100">
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body" href="/addys/<%= addys[i]._id %>">
                   <div class="row mb-3">
                     <div class="col">
                       <!-- Media -->

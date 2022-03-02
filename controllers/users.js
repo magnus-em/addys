@@ -44,3 +44,7 @@ module.exports.logout = (req,res) => {
     req.flash('success','Logged out')
     res.redirect('/login')
 }
+
+module.exports.inbox = (req,res) => {
+    res.render('users/inbox')
+}
