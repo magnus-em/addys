@@ -58,7 +58,9 @@ passport.deserializeUser(User.deserializeUser())
 
 
 //specify static asset path
-app.use('/public', express.static('public'));
+// app.use('/public', express.static('public'));
+app.use('/public', express.static(path.join(__dirname, 'public')))
+
 
 //method override for html forms
 app.use(methodOverride('_method'));
