@@ -14,6 +14,8 @@ router.route('/')
 //get new addy form
 router.get('/new', isLoggedIn, addys.renderNewform)
 
+
+
 router.route('/:id')
     .get(addys.showAddy)
     .patch(isForwarder, validateAddy, addys.updateAddy)

@@ -1,54 +1,270 @@
 <%- layout('layouts/boilerplate') %>
-  <div class="container content-space-2 content-space-lg-3">
-    <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
-      <!-- Heading -->
-      <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
-        <h2 class="h1">All Addys</h2>
-      </div>
-      <%- include('../partials/flash') %> 
-      <!-- End Heading -->
-      <form action="/addys/new">
-        <div class="d-grid mb-3">
-          <button type="submit" class="btn btn-primary btn-lg">New addy</button>
-        </div>
-      </form>
-      <!-- List Striped -->
-      <ul class="list-group list-group-lg">
+<main id="content" role="main" class="content-space-t-2">
+    <!-- Hero -->
+    <div class="gradient-x-three-sm-primary">
+      <div class="container content-space-3">
+        <form  data-form-type="search">
+          <!-- Input Card -->
+          <div class="input-card input-card-sm mb-3">
+            
 
-        <% for (let i=addys.length-1; i>=0;i--) { %>
-          <li class="list-group-item">
-            <div class="row">
-              <div class="col-sm-4 mb-2 mb-sm-0">
-                <span class="h6">
-                  <%= addys[i].address1 %>
+            <div class="input-card-form">
+              <label for="cityForm" class="form-label visually-hidden">City, state, or zip</label>
+              <div class="input-group input-group-merge">
+                <span class="input-group-prepend input-group-text">
+                  <i class="bi-geo-alt"></i>
                 </span>
-              </div>
-              <!-- End Col -->
-
-              <div class="col-sm-2 mb-2 mb-sm-0">
-                <span>
-                  <%= addys[i].city + ', ' + addys[i].state %>
-                </span>
-              </div>
-              <!-- End Col -->
-
-              <div class="col-sm-4 mb-2 mb-sm-0">
-                <span>
-                  Packages: <b><%= addys[i].packages.length %></b>
-                </span>
-              </div>
-              <!-- End Col -->
-
-              <div class="col-sm-2 text-sm-end">
-                <a href="/addys/<%= addys[i]._id %> ">Details <i class="bi-chevron-right small ms-1 small ms-1"></i></a>
-              </div>
-              <!-- End Col -->
+                <input type="text" class="form-control" id="cityForm" placeholder="City, state, or zip" aria-label="City, state, or zip" data-dashlane-rid="426871091e83e400" data-kwimpalastatus="alive" data-kwimpalaid="1646199738355-1" data-form-type="address,city,zip,query">
+                </div>
             </div>
-            <!-- End Row -->
-          </li>
-          <% }%>
-      </ul>
-      <!-- End List Striped -->
+            <button type="button" class="btn btn-primary" data-form-type="action,search">Search</button>
+          </div>
+          <!-- End Input Card -->
+        </form>
+
+        <div class="row align-items-center">
+          <div class="col-md-auto mb-3 mb-lg-0">
+            <h6 class="mb-1">Limit search to:</h6>
+          </div>
+          <!-- End Col -->
+
+          <div class="col-md mb-3 mb-lg-0">
+            <!-- Check -->
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="jobSearchToCheckbox1" value="option1" checked="">
+              <label class="form-check-label" for="jobSearchToCheckbox1">Available</label>
+            </div>
+            <!-- End Check -->
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="jobSearchToCheckbox2" value="option1" checked="">
+              <label class="form-check-label" for="jobSearchToCheckbox2">Full</label>
+            </div>
+          </div>
+
+          <div class="col-md-auto">
+            <!-- Switch -->
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="remoteOnlySwitch">
+              <label class="form-check-label" for="remoteOnlySwitch">US only</label>
+            </div>
+            <!-- End Switch -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
     </div>
-  </div>
-  <!-- End Careers -->
+    <!-- End Hero -->
+
+    <!-- Card Grid -->
+    <div class="container content-space-t-1 content-space-t-md-2 content-space-b-2 content-space-b-lg-3">
+      <div class="row">
+        <div class="col-lg-3 order-lg-2">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg mb-5">
+            <!-- Navbar Toggle -->
+            <div class="d-grid">
+              <button type="button" class="navbar-toggler btn btn-white mb-3" data-bs-toggle="collapse" data-bs-target="#navbarVerticalNavMenu" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navbarVerticalNavMenu">
+                <span class="d-flex justify-content-between align-items-center">
+                  <span class="text-dark">Filters</span>
+
+                  <span class="navbar-toggler-default">
+                    <i class="bi-list"></i>
+                  </span>
+
+                  <span class="navbar-toggler-toggled">
+                    <i class="bi-x"></i>
+                  </span>
+                </span>
+              </button>
+            </div>
+            <!-- End Navbar Toggle -->
+
+            <!-- Navbar Collapse -->
+            <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
+              <div class="w-100">
+                <!-- Form -->
+                <form>
+                  <div class="mb-5">
+                    <h5 class="mb-3">Distance</h5>
+
+                    <p class="form-text">Within <span id="rangeSliderDistance">25</span> miles of <span class="fw-semi-bold text-dark">Los Angeles</span></p>
+
+                    <!-- Range Slider -->
+                    <div class="range-slider">
+                      <div class="js-nouislider noUi-target noUi-ltr noUi-horizontal noUi-txt-dir-ltr" data-hs-nouislider-options="{
+                               &quot;range&quot;: {
+                                 &quot;min&quot;: 0,
+                                 &quot;max&quot;: 100
+                               },
+                               &quot;connect&quot;: [true, false],
+                               &quot;start&quot;: 25,
+                               &quot;result_min_target_el&quot;: &quot;#rangeSliderDistance&quot;
+                             }">
+                      <div class="noUi-base"><div class="noUi-connects"><div class="noUi-connect" style="transform: translate(0%, 0px) scale(0.25, 1);"></div></div><div class="noUi-origin" style="transform: translate(-75%, 0px); z-index: 4;"><div class="noUi-handle noUi-handle-lower" data-handle="0" tabindex="0" role="slider" aria-orientation="horizontal" aria-valuemin="0.0" aria-valuemax="100.0" aria-valuenow="25.0" aria-valuetext="25.00"><div class="noUi-touch-area"></div></div></div></div></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-5">
+                      <span class="text-body">5 miles</span>
+                      <span class="text-body">100 miles</span>
+                    </div>
+                    <!-- End Range Slider -->
+                  </div>
+
+                  <div class="mb-5">
+                    <h5 class="mb-3">Max monthly forwards</h5>
+
+                    <!-- Select -->
+                    <select class="form-select form-select-sm">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="15">15</option>
+                      <option value="20" selected="">20</option>
+                      <option value="30">30</option>
+                      <option value="50">50</option>
+                    </select>
+                    <!-- End Select -->
+                  </div>
+
+                  <div class="d-grid">
+                    <button type="button" class="btn btn-white btn-transition">Clear all</button>
+                  </div>
+                </form>
+                <!-- End Form -->
+              </div>
+            </div>
+            <!-- End Navbar Collapse -->
+          </div>
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="row align-items-center mb-5">
+            <div class="col-sm mb-3 mb-sm-0">
+              <h3 class="mb-0"><%=addys.length%> addys in <span class="fw-normal">US</span></h3>
+            </div>
+
+            <div class="col-sm-auto">
+              <div class="d-sm-flex justify-content-sm-end align-items-center">
+                <!-- Select -->
+                <div class="mb-2 mb-sm-0 me-sm-2">
+                  <select class="form-select form-select-sm">
+                    <option value="Relevance" selected="">Distance</option>
+                    <option value="mostRecent">Most popular</option>
+                  </select>
+                </div>
+                <!-- End Select -->
+
+              </div>
+            </div>
+          </div>
+          <!-- End Row -->
+
+          <div class="row row-cols-1 row-cols-sm-2 mb-5">
+
+            <% for (let i=addys.length-1; i>=0;i--) { %>
+
+            <div class="col mb-5">
+              <!-- Card -->
+              <div class="card card-bordered h-100">
+                <!-- Card Body -->
+                <div class="card-body">
+                  <div class="row mb-3">
+                    <div class="col">
+                      <!-- Media -->
+                      <div class="d-flex align-items-center">
+                        
+
+                        <div class="flex-grow-1">
+                          <h6 class="card-title">
+                            <i class="bi-geo-alt"></i>
+                            <a class="text-dark" href="/addys/<%= addys[i]._id %>"><%= addys[i].city %>, <%= addys[i].state %></a>
+                          </h6>
+                        </div>
+                      </div>
+                      <!-- End Media -->
+                    </div>
+                    <!-- End Col -->
+
+                    <div class="col-auto">
+                      <span class="badge bg-soft-info text-info me-2">
+                        <span class="legend-indicator bg-info"></span>Available
+                      </span>
+                      <!-- Checkbbox Bookmark -->
+                      <!-- <div class="form-check form-check-bookmark">
+                        <input class="form-check-input" type="checkbox" value="" id="jobsCardBookmarkCheck1">
+                        <label class="form-check-label" for="jobsCardBookmarkCheck1">
+                          <span class="form-check-bookmark-default" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Save this job">
+                            <i class="bi-star"></i>
+                          </span>
+                          <span class="form-check-bookmark-active" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Saved">
+                            <i class="bi-star-fill"></i>
+                          </span>
+                        </label>
+                      </div> -->
+                      <!-- End Checkbbox Bookmark -->
+                    </div>
+                    <!-- End Col -->
+                  </div>
+                  <!-- End Row -->
+
+                  <h3 class="card-title">
+                    <a class="text-dark" href="/addys/<%= addys[i]._id %>"><%= addys[i].address1 %> </a>
+                  </h3>
+
+                  <span class="d-block small text-body mb-1">Starting at $15 monthly</span>
+
+                  <!-- <span class="badge bg-soft-info text-info me-2">
+                    <span class="legend-indicator bg-info"></span>Available
+                  </span> -->
+                </div>
+                <!-- End Card Body -->
+
+                <!-- Card Footer -->
+                <div class="card-footer pt-0">
+                  <ul class="list-inline list-separator small text-body">
+                    <li class="list-inline-item">4 reviews</li>
+                    <li class="list-inline-item">4.8 stars</li>
+                  </ul>
+                </div>
+                <!-- End Card Footer -->
+              </div>
+              <!-- End Card -->
+            </div>
+            <!-- End Col -->
+            <% } %> 
+
+          </div>
+
+          <!-- Pagination -->
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">
+                    <i class="bi-chevron-double-left small"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="page-item active"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+              <li class="page-item"><a class="page-link" href="#">5</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">
+                    <i class="bi-chevron-double-right small"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- End Pagination -->
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Card Grid -->
+  </main>

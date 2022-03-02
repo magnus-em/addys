@@ -86,6 +86,7 @@ app.use('/', userRoutes)
 app.get('/', (req, res) => {
     res.render('home');
 })
+
 app.get('/index', (req, res) => {
     res.render('home');
 })
