@@ -61,8 +61,12 @@ passport.deserializeUser(User.deserializeUser())
 // app.use('/public', express.static('public'));
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
+// put this in staticfiles.config
+// option_settings:
+//   aws:elasticbeanstalk:environment:proxy:staticfiles:
+//     /public: /public
+// //method override for html forms
 
-//method override for html forms
 app.use(methodOverride('_method'));
 
 //save any req.flash messages to res.locals (local variables available to views)
