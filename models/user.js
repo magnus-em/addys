@@ -13,7 +13,11 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId, 
             ref: 'Package'
         }
-    ]
+    ],
+    addy: {
+        type: Schema.Types.ObjectId,
+        ref: 'Addy'
+    }
 })
 
 userSchema.plugin(passportLocalMongoose);

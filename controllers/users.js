@@ -1,36 +1,53 @@
 const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user')
+const Package = require('../models/package')
+const Addy = require('../models/addy')
 const express = require("express");
-const passport = require('passport')
+const passport = require('passport');
+const { use } = require('passport');
 
 
 module.exports.renderLoginForm = async(req,res) => {
     res.render('users/login')
 }
 
-module.exports.renderRegisterForm = (req,res) => {
-    res.render('users/register')
-}
+module.exports.renderRegisterForm = catchAsync(async (req,res) => {
+    console.log(req.query.addy)
+    if (!req.query.addy) {
+        return res.redirect('/addys')
+    }
+    const addy = await Addy.findById(req.query.addy)
+    res.render('users/register', {addy})
+})
 
 module.exports.createUser = catchAsync(async (req,res,next) => {
     try {
+        if (req.body.invite != 69420) {
+            throw new Error('Invalid invite code')
+        }
         const {email,username,password} = req.body
-        const user = new User({email,username})
+        const addy = await Addy.findById(req.body.addy).populate('users')
+        const user = new User({email,username,addy})
+        await addy.users.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
+        await addy.save()
         const registeredUser = await User.register(user, password)
         req.login(registeredUser, err => {
             if (err) return next(err);
         })
         req.flash('success', 'Account created')
-        res.redirect('/register')
+        console.log('NEW USER CREATED')
+        console.log(user)
+        res.redirect('/user/inbox')
     } catch (err) {
         req.flash('error',err.message)
-        res.redirect('/register')
+        console.log('in the error handler', err.stack)
+        res.redirect(`/register?addy=${req.body.addy}`)
     }
 })
 
 module.exports.login = catchAsync(async (req,res) => {
     req.flash('success', 'Logged in')
-    const redirectUrl = req.session.returnTo || '/addys'
+    const redirectUrl = req.session.returnTo || '/user/inbox'
     delete req.session.returnTo
     res.redirect(redirectUrl)
 })
@@ -45,6 +62,27 @@ module.exports.logout = (req,res) => {
     res.redirect('/login')
 }
 
-module.exports.inbox = (req,res) => {
-    res.render('users/inbox')
+module.exports.inbox = catchAsync((async (req,res) => {
+    console.log('USER: ' + req.user)
+    const user = await User.findById(req.user._id).populate('packages').populate('addy');
+    res.render('users/inbox', {user})
+}))
+
+module.exports.uploadForm = (req,res) => {
+    res.render('users/upload')
 }
+
+module.exports.upload = catchAsync(async (req,res) => {
+    const user = await User.findById(req.user._id).populate('packages');
+    const package = new Package(req.body.package)
+    user.packages.push(package)
+    package.user = user;
+    package.addy = user.addy
+    package.images = req.files.map(f => ({url: f.path, filename: f.filename}))
+    await package.save()
+    await user.save()
+    console.log('NEW PACKAGE')
+    console.log(package)
+    res.redirect('/user/inbox')
+
+})

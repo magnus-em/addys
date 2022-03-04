@@ -7,13 +7,18 @@
     <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
       <!-- Heading -->
       <div class="text-center mb-5 mb-md-7">
-        <h1 class="h2">Welcome to Addys</h1>
+        <% if (addy) { %> 
+        <h1 class="h2"><%= addy.address1 %> </h1>
+        <% } %> 
         <p>Fill out the form to get started.</p>
       </div>
       <!-- End Heading -->
   
       <!-- Form -->
       <form action="/register" method="post" class="js-validate needs-validation" novalidate>
+
+        <input name='addy' type='hidden' value='<%= addy._id %>'>
+
 
          <!-- Form -->
          <div class="mb-3">
@@ -72,6 +77,14 @@
           </div>
   
           <span class="invalid-feedback">Passwords don't match.</span>
+        </div>
+        <!-- End Form -->
+
+        <!-- Form -->
+        <div class="mb-3">
+          <label class="form-label" for="invite">Invite code</label>
+          <input type="text" class="form-control form-control-lg" name="invite" id="invite" placeholder="Unique" aria-label="email@site.com" required>
+          <span class="invalid-feedback">Required</span>
         </div>
         <!-- End Form -->
   

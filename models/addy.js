@@ -25,6 +25,12 @@ const addySchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Review'
         }
+    ],
+    users: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
     ]
 })
 

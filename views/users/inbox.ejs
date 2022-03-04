@@ -1,7 +1,21 @@
 <%- include('../partials/head') %>
 <%- include('../partials/navbar_user') %> 
 
-<div class="container content-space-b-2 content-space-b-lg-3 content-space-t-4">
+<div class="container content-space-b-2 content-space-b-lg-3 content-space-t-3">
+  <div class="border-top border-bottom mb-5">
+    <div class="container py-3">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+          <li class="breadcrumb-item">
+            <a href="../demo-app-marketplace/index.html"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Inbox</li>
+        </ol>
+      </nav>
+      <!-- End Breadcrumb -->
+    </div>
+  </div>
     <div class="row col-lg-divider">
       <div class="col-lg-3">
         <!-- Navbar -->
@@ -61,7 +75,7 @@
 
           <div class="d-grid gap-5 mb-10">
 
-            <% for (let p of addy.packages) { %> 
+            <% for (let p of user.packages) { %> 
             <!-- Card -->
             <div class="card card-bordered ">
               <div class="card-body">

@@ -268,14 +268,14 @@
                                                 alt="Image Description">
                                         </div>
                                         <div class="flex-grow-1 ms-3">
-                                            <h4 class="card-title">Open mailbox</h4>
+                                            <h4 class="card-title">Choose this mailbox</h4>
                                         </div>
                                     </div>
                                     <!-- End Media -->
 
                                     <!-- Form -->
-                                    <form data-dashlane-rid="76e2bf4e0ca33cdf" data-form-type="contact">
-                                        <select class="form-select mb-2" data-form-type="other">
+                                    <form action="/register">
+                                        <select class="form-select mb-2">
                                             <option selected="" disabled="">Est. package volume</option>
                                             <option value="aboutProperty1">1-5</option>
                                             <option value="aboutProperty2">5-10</option>
@@ -284,14 +284,14 @@
                                             <option value="aboutProperty3">30+</option>
                                         </select>
 
+                                        <input name='addy' type='hidden' value='<%= addy._id %>'>
+
 
 
 
 
                                         <div class="d-grid">
-                                            <button type="button" class="btn btn-primary"
-                                                data-dashlane-rid="4d2a382ea5eb1a43" data-dashlane-label="true"
-                                                data-form-type="action">Get started</button>
+                                            <button type="submit" class="btn btn-primary">Sign up</button>
                                         </div>
                                     </form>
                                     <!-- End Form -->

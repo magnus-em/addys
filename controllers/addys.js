@@ -57,6 +57,8 @@ module.exports.showAddy = catchAsync(async (req, res, next) => {
         req.flash('error','No Addy with that ID')
         return res.redirect('/addys')
     }
+    console.log('SHOW ADDY DETAILS')
+    console.log(addy)
     res.render('addys/details', { addy })
 })
 

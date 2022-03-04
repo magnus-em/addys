@@ -4,6 +4,11 @@ const catchAsync = require('../utils/catchAsync')
 const passport = require('passport')
 const router = express.Router();
 const users = require('../controllers/users')
+const {isLoggedIn} = require('../utils/middleware')
+const multer = require('multer')
+const {storage} = require('../cloudinary')
+const upload = multer({storage})
+
 
 router
 
@@ -20,7 +25,12 @@ router.get('/logout', users.logout)
 
 router.get('/users/info',users.showUser)
 
-router.get('/inbox', users.inbox)
+router.get('/user/inbox', isLoggedIn, users.inbox)
+
+router.route('/user/upload')
+    .get(isLoggedIn, users.uploadForm)
+    .post(isLoggedIn, upload.array('image'), users.upload)
 
 
-module.exports = router;
+
+module.exports = router;   

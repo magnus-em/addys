@@ -1,6 +1,8 @@
 const mongoose  = require('mongoose');
 const Addy = require('../models/addy')
 const Review = require('../models/review')
+const Package = require('../models/package')
+const User = require('../models/user')
 const cities = require('./cities')
 const titles = require('./seedHelpers')
 const addresses = require('./addresses.json').addresses
@@ -31,15 +33,21 @@ const seedDb = async () => {
         console.log(c.address1)
         await c.save()
     }
-    console.log('Done')
+    console.log('Addys deleted and seeded')
 }
 
 const clearReviews = async () => {
     await Review.deleteMany({})
-    console.log('Done')
+    console.log('Reviews deleted')
+}
+
+const clearPackages = async() => {
+    await Package.deleteMany({})
+    console.log('Packages deleted')
 }
 
 clearReviews();
+clearPackages();
 seedDb();
 
 

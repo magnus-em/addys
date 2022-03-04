@@ -95,6 +95,8 @@ app.get('/', (req, res) => {
     res.render('home');
 })
 
+
+
 app.get('/index', (req, res) => {
     res.render('home');
 })
@@ -127,6 +129,7 @@ app.get("/sitemap.xml", function(req, res, next){
 app.use((err, req, res, next) => {
     const { status = 501, message = 'something went very wrong' } = err
     console.log('MESSAGE: ' + message)
+    console.error('STACK: ' + err.stack)
     param = {message}
     res.status(status).render('error', {param})
 })
