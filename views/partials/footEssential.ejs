@@ -7,6 +7,7 @@
 
 <script src="/public/assets/js/hs-show-animation.js"></script>
 <script src="/public/assets/js/hs-header.js"></script>
+<script src="/public/assets/js/hs-file-attach.js"></script>
 
    
 <script src="/public/assets/vendor/hs-go-to/dist/hs-go-to.min.js"></script>
@@ -28,6 +29,7 @@
 
 <script src="/public/assets/js/hs.bs-dropdown.js"></script>
 <script src="/public/assets/js/hs.nouislider.js"></script>
+<script src="/public/assets/js/fslightbox.js"></script>
 
 
 
@@ -61,6 +63,14 @@
     // =======================================================
     HSBsDropdown.init()
   })()
+</script>
+
+<script>
+  (function() {
+    // INITIALIZATION OF FILE ATTACH
+    // =======================================================
+    new HSFileAttach('.js-file-attach')
+  });
 </script>
 
 <!-- JS Plugins Init. -->

@@ -164,6 +164,8 @@
                                             <% if (user && addy.forwarder.equals(user)) {%> 
                                             <div class="col-lg-auto align-self-lg-end text-lg-right">
                                                 <div class="d-flex gap-2">
+                                                     <a href="/addys/<%= addy._id %>/inbox" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">inbox</a>
+
                                                     <a class="btn btn-primary btn-sm"
                                                         href="/addys/<%= addy._id %>/edit">
                                                         <i class="bi-pencil-fill me-1"></i> Edit

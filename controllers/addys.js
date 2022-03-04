@@ -45,7 +45,14 @@ module.exports.showAddy = catchAsync(async (req, res, next) => {
                             populate: {
                                 path: 'author'
                             }
-                        }).populate('packages').populate('forwarder')
+                        })
+                        .populate({
+                            path:'packages',
+                            populate: {
+                                path: 'images'
+                            }
+                        })
+                        .populate('forwarder')
     if (!addy) {
         req.flash('error','No Addy with that ID')
         return res.redirect('/addys')
@@ -77,4 +84,21 @@ module.exports.deleteAddy = catchAsync(async (req, res, next) => {
     await addy.delete()
     req.flash('success','Addy deleted')
     res.redirect('/addys')
+})
+
+module.exports.showInbox = catchAsync(async (req,res) => {
+    const { id } = req.params;
+    const addy = await Addy.findById(id)
+                        .populate({
+                            path:'packages',
+                            populate: {
+                                path: 'images'
+                            }
+                        })
+                        .populate('forwarder')
+    if (!addy) {
+        req.flash('error','No Addy with that ID')
+        return res.redirect('/addys')
+    }
+    res.render('users/inbox', {addy})
 })

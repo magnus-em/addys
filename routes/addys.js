@@ -23,4 +23,6 @@ router.route('/:id')
 
 router.get('/:id/edit', isForwarder, addys.renderEditForm)
 
+router.get('/:id/inbox', addys.showInbox)
+
 module.exports = router;

@@ -7,10 +7,14 @@ const {isLoggedIn} = require('../utils/middleware')
 const catchAsync = require('../utils/catchAsync')
 const router = express.Router();
 const packages = require('../controllers/packages')
+const multer = require('multer')
+const {storage} = require('../cloudinary')
+const upload = multer({storage})
+
 
 
 //post new package tied to specific addy
-router.post('/addys/:id/packages', isLoggedIn, packages.createPackage)
+router.post('/addys/:id/packages', isLoggedIn, upload.array('image'), packages.createPackage)
 
 //get all packages and show all
 router.get('/packages', packages.index)

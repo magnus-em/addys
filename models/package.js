@@ -11,6 +11,20 @@ const packageSchema = new Schema({
         required: [true, 'Package must have a shipper']
     },
     weight: Number,
+    carrier: {
+        type: String,
+        enum : ['USPS','FEDEX','UPS','DHL','ONTRAC'],
+    },
+    length: Number,
+    width: Number,
+    height: Number,
+    uploaded: Date,
+    images: [
+        {
+            url: String,
+            filename: String
+        }  
+    ],
     addy: {type: Schema.Types.ObjectId, ref: 'Addy'},
     user: {type: Schema.Types.ObjectId, ref: 'User'}
 })

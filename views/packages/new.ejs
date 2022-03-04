@@ -14,7 +14,7 @@
     <!-- Body -->
     <div class="card-body">
       <!-- Form -->
-      <form action="/addys/<%= id %>/packages" method="post" class="needs-validation" novalidate>
+      <form action="/addys/<%= id %>/packages" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
        
         <div class="row mb-4">
           <label for="tracking" class="col-sm-3 col-form-label form-label">Tracking</label>
@@ -37,13 +37,33 @@
           </div>
 
           <div class="row mb-4">
-            <label for="weight" class="col-sm-3 col-form-label form-label">Weight</label>
+            <label for="weight" class="col-sm-3 col-form-label form-label">Weight (g)</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" name="package[weight]" id="weight" required>
               <div class="invalid-feedback">Required</div>
               <div class="valid-feedback">Looks good</div>
             </div>
           </div>
+          <div class="row mb-4">
+            <label for="carrier" class="col-sm-3 col-form-label form-label">Carrier</label>
+            <div class="col-sm-9">
+              <select class="form-select mb-2" name="package[carrier]">
+                <option value="USPS">USPS</option>
+                <option value="UPS">UPS</option>
+                <option value="FEDEX">FEDEX</option>
+                <option value="DHL">DHL</option>
+                <option value="ONTRAC">ONTRAC</option>
+            </select>
+          </div>
+
+          <div class="row mb-4">
+            <label for="photo" class="js-file-attach col-sm-3 col-form-label form-label"
+            data-hs-file-attach-options='{
+             "textTarget": "[for=\"customFile\"]"
+            }'>Upload image of box</label>
+                     <input class="form-control" type="file" id="photo" name="image" multiple>
+          </div>
+         
 
         <div class="d-flex justify-content-end gap-3">
           <a class="btn btn-white" href="/addys/<%= id %>">Cancel</a>

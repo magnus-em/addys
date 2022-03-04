@@ -2,6 +2,8 @@ const ExpressError = require('../utils/ExpressError')
 const catchAsync = require('../utils/catchAsync')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
+const multer = require('multer')
+const upload = multer({dest: 'uploads/'})
 
 module.exports.createPackage = catchAsync(async(req,res,next) => {
     const {id} = req.params
@@ -9,6 +11,7 @@ module.exports.createPackage = catchAsync(async(req,res,next) => {
     const package = new Package(req.body.package)
     await addy.packages.push(package)
     package.addy = addy;
+    package.images = req.files.map(f => ({url: f.path, filename: f.filename}))
     await addy.save()
     await package.save()
     console.log('NEW PACKAGE')
@@ -38,7 +41,7 @@ module.exports.showPackage = catchAsync(async (req,res,next) => {
 module.exports.deletePackage = catchAsync(async (req,res,next) => {
     const {packageId, addyId} = req.params;
     const package = await Package.findByIdAndDelete(packageId)
-    const addy = await Addy.findByIdAndUpdate(addyId, {$pull: {packages: packageId}}).populate('packages').populate('reviews')
+    const addy = await Addy.findByIdAndUpdate(addyId, {$pull: {packages: packageId}}).populate('packages').populate('reviews').populate('forwarder')
     // console.log('package deleted: ' + package)
     res.render('addys/details', {addy})
 })
