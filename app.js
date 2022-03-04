@@ -75,6 +75,7 @@ app.use((req,res,next) => {
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error')
     res.locals.user = req.user;
+    res.locals.title = 'Addys: US residential addresses for global package forwarding'
     next();
 })
 
@@ -110,6 +111,10 @@ app.get('/requirements',(req,res) => {
 app.get('/reshipper', catchAsync(async(req,res, next) => {
     res.render('reshipper')
 }))
+
+app.get("/sitemap.xml", function(req, res, next){
+    res.sendFile(__dirname + '/public/assets/sitemap.xml'); 
+  })
 
 app.use((err, req, res, next) => {
     const { status = 501, message = 'something went very wrong' } = err
