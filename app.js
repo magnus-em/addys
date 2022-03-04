@@ -116,6 +116,9 @@ app.get('/reshipper', catchAsync(async(req,res, next) => {
 app.get("/sitemap.xml", function(req, res, next){
     res.sendFile(__dirname + '/public/assets/sitemap.xml'); 
   })
+  app.get("/robots.txt", function(req, res, next){
+    res.sendFile(__dirname + '/public/assets/robots.txt'); 
+  })
 
 app.use((err, req, res, next) => {
     const { status = 501, message = 'something went very wrong' } = err
