@@ -76,6 +76,7 @@ app.use((req,res,next) => {
     res.locals.error = req.flash('error')
     res.locals.user = req.user;
     res.locals.title = 'Addys: US residential addresses for global package forwarding'
+    res.locals.description = 'Addys offers fast and reliable, global package forwarding from real US residential addresses. Scale your resale business with Addys.'
     next();
 })
 
