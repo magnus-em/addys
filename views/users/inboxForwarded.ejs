@@ -8,7 +8,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item">
-            <a href="../demo-app-marketplace/index.html"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %></a>
+            <a href="/user/inbox"><%= user.addy.address1 %>, #<%= user.mailbox %>, <%= user.addy.city %>, <%= user.addy.state %></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">Inbox</li>
         </ol>
@@ -42,17 +42,17 @@
           <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
             <div class="d-grid gap-4 flex-grow-1">
               <div class="d-grid">
-                <a class="btn btn-sm btn-block btn-primary transition-3d-hover" href="/forwarder/upload">Upload new package</a>
-              </div>
-              <div class="d-grid">
                 <h5 class="dropdown-header">Categories</h5>
-                <a class="dropdown-item d-flex justify-content-between active" href="#">Forward requested<span class="badge text-dark border rounded-pill">3</span></a>
-                <a class="dropdown-item d-flex justify-content-between" href="#">Awaiting request<span class="badge text-dark border rounded-pill">1</span></a>
-                <a class="dropdown-item d-flex justify-content-between" href="#">Forwarded<span class="badge text-dark border rounded-pill">43</span></a>
+                <a class="dropdown-item d-flex justify-content-between" href="/user/inbox">New packages<span class="badge text-dark border rounded-pill"><%= user.totalNew %></span></a>
+                <a class="dropdown-item d-flex justify-content-between" href="/user/inbox/pending">Pending forward<span class="badge text-dark border rounded-pill"><%= user.totalPending %></span></a>
+                <a class="dropdown-item d-flex justify-content-between active" href="#">Forwarded<span class="badge text-dark border rounded-pill"><%= user.totalForwarded %></span></a>
                                 
               </div>
 
-          
+              
+
+              
+
               
             </div>
           </div>
@@ -69,13 +69,15 @@
 
           <!-- Heading -->
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0">Forward requested</h4>
+            <h4 class="mb-0">Forwarded packages</h4>
           </div>
 
 
           <div class="d-grid gap-5 mb-10">
 
-            <% for (let p of user.addy.packages) { %> 
+            <% for (let p of user.packages) { %> 
+              <% if (p.status != 'FORWARDED') { continue; } %> 
+
             <!-- Card -->
             <div class="card card-bordered ">
               <div class="card-body">
@@ -103,10 +105,10 @@
                       <div class="col-12 col-md mt-3 mt-md-0">
 
                         <span class="badge bg-soft-success text-success me-2 mb-2">
-                          <span class="legend-indicator bg-success"></span>Forward requested
+                          <span class="legend-indicator bg-success"></span>Ready to forward
                         </span>
                         <div class="d-flex gap-2 mt-1">
-                          <button type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Download label</button>
+                          <button type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</button>
                           <% if (p.images.length != 0) { %> 
                           <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer"  href="<%= p.images[0].url %>" data-fslightbox="gallerye<%=p._id %>">
                             <i class="bi-image me-1"></i>Photos
@@ -128,8 +130,6 @@
                   <li class="list-inline-item"><%=p.carrier %> </li>
                   <li class="list-inline-item"><%= p.weight %> grams</li>
                   <li class="list-inline-item">Uploaded 10/8/21</li>
-                  <li class="list-inline-item">Box: <%= p.mailbox %> </li>
-                  <li class="list-inline-item">Status: <%= p.status %> </li>
                 </ul>
                 
               </div>

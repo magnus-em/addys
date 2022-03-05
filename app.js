@@ -103,14 +103,22 @@ app.get('/index', (req, res) => {
     res.render('home');
 })
 app.get('/faq', (req,res) => {
-    res.render('faq')
+    res.render('details/faq')
+})
+app.get('/cookies',(req,res) => {
+    res.render('details/cookies')
 })
 app.get('/terms', (req,res) => {
-    res.render('terms')
+    res.render('details/terms')
 })
 app.get('/privacy', (req,res) => {
-    res.render('privacy')
+    res.render('details/privacy')
 })
+
+app.get('/disclaimer', (req,res) => {
+    res.render('details/disclaimer')
+})
+
 app.get('/contact',(req,res) => {
     res.render('contact')
 })
@@ -133,7 +141,7 @@ app.use((err, req, res, next) => {
     console.log('MESSAGE: ' + message)
     console.error('STACK: ' + err.stack)
     param = {message}
-    res.status(status).render('error', {param})
+    res.status(status).render('details/error', {param})
 })
 
 // app.all('*', (req,res) => {
@@ -141,7 +149,7 @@ app.use((err, req, res, next) => {
 // })
 
 app.use((req, res) => {
-    res.status(404).render('notfound')
+    res.status(404).render('details/notfound')
 })
 
 const port = process.env.PORT || 3001

@@ -27,6 +27,9 @@ router.get('/users/info',users.showUser)
 
 router.get('/user/inbox', isUser, users.inbox)
 
+router.get('/user/inbox/pending', isUser, users.inboxPending)
+router.get('/user/inbox/forwarded', isUser, users.inboxForwarded)
+
 router.route('/user/upload')
     .get(isUser, users.uploadForm)
     .post(isUser, upload.array('image'), users.upload)

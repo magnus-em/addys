@@ -8,7 +8,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb mb-0">
           <li class="breadcrumb-item">
-            <a href="/user/inbox"><%= user.addy.address1 %>, Box: <%= user.mailbox %>, <%= user.addy.city %>, <%= user.addy.state %></a>
+            <a href="/user/inbox"><%= user.addy.address1 %>, #<%= user.mailbox %>, <%= user.addy.city %>, <%= user.addy.state %></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">Inbox</li>
         </ol>
@@ -43,9 +43,9 @@
             <div class="d-grid gap-4 flex-grow-1">
               <div class="d-grid">
                 <h5 class="dropdown-header">Categories</h5>
-                <a class="dropdown-item d-flex justify-content-between active" href="#">Awaiting forward<span class="badge text-dark border rounded-pill">3</span></a>
-                <a class="dropdown-item d-flex justify-content-between" href="#">Pending forward<span class="badge text-dark border rounded-pill">1</span></a>
-                <a class="dropdown-item d-flex justify-content-between" href="#">Forwarded<span class="badge text-dark border rounded-pill">43</span></a>
+                <a class="dropdown-item d-flex justify-content-between active" href="#">New packages<span class="badge text-dark border rounded-pill"><%= user.totalNew %> </span></a>
+                <a class="dropdown-item d-flex justify-content-between" href="/user/inbox/pending">Pending forward<span class="badge text-dark border rounded-pill"><%= user.totalPending %> </span></a>
+                <a class="dropdown-item d-flex justify-content-between" href="/user/inbox/forwarded">Forwarded<span class="badge text-dark border rounded-pill"><%= user.totalForwarded %> </span></a>
                                 
               </div>
 
@@ -69,13 +69,14 @@
 
           <!-- Heading -->
           <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="mb-0">Awaiting forward</h4>
+            <h4 class="mb-0">New packages</h4>
           </div>
 
 
           <div class="d-grid gap-5 mb-10">
 
             <% for (let p of user.packages) { %> 
+              <% if (p.status != 'NEW') { continue; } %> 
             <!-- Card -->
             <div class="card card-bordered ">
               <div class="card-body">

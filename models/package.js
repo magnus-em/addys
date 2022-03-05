@@ -26,6 +26,10 @@ const packageSchema = new Schema({
         }  
     ],
     mailbox: Number,
+    status: {
+        type: String,
+        enum: ['NEW','PENDING','FORWARDED']
+    },
     addy: {type: Schema.Types.ObjectId, ref: 'Addy'},
     user: {type: Schema.Types.ObjectId, ref: 'User'}
 })
