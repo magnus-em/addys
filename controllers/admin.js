@@ -1,5 +1,4 @@
 const Addy = require("../models/addy")
-const Forwarder = require('../models/forwarder')
 const User = require("../models/user")
 const catchAsync = require("../utils/catchAsync")
 

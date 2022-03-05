@@ -2,9 +2,6 @@ const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
-const express = require("express");
-const passport = require('passport');
-const { use } = require('passport');
 
 
 module.exports.renderLoginForm = async(req,res) => {

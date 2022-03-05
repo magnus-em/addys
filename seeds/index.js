@@ -24,7 +24,6 @@ const seedDb = async () => {
     for (let i=0;i<20;i++) {
         const a = addresses[Math.floor(Math.random() * addresses.length)]
         const c = new Addy({
-            forwarder: '6222b4651cf0042879abef7a',
             address1: a.address1,
             city: a.city,
             state: a.state,
@@ -51,10 +50,10 @@ const clearUsers = async() => {
     console.log('Users deleted')
 }
 
-// clearReviews();
-// clearPackages();
-// clearUsers();
-// seedDb();
+clearReviews();
+clearPackages();
+clearUsers();
+seedDb();
 
 
 

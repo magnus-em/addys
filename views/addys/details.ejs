@@ -108,10 +108,13 @@
                                         <dd class="col-6">20 lbs</dd>
 
                                         <dt class="col-6">Forwarder:</dt>
+                                        <% if (addy.forwarder) { %> 
                                         <dd class="col-6"><%= addy.forwarder.username %> </dd>
-
+                                        <% } %> 
                                         <dt class="col-6">Forwarder email:</dt>
+                                        <% if (addy.forwarder) { %> 
                                         <dd class="col-6"><%= addy.forwarder.email %> </dd>
+                                        <% } %> 
                                     </dl>
                                     <!-- End Row -->
                                 </div>
@@ -160,7 +163,7 @@
                                                 </ul>
                                             </div>
                                             <!-- End Col -->
-
+                                            <% if (addy.forwarder) { %> 
                                             <% if (user && addy.forwarder.equals(user)) {%> 
                                             <div class="col-lg-auto align-self-lg-end text-lg-right">
                                                 <div class="d-flex gap-2">
@@ -179,6 +182,7 @@
                                                 </div>
                                             </div>
                                             <!-- End Col -->
+                                            <% } %> 
                                             <% } %> 
                                         </div>
                                         <!-- End Row -->
