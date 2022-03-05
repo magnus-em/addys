@@ -1,0 +1,124 @@
+<%- layout('layouts/boilerplate') %> 
+
+<!-- Form -->
+<div class="container content-space-2 content-space-lg-3 mt-5">
+    <%- include('../partials/flash') %>
+
+    <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
+      <!-- Heading -->
+      <div class="text-center mb-5 mb-md-7">
+
+        <h1 class="h2">New Forwarder Form</h1>
+      </div>
+      <!-- End Heading -->
+  
+      <!-- Form -->
+      <form action="/admin/forwarders/register" method="post" class="js-validate needs-validation" novalidate>
+
+
+
+         <!-- Form -->
+         <div class="mb-3">
+          <label class="form-label" for="username">Your username</label>
+          <input type="text" class="form-control form-control-lg" name="username" id="username" placeholder="Has to be unique" aria-label="username" required>
+          <span class="invalid-feedback">Please enter a valid username.</span>
+        </div>
+        <!-- End Form -->
+
+        <div class="row gx-3">
+              <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label" for="signupHeroFormFirstName">First name</label>
+                  <input type="text" class="form-control form-control-lg" name="firstName" id="signupHeroFormFirstName" placeholder="First name" aria-label="First name" required>
+                  <span class="invalid-feedback">Please enter your first name</span>
+                </div>
+                <!-- End Form -->
+              </div>
+              <!-- End Col -->
+
+              <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label" for="signupHeroFormLasttName">Last name</label>
+                  <input type="text" class="form-control form-control-lg" name="lastName" id="signupHeroFormLasttName" placeholder="Last name" aria-label="Last name" required>
+                  <span class="invalid-feedback">Please enter your last name</span>
+                </div>
+                <!-- End Form -->
+              </div>
+              <!-- End Col -->
+            </div>
+        
+
+        <!-- Form -->
+        <div class="mb-3">
+          <label class="form-label" for="signupSimpleSignupEmail">Your email</label>
+          <input type="email" class="form-control form-control-lg" name="email" id="signupSimpleSignupEmail" placeholder="We won't spam" aria-label="email@site.com" required>
+          <span class="invalid-feedback">Please enter a valid email address.</span>
+        </div>
+        <!-- End Form -->
+        
+  
+        <!-- Form -->
+        <div class="mb-3">
+          <label class="form-label" for="signupSimpleSignupPassword">Password</label>
+  
+          <div class="input-group input-group-merge" data-hs-validation-validate-class>
+            <input type="password" class="js-toggle-password form-control form-control-lg" name="password" id="signupSimpleSignupPassword" placeholder="8+ characters required" aria-label="8+ characters required" required
+                    data-hs-toggle-password-options='{
+                       "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
+                       "defaultClass": "bi-eye",
+                       "showClass": "bi-eye-slash",
+                       "classChangeTarget": ".js-toggle-passowrd-show-icon-1"
+                     }'>
+            <a class="js-toggle-password-target-1 input-group-append input-group-text" href="javascript:;">
+              <i class="js-toggle-passowrd-show-icon-1 bi-eye"></i>
+            </a>
+          </div>
+  
+          <span class="invalid-feedback">Your password is invalid. Please try again.</span>
+        </div>
+        <!-- End Form -->
+  
+        <!-- Form -->
+        <div class="mb-3">
+          <label class="form-label" for="signupSimpleSignupConfirmPassword">Confirm password</label>
+  
+          <div class="input-group input-group-merge" data-hs-validation-validate-class>
+            <input type="password" class="js-toggle-password form-control form-control-lg" name="confirmPassword" id="signupSimpleSignupConfirmPassword" placeholder="8+ characters required" aria-label="8+ characters required" required
+                   data-hs-validation-equal-field="#signupSimpleSignupPassword"
+                    data-hs-toggle-password-options='{
+                     "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
+                     "defaultClass": "bi-eye",
+                     "showClass": "bi-eye-slash",
+                     "classChangeTarget": ".js-toggle-passowrd-show-icon-2"
+                   }'>
+             <a class="js-toggle-password-target-2 input-group-append input-group-text" href="javascript:;">
+              <i class="js-toggle-passowrd-show-icon-2 bi-eye"></i>
+            </a>
+          </div>
+  
+          <span class="invalid-feedback">Passwords don't match.</span>
+        </div>
+        <!-- End Form -->
+
+        <!-- Form -->
+        <div class="mb-3">
+          <label class="form-label" for="addyId">Addy ID</label>
+          <input type="text" class="form-control form-control-lg" name="addyId" id="addyId" placeholder="Unique" aria-label="email@site.com" required>
+          <span class="invalid-feedback">Required</span>
+        </div>
+        <!-- End Form -->
+  
+      
+  
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary btn-lg">Create</button>
+        </div>
+
+      </form>
+      <!-- End Form -->
+    </div>
+  </div>
+  <!-- End Form -->
+

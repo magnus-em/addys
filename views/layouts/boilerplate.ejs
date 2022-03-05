@@ -1,4 +1,10 @@
 <%- include('../partials/head') %>
-<%- include('../partials/navbar') %> 
-    <%- body %>
+
+<% if(user && user.isAdmin) { %> 
+    <%- include('../partials/navbar_admin') %> 
+<% }  else { %> 
+    <%- include('../partials/navbar') %> 
+<% } %> 
+
+<%- body %>
 <%- include('../partials/foot') %>

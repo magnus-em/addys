@@ -8,6 +8,8 @@ const userSchema = new Schema({
         required: [true, 'email cannot be blank'],
         unique: true,
     },
+    firstName: String,
+    lastName: String,
     packages: [
         {
             type: Schema.Types.ObjectId, 
@@ -17,6 +19,15 @@ const userSchema = new Schema({
     addy: {
         type: Schema.Types.ObjectId,
         ref: 'Addy'
+    },
+    mailbox: Number,
+    isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isForwarder: {
+        type: Boolean,
+        default: false
     }
 })
 

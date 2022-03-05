@@ -18,11 +18,11 @@ router.get('/new', isLoggedIn, addys.renderNewform)
 
 router.route('/:id')
     .get(addys.showAddy)
-    .patch(isForwarder, validateAddy, addys.updateAddy)
-    .delete(isForwarder, addys.deleteAddy)
+    .patch( validateAddy, addys.updateAddy)
+    .delete( addys.deleteAddy)
 
-router.get('/:id/edit', isForwarder, addys.renderEditForm)
+router.get('/:id/edit', addys.renderEditForm)
 
-router.get('/:id/inbox', addys.showInbox)
+router.get('/:id/inbox', isLoggedIn, addys.showInbox)
 
 module.exports = router;

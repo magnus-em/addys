@@ -27,7 +27,8 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         }
         const {email,username,password} = req.body
         const addy = await Addy.findById(req.body.addy).populate('users')
-        const user = new User({email,username,addy})
+        const mailbox = addy.users.length + 30; // make it seem like there are more people reshipping
+        const user = new User({email,username,addy, mailbox})
         await addy.users.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
         const registeredUser = await User.register(user, password)
@@ -40,13 +41,18 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         res.redirect('/user/inbox')
     } catch (err) {
         req.flash('error',err.message)
-        console.log('in the error handler', err.stack)
+        console.log('in the users.createUser error handler', err.stack)
         res.redirect(`/register?addy=${req.body.addy}`)
     }
 })
 
 module.exports.login = catchAsync(async (req,res) => {
     req.flash('success', 'Logged in')
+    if (req.user.isAdmin) {
+        return res.redirect('/admin')
+    } else if (req.user.isForwarder) {
+        return res.redirect('/forwarder/inbox')
+    }
     const redirectUrl = req.session.returnTo || '/user/inbox'
     delete req.session.returnTo
     res.redirect(redirectUrl)

@@ -18,13 +18,14 @@ const packageSchema = new Schema({
     length: Number,
     width: Number,
     height: Number,
-    uploaded: Date,
+    uploaded: {type: Date, default: Date.now},
     images: [
         {
             url: String,
             filename: String
         }  
     ],
+    mailbox: Number,
     addy: {type: Schema.Types.ObjectId, ref: 'Addy'},
     user: {type: Schema.Types.ObjectId, ref: 'User'}
 })

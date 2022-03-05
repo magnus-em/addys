@@ -16,6 +16,7 @@ const packageRoutes = require('./routes/packages')
 const reviewRoutes = require('./routes/reviews')
 const userRoutes = require('./routes/users')
 const fwRoutes = require('./routes/forwarder')
+const adminRoutes = require('./routes/admin')
 const session = require('express-session')
 const flash = require('connect-flash')
 const passport = require('passport')
@@ -89,6 +90,7 @@ app.use('/',packageRoutes)
 app.use('/addys/:addyId/reviews',reviewRoutes)
 app.use('/', userRoutes)
 app.use('/forwarder', fwRoutes)
+app.use('/admin', adminRoutes)
 
 
 app.get('/', (req, res) => {
