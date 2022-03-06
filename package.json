@@ -34,6 +34,7 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
+    "shippo": "^1.7.1",
     "swiper": "^8.0.6",
     "typed.js": "^2.0.12"
   }

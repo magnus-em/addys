@@ -2,6 +2,8 @@ const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
+const {getShipment} = require('../shippo/test')
+const shippo = require('shippo')(process.env.SHIPPO_TEST);
 
 
 module.exports.renderLoginForm = async(req,res) => {
@@ -56,9 +58,7 @@ module.exports.login = catchAsync(async (req,res) => {
     res.redirect(redirectUrl)
 })
 
-module.exports.showUser = (req,res) => {
-    res.render('users/info')
-}
+
 
 module.exports.logout = (req,res) => {
     req.logout()
@@ -79,21 +79,30 @@ module.exports.inboxForwarded = catchAsync((async (req,res) => {
     res.render('users/inboxForwarded', {user})
 }))
 
-module.exports.uploadForm = (req,res) => {
-    res.render('users/upload')
-}
-
-module.exports.upload = catchAsync(async (req,res) => {
-    const user = await User.findById(req.user._id).populate('packages');
-    const package = new Package(req.body.package)
-    user.packages.push(package)
-    package.user = user;
-    package.addy = user.addy
-    package.images = req.files.map(f => ({url: f.path, filename: f.filename}))
-    await package.save()
-    await user.save()
-    console.log('NEW PACKAGE')
-    console.log(package)
-    res.redirect('/user/inbox')
-
+module.exports.forwardForm = catchAsync(async (req,res) => {
+    const {id} = req.params
+    const pkg = await Package.findById(id);
+    const addy = await Addy.findById(req.user.addy._id)
+    const user = await User.findById(req.user._id).populate('addy')
+    user.pkg = pkg;
+    user.shipment = await getShipment();
+    console.log('USER RATES')
+    console.log(user.shipment)
+    res.render('users/forward', {user} )
 })
+
+module.exports.forward = catchAsync(async (req,res) => {
+    const {id} = req.params
+    const {rateId, shipmentId} = req.body
+    console.log(rateId)
+    console.log(shipmentId)
+    const shipment = await shippo.shipment.retrieve(shipmentId)
+    console.log(shipment.status)
+    // console.log('shipment: ')
+    // console.log(shipment)
+    const pkg = await Package.findById(id);
+    console.log(req.body)
+    res.send(req.body)
+})
+
+
