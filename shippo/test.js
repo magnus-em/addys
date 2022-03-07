@@ -28,6 +28,8 @@ var parcel = {
     "mass_unit": "lb"
 };
 
+let savedShipment = null;
+
 // shippo.shipment.create({
 //     "address_from": addressFrom,
 //     "address_to": addressTo,
@@ -65,6 +67,9 @@ var parcel = {
 
 module.exports.getShipment = function () {
     return new Promise((resolve,reject) => {
+        if (savedShipment) {
+            resolve(savedShipment)
+        }
         shippo.shipment.create({
             "address_from": addressFrom,
             "address_to": addressTo,
@@ -78,6 +83,7 @@ module.exports.getShipment = function () {
             }
             console.log('in shipment generator')
             console.log(shipment)
+            savedShipment = shipment;
             resolve(shipment)
         });
     })

@@ -19,6 +19,10 @@ module.exports.renderRegisterForm = catchAsync(async (req,res) => {
     res.render('users/register', {addy})
 })
 
+module.exports.resetForm = (req,res) => {
+    res.render('users/resetPw')
+}
+
 module.exports.createUser = catchAsync(async (req,res,next) => {
     try {
         if (req.body.invite != 69420) {
@@ -79,17 +83,55 @@ module.exports.inboxForwarded = catchAsync((async (req,res) => {
     res.render('users/inboxForwarded', {user})
 }))
 
-module.exports.forwardForm = catchAsync(async (req,res) => {
+// module.exports.forwardForm = catchAsync(async (req,res) => {
+//     const {id} = req.params
+//     const pkg = await Package.findById(id);
+//     const addy = await Addy.findById(req.user.addy._id)
+//     const user = await User.findById(req.user._id).populate('addy')
+//     user.pkg = pkg;
+//     user.shipment = await getShipment();
+//     console.log('USER RATES')
+//     console.log(user.shipment)
+//     res.render('users/forward/forwardThreePayment', {user} )
+// })
+
+module.exports.addressForm = catchAsync(async(req,res) => {
     const {id} = req.params
-    const pkg = await Package.findById(id);
+    const pkg = await Package.findById(id)
+    const addy = await Addy.findById(req.user.addy._id)
+    const user = await User.findById(req.user._id).populate('addy')
+    user.pkg = pkg;
+    res.render('users/forward/fwAddress', {user})
+})
+
+module.exports.shippingForm = catchAsync(async(req,res) => {
+    const {id} = req.params
+    const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
     user.shipment = await getShipment();
-    console.log('USER RATES')
-    console.log(user.shipment)
-    res.render('users/forward', {user} )
+    res.render('users/forward/fwShipping', {user})
 })
+
+module.exports.paymentForm = catchAsync(async(req,res) => {
+    const {id} = req.params
+    const pkg = await Package.findById(id)
+    const addy = await Addy.findById(req.user.addy._id)
+    const user = await User.findById(req.user._id).populate('addy')
+    user.pkg = pkg;
+    res.render('users/forward/fwPayment', {user})
+})
+
+module.exports.overviewForm = catchAsync(async(req,res) => {
+    const {id} = req.params
+    const pkg = await Package.findById(id)
+    const addy = await Addy.findById(req.user.addy._id)
+    const user = await User.findById(req.user._id).populate('addy')
+    user.pkg = pkg;
+    res.render('users/forward/fwOverview', {user})
+})
+
 
 module.exports.forward = catchAsync(async (req,res) => {
     const {id} = req.params

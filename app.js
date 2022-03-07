@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require('express');
 const methodOverride = require('method-override')
 const mongoose = require('mongoose');
+const mongoSanitize = require('express-mongo-sanitize')
 const app = express();
 const path = require('path');
 const ejsMate = require('ejs-mate')
@@ -37,9 +38,13 @@ db.once("open", () => {
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-// to get data out of post requests body
 app.use(express.urlencoded({ extended: true }));
+app.use('/public', express.static(path.join(__dirname, 'public')))
+app.use(methodOverride('_method'));
+app.use(mongoSanitize())
+
+
+
 
 const sessionConfig = {
     secret: 'demosecret', 
@@ -63,9 +68,7 @@ passport.deserializeUser(User.deserializeUser())
 
 
 
-//specify static asset path
-// app.use('/public', express.static('public'));
-app.use('/public', express.static(path.join(__dirname, 'public')))
+
 
 // put this in staticfiles.config
 // option_settings:
@@ -73,7 +76,6 @@ app.use('/public', express.static(path.join(__dirname, 'public')))
 //     /public: /public
 // //method override for html forms
 
-app.use(methodOverride('_method'));
 
 //save any req.flash messages to res.locals (local variables available to views)
 app.use((req,res,next) => {

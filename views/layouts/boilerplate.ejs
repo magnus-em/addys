@@ -2,9 +2,12 @@
 
 <% if(user && user.isAdmin) { %> 
     <%- include('../partials/navbar_admin') %> 
-<% }  else { %> 
+<% }  else if (user && user.isForwarder) { %> 
+    <%- include('../partials/navbar_user') %> 
+<% }  else if (user) { %> 
+    <%- include('../partials/navbar_user') %> 
+<% }  else  { %> 
     <%- include('../partials/navbar') %> 
 <% } %> 
-
 <%- body %>
 <%- include('../partials/foot') %>
