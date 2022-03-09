@@ -54,7 +54,7 @@ module.exports.login = catchAsync(async (req,res) => {
     if (req.user.isAdmin) {
         return res.redirect('/admin')
     } else if (req.user.isForwarder) {
-        return res.redirect('/forwarder/dash/requested')
+        return res.redirect('/forwarder/dash/pending')
     }
     // const redirectUrl = req.session.returnTo || '/user/inbox/new'
     const redirectUrl = '/user/inbox/new'
@@ -185,7 +185,7 @@ module.exports.forward = catchAsync(async (req,res) => {
     pkg.label_url = trx.label_url;
     pkg.tracking_number = trx.tracking_number;
     pkg.tracking_url_provider = trx.tracking_url_provider;
-    pkg.status = 'FORWARDED'
+    pkg.status = 'PENDING'
     pkg.save()
     console.log(pkg)
     console.log(req.body)

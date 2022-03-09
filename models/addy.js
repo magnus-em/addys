@@ -81,6 +81,44 @@ addySchema.virtual('totalRating').get(function() {
     return [null,one,two,three,four,five];
 })
 
+addySchema.virtual('totalNew').get(function() {
+    let i = 0;
+    for (let p of this.packages) {
+        if (p.status == "NEW") {
+            i++;
+        }
+    }
+    return i;
+})
+addySchema.virtual('totalPending').get(function() {
+    let i = 0;
+    for (let p of this.packages) {
+        if (p.status == "PENDING") {
+            i++;
+        }
+    }
+    return i;
+})
+addySchema.virtual('totalForwarded').get(function() {
+    let i = 0;
+    for (let p of this.packages) {
+        if (p.status == "FORWARDED") {
+            i++;
+        }
+    }
+    return i;
+})
+
+addySchema.virtual('totalPackages').get(function() {
+    let i = 0;
+    for (let p of this.packages) {
+            i++;
+        
+    }
+    return i;
+})
+
+
 
 
 

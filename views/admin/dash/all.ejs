@@ -1,0 +1,163 @@
+<%- layout('layouts/boilerplate') %>
+
+  <div class=" content-space-t-2">
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark"
+      style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Admin dashboard</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                <li class="breadcrumb-item">
+                  address placeholder
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Overview</li>
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
+          </div>
+          <!-- End Col -->
+
+          <div class="col-auto">
+
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+    </div>
+    <!-- End Breadcrumb -->
+
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg navbar-light">
+            <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+              <!-- Card -->
+              <div class="card mb-5">
+                <div class="card-body">
+
+                  <div class="d-none d-lg-block text-center mb-5">
+                    <div class="text-center mb-5">
+                      <a class="btn btn-sm btn-block btn-primary transition-3d-hover" href="/forwarder/upload">Upload
+                        new package</a>
+                    </div>
+                  </div>
+
+
+
+                  <!-- Nav -->
+                  <span class="text-cap">Categories</span>
+
+                  <!-- List -->
+                  <ul class="nav nav-sm nav-tabs nav-vertical">
+                    <li class="nav-item">
+                      <a class="nav-link active " href="/admin/dash/">
+                        <i class="bi-truck nav-icon"></i>
+                        <span class="me-2">All</span><span class="badge text-dark border rounded-pill">
+                          3
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="/forwarder/dash/pending">
+                        <i class="bi-truck nav-icon"></i>
+                        <span class="me-2">Ready to ship</span><span class="badge text-dark border rounded-pill">
+                          3
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link " href="/forwarder/dash/new">
+                        <i class="bi-hourglass-split nav-icon"></i>
+                        <span class="me-2">Awaiting</span><span class="badge text-dark border rounded-pill">
+                          2
+                        </span>
+                      </a>
+
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="/forwarder/dash/forwarded">
+                        <i class="bi-forward-fill nav-icon"></i>
+                        <span class="me-2">Forwarded</span><span class="badge text-dark border rounded-pill">
+                          3
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- End List -->
+
+
+
+
+
+                </div>
+              </div>
+              <!-- End Card -->
+            </div>
+          </div>
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h4 class="card-header-title">All</h4>
+
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+
+                <div class="d-grid gap-5 mb-10">
+
+                  <% for (let p of packages) { %>
+                      <%- include('./pkg', {p}) %>
+
+                        <% } %>
+
+                </div>
+
+
+              </div>
+              <!-- End Body -->
+
+
+            </div>
+            <!-- End Card -->
+
+
+
+
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content -->
+  </div>

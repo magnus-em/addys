@@ -1,10 +1,12 @@
 const Addy = require("../models/addy")
+const Package = require("../models/package")
 const User = require("../models/user")
 const catchAsync = require("../utils/catchAsync")
 
-module.exports.index = (req,res) => {
-    res.render('admin/index')
-}
+module.exports.all = catchAsync( async (req,res) => {
+    const packages = await Package.find({})
+    res.render('admin/dash/all', {packages})
+})
 
 module.exports.newFwForm = (req,res) => {
     res.render('admin/fwRegister')
@@ -27,4 +29,11 @@ module.exports.createFw = catchAsync(async (req,res) => {
         req.flash('error', err.message)
         console.log('in the createFw error handler', err.stack)
     }
+})
+
+module.exports.deletePackage = catchAsync(async (req,res) => {
+    const {id} = req.params
+    const pkg = await Package.findByIdAndDelete(id)
+    console.log('deleted package: ' + pkg)
+    res.redirect('/admin/dash/')
 })

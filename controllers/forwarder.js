@@ -10,14 +10,14 @@ module.exports.landing = (req,res) => {
     res.render('forwarder/landing')
 }
 
-module.exports.requested = catchAsync(async (req,res) => {
+module.exports.pending = catchAsync(async (req,res) => {
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
-    res.render('forwarder/dash/requested', {user})
+    res.render('forwarder/dash/pending', {user})
 })
 
-module.exports.awaiting = catchAsync(async (req,res) => {
+module.exports.new = catchAsync(async (req,res) => {
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
-    res.render('forwarder/dash/awaiting', {user})
+    res.render('forwarder/dash/new', {user})
 })
 
 module.exports.forwarded = catchAsync(async (req,res) => {
@@ -31,21 +31,22 @@ module.exports.uploadForm = (req,res) => {
 
 module.exports.upload = catchAsync(async (req,res) => {
     const package = new Package(req.body.package)
-    const user = await User.findById(req.user._id).populate({
+    const forwarder = await User.findById(req.user._id).populate({
                     path: 'addy',
                     populate: {
                         path: 'packages'
                     }});
 
     // add reference to package on client by matching mailbox number and addy tied to current user (forwarder)
-    const client = await User.findOne({addy: user.addy._id, mailbox: package.mailbox}).populate('packages')
+    const client = await User.findOne({addy: forwarder.addy._id, mailbox: package.mailbox}).populate('packages')
     client.packages.push(package)
     await client.save()
 
     // set reference on package to addy by finding addy tied to current user
     // set images on url and filename processed via multer plus cloudinary
-    const addy = await Addy.findById(user.addy)
-    package.addy = user.addy;
+    const addy = await Addy.findById(forwarder.addy)
+    package.addy = addy;
+    package.client = client;
     package.images = req.files.map(f => ({url: f.path, filename: f.filename}))
     await package.save();
 
@@ -53,7 +54,17 @@ module.exports.upload = catchAsync(async (req,res) => {
     addy.packages.push(package)
     await addy.save()               
 
-    res.redirect('/forwarder/dash/requested')
+    res.redirect('/forwarder/dash/pending')
+})
+
+module.exports.uploadReceipt = catchAsync(async (req,res) => {
+    const id = req.body.pkgId
+    console.log(id)
+    const package = await Package.findById(id)
+    package.receipts = req.files.map(f => ({url: f.path, filename: f.filename}))
+    package.status = 'FORWARDED'
+    await package.save();
+    res.redirect('/forwarder/dash/forwarded')
 })
 
 module.exports.personal = catchAsync(async (req,res) => {

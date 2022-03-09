@@ -64,25 +64,35 @@
                 <!-- Nav -->
                 <span class="text-cap">Categories</span>
 
-                <!-- List -->
-                <ul class="nav nav-sm nav-tabs nav-vertical">
-                  <li class="nav-item">
-                    <a class="nav-link " href="/forwarder/dash/requested">
-                      <i class="bi-box nav-icon"></i> Forward requested
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="/forwarder/dash/awaiting">
-                      <i class="bi-hourglass-split nav-icon"></i> Awaiting request
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="/forwarder/dash/forwarded">
-                      <i class="bi-forward-fill nav-icon"></i> Forwarded
-                    </a>
-                  </li>
-                </ul>
-                <!-- End List -->
+                  <!-- List -->
+                  <ul class="nav nav-sm nav-tabs nav-vertical">
+                    <li class="nav-item">
+                      <a class="nav-link " href="/forwarder/dash/pending">
+                        <i class="bi-truck nav-icon"></i>
+                        <span class="me-2">Ready to ship</span><span class="badge text-dark border rounded-pill">
+                          <%= user.addy.totalPending %>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link" href="/forwarder/dash/new">
+                        <i class="bi-hourglass-split nav-icon"></i>
+                        <span class="me-2">Awaiting</span><span class="badge text-dark border rounded-pill">
+                          <%= user.addy.totalNew %>
+                        </span>
+                      </a>
+
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/forwarder/dash/forwarded">
+                        <i class="bi-forward-fill nav-icon"></i>
+                        <span class="me-2">Forwarded</span><span class="badge text-dark border rounded-pill">
+                          <%= user.addy.totalForwarded %>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- End List -->
 
 
 
@@ -114,67 +124,8 @@
 
                 <% for (let p of user.addy.packages) { %> 
                   <% if (p.status != 'FORWARDED') { continue;} %> 
+                  <%- include('./pkg', {p}) %> 
 
-                <!-- Card -->
-                <div class="card card-bordered ">
-                  <div class="card-body">
-                    <!-- Media -->
-                    <div class="d-sm-flex">
-                      <!-- Media -->                
-                      <div class="flex-grow-1">
-                        <div class="row">
-                          <div class="col col-md-8">
-                            <div class="mb-2">
-                              <a class="link-sm link-secondary" href="#">Shipper</a>
-                            </div>
-                            <h3 class="card-title"><%= p.shipper %> 
-                              <!-- <a class="text-dark" href="/public/demo-jobs/employer.html">Package</a> -->
-                            </h3>
-                            <div class="mt-3">
-                              <h6 class="card-title"><%= p.tracking %> 
-                                <!-- <a class="text-dark" href="/">Tracking: 67398767898767890900</a> -->
-                              </h6>
-                            </div>
-                          </div>
-                          <!-- End Col -->
-    
-    
-                          <div class="col-12 col-md mt-3 mt-md-0">
-    
-                            <span class="badge bg-soft-success text-success me-2 mb-2">
-                              <span class="legend-indicator bg-success"></span>Forward requested
-                            </span>
-                            <div class="d-flex gap-2 mt-1">
-                              <a type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-download me-1"></i>Label</a>
-                              <% if (p.images.length != 0) { %> 
-                              <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer"  href="<%= p.images[0].url %>" data-fslightbox="gallerye<%=p._id %>">
-                                <i class="bi-image me-1"></i>Photos
-                              </a>
-                              <% } %> 
-                            </div>
-                            <!-- <button type="button" class="d-block btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</button> -->
-                          </div>
-                          <!-- End Col -->
-                        </div>
-                        <!-- End Row -->
-                      </div>
-                    </div>
-                    <!-- End Media -->
-                  </div>
-    
-                  <div class="card-footer pt-0">
-                    <ul class="list-inline list-separator small text-body">
-                      <li class="list-inline-item"><%=p.carrier %> </li>
-                      <li class="list-inline-item"><%= p.weight %> lbs</li>
-                      <li class="list-inline-item">Uploaded <%= p.uploaded %> </li>
-                      <li class="list-inline-item">Box: <%= p.mailbox %> </li>
-                      <li class="list-inline-item">Status: <%= p.status %> </li>
-                    </ul>
-                    
-                  </div>
-                </div>
-                <!-- End Card -->
-    
                 <% } %> 
     
               </div>

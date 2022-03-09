@@ -10,6 +10,7 @@ const userSchema = new Schema({
     },
     firstName: String,
     lastName: String,
+    phone: String,
     packages: [
         {
             type: Schema.Types.ObjectId, 

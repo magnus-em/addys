@@ -1,0 +1,204 @@
+<%- layout('layouts/boilerplate') %>
+
+  <div class=" content-space-t-2">
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark"
+      style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Dashboard</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                <li class="breadcrumb-item">
+                  <%= user.addy.address1 %>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Overview</li>
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
+          </div>
+          <!-- End Col -->
+
+          <div class="col-auto">
+
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
+        </div>
+        <!-- End Row -->
+      </div>
+    </div>
+    <!-- End Breadcrumb -->
+
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg navbar-light">
+            <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+              <!-- Card -->
+              <div class="card mb-5">
+                <div class="card-body">
+
+                  <div class="d-none d-lg-block text-center mb-5">
+                    <div class="text-center mb-5">
+                      <a class="btn btn-sm btn-block btn-primary transition-3d-hover" href="/forwarder/upload">Upload
+                        new package</a>
+                    </div>
+                  </div>
+
+
+
+                  <!-- Nav -->
+                  <span class="text-cap">Categories</span>
+
+                  <!-- List -->
+                  <ul class="nav nav-sm nav-tabs nav-vertical">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="/forwarder/dash/pending">
+                        <i class="bi-truck nav-icon"></i>
+                        <span class="me-2">Ready to ship</span><span class="badge text-dark border rounded-pill">
+                          <%= user.addy.totalPending %>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link" href="/forwarder/dash/new">
+                        <i class="bi-hourglass-split nav-icon"></i>
+                        <span class="me-2">Awaiting</span><span class="badge text-dark border rounded-pill">
+                          <%= user.addy.totalNew %>
+                        </span>
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="/forwarder/dash/forwarded">
+                        <i class="bi-forward-fill nav-icon"></i>
+                        <span class="me-2">Forwarded</span><span class="badge text-dark border rounded-pill">
+                          <%= user.addy.totalForwarded %>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- End List -->
+
+
+
+
+
+                </div>
+              </div>
+              <!-- End Card -->
+            </div>
+          </div>
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h4 class="card-header-title">Ready to forward</h4>
+                <p class="card-text">Download label, attach, and drop off</p>
+
+              </div>
+
+              <!-- Body -->
+              <div class="card-body">
+
+                <div class="d-grid gap-5 mb-10">
+
+                  <% for (let p of user.addy.packages) { %>
+                    <% if (p.status !='PENDING' ) { continue;} %>
+
+                      <%- include('./pkg', {p}) %>
+
+
+                        <% } %>
+
+                </div>
+
+
+              </div>
+              <!-- End Body -->
+
+
+            </div>
+            <!-- End Card -->
+
+            <!-- Modal -->
+            <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog"
+              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirm package drop off</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Only confirm after completing the following steps: </p>
+                    <ol>
+                      <li>Download shipping label, attach to box. Make sure to double check the tracking number on the
+                        old label so you don't mix up boxes.</li>
+                      <li>Bring to carrier drop off location, make sure to ask for drop off receipt.</li>
+                      <li>Take photo of receipt, upload and submit. Your balance will reflect after review, within 24
+                        hours.</li>
+                    </ol>
+                    <form action="/forwarder/upload/receipt" method="post" enctype="multipart/form-data">
+                      <div class="row mb-4">
+                        <label for="photo" class="js-file-attach col-sm-3 col-form-label form-label"
+                          data-hs-file-attach-options='{
+                       "textTarget": "[for=\"customFile\"]"
+                      }'>Image of receipt</label>
+                        <input class="form-control" type="file" id="photo" name="image" multiple>
+                      </div>
+                  </div>
+                  <input type="hidden" name="pkgId" id="pkgId">
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                  </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- End Modal -->
+
+
+
+
+          </div>
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+    <!-- End Content -->
+  </div>
+
+  <script type="text/javascript">
+
+    $('#exampleModalCenter').on('show.bs.modal', function (event) {
+      let pkg = $(event.relatedTarget).data('id')
+      $(this).find('#pkgId').val(pkg)
+    })
+  </script>

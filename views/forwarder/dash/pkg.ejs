@@ -1,0 +1,90 @@
+<!-- Card -->
+<div class="card card-bordered ">
+    <div class="card-body">
+        <!-- Media -->
+        <div class="d-sm-flex">
+            <!-- Media -->
+            <div class="flex-grow-1">
+                <div class="row">
+                    <div class="col col-md-8">
+                        <div class="mb-2">
+                            <a class="link-sm link-secondary" href="#">Shipper</a>
+                        </div>
+                        <h3 class="card-title">
+                            <%= p.shipper %>
+                                <!-- <a class="text-dark" href="/public/demo-jobs/employer.html">Package</a> -->
+                        </h3>
+                        <div class="mt-3">
+                            <h6 class="card-title">
+                                <%= p.carrier %>: <%= p.tracking %>
+                                    <!-- <a class="text-dark" href="/">Tracking: 67398767898767890900</a> -->
+                            </h6>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+
+
+                    <div class="col-12 col-md mt-3 mt-md-0">
+
+                        <% if (p.status == 'PENDING') { %> 
+                            <span class="badge bg-soft-success text-success mt-2 me-2 mb-2">
+                                <span class="legend-indicator bg-success"></span>Label ready
+                            </span>
+                        <% } else if (p.status == 'NEW')  {%> 
+                            <span class="badge bg-soft-warning text-warning me-2 mb-2">
+                                <span class="legend-indicator bg-warning"></span>Waiting for client request
+                            </span>
+                        <% } else if (p.status == 'FORWARDED') { %> 
+                            <span class="badge bg-soft-info text-info mt-2 me-2 mb-2">
+                                <span class="legend-indicator bg-info"></span>Receipt accepted & paid
+                            </span>
+                        <% } %> 
+
+                        <div class="d-flex gap-2 mt-2">
+                            
+                            <% if (p.images.length != 0) { %> 
+                                <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer"  href="<%= p.images[0].url %>" data-fslightbox="gallerye<%=p._id %>">
+                                  <i class="bi-image me-1"></i>Photos
+                                </a>
+                                <% } %> 
+                                <% if (p.receipts.length != 0) { %> 
+                                    <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer"  href="<%= p.receipts[0].url %>" data-fslightbox="gallerye<%=p._id %>">
+                                      <i class="bi-image me-1"></i>Receipts
+                                    </a>
+                                    <% } %> 
+                          </div>
+
+                        
+                        <!-- <button type="button" class="d-block btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</button> -->
+                    </div>
+                    <!-- End Col -->
+                    <div class="d-flex gap-2 mt-2">
+                        <% if (p.label_url) { %> 
+                        <a type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-download me-1"></i>Label</a>
+                        <% } %>                 
+                          <%  if (p.status == "PENDING") {%> 
+                            <a type="button" data-id="<%= p._id %>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-upload me-1"></i>Receipt</a>
+
+                        <% } %> 
+                      </div>
+                </div>
+                <!-- End Row -->
+            </div>
+        </div>
+        <!-- End Media -->
+    </div>
+
+    <div class="card-footer pt-0">
+        <ul class="list-inline list-separator small text-body">
+            <li class="list-inline-item">
+                <%= p.weight %> lbs
+            </li>
+            <li class="list-inline-item">Uploaded <%= p.uploaded.getMonth() %>/<%= p.uploaded.getDate() %> 
+            </li>
+            <li class="list-inline-item">Client box #<%= p.mailbox %>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<!-- End Card -->
