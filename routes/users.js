@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync')
 const passport = require('passport')
 const router = express.Router();
 const user = require('../controllers/user')
-const {isUser} = require('../utils/middleware')
+const {isClient} = require('../utils/middleware')
 const multer = require('multer')
 const {storage} = require('../cloudinary')
 const upload = multer({storage})
@@ -30,23 +30,23 @@ router.get('/forward',(req,res) => {
 router.get('/logout', user.logout)
 
 
-router.get('/user/inbox', isUser, user.inbox)
-router.get('/user/inbox/pending', isUser, user.inboxPending)
-router.get('/user/inbox/forwarded', isUser, user.inboxForwarded)
+router.get('/user/inbox/new', isClient, user.inbox)
+router.get('/user/inbox/pending', isClient, user.inboxPending)
+router.get('/user/inbox/forwarded', isClient, user.inboxForwarded)
 
-router.get('/user/inbox/:id/forward/address', isUser, user.addressForm)
-router.get('/user/inbox/:id/forward/shipping', isUser, user.shippingForm)
-router.get('/user/inbox/:id/forward/payment', isUser, user.paymentForm)
-router.get('/user/inbox/:id/forward/overview', isUser, user.overviewForm)
+router.get('/user/inbox/:id/forward/address', isClient, user.addressForm)
+router.get('/user/inbox/:id/forward/shipping', isClient, user.shippingForm)
+router.get('/user/inbox/:id/forward/payment', isClient, user.paymentForm)
+router.get('/user/inbox/:id/forward/overview', isClient, user.overviewForm)
 
 
-router.post('/user/inbox/:id/forward', isUser, user.forward)
+router.post('/user/inbox/:id/forward', isClient, user.forward)
 
-router.get('/user/account/personal',isUser, user.personal)
-router.get('/user/account/security',isUser, user.security)
-router.get('/user/account/payments',isUser, user.payments)
-router.get('/user/account/addresses',isUser, user.address)
-router.get('/user/account/notifications',isUser, user.notifications)
+router.get('/user/account/personal',isClient, user.personal)
+router.get('/user/account/security',isClient, user.security)
+router.get('/user/account/payments',isClient, user.payments)
+router.get('/user/account/addresses',isClient, user.address)
+router.get('/user/account/notifications',isClient, user.notifications)
 
 
 

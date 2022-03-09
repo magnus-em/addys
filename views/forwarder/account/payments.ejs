@@ -1,6 +1,5 @@
 <%- layout('layouts/boilerplate') %> 
 
-
 <div class="content-space-t-2">
   <!-- Breadcrumb -->
   <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
@@ -66,17 +65,17 @@
                 <!-- List -->
                 <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                   <li class="nav-item">
-                    <a class="nav-link " href="/user/account/personal">
+                    <a class="nav-link " href="/forwarder/account/personal">
                       <i class="bi-person-badge nav-icon"></i> Personal info
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/user/account/security">
+                    <a class="nav-link" href="/forwarder/account/security">
                       <i class="bi-shield-shaded nav-icon"></i> Security
                     </a>
                   </li>
                   <!-- <li class="nav-item">
-                    <a class="nav-link " href="/user/account/notifications">
+                    <a class="nav-link " href="/forwarder/account/notifications">
                       <i class="bi-bell nav-icon"></i> Notifications
                     </a>
                   </li> -->
@@ -85,20 +84,20 @@
                 <!-- End List -->
 
 
-                <span class="text-cap">Billing</span>
+                <span class="text-cap">Earnings</span>
 
                 <!-- List -->
                 <ul class="nav nav-sm nav-tabs nav-vertical">
                   <li class="nav-item">
-                    <a class="nav-link active " href="/user/account/payments">
+                    <a class="nav-link active " href="/forwarder/account/payments">
                       <i class="bi-credit-card nav-icon"></i> Payments
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="/user/account/addresses">
-                      <i class="bi-geo-alt nav-icon"></i> Addresses
+                  <!-- <li class="nav-item">
+                    <a class="nav-link " href="/forwarder/account/addresses">
+                      <i class="bi-list nav-icon"></i> History
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
                 <!-- End List -->
 
@@ -126,24 +125,38 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md mb-4 mb-md-0">
-                  <div class="mb-4">
-                    <span class="card-subtitle">Your plan (billed monthly):</span>
-                    <h5>Basic</h5>
+
+                  <div class="mb-2">
+                    <span class="card-subtitle">Your clients</span>
+                    <h5>3</h5>
                   </div>
 
+                  <div class="mb-2">
+                    <span class="card-subtitle">Subscriptions per month</span>
+                    <h4 class="text-primary">$15</h3>
+                  </div>
+
+                  <hr>
+
+                  <div class="mb-2">
+                    <span class="card-subtitle">Forwards this week</span>
+                    <h5>4</h5>
+                  </div>
+                  <div class="mb-4">
+                    <span class="card-subtitle">Profit this week</span>
+                    <h4 class="text-primary">$60</h3>
+                  </div>
+
+                  <hr>
+
                   <div>
-                    <span class="card-subtitle">Total per month</span>
-                    <h3 class="text-primary">$15 USD</h3>
+                    <span class="card-subtitle">Current balance</span>
+                    <h1 class="text-primary">$75</h1>
                   </div>
                 </div>
                 <!-- End Col -->
 
-                <div class="col-md-auto">
-                  <div class="d-grid d-md-flex gap-3">
-                    <a class="btn btn-white btn-sm" href="#">Cancel subscription</a>
-                    <a class="btn btn-primary btn-sm btn-transition" href="./page-pricing.html">Update plan</a>
-                  </div>
-                </div>
+                
                 <!-- End Col -->
               </div>
               <!-- End Row -->
@@ -156,12 +169,12 @@
             <div class="card-body">
               <div class="row align-items-center flex-grow-1 mb-2">
                 <div class="col">
-                  <h4 class="card-header-title">Forward allowance</h4>
+                  <h4 class="card-header-title">Weekly payout progress</h4>
                 </div>
                 <!-- End Col -->
 
                 <div class="col-auto">
-                  <span class="text-dark fw-semi-bold">4</span> forwarded of 10
+                  <span class="text-dark fw-semi-bold">2</span> days left
                 </div>
                 <!-- End Col -->
               </div>
@@ -169,7 +182,7 @@
 
               <!-- Progress -->
               <div class="progress rounded-pill mb-3">
-                <div class="progress-bar" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: 72%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <!-- End Progress -->
             </div>
@@ -180,13 +193,13 @@
           <!-- Card -->
           <div class="card">
             <div class="card-header border-bottom">
-              <h5 class="card-header-title">Payment method</h5>
+              <h5 class="card-header-title">Payout method</h5>
             </div>
 
             <!-- Body -->
             <div class="card-body">
               <div class="mb-4">
-                <p>Cards will be charged either at the end of the month or whenever your balance exceeds the usage threshold. All major credit / debit cards accepted.</p>
+                <p>We currently only offer payouts to bank accounts and via Cash App or Venmo. Debit card and crypto support coming soon.</p>
               </div>
 
               <!-- List Group -->
@@ -194,7 +207,7 @@
                 <!-- Item -->
                 <li class="list-group-item">
                   <div class="mb-2">
-                    <h5>Maria Williams <span class="badge bg-primary ms-1">Primary</span></h5>
+                    <h5>First Name <span class="badge bg-primary ms-1">Primary</span></h5>
                   </div>
 
                   <!-- Media -->
@@ -233,7 +246,7 @@
                 <!-- Item -->
                 <li class="list-group-item">
                   <div class="mb-2">
-                    <h5>Maria Williams
+                    <h5>First Name
                   </div>
 
                   <!-- Media -->
@@ -275,7 +288,7 @@
               <a class="card card-dashed card-centered" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountAddCardModal">
                 <div class="card-body card-dashed-body py-8">
                   <img class="avatar avatar-lg avatar-4x3 mb-2" src="/public/assets/svg/illustrations/oc-add-card.svg" alt="Image Description">
-                  <span class="d-block"><i class="bi-plus"></i> Add a new card</span>
+                  <span class="d-block"><i class="bi-plus"></i> Add a new payout method</span>
                 </div>
               </a>
               <!-- End Card -->
@@ -288,7 +301,7 @@
           <div class="card">
             <!-- Header -->
             <div class="card-header">
-              <h5 class="card-header-title">Order history</h5>
+              <h5 class="card-header-title">Payout history</h5>
             </div>
             <!-- End Header -->
 

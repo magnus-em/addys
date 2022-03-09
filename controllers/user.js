@@ -41,7 +41,7 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         req.flash('success', 'Account created')
         console.log('NEW USER CREATED')
         console.log(user)
-        res.redirect('/user/inbox')
+        res.redirect('/user/inbox/new')
     } catch (err) {
         req.flash('error',err.message)
         console.log('in the user.createUser error handler', err.stack)
@@ -54,10 +54,10 @@ module.exports.login = catchAsync(async (req,res) => {
     if (req.user.isAdmin) {
         return res.redirect('/admin')
     } else if (req.user.isForwarder) {
-        return res.redirect('/forwarder/inbox')
+        return res.redirect('/forwarder/dash/requested')
     }
-    // const redirectUrl = req.session.returnTo || '/user/inbox'
-    const redirectUrl = '/user/inbox'
+    // const redirectUrl = req.session.returnTo || '/user/inbox/new'
+    const redirectUrl = '/user/inbox/new'
     delete req.session.returnTo
     res.redirect(redirectUrl)
 })
@@ -72,15 +72,15 @@ module.exports.logout = (req,res) => {
 
 module.exports.inbox = catchAsync((async (req,res) => {
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inbox', {user})
+    res.render('user/inbox/new', {user})
 }))
 module.exports.inboxPending = catchAsync((async (req,res) => {
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inboxPending', {user})
+    res.render('user/inbox/pending', {user})
 }))
 module.exports.inboxForwarded = catchAsync((async (req,res) => {
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inboxForwarded', {user})
+    res.render('user/inbox/forwarded', {user})
 }))
 
 // module.exports.forwardForm = catchAsync(async (req,res) => {
@@ -101,7 +101,7 @@ module.exports.addressForm = catchAsync(async(req,res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/fwAddress', {user})
+    res.render('user/forward/fwAddyNew', {user})
 })
 
 module.exports.shippingForm = catchAsync(async(req,res) => {
@@ -111,7 +111,7 @@ module.exports.shippingForm = catchAsync(async(req,res) => {
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
     user.shipment = await getShipment();
-    res.render('user/forward/fwShipping', {user})
+    res.render('user/forward/fwShippingNew', {user})
 })
 
 module.exports.paymentForm = catchAsync(async(req,res) => {
@@ -120,7 +120,7 @@ module.exports.paymentForm = catchAsync(async(req,res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/fwPayment', {user})
+    res.render('user/forward/fwPaymentNew', {user})
 })
 
 module.exports.overviewForm = catchAsync(async(req,res) => {
@@ -129,7 +129,7 @@ module.exports.overviewForm = catchAsync(async(req,res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/fwOverview', {user})
+    res.render('user/forward/fwOverviewNew', {user})
 })
 
 

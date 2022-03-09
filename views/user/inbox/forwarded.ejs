@@ -1,0 +1,188 @@
+<%- include('../../partials/head') %>
+<%- include('../../partials/navbar_user') %> 
+
+<div class=" content-space-t-2">
+  <!-- Breadcrumb -->
+  <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+    <div class="container content-space-1 content-space-b-lg-3">
+      <div class="row align-items-center">
+        <div class="col">
+          <div class="d-none d-lg-block">
+            <h1 class="h2 text-white">1456 N Capri Drive</h1>
+          </div>
+
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light mb-0">
+              <li class="breadcrumb-item">Box 35</li>
+              <li class="breadcrumb-item active" aria-current="page">Inbox</li>
+            </ol>
+          </nav>
+          <!-- End Breadcrumb -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-auto">
+
+
+          <!-- Responsive Toggle Button -->
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-default">
+              <i class="bi-list"></i>
+            </span>
+            <span class="navbar-toggler-toggled">
+              <i class="bi-x"></i>
+            </span>
+          </button>
+          <!-- End Responsive Toggle Button -->
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+  </div>
+  <!-- End Breadcrumb -->
+
+  <!-- Content -->
+  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+    <div class="row">
+      <div class="col-lg-3">
+        <!-- Navbar -->
+        <div class="navbar-expand-lg navbar-light">
+          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+            <!-- Card -->
+            <div class="card flex-grow-1 mb-5">
+              <div class="card-body">
+                
+                <!-- Nav -->
+                <span class="text-cap">Categories</span>
+
+                <!-- List -->
+                <ul class="nav nav-sm nav-tabs nav-vertical">
+                  <li class="nav-item">
+                    <a class="nav-link" href="/user/inbox/new">
+                      <i class="bi-box nav-icon"></i> New packages
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/user/inbox/pending">
+                      <i class="bi-hourglass-split nav-icon"></i> Pending forward
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="/user/inbox/forwarded">
+                      <i class="bi-forward-fill nav-icon"></i> Forwarded
+                    </a>
+                  </li>
+
+                </ul>
+                <!-- End List -->
+
+
+
+
+
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+        </div>
+        <!-- End Navbar -->
+      </div>
+      <!-- End Col -->
+
+      <div class="col-lg-9">
+        <div class="d-grid gap-3 gap-lg-5">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-header border-bottom">
+              <h4 class="card-header-title">Forwarded packages</h4>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <div class="d-grid gap-5 mb-10">
+
+                <% for (let p of user.packages) { %>     
+                <% if (p.status != 'FORWARDED') { continue; } %> 
+              <!-- Card -->
+              <div class="card card-bordered ">
+                <div class="card-body">
+                  <!-- Media -->
+                  <div class="d-sm-flex">
+                    <!-- Media -->                
+                    <div class="flex-grow-1">
+                      <div class="row">
+                        <div class="col col-md-8">
+                          <div class="mb-2">
+                            <a class="link-sm link-secondary" href="#">Shipper</a>
+                          </div>
+                          <h3 class="card-title"><%= p.shipper %> 
+                            <!-- <a class="text-dark" href="/public/demo-jobs/employer.html">Package</a> -->
+                          </h3>
+                          <div class="mt-3">
+                            <h6 class="card-title"><%= p.tracking %> 
+                              <!-- <a class="text-dark" href="/">Tracking: 67398767898767890900</a> -->
+                            </h6>
+                          </div>
+                        </div>
+                        <!-- End Col -->
+  
+  
+                        <div class="col-12 col-md mt-3 mt-md-0">
+  
+                          <span class="badge bg-soft-success text-success me-2 mb-2">
+                            <span class="legend-indicator bg-success"></span>Ready to forward
+                          </span>
+                          <div class="d-flex gap-2 mt-1">
+                            <a type="button" href="/user/inbox/<%= p._id %>/forward/address" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</a>
+                            <% if (p.images.length != 0) { %> 
+                            <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer"  href="<%= p.images[0].url %>" data-fslightbox="gallerye<%=p._id %>">
+                              <i class="bi-image me-1"></i>Photos
+                            </a>
+                            <% } %> 
+                          </div>
+                          <!-- <button type="button" class="d-block btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</button> -->
+                        </div>
+                        <!-- End Col -->
+                      </div>
+                      <!-- End Row -->
+                    </div>
+                  </div>
+                  <!-- End Media -->
+                </div>
+  
+                <div class="card-footer pt-0">
+                  <ul class="list-inline list-separator small text-body">
+                    <li class="list-inline-item"><%=p.carrier %> </li>
+                    <li class="list-inline-item"><%= p.weight %> lbs</li>
+                    <li class="list-inline-item">Uploaded 10/8/21</li>
+                  </ul>
+                  
+                </div>
+              </div>
+              <!-- End Card -->
+  
+              <% } %> 
+  
+            </div>
+            </div>
+            <!-- End Body -->
+
+
+          </div>
+          <!-- End Card -->
+
+
+
+
+        </div>
+      </div>
+      <!-- End Col -->
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- End Content -->
+</div>
+
+  <%- include('../../partials/foot') %>

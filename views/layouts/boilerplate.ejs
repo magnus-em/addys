@@ -3,7 +3,7 @@
 <% if(user && user.isAdmin) { %> 
     <%- include('../partials/navbar_admin') %> 
 <% }  else if (user && user.isForwarder) { %> 
-    <%- include('../partials/navbar_user') %> 
+    <%- include('../partials/navbar_forwarder') %> 
 <% }  else if (user) { %> 
     <%- include('../partials/navbar_user') %> 
 <% }  else  { %> 

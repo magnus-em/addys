@@ -10,9 +10,9 @@ module.exports.landing = (req,res) => {
     res.render('forwarder/landing')
 }
 
-module.exports.inbox = catchAsync(async (req,res) => {
+module.exports.requested = catchAsync(async (req,res) => {
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
-    res.render('forwarder/inbox', {user})
+    res.render('forwarder/dash/requested', {user})
 })
 
 module.exports.uploadForm = (req,res) => {
@@ -45,3 +45,32 @@ module.exports.upload = catchAsync(async (req,res) => {
 
     res.redirect('/forwarder/inbox')
 })
+
+module.exports.personal = catchAsync(async (req,res) => {
+    res.render('forwarder/account/personal')
+})
+
+module.exports.security = catchAsync(async (req,res) => {
+    res.render('forwarder/account/security')
+})
+
+module.exports.payments = catchAsync(async (req,res) => {
+    res.render('forwarder/account/payments')
+})
+
+module.exports.address = catchAsync(async (req,res) => {
+    res.render('forwarder/account/addresses')
+})
+
+module.exports.forwards = catchAsync(async (req,res) => {
+    res.render('forwarder/account/forwards')
+})
+
+module.exports.preferences = catchAsync(async (req,res) => {
+    res.render('forwarder/account/preferences')
+})
+
+module.exports.notifications = catchAsync(async (req,res) => {
+    res.render('forwarder/account/notifications')
+})
+

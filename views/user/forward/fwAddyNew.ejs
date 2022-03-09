@@ -1,0 +1,208 @@
+<%- include('../../partials/head') %>
+<%- include('../../partials/navbar_user') %> 
+
+<div class=" content-space-t-2">
+  <!-- Breadcrumb -->
+  <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+    <div class="container content-space-1 content-space-b-lg-3">
+      <div class="row align-items-center">
+        <div class="col">
+          <div class="d-none d-lg-block">
+            <h1 class="h2 text-white">Submit forward</h1>
+          </div>
+
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-light mb-0">
+              <li class="breadcrumb-item active" aria-current="page"><%= user.pkg.shipper %></li>
+              <li class="breadcrumb-item"><%= user.pkg.carrier %> </li>
+              <li class="breadcrumb-item"><%= user.pkg.tracking %> </li>
+            </ol>
+          </nav>
+          <!-- End Breadcrumb -->
+        </div>
+        <!-- End Col -->
+
+        <div class="col-auto">
+
+
+          <!-- Responsive Toggle Button -->
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-default">
+              <i class="bi-list"></i>
+            </span>
+            <span class="navbar-toggler-toggled">
+              <i class="bi-x"></i>
+            </span>
+          </button>
+          <!-- End Responsive Toggle Button -->
+        </div>
+        <!-- End Col -->
+      </div>
+      <!-- End Row -->
+    </div>
+  </div>
+  <!-- End Breadcrumb -->
+
+  <!-- Content -->
+  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+    <div class="row">
+      <div class="col-lg-3">
+        <!-- Navbar -->
+        <div class="navbar-expand-lg navbar-light">
+          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+            <!-- Card -->
+            <div class="card flex-grow-1 mb-5">
+              <div class="card-body">
+
+                
+                
+                <!-- Nav -->
+                <span class="text-cap">Steps</span>
+
+                <!-- List -->
+                <ul class="nav nav-sm nav-tabs nav-vertical">
+                  <ul id="fwFormProgress" class="js-step-progress step step-icon-xs step-border-last-0">
+                    <li class="step-item active focus">
+                      <a class="step-content-wrapper"  href="#"
+                         data-hs-step-form-next-options='{
+                          "targetSelector": "#fwFormStepAddress"
+                        }'>
+                        <span class="step-icon step-icon-soft-dark">1</span>
+                        <div class="step-content">
+                          <span class="step-title">Address</span>
+                          <span class="step-title-description step-text">Specify where to forward</span>
+                        </div>
+                      </a>
+                    </li>
+      
+                    <li class="step-item">
+                      <a class="step-content-wrapper" href="/user/inbox/<%= user.pkg._id %>/forward/shipping"
+                         data-hs-step-form-next-options='{
+                          "targetSelector": "#fwFormStepShipping"
+                        }'>
+                        <span class="step-icon step-icon-soft-dark">2</span>
+                        <div class="step-content">
+                          <span class="step-title">Shipping</span>
+                          <span class="step-title-description step-text">Choose shipping service</span>
+                        </div>
+                      </a>
+                    </li>
+      
+                    <li class="step-item">
+                      <a class="step-content-wrapper"  href="/user/inbox/<%= user.pkg._id %>/forward/payment"
+                         data-hs-step-form-next-options='{
+                          "targetSelector": "#fwFormStepPayment"
+                        }'>
+                        <span class="step-icon step-icon-soft-dark">3</span>
+                        <div class="step-content">
+                          <span class="step-title">Payment</span>
+                          <span class="step-title-description step-text">Choose your payment method</span>
+                        </div>
+                      </a>
+                    </li>
+        
+    
+    
+      
+                    <li class="step-item">
+                      <a class="step-content-wrapper"  href="/user/inbox/<%= user.pkg._id %>/forward/overview"
+                         data-hs-step-form-next-options='{
+                          "targetSelector": "#fwFormStepOverview"
+                        }'>
+                        <span class="step-icon step-icon-soft-dark">4</span>
+                        <div class="step-content">
+                          <span class="step-title">Overview</span>
+                          <span class="step-title-description step-text">Confirm your forward</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </ul>
+                <!-- End List -->
+
+
+
+
+
+              </div>
+            </div>
+            <!-- End Card -->
+          </div>
+        </div>
+        <!-- End Navbar -->
+      </div>
+      <!-- End Col -->
+
+      <div class="col-lg-9">
+        <div class="d-grid gap-3 gap-lg-5">
+          <!-- Card -->
+          <div class="card">
+            <div class="card-header border-bottom">
+              <div class="flex-grow-1">
+                <span class="d-lg-none">Step 1 of 4</span>
+                <h3 class="card-header-title">Where do you want your package shipped?</h3>
+              </div>            
+            </div>
+
+                      <!-- Body -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6 mb-5 mb-sm-7">
+                <!-- Radio Check -->
+                <div class="form-check form-check-inline w-100 h-100">
+                  <input type="radio" id="billingRadio1" name="billingRadio" class="form-check-input" checked="">
+                  <label class="form-check-label" for="billingRadio1">
+                    <span class="h5 d-block">Shipping address #1</span>
+
+                    <span class="d-block mb-2">
+                      45 Roker Terrace<br>
+                      Latheronwheel<br>
+                      KW5 8NW, London<br>
+                      UK <img class="avatar avatar-xss avatar-circle me-1" src="/public/assets/svg/flags/1x1/gb.svg" alt="Great Britain Flag">
+                    </span>
+
+                    <a class="btn btn-white btn-xs" href="/user/account/addresses">
+                      <i class="bi-pencil-fill me-1"></i> Edit address
+                    </a>
+                  </label>
+                </div>
+                <!-- End Radio Check -->
+              </div>
+              <!-- End Col -->
+
+              
+            </div>
+            <!-- End Row -->
+          </div>
+          <!-- End Body -->
+
+          <!-- Footer -->
+          <div class="card-footer pt-0">
+            <div class="d-flex justify-content-end align-items-center">
+              <a type="button" class="btn btn-primary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
+                Save and continue <i class="bi-chevron-right small ms-1"></i>
+              </a>
+            </div>
+          </div>
+          <!-- End Footer -->
+
+
+
+
+          </div>
+          <!-- End Card -->
+
+
+
+
+        </div>
+      </div>
+      <!-- End Col -->
+    </div>
+    <!-- End Row -->
+  </div>
+  <!-- End Content -->
+</div>
+
+  <%- include('../../partials/foot') %>

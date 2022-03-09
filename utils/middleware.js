@@ -2,15 +2,15 @@ const Addy = require('../models/addy')
 const Review = require('../models/review')
 
 
-module.exports.isUser = (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        req.session.returnTo = req.originalUrl;
-        req.flash('error', 'Must be logged in')
-        return res.redirect('/login')
-    } else if (req.user.isAdmin) {
-        return res.redirect('/admin')
-    }
-    next()
+
+
+module.exports.isClient = (req, res, next) => {
+    if (req.isAuthenticated() && req.user.isClient) {
+        return next();
+    } 
+    req.session.returnTo = req.originalUrl;
+    req.flash('error', 'Must be client')
+    res.redirect('/login') 
 }
 
 module.exports.isLoggedIn = (req, res, next) => {

@@ -21,6 +21,10 @@ const userSchema = new Schema({
         ref: 'Addy'
     },
     mailbox: Number,
+    isClient: {
+        type: Boolean,
+        default: false
+    },
     isAdmin: {
         type: Boolean,
         default: false

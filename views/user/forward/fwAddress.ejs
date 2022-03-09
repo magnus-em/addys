@@ -119,53 +119,33 @@
 
           <!-- Body -->
           <div class="card-body">
-            <!-- Form -->
-            <div class="mb-4">
-                <label for="streetAddressLabel" class="form-label">Enter a street address</label>
-                <p class="small mt-n2">We won't share your street address. We use your location to find candidates in your area.</p>
+            <div class="row">
+              <div class="col-sm-6 mb-5 mb-sm-7">
+                <!-- Radio Check -->
+                <div class="form-check form-check-inline w-100 h-100">
+                  <input type="radio" id="billingRadio1" name="billingRadio" class="form-check-input" checked="">
+                  <label class="form-check-label" for="billingRadio1">
+                    <span class="h5 d-block">Shipping address #1</span>
 
-                <input type="text" class="form-control" name="streetAddress" id="streetAddressLabel" placeholder="Arch 294 Jewell Street" aria-label="Arch 294 Jewell Street">
+                    <span class="d-block mb-2">
+                      45 Roker Terrace<br>
+                      Latheronwheel<br>
+                      KW5 8NW, London<br>
+                      UK <img class="avatar avatar-xss avatar-circle me-1" src="/public/assets/svg/flags/1x1/gb.svg" alt="Great Britain Flag">
+                    </span>
+
+                    <a class="btn btn-white btn-xs" href="/user/account/addresses">
+                      <i class="bi-pencil-fill me-1"></i> Edit address
+                    </a>
+                  </label>
+                </div>
+                <!-- End Radio Check -->
               </div>
-              <!-- End Form -->
+              <!-- End Col -->
 
-              <div class="row gx-3">
-                <div class="col-sm-6">
-                  <!-- Form -->
-                  <div class="mb-4">
-                    <label for="cityLabel" class="form-label">City</label>
-                    <input type="text" class="form-control" name="cityName" id="cityLabel" placeholder="London" aria-label="London">
-                  </div>
-                  <!-- End Form -->
-                </div>
-                <!-- End Col -->
-
-                <div class="col-6 col-sm-3">
-                  <!-- Form -->
-                  <div class="mb-4">
-                    <label for="stateLabel" class="form-label">State</label>
-                    <input type="text" class="form-control" name="stateName" id="stateLabel" placeholder="Camberwell" aria-label="Camberwell">
-                  </div>
-                  <!-- End Form -->
-                </div>
-                <!-- End Col -->
-
-                <div class="col-6 col-sm-3">
-                  <!-- Form -->
-                  <div class="mb-4">
-                    <label for="zipCodeLabel" class="form-label">ZIP code</label>
-                    <input type="text" class="js-masked-input form-control" name="zipCodeName" id="zipCodeLabel" placeholder="xxx xxx" aria-label="xxx xxx"
-                           data-hs-mask-options='{
-                             "template": "AA0 0AA"
-                           }'>
-                  </div>
-                  <!-- End Form -->
-                </div>
-                <!-- End Col -->
-              </div>
-              <!-- End Row -->
-
-
-
+              
+            </div>
+            <!-- End Row -->
           </div>
           <!-- End Body -->
 
