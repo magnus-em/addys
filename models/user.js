@@ -32,7 +32,41 @@ const userSchema = new Schema({
     isForwarder: {
         type: Boolean,
         default: false
-    }
+    },
+    addresses: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            company: String,
+            street1: {
+                type: String,
+                required: true
+            },
+            street_no: String,
+            street2: String,
+            street3: String,
+            city: {
+                type: String,
+                required: true
+            },
+            zip: {
+                type: String,
+                required: true
+            },
+            state: {
+                type: String,
+                required: true
+            },
+            country: {
+                type: String,
+                required: true
+            },
+            phone: String,
+            email: String,
+        }
+    ]
 })
 
 userSchema.virtual('totalNew').get(function() {

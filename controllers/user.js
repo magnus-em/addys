@@ -2,7 +2,7 @@ const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
-const {getShipment} = require('../shippo/test')
+const {getShipment, createTransaction} = require('../shippo/test')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 
 
@@ -101,50 +101,95 @@ module.exports.addressForm = catchAsync(async(req,res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/fwAddyNew', {user})
+    res.render('user/forward/address', {user})
+})
+
+module.exports.saveAddress = catchAsync(async (req,res) => {
+    const user = await User.findById(req.user._id)
+    const address = {
+        name: req.body.name,
+        street1: req.body.street1,
+        street2: req.body.street2,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        zip: req.body.zip
+    }
+    user.addresses.push(address)
+    await user.save()
+    res.redirect('/user/account/addresses')
+})
+
+module.exports.deleteAddress = catchAsync(async(req,res) => { 
+    const user = await User.findById(req.user._id)
+    const index = req.params.id  -1 ;
+    console.log(index)
+    console.log(user.addresses[index])
+    user.addresses.splice(index, 1)
+    await user.save()
+    res.redirect('/user/account/addresses')
 })
 
 module.exports.shippingForm = catchAsync(async(req,res) => {
     const {id} = req.params
+    console.log(req.query)
+    res.locals.query = req.query
+    const user = await User.findById(req.user._id).populate('addy')
+    const address = await user.addresses.id(req.query.address)
+    console.log(address)
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
-    const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    user.shipment = await getShipment();
-    res.render('user/forward/fwShippingNew', {user})
+    user.shipment = await getShipment(address);
+    res.render('user/forward/shipping', {user})
 })
 
 module.exports.paymentForm = catchAsync(async(req,res) => {
+    res.locals.query = req.query
     const {id} = req.params
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/fwPaymentNew', {user})
+    res.render('user/forward/payment', {user})
 })
 
 module.exports.overviewForm = catchAsync(async(req,res) => {
+    res.locals.query = req.query
     const {id} = req.params
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/fwOverviewNew', {user})
+
+
+
+    res.render('user/forward/overview', {user})
 })
 
 
 module.exports.forward = catchAsync(async (req,res) => {
     const {id} = req.params
-    const {rateId, shipmentId} = req.body
-    console.log(rateId)
-    console.log(shipmentId)
-    const shipment = await shippo.shipment.retrieve(shipmentId)
-    console.log(shipment.status)
-    // console.log('shipment: ')
-    // console.log(shipment)
+    const {rate} = req.query
+
+    const user = await User.findById(req.user._id).populate('addy')
+    const address = await user.addresses.id(req.body.address)
+    // const shipment = getShipment(address)
+    console.log('body.rate')
+    console.log(req.body.rate)
+    console.log(req.body.shipment)
+    const trx = await createTransaction(req.body.rate)
+    console.log(trx)
     const pkg = await Package.findById(id);
+    pkg.shippo = trx;
+    pkg.label_url = trx.label_url;
+    pkg.tracking_number = trx.tracking_number;
+    pkg.tracking_url_provider = trx.tracking_url_provider;
+    pkg.status = 'FORWARDED'
+    pkg.save()
+    console.log(pkg)
     console.log(req.body)
-    res.send(req.body)
+    res.redirect('/user/inbox/new')
 })
 
 

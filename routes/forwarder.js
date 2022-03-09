@@ -13,6 +13,10 @@ router.route('/')
 router.route('/dash/requested')
     .get(isForwarder, fw.requested)
 
+router.get('/dash/awaiting', isForwarder, fw.awaiting)
+router.get('/dash/forwarded', isForwarder, fw.forwarded)
+
+
 router.route('/upload')
     .get(isForwarder, fw.uploadForm)
     .post(isForwarder, upload.array('image'), fw.upload)

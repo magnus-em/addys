@@ -15,6 +15,16 @@ module.exports.requested = catchAsync(async (req,res) => {
     res.render('forwarder/dash/requested', {user})
 })
 
+module.exports.awaiting = catchAsync(async (req,res) => {
+    const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
+    res.render('forwarder/dash/awaiting', {user})
+})
+
+module.exports.forwarded = catchAsync(async (req,res) => {
+    const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
+    res.render('forwarder/dash/forwarded', {user})
+})
+
 module.exports.uploadForm = (req,res) => {
     res.render('forwarder/upload')
 }
@@ -43,7 +53,7 @@ module.exports.upload = catchAsync(async (req,res) => {
     addy.packages.push(package)
     await addy.save()               
 
-    res.redirect('/forwarder/inbox')
+    res.redirect('/forwarder/dash/requested')
 })
 
 module.exports.personal = catchAsync(async (req,res) => {

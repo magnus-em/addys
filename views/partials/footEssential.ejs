@@ -18,6 +18,8 @@
 <script src="/public/assets/js/leaflet.js"></script>
 
 <script src="/public/assets/js/swiper-bundle.js"></script>
+<script src="/public/assets/js/tom-select.complete.min.js"></script>
+<script src="/public/assets/js/hs.tom-select.js"></script>
 
 
 <script src="/public/assets/js/hs.bs-validation.js"></script>
@@ -170,6 +172,14 @@
     // INITIALIZATION OF TOGGLE STATE
     // =======================================================
     new HSToggleState('.js-toggle-state')
+  });
+</script>
+
+<script>
+  (function() {
+    // INITIALIZATION OF SELECT
+    // =======================================================
+    HSCore.components.HSTomSelect.init('.js-select')
   });
 </script>
 

@@ -133,77 +133,75 @@
 
       <div class="col-lg-9">
         <div class="d-grid gap-3 gap-lg-5">
-          <!-- Card -->
-          <div id="fwFormStepAddress" class="card active">
 
-
-            <!-- Header -->
-            <div class="card-header border-bottom">
-                  <div class="flex-grow-1">
-                    <span class="d-lg-none">Step 3 of 4</span>
-                    <h3 class="card-header-title">Payment details</h3>
+          <form action="/user/inbox/<%= user.pkg._id %>/forward/overview">
+            <!-- Card -->
+            <div id="fwFormStepAddress" class="card active">
+              <!-- Header -->
+              <div class="card-header border-bottom">
+                    <div class="flex-grow-1">
+                      <span class="d-lg-none">Step 3 of 4</span>
+                      <h3 class="card-header-title">Payment details</h3>
+                    </div>
+                  </div>
+              <!-- End Header -->
+              <!-- Body -->
+              <div class="card-body">
+                <!-- Form -->
+                <div class="mb-4">
+                  <label class="form-label">Choose saved card</label>
+                  <div class="d-grid gap-2">
+                    <!-- Custom Radio -->
+                    <label class="form-control" for="jobTypeRadio1">
+                      <span class="form-check custom-radio">
+                        <input type="radio" class="form-check-input" name="payment" id="jobTypeRadio1" value="payment1" checked>
+                        <span class="form-check-label">Visa 0005</span>
+                      </span>
+                    </label>
+                    <!-- End Custom Radio -->
+                    <!-- Custom Radio -->
+                    <label class="form-control" for="jobTypeRadio2">
+                      <span class="form-check custom-radio">
+                        <input type="radio" class="form-check-input" name="payment" id="jobTypeRadio2" value="payment2">
+                        <span class="form-check-label">Amex 5002</span>
+                      </span>
+                    </label>
+                    <!-- End Custom Radio -->
                   </div>
                 </div>
-            <!-- End Header -->
-  
-            <!-- Body -->
-            <div class="card-body">
-              <!-- Form -->
-              <div class="mb-4">
-                <label class="form-label">Choose saved card</label>
-  
-                <div class="d-grid gap-2">
-                  <!-- Custom Radio -->
-                  <label class="form-control" for="jobTypeRadio1">
-                    <span class="form-check custom-radio">
-                      <input type="radio" class="form-check-input" name="jobTypeRadioName" id="jobTypeRadio1" checked>
-                      <span class="form-check-label">Visa 0005</span>
-                    </span>
-                  </label>
-                  <!-- End Custom Radio -->
-  
-                  <!-- Custom Radio -->
-                  <label class="form-control" for="jobTypeRadio2">
-                    <span class="form-check custom-radio">
-                      <input type="radio" class="form-check-input" name="jobTypeRadioName" id="jobTypeRadio2">
-                      <span class="form-check-label">Amex 5002</span>
-                    </span>
-                  </label>
-                  <!-- End Custom Radio -->
-  
-  
-                </div>
+                <!-- End Form -->
               </div>
-              <!-- End Form -->
-  
-  
-            </div>
-            <!-- End Body -->
-            <div class="card-footer pt-0">
-              <div class="d-flex align-items-center">
-                <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
-                  <i class="bi-chevron-left small ms-1"></i> Previous step
-                </a>
-                <div class="ms-auto">
-                  <a type="button" class="btn btn-primary" href="/user/inbox/<%= user.pkg._id %>/forward/overview">
-                    Save and continue <i class="bi-chevron-right small ms-1"></i>
+              <!-- End Body -->
+
+              <input type="hidden" value="<%= query.address %>" name="address" />
+              <input type="hidden" value="<%= query.shipment%> " name="shipment" />
+              <input type="hidden" value="<%= query.rate %>" name="rate" />
+
+
+
+              <div class="card-footer pt-0">
+                <div class="d-flex align-items-center">
+                  <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
+                    <i class="bi-chevron-left small ms-1"></i> Previous step
                   </a>
+                  <div class="ms-auto">
+                    <button type="submit" class="btn btn-primary">
+                      Save and continue <i class="bi-chevron-right small ms-1"></i>
+                    </button>
+                  </div>
+                  <!-- <div class="ms-auto">
+                    <button type="button" class="btn btn-primary"
+                            data-hs-step-form-next-options='{
+                              "targetSelector": "#fwFormStepOverview"
+                            }'>
+                      Save and continue <i class="bi-chevron-right small ms-1"></i>
+                    </button>
+                  </div> -->
                 </div>
-  
-                <!-- <div class="ms-auto">
-                  <button type="button" class="btn btn-primary"
-                          data-hs-step-form-next-options='{
-                            "targetSelector": "#fwFormStepOverview"
-                          }'>
-                    Save and continue <i class="bi-chevron-right small ms-1"></i>
-                  </button>
-                </div> -->
               </div>
             </div>
-  
-  
-          </div>
-          <!-- End Card -->
+            <!-- End Card -->
+          </form>
 
 
 

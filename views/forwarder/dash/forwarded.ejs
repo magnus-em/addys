@@ -67,7 +67,7 @@
                 <!-- List -->
                 <ul class="nav nav-sm nav-tabs nav-vertical">
                   <li class="nav-item">
-                    <a class="nav-link active" href="/forwarder/dash/requested">
+                    <a class="nav-link " href="/forwarder/dash/requested">
                       <i class="bi-box nav-icon"></i> Forward requested
                     </a>
                   </li>
@@ -77,11 +77,10 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link " href="/forwarder/dash/forwarded">
+                    <a class="nav-link active" href="/forwarder/dash/forwarded">
                       <i class="bi-forward-fill nav-icon"></i> Forwarded
                     </a>
                   </li>
-
                 </ul>
                 <!-- End List -->
 
@@ -103,8 +102,8 @@
           <!-- Card -->
           <div class="card">
             <div class="card-header border-bottom">
-              <h4 class="card-header-title">Ready to forward</h4>
-              <p class="card-text">Download label, attach, and drop off</p>
+              <h4 class="card-header-title">Forwarded packages</h4>
+              <p class="card-text">Find payout details under Account / Payments</p>
 
             </div>
 
@@ -114,7 +113,7 @@
               <div class="d-grid gap-5 mb-10">
 
                 <% for (let p of user.addy.packages) { %> 
-                  <% if (p.status != 'PENDING') { continue;} %> 
+                  <% if (p.status != 'FORWARDED') { continue;} %> 
 
                 <!-- Card -->
                 <div class="card card-bordered ">
@@ -146,7 +145,7 @@
                               <span class="legend-indicator bg-success"></span>Forward requested
                             </span>
                             <div class="d-flex gap-2 mt-1">
-                              <a type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="#"> <i class="bi-download me-1"></i>Label</a>
+                              <a type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-download me-1"></i>Label</a>
                               <% if (p.images.length != 0) { %> 
                               <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer"  href="<%= p.images[0].url %>" data-fslightbox="gallerye<%=p._id %>">
                                 <i class="bi-image me-1"></i>Photos

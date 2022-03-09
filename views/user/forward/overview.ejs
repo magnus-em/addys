@@ -134,73 +134,72 @@
       <div class="col-lg-9">
         <div class="d-grid gap-3 gap-lg-5">
           <!-- Card -->
-          <div id="fwFormStepAddress" class="card active">
+          <form action="/user/inbox/<%= user.pkg._id %>/forward/" method="post">
+            <div id="fwFormStepAddress" class="card active">
+              <div class="card-header border-bottom">
+                <div class="flex-grow-1">
+                  <span class="d-lg-none">Step 4 of 4</span>
+                  <h3 class="card-header-title">Forward overview</h3>
+                </div>
+              </div>
+              <!-- End Header -->
+              <!-- Body -->
+              <div class="card-body">
+                <div class="row justify-content-md-between">
+                    <div class="col-md-5">
+                      <dl class="row">
+                        <dt class="col-6">Address Id:</dt>
+                        <dd class="col-6"><%= query.address %> </dd>
+                        <dt class="col-6">Shipment</dt>
+                        <dd class="col-6"><%= user.shipment %> </dd>
+                        <dt class="col-6">Cost:</dt>
+                        <dd class="col-6">$10</dd>
+                      </dl>
+                      <!-- End Row -->
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-md-5">
+                      <dl class="row">
+                        <dt class="col-6">Package:</dt>
+                        <dd class="col-6">Amazon</dd>
+                        <dt class="col-6">Weight:</dt>
+                        <dd class="col-6">12 lbs</dd>
+                        <dt class="col-6">Est days:</dt>
+                        <dd class="col-6">2</dd>
+                      </dl>
+                      <!-- End Row -->
+                    </div>
+                    <!-- End Col -->
+                  </div>
+            
+              </div>
+              <!-- End Body -->
 
-            <div class="card-header border-bottom">
-              <div class="flex-grow-1">
-                <span class="d-lg-none">Step 4 of 4</span>
-                <h3 class="card-header-title">Forward overview</h3>
-              </div>
-            </div>
-            <!-- End Header -->
-  
-            <!-- Body -->
-            <div class="card-body">
-  
-              <div class="row justify-content-md-between">
-                  <div class="col-md-5">
-                    <dl class="row">
-                      <dt class="col-6">Carrier:</dt>
-                      <dd class="col-6">HG328e91UA</dd>
-  
-                      <dt class="col-6">Service</dt>
-                      <dd class="col-6">House</dd>
-  
-                      <dt class="col-6">Cost:</dt>
-                      <dd class="col-6">$10</dd>
-                    </dl>
-                    <!-- End Row -->
-                  </div>
-                  <!-- End Col -->
-  
-                  <div class="col-md-5">
-                    <dl class="row">
-                      <dt class="col-6">Package:</dt>
-                      <dd class="col-6">Amazon</dd>
-  
-                      <dt class="col-6">Weight:</dt>
-                      <dd class="col-6">12 lbs</dd>
-  
-                      <dt class="col-6">Est days:</dt>
-                      <dd class="col-6">2</dd>
-                    </dl>
-                    <!-- End Row -->
-                  </div>
-                  <!-- End Col -->
-                </div>
-              
-            </div>
-            <!-- End Body -->
-  
-            <!-- Footer -->
-            <div class="card-footer pt-0">
-              <div class="d-flex align-items-center">
-                <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/payment">
-                  <i class="bi-chevron-left small ms-1"></i> Previous step
-                </a>
-  
-                <div class="ms-auto">
-                  <a type="button" class="btn btn-primary" href="/user/inbox/pending">
-                    Forward 
+
+              <input type="hidden" value="<%= query.address %>" name="address" />
+              <input type="hidden" value="<%= query.shipment%> " name="shipment" />
+              <input type="hidden" value="<%= query.rate %>" name="rate" />
+              <input type="hidden" value="<%= query.payment %>" name="payment" />
+
+
+              <!-- Footer -->
+              <div class="card-footer pt-0">
+                <div class="d-flex align-items-center">
+                  <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/payment">
+                    <i class="bi-chevron-left small ms-1"></i> Previous step
                   </a>
-                  <!-- <button  type="submit"  class="btn btn-primary">
-                      Save and continue <i class="bi-chevron-right small ms-1"></i>
-                    </button> -->
+                  <div class="ms-auto">
+                    <button type="submit" class="btn btn-primary" >
+                      Submit
+                    </button>
+                    <!-- <button  type="submit"  class="btn btn-primary">
+                        Save and continue <i class="bi-chevron-right small ms-1"></i>
+                      </button> -->
+                  </div>
                 </div>
               </div>
             </div>
-  
-          </div>
+          </form>
           <!-- End Card -->
 
 

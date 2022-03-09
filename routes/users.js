@@ -45,7 +45,11 @@ router.post('/user/inbox/:id/forward', isClient, user.forward)
 router.get('/user/account/personal',isClient, user.personal)
 router.get('/user/account/security',isClient, user.security)
 router.get('/user/account/payments',isClient, user.payments)
+
 router.get('/user/account/addresses',isClient, user.address)
+router.post('/user/account/addresses', isClient, user.saveAddress)
+router.delete('/user/account/addresses/:id', isClient, user.deleteAddress)
+
 router.get('/user/account/notifications',isClient, user.notifications)
 
 

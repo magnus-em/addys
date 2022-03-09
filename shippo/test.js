@@ -1,7 +1,7 @@
 var shippo = require('shippo')(process.env.SHIPPO_TEST);
 
 
-var addressFrom  = {
+var addressFrom = {
     "name": "Shawn Ippotle",
     "street1": "1127 Evergreen Point Rd",
     "city": "Medina",
@@ -20,7 +20,7 @@ var addressTo = {
 };
 
 var parcel = {
-    "length": "5",
+    "length": "15",
     "width": "5",
     "height": "5",
     "distance_unit": "in",
@@ -28,7 +28,6 @@ var parcel = {
     "mass_unit": "lb"
 };
 
-let savedShipment = null;
 
 // shippo.shipment.create({
 //     "address_from": addressFrom,
@@ -65,45 +64,45 @@ let savedShipment = null;
 //     });
 // }
 
-module.exports.getShipment = function () {
-    return new Promise((resolve,reject) => {
-        if (savedShipment) {
-            resolve(savedShipment)
-        }
+module.exports.getShipment = function (address) {
+    return new Promise((resolve, reject) => {
+
         shippo.shipment.create({
-            "address_from": addressFrom,
+            "address_from": {
+                "name": address.name,
+                "street1": address.street1,
+                "city": address.city,
+                "state": address.state,
+                "zip": address.zip,
+                "country": address.country
+            },
             "address_to": addressTo,
             "parcels": [parcel],
             "async": false
-        }, function(err, shipment){
+        }, function (err, shipment) {
             if (err) {
                 console.log('SHIPPO ERROR')
                 console.log(err)
                 reject(err)
             }
-            console.log('in shipment generator')
-            console.log(shipment)
-            savedShipment = shipment;
             resolve(shipment)
         });
     })
 }
 
-// genRates = async () => {
-//     shippo.shipment.create({
-//         "address_from": addressFrom,
-//         "address_to": addressTo,
-//         "parcels": [parcel],
-//         "async": false
-//     }, function(err, shipment){
-//         if (err) {
-//             console.log('SHIPPO ERROR')
-//             console.log(err)
-//             return
-//         }
-//         console.log('in rates generator')
-//         console.log(shipment.rates)
-//         return shipment.rates
-//     });
-// }
+module.exports.createTransaction = function (rate) {
+    return new Promise((resolve, reject) => {
+        shippo.transaction.create({
+            "rate": rate,
+            "label_file_type": "PDF",
+            "async": false
+        }, function (err, transaction) {
+            if (err) {
+                console.log(err)
+                reject(err)
+            }
+            resolve(transaction)
+        });
+    })
+}
 

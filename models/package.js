@@ -31,7 +31,11 @@ const packageSchema = new Schema({
         enum: ['NEW','PENDING','FORWARDED']
     },
     addy: {type: Schema.Types.ObjectId, ref: 'Addy'},
-    user: {type: Schema.Types.ObjectId, ref: 'User'}
+    user: {type: Schema.Types.ObjectId, ref: 'User'},
+    label_url: String,
+    tracking_number: String,
+    tracking_url_provider: String,
+    shippo: {}
 })
 
 module.exports = mongoose.model('Package',packageSchema)
