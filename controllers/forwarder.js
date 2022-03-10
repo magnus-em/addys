@@ -103,6 +103,33 @@ module.exports.payments = catchAsync(async (req,res) => {
     res.render('forwarder/account/payments', {fw, moment, weekPkgs})
 })
 
+module.exports.addPayoutMethod = catchAsync(async(req,res) => {
+    const {type, username, primary, name} = req.body
+    const fw = await User.findById(req.user._id)
+    let prim = false;
+    if (primary) {
+        prim = true
+        for (let p of fw.payouts) {
+            p.isPrimary = false;
+        }
+    }
+    const newPayout = {type, username, name, isPrimary:prim }
+    fw.payouts.push(newPayout)
+    await fw.save();
+    res.redirect('/forwarder/account/payments')
+})
+
+module.exports.deletePayoutMethod = catchAsync(async(req,res) => {
+    const {id} = req.params;
+    console.log(id)
+    const fw = await User.findByIdAndUpdate(req.user._id, {
+        $pull: {
+            payouts: {_id : id}
+        }
+    });
+    res.redirect('/forwarder/account/payments')
+})
+
 module.exports.address = catchAsync(async (req,res) => {
     res.render('forwarder/account/addresses')
 })

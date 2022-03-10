@@ -1,326 +1,331 @@
-<%- layout('layouts/boilerplate') %> 
+<%- layout('layouts/boilerplate') %>
 
-<div class="content-space-t-2">
-  <!-- Breadcrumb -->
-  <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
-    <div class="container content-space-1 content-space-b-lg-3">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="d-none d-lg-block">
-            <h1 class="h2 text-white">Payments</h1>
+  <div class="content-space-t-2">
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark"
+      style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-none d-lg-block">
+              <h1 class="h2 text-white">Payments</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                <li class="breadcrumb-item">Account</li>
+                <li class="breadcrumb-item active" aria-current="page">Payments</li>
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
           </div>
+          <!-- End Col -->
 
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Account</li>
-              <li class="breadcrumb-item active" aria-current="page">Payments</li>
-            </ol>
-          </nav>
-          <!-- End Breadcrumb -->
+          <div class="col-auto">
+
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
         </div>
-        <!-- End Col -->
-
-        <div class="col-auto">
-
-
-          <!-- Responsive Toggle Button -->
-          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-default">
-              <i class="bi-list"></i>
-            </span>
-            <span class="navbar-toggler-toggled">
-              <i class="bi-x"></i>
-            </span>
-          </button>
-          <!-- End Responsive Toggle Button -->
-        </div>
-        <!-- End Col -->
+        <!-- End Row -->
       </div>
-      <!-- End Row -->
     </div>
-  </div>
-  <!-- End Breadcrumb -->
+    <!-- End Breadcrumb -->
 
-  <!-- Content Section -->
-  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
-    <div class="row">
-      <div class="col-lg-3">
-        <!-- Navbar -->
-        <div class="navbar-expand-lg navbar-light">
-          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
-            <!-- Card -->
-            <div class="card flex-grow-1 mb-5">
-              <div class="card-body">
-                <!-- Avatar -->
-                <div class="d-none d-lg-block text-center mb-5">
-                  <h4 class="card-title mb-0"><%= user.username %> </h4>
-                  <p class="card-text small"><%= user.email %> </p>
-                </div>
-                <!-- End Avatar -->
+    <!-- Content Section -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg navbar-light">
+            <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+              <!-- Card -->
+              <div class="card flex-grow-1 mb-5">
+                <div class="card-body">
+                  <!-- Avatar -->
+                  <div class="d-none d-lg-block text-center mb-5">
+                    <h4 class="card-title mb-0">
+                      <%= user.username %>
+                    </h4>
+                    <p class="card-text small">
+                      <%= user.email %>
+                    </p>
+                  </div>
+                  <!-- End Avatar -->
 
-                <!-- Nav -->
-                <span class="text-cap">Account</span>
+                  <!-- Nav -->
+                  <span class="text-cap">Account</span>
 
-                <!-- List -->
-                <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
-                  <li class="nav-item">
-                    <a class="nav-link " href="/forwarder/account/personal">
-                      <i class="bi-person-badge nav-icon"></i> Personal info
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/forwarder/account/security">
-                      <i class="bi-shield-shaded nav-icon"></i> Security
-                    </a>
-                  </li>
-                  <!-- <li class="nav-item">
+                  <!-- List -->
+                  <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
+                    <li class="nav-item">
+                      <a class="nav-link " href="/forwarder/account/personal">
+                        <i class="bi-person-badge nav-icon"></i> Personal info
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/forwarder/account/security">
+                        <i class="bi-shield-shaded nav-icon"></i> Security
+                      </a>
+                    </li>
+                    <!-- <li class="nav-item">
                     <a class="nav-link " href="/forwarder/account/notifications">
                       <i class="bi-bell nav-icon"></i> Notifications
                     </a>
                   </li> -->
 
-                </ul>
-                <!-- End List -->
+                  </ul>
+                  <!-- End List -->
 
 
-                <span class="text-cap">Earnings</span>
+                  <span class="text-cap">Earnings</span>
 
-                <!-- List -->
-                <ul class="nav nav-sm nav-tabs nav-vertical">
-                  <li class="nav-item">
-                    <a class="nav-link active " href="/forwarder/account/payments">
-                      <i class="bi-credit-card nav-icon"></i> Payments
-                    </a>
-                  </li>
-                  <!-- <li class="nav-item">
+                  <!-- List -->
+                  <ul class="nav nav-sm nav-tabs nav-vertical">
+                    <li class="nav-item">
+                      <a class="nav-link active " href="/forwarder/account/payments">
+                        <i class="bi-credit-card nav-icon"></i> Payments
+                      </a>
+                    </li>
+                    <!-- <li class="nav-item">
                     <a class="nav-link " href="/forwarder/account/addresses">
                       <i class="bi-list nav-icon"></i> History
                     </a>
                   </li> -->
-                </ul>
-                <!-- End List -->
+                  </ul>
+                  <!-- End List -->
 
 
-              </div>
-            </div>
-            <!-- End Card -->
-          </div>
-        </div>
-        <!-- End Navbar -->
-      </div>
-      <!-- End Col -->
-
-      <div class="col-lg-9">
-        <div class="d-grid gap-3 gap-lg-5">
-          <!-- Card -->
-          <div class="card">
-            <!-- Header -->
-            <div class="card-header d-flex justify-content-between align-items-center border-bottom">
-              <h5 class="card-header-title">Overview</h5>
-            </div>
-            <!-- End Header -->
-
-            <!-- Body -->
-            <div class="card-body">
-              <div class="row">
-                <div class="col-md mb-4 mb-md-0">
-
-                  <div class="mb-2">
-                    <span class="card-subtitle">Your clients</span>
-                    <h5><%= fw.addy.clients.length %> </h5>
-                  </div>
-
-                  <div class="mb-2">
-                    <span class="card-subtitle">Subscriptions per month</span>
-                    <h4 class="text-primary">$<%= fw.addy.clients.length *5 %> </h3>
-                  </div>
-
-                  <hr>
-
-                  <div class="mb-2">
-                    <span class="card-subtitle">Forwards this week</span>
-                    <h5><%= weekPkgs.length %> </h5>
-                  </div>
-                  <div class="mb-4">
-                    <span class="card-subtitle">Profit this week</span>
-                    <h4 class="text-primary">$<%= weekPkgs.length * 15%> </h3>
-                  </div>
-
-                  <hr>
-
-                  <div>
-                    <span class="card-subtitle">Current balance</span>
-                    <h1 class="text-primary">$<%= user.balance %> </h1>
-                  </div>
                 </div>
-                <!-- End Col -->
-
-                
-                <!-- End Col -->
               </div>
-              <!-- End Row -->
-            </div>
-            <!-- End Body -->
-
-            <hr class="my-3">
-
-            <!-- Body -->
-            <div class="card-body">
-              <div class="row align-items-center flex-grow-1 mb-2">
-                <div class="col">
-                  <h4 class="card-header-title">Weekly payout progress</h4>
-                </div>
-                <!-- End Col -->
-
-                <div class="col-auto">
-                  <span class="text-dark fw-semi-bold"><%= 7-moment().day() %> </span> days left
-                </div>
-                <!-- End Col -->
-              </div>
-              <!-- End Row -->
-
-              <!-- Progress -->
-              <div class="progress rounded-pill mb-3">
-                <div class="progress-bar" role="progressbar" style="width: <%= (moment().day()/7)*100  %>%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <!-- End Progress -->
-            </div>
-            <!-- End Body -->
-          </div>
-          <!-- End Card -->
-
-          <!-- Card -->
-          <div class="card">
-            <div class="card-header border-bottom">
-              <h5 class="card-header-title">Payout method</h5>
-            </div>
-
-            <!-- Body -->
-            <div class="card-body">
-              <div class="mb-4">
-                <p>We currently only offer payouts via Cash App, PayPal, and Venmo. Debit card and crypto support coming soon.</p>
-              </div>
-
-              <!-- List Group -->
-              <ul class="list-group mb-5">
-                <!-- Item -->
-                <li class="list-group-item">
-                  <div class="mb-2">
-                    <h5>Mark Meadows <span class="badge bg-primary ms-1">Primary</span></h5>
-                  </div>
-
-                  <!-- Media -->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img class="avatar avatar-sm" src="/public/assets/svg/brands/cash-app.png" alt="Image Description">
-                    </div>
-
-                    <div class="flex-grow-1 ms-3">
-                      <div class="row">
-                        <div class="col-sm mb-3 mb-sm-0">
-                          <span class="d-block text-dark">Cash App</span>
-                          <small class="d-block text-muted"> $userName</small>
-                        </div>
-                        <!-- End Col -->
-
-                        <div class="col-sm-auto">
-                          <div class="d-flex gap-3">
-                            <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountEditCardModal">
-                              <i class="bi-pencil-fill me-1"></i> Edit
-                            </a>
-                            <button type="button" class="btn btn-white btn-xs">
-                              <i class="bi-trash me-1"></i> Delete
-                            </button>
-                          </div>
-                        </div>
-                        <!-- End Col -->
-                      </div>
-                      <!-- End Row -->
-                    </div>
-                  </div>
-                  <!-- End Media -->
-                </li>
-                <!-- End Item -->
-
-                <!-- Item -->
-                <li class="list-group-item">
-                  <div class="mb-2">
-                    <h5>Mark Meadows
-                  </div>
-
-                  <!-- Media -->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img class="avatar avatar-sm" src="/public/assets/svg/brands/venmo.svg" alt="Image Description">
-                    </div>
-
-                    <div class="flex-grow-1 ms-3">
-                      <div class="row">
-                        <div class="col-sm mb-3 mb-sm-0">
-                          <span class="d-block text-dark">Venmo </span>
-                          <small class="d-block text-muted">@userName</small>
-                        </div>
-                        <!-- End Col -->
-
-                        <div class="col-sm-auto">
-                          <div class="d-flex gap-3">
-                            <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountEditCardModal">
-                              <i class="bi-pencil-fill me-1"></i> Edit
-                            </a>
-                            <button type="button" class="btn btn-white btn-xs">
-                              <i class="bi-trash me-1"></i> Delete
-                            </button>
-                          </div>
-                        </div>
-                        <!-- End Col -->
-                      </div>
-                      <!-- End Row -->
-                    </div>
-                  </div>
-                  <!-- End Media -->
-                </li>
-                <!-- End Item -->
-              </ul>
-              <!-- End List Group -->
-
-              <!-- Card -->
-              <a class="card card-dashed card-centered" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountAddCardModal">
-                <div class="card-body card-dashed-body py-8">
-                  <img class="avatar avatar-lg avatar-4x3 mb-2" src="/public/assets/svg/illustrations/oc-add-card.svg" alt="Image Description">
-                  <span class="d-block"><i class="bi-plus"></i> Add a new payout method</span>
-                </div>
-              </a>
               <!-- End Card -->
             </div>
-            <!-- End Body -->
           </div>
-          <!-- End Card -->
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
 
-          <!-- Card -->
-          <div class="card">
-            <!-- Header -->
-            <div class="card-header">
-              <h5 class="card-header-title">Payout history</h5>
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+            <div class="card">
+              <!-- Header -->
+              <div class="card-header d-flex justify-content-between align-items-center border-bottom">
+                <h5 class="card-header-title">Overview</h5>
+              </div>
+              <!-- End Header -->
+
+              <!-- Body -->
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md mb-4 mb-md-0">
+
+                    <div class="mb-2">
+                      <span class="card-subtitle">Your clients</span>
+                      <h5>
+                        <%= fw.addy.clients.length %>
+                      </h5>
+                    </div>
+
+                    <div class="mb-2">
+                      <span class="card-subtitle">Subscriptions per month</span>
+                      <h4 class="text-primary">$<%= fw.addy.clients.length *5 %>
+                          </h3>
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-2">
+                      <span class="card-subtitle">Forwards this week</span>
+                      <h5>
+                        <%= weekPkgs.length %>
+                      </h5>
+                    </div>
+                    <div class="mb-4">
+                      <span class="card-subtitle">Profit this week</span>
+                      <h4 class="text-primary">$<%= weekPkgs.length * 15%>
+                          </h3>
+                    </div>
+
+                    <hr>
+
+                    <div>
+                      <span class="card-subtitle">Current balance</span>
+                      <h1 class="text-primary">$<%= user.balance %>
+                      </h1>
+                    </div>
+                  </div>
+                  <!-- End Col -->
+
+
+                  <!-- End Col -->
+                </div>
+                <!-- End Row -->
+              </div>
+              <!-- End Body -->
+
+              <hr class="my-3">
+
+              <!-- Body -->
+              <div class="card-body">
+                <div class="row align-items-center flex-grow-1 mb-2">
+                  <div class="col">
+                    <h4 class="card-header-title">Weekly payout progress</h4>
+                  </div>
+                  <!-- End Col -->
+
+                  <div class="col-auto">
+                    <span class="text-dark fw-semi-bold">
+                      <%= 7-moment().day() %>
+                    </span> days left
+                  </div>
+                  <!-- End Col -->
+                </div>
+                <!-- End Row -->
+
+                <!-- Progress -->
+                <div class="progress rounded-pill mb-3">
+
+                  <div class="progress-bar" role="progressbar" style="width: <%= (moment().day()/7)*100  %>%;"
+                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <!-- End Progress -->
+              </div>
+              <!-- End Body -->
             </div>
-            <!-- End Header -->
+            <!-- End Card -->
 
-            <!-- Table -->
-            <div class="table-responsive">
-              <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Reference</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                    <th>Updated</th>
-                    <th>Invoice</th>
-                    <th></th>
-                  </tr>
-                </thead>
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h5 class="card-header-title">Payout method</h5>
+              </div>
 
-                <tbody>
-                  <!-- <tr>
+              <!-- Body -->
+              <div class="card-body">
+                <div class="mb-4">
+                  <p>We currently only offer payouts via Cash App, PayPal, and Venmo. Debit card and crypto support
+                    coming soon.</p>
+                </div>
+
+                <!-- List Group -->
+                <ul class="list-group mb-5">
+                    <% for (let p of user.payouts) { %>
+                    <!-- Item -->
+                    <li class="list-group-item">
+                      <div class="mb-2">
+                        <% if (p.isPrimary) { %>
+                          <h5><%= p.name %>  <span class="badge bg-primary ms-1">Primary</span></h5>
+                          <% } else { %>
+                            <h5><%= p.name %> </h5>
+                            <%}%>
+                      </div>
+
+                      <!-- Media -->
+                      <div class="d-flex">
+                        <div class="flex-shrink-0">
+                          <% if (p.type=='CASHAPP' ) {%>
+                            <img class="avatar avatar-sm" src="/public/assets/svg/brands/cash-app.png"
+                              alt="Image Description">
+                            <% } else if (p.type=='VENMO' ) { %>
+                              <img class="avatar avatar-sm" src="/public/assets/svg/brands/venmo.svg"
+                                alt="Image Description">
+                              <% }  else if (p.type=='PAYPAL') {%>
+                                <img class="avatar avatar-sm" src="/public/assets/paypal.png"
+                                alt="Image Description">
+                              <% } %> 
+                        </div>
+
+                        <div class="flex-grow-1 ms-3">
+                          <div class="row">
+                            <div class="col-sm mb-3 mb-sm-0">
+                              <span class="d-block text-dark">
+                                <%= p.type %>
+                              </span>
+                              <small class="d-block text-muted">
+                                <%= p.username %>
+                              </small>
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-auto">
+                              <div class="d-flex gap-3">
+                                <!-- <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal"
+                                  data-bs-target="#accountEditCardModal">
+                                  <i class="bi-pencil-fill me-1"></i> Edit
+                                </a> -->
+                                <form action="/forwarder/account/payments/<%= p._id %>?_method=DELETE" method="post">
+                                  <button type="submit" class="btn btn-white btn-xs">
+                                    <i class="bi-trash me-1"></i> Delete
+                                  </button>
+                                </form>
+                              </div>
+                            </div>
+                            <!-- End Col -->
+                          </div>
+                          <!-- End Row -->
+                        </div>
+                      </div>
+                      <!-- End Media -->
+                    </li>
+                    <!-- End Item -->
+                    <% } %>
+
+                </ul>
+                <!-- End List Group -->
+
+                <!-- Card -->
+                <a class="card card-dashed card-centered" href="javascript:;" data-bs-toggle="modal"
+                  data-bs-target="#exampleModalCenter">
+                  <div class="card-body card-dashed-body py-8">
+                    <img class="avatar avatar-lg avatar-4x3 mb-2" src="/public/assets/svg/illustrations/oc-add-card.svg"
+                      alt="Image Description">
+                    <span class="d-block"><i class="bi-plus"></i> Add a new payout method</span>
+                  </div>
+                </a>
+                <!-- End Card -->
+              </div>
+              <!-- End Body -->
+            </div>
+            <!-- End Card -->
+
+            <!-- Card -->
+            <div class="card">
+              <!-- Header -->
+              <div class="card-header">
+                <h5 class="card-header-title">Payout history</h5>
+              </div>
+              <!-- End Header -->
+
+              <!-- Table -->
+              <div class="table-responsive">
+                <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Reference</th>
+                      <th>Status</th>
+                      <th>Amount</th>
+                      <th>Updated</th>
+                      <th>Invoice</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <!-- <tr>
                     <td><a href="#">#3682303</a></td>
                     <td><span class="badge bg-soft-warning text-warning">Pending</span></td>
                     <td>$264</td>
@@ -346,17 +351,100 @@
                     <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td>
                     <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td>
                   </tr> -->
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
+              <!-- End Table -->
             </div>
-            <!-- End Table -->
+            <!-- End Card -->
           </div>
-          <!-- End Card -->
         </div>
+        <!-- End Col -->
       </div>
-      <!-- End Col -->
+      <!-- End Row -->
     </div>
-    <!-- End Row -->
+    <!-- End Content Section -->
   </div>
-  <!-- End Content Section -->
-</div>
+
+
+
+  <!-- Modal -->
+  <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <!-- Header -->
+        <div class="modal-header">
+          <h4 class="modal-title" id="accountAddCardModalLabel">Add payment account</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- End Header -->
+
+        <!-- Body -->
+        <div class="modal-body">
+
+          <!-- Form -->
+          <form action="/forwarder/account/payments" class="js-validate needs-validation" novalidate method="post">
+            <!-- Radio Button Group -->
+            <div class="btn-group btn-group-segment d-flex mb-4" role="group"
+              aria-label="Account add card radio button group">
+              <input type="radio" class="btn-check" name="accountAddCardBtnRadio" id="accountAddCardBtnRadioOption1"
+                autocomplete="off" checked="">
+              <label class="btn btn-sm" for="accountAddCardBtnRadioOption1">Payment app</label>
+
+              <input type="radio" class="btn-check" name="accountAddCardBtnRadio" id="accountAddCardBtnRadioOption2"
+                autocomplete="off" disabled="">
+              <label class="btn btn-sm" for="accountAddCardBtnRadioOption2">Debit <span
+                  class="badge bg-soft-primary text-primary">Coming soon</span></label>
+            </div>
+            <!-- End Radio Button Group -->
+
+            <!-- Form -->
+            <div class="mb-4">
+              <label for="cardNameLabel" class="form-label">Account type</label>
+              <!-- Select -->
+              <div class="tom-select-custom">
+                <select class="js-select form-select" id='type' name='type' required>
+                  <option value=""></option>
+                  <option value="CASHAPP">Cash App</option>
+                  <option value="VENMO">Venmo</option>
+                  <option value="PAYPAL">PayPal</option>
+                </select>
+              </div>
+              <!-- End Select -->
+            </div>
+            <!-- End Form -->
+
+            <!-- Form -->
+            <div class="mb-4">
+              <label for="username" class="form-label">Username (email for paypal)</label>
+              <input type="text" class="form-control" name="username" id="username" required>
+            </div>
+            <!-- End Form -->
+
+            <!-- Form -->
+            <div class="mb-4">
+              <label for="name" class="form-label">Account name</label>
+              <input type="text" class="form-control" name="name" id="name" required>
+            </div>
+            <!-- End Form -->
+
+            <!-- Custom Checkbox -->
+            <div class="form-check mb-4">
+              <input type="checkbox" class="form-check-input" name="primary" id="primaryCheckbox">
+              <label class="form-check-label" for="primaryCheckbox">Make this primary payout account</label>
+            </div>
+            <!-- End Custom Checkbox -->
+
+            <div class="d-flex justify-content-end gap-3">
+              <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+          <!-- End Form -->
+        </div>
+        <!-- End Body -->
+      </div>
+    </div>
+  </div>
+  <!-- End Modal -->

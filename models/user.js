@@ -30,6 +30,27 @@ const userSchema = new Schema({
         type: Number,
         default: 0
     },
+    payouts: [
+        {
+            type: {
+                type: String,
+                enum: ['CASHAPP','VENMO','PAYPAL'],
+                required: true
+            },
+            username: {
+                type: String,
+                requried: true
+            },
+            name: {
+                type: String,
+                required: true
+            },
+            isPrimary: {
+                type: Boolean,
+                default: false
+            }
+        }
+    ],
     
 
     addresses: [

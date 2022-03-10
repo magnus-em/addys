@@ -26,7 +26,12 @@ router.post('/upload/receipt', upload.array('image'),fw.uploadReceipt)
 
 router.get('/account/personal',isForwarder, fw.personal)
 router.get('/account/security',isForwarder, fw.security)
+
 router.get('/account/payments',isForwarder, fw.payments)
+router.post('/account/payments', isForwarder, fw.addPayoutMethod)
+
+router.delete('/account/payments/:id', isForwarder, fw.deletePayoutMethod)
+
 router.get('/account/addresses',isForwarder, fw.address)
 router.get('/account/notifications',isForwarder, fw.notifications)
 
