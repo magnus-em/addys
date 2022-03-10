@@ -36,7 +36,7 @@
                             </span>
                         <% } else if (p.status == 'FORWARDED') { %> 
                             <span class="badge bg-soft-info text-info mt-2 me-2 mb-2">
-                                <span class="legend-indicator bg-info"></span>Receipt accepted & paid
+                                <span class="legend-indicator bg-info"></span>Receipt accepted & paid out
                             </span>
                         <% } %> 
 
@@ -58,12 +58,12 @@
                         <!-- <button type="button" class="d-block btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</button> -->
                     </div>
                     <!-- End Col -->
-                    <div class="d-flex gap-2 mt-2">
+                    <div class="d-flex gap-2 mt-3">
                         <% if (p.label_url) { %> 
-                        <a type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-download me-1"></i>Label</a>
+                        <a type="button" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-download me-1"></i> Download label</a>
                         <% } %>                 
                           <%  if (p.status == "PENDING") {%> 
-                            <a type="button" data-id="<%= p._id %>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-upload me-1"></i>Receipt</a>
+                            <a type="button" data-id="<%= p._id %>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" class="btn btn-outline-primary btn-sm btn-transition rounded-pill" href="<%=p.label_url%>"> <i class="bi-check-circle-fill me-1"></i> Confirm drop off</a>
 
                         <% } %> 
                       </div>
@@ -82,6 +82,8 @@
             <li class="list-inline-item">Uploaded <%= p.uploaded.getMonth() %>/<%= p.uploaded.getDate() %> 
             </li>
             <li class="list-inline-item">Client box #<%= p.mailbox %>
+            </li>
+            <li class="list-inline-item">Forwarded <%= p.forwardedDate %>
             </li>
         </ul>
 

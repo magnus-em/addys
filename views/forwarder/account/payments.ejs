@@ -128,30 +128,30 @@
 
                   <div class="mb-2">
                     <span class="card-subtitle">Your clients</span>
-                    <h5>3</h5>
+                    <h5><%= fw.addy.clients.length %> </h5>
                   </div>
 
                   <div class="mb-2">
                     <span class="card-subtitle">Subscriptions per month</span>
-                    <h4 class="text-primary">$15</h3>
+                    <h4 class="text-primary">$<%= fw.addy.clients.length *5 %> </h3>
                   </div>
 
                   <hr>
 
                   <div class="mb-2">
                     <span class="card-subtitle">Forwards this week</span>
-                    <h5>4</h5>
+                    <h5><%= weekPkgs.length %> </h5>
                   </div>
                   <div class="mb-4">
                     <span class="card-subtitle">Profit this week</span>
-                    <h4 class="text-primary">$60</h3>
+                    <h4 class="text-primary">$<%= weekPkgs.length * 15%> </h3>
                   </div>
 
                   <hr>
 
                   <div>
                     <span class="card-subtitle">Current balance</span>
-                    <h1 class="text-primary">$75</h1>
+                    <h1 class="text-primary">$<%= user.balance %> </h1>
                   </div>
                 </div>
                 <!-- End Col -->
@@ -174,7 +174,7 @@
                 <!-- End Col -->
 
                 <div class="col-auto">
-                  <span class="text-dark fw-semi-bold">2</span> days left
+                  <span class="text-dark fw-semi-bold"><%= 7-moment().day() %> </span> days left
                 </div>
                 <!-- End Col -->
               </div>
@@ -182,7 +182,7 @@
 
               <!-- Progress -->
               <div class="progress rounded-pill mb-3">
-                <div class="progress-bar" role="progressbar" style="width: 72%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar" role="progressbar" style="width: <%= (moment().day()/7)*100  %>%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <!-- End Progress -->
             </div>
@@ -199,7 +199,7 @@
             <!-- Body -->
             <div class="card-body">
               <div class="mb-4">
-                <p>We currently only offer payouts to bank accounts and via Cash App or Venmo. Debit card and crypto support coming soon.</p>
+                <p>We currently only offer payouts via Cash App, PayPal, and Venmo. Debit card and crypto support coming soon.</p>
               </div>
 
               <!-- List Group -->
@@ -207,20 +207,20 @@
                 <!-- Item -->
                 <li class="list-group-item">
                   <div class="mb-2">
-                    <h5>First Name <span class="badge bg-primary ms-1">Primary</span></h5>
+                    <h5>Mark Meadows <span class="badge bg-primary ms-1">Primary</span></h5>
                   </div>
 
                   <!-- Media -->
                   <div class="d-flex">
                     <div class="flex-shrink-0">
-                      <img class="avatar avatar-sm" src="/public/assets/svg/brands/mastercard.svg" alt="Image Description">
+                      <img class="avatar avatar-sm" src="/public/assets/svg/brands/cash-app.png" alt="Image Description">
                     </div>
 
                     <div class="flex-grow-1 ms-3">
                       <div class="row">
                         <div class="col-sm mb-3 mb-sm-0">
-                          <span class="d-block text-dark">MasterCard •••• 4242</span>
-                          <small class="d-block text-muted">Checking - Expires 12/22</small>
+                          <span class="d-block text-dark">Cash App</span>
+                          <small class="d-block text-muted"> $userName</small>
                         </div>
                         <!-- End Col -->
 
@@ -246,20 +246,20 @@
                 <!-- Item -->
                 <li class="list-group-item">
                   <div class="mb-2">
-                    <h5>First Name
+                    <h5>Mark Meadows
                   </div>
 
                   <!-- Media -->
                   <div class="d-flex">
                     <div class="flex-shrink-0">
-                      <img class="avatar avatar-sm" src="/public/assets/svg/brands/visa.svg" alt="Image Description">
+                      <img class="avatar avatar-sm" src="/public/assets/svg/brands/venmo.svg" alt="Image Description">
                     </div>
 
                     <div class="flex-grow-1 ms-3">
                       <div class="row">
                         <div class="col-sm mb-3 mb-sm-0">
-                          <span class="d-block text-dark">Visa •••• 9016</span>
-                          <small class="d-block text-muted">Debit - Expires 04/20</small>
+                          <span class="d-block text-dark">Venmo </span>
+                          <small class="d-block text-muted">@userName</small>
                         </div>
                         <!-- End Col -->
 

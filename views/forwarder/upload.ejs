@@ -3,12 +3,13 @@
     <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
         <!-- Heading -->
         <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
-            <h2 class="h1">New package</h2>
+            <h2 class="h1">Upload new package</h2>
         </div>
         <!-- Card -->
 <div class="card">
     <div class="card-header border-bottom">
       <h5 class="card-header-title">Enter details</h5>
+      <h5 class="card-text">Make sure to enter accurate information. Inaccurate information can cause packages to get returned.</h5>
     </div>
   
     <!-- Body -->
@@ -37,9 +38,36 @@
           </div>
 
           <div class="row mb-4">
-            <label for="weight" class="col-sm-3 col-form-label form-label">Weight (g)</label>
+            <label for="weight" class="col-sm-3 col-form-label form-label">Weight (lbs)</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" name="package[weight]" id="weight" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="length" class="col-sm-3 col-form-label form-label">Length (in)</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[length]" id="length" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="width" class="col-sm-3 col-form-label form-label">Wdith (in)</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[width]" id="width" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="height" class="col-sm-3 col-form-label form-label">Height (in)</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[height]" id="height" required>
               <div class="invalid-feedback">Required</div>
               <div class="valid-feedback">Looks good</div>
             </div>

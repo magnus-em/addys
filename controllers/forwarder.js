@@ -2,7 +2,7 @@ const User = require("../models/user")
 const catchAsync = require("../utils/catchAsync")
 const Package = require('../models/package')
 const Addy = require('../models/addy')
-
+const moment = require('moment')
 
 module.exports.landing = (req,res) => {
     res.locals.title = 'Get Paid to Forward Packages From Your Home'
@@ -63,7 +63,12 @@ module.exports.uploadReceipt = catchAsync(async (req,res) => {
     const package = await Package.findById(id)
     package.receipts = req.files.map(f => ({url: f.path, filename: f.filename}))
     package.status = 'FORWARDED'
+    package.forwardedDate = Date.now()
     await package.save();
+    const client = await User.findById(req.user._id)
+    client.balance += 15;
+    await client.save();
+    req.flash('success', 'Drop off confirmed & $15 added to balance')
     res.redirect('/forwarder/dash/forwarded')
 })
 
@@ -76,7 +81,26 @@ module.exports.security = catchAsync(async (req,res) => {
 })
 
 module.exports.payments = catchAsync(async (req,res) => {
-    res.render('forwarder/account/payments')
+    const fw = await User.findById(req.user._id).populate('addy')
+    const addy = await Addy.findById(fw.addy._id).populate('clients').populate('packages')
+    fw.addy = addy;
+    console.log('fw: ' + fw)
+    console.log('addy: ' + addy)
+
+    const today = moment();
+    const weekStart = today.startOf('week').toDate()
+    const weekEnd = today.endOf('week').toDate()
+    console.log(weekStart)
+    console.log(weekEnd)
+    const weekPkgs = await Package.find({
+        forwardedDate: {
+            $gte: weekStart,
+            $lte: weekEnd
+        }
+    })
+
+    console.log('forwarded last week' + weekPkgs)
+    res.render('forwarder/account/payments', {fw, moment, weekPkgs})
 })
 
 module.exports.address = catchAsync(async (req,res) => {

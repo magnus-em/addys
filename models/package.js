@@ -21,6 +21,7 @@ const packageSchema = new Schema({
     width: Number,
     height: Number,
     uploaded: { type: Date, default: Date.now },
+    forwardedDate: Date,
     images: [
         {
             url: String,

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Package = require('./package');
 const Review = require('./review');
+const moment = require('moment')
 
 
 const addySchema = new Schema({
@@ -26,7 +27,7 @@ const addySchema = new Schema({
             ref: 'Review'
         }
     ],
-    users: [
+    clients: [
         {
             type: Schema.Types.ObjectId,
             ref: 'User'
@@ -117,6 +118,8 @@ addySchema.virtual('totalPackages').get(function() {
     }
     return i;
 })
+
+
 
 
 

@@ -5,7 +5,7 @@ const Review = require('../models/review')
 
 
 module.exports.isClient = (req, res, next) => {
-    if (req.isAuthenticated() && req.user.isClient) {
+    if (req.isAuthenticated() && req.user.type == 'CLIENT') {
         return next();
     } 
     req.session.returnTo = req.originalUrl;
@@ -23,7 +23,7 @@ module.exports.isLoggedIn = (req, res, next) => {
 }
 
 module.exports.isAdmin = (req, res, next) => {
-    if (req.isAuthenticated() && req.user.isAdmin) {
+    if (req.isAuthenticated() && req.user.type == 'ADMIN') {
         return next()
     } 
     req.session.returnTo = req.originalUrl;
@@ -32,7 +32,7 @@ module.exports.isAdmin = (req, res, next) => {
 }
 
 module.exports.isForwarder = (req,res,next) => {
-    if (req.isAuthenticated() && req.user.isForwarder) {
+    if (req.isAuthenticated() && req.user.type == 'FW') {
         return next();
     }
     req.session.returnTo = req.originalUrl;

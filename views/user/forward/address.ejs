@@ -157,6 +157,18 @@
                   <!-- Body -->
                   <div class="card-body">
                     <div class="row">
+                      <% if (user.addresses.length == 0) { %> 
+                        <div class="col-sm-6 mb-5 mb-sm-7">
+                          <!-- Card -->
+                          <a class="card card-dashed card-centered" href="/user/account/addresses">
+                            <div class="card-body card-dashed-body py-8">
+                              <img class="avatar avatar-lg avatar-4x3 mb-2" src="/public/assets/svg/illustrations/oc-address.svg" alt="Image Description">
+                              <span class="d-block"><i class="bi-plus"></i> Add a new address</span>
+                            </div>
+                          </a>
+                          <!-- End Card -->
+                        </div>
+                      <% } %> 
                       <% let i=0 %>
                         <% for (let a of user.addresses) { %>
                           <% i++; %>

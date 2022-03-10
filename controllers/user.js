@@ -29,16 +29,15 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
             throw new Error('Invalid invite code')
         }
         const {email,username,password} = req.body
-        const addy = await Addy.findById(req.body.addy).populate('users')
-        const mailbox = addy.users.length + 33; // make it seem like there are more people reshipping
-        const user = new User({email,username,addy, mailbox})
-        await addy.users.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
+        const addy = await Addy.findById(req.body.addy).populate('clients')
+        const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
+        const user = new User({email,username,addy, mailbox, type: 'CLIENT'})
+        await addy.clients.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
         const registeredUser = await User.register(user, password)
         req.login(registeredUser, err => {
             if (err) return next(err);
         })
-        req.flash('success', 'Account created')
         console.log('NEW USER CREATED')
         console.log(user)
         res.redirect('/user/inbox/new')
@@ -50,10 +49,9 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
 })
 
 module.exports.login = catchAsync(async (req,res) => {
-    req.flash('success', 'Logged in')
-    if (req.user.isAdmin) {
+    if (req.user.type == 'ADMIN') {
         return res.redirect('/admin')
-    } else if (req.user.isForwarder) {
+    } else if (req.user.type == 'FW') {
         return res.redirect('/forwarder/dash/pending')
     }
     // const redirectUrl = req.session.returnTo || '/user/inbox/new'

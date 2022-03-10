@@ -21,7 +21,7 @@ db.once("open", () => {
 
 const seedDb = async () => {
     await Addy.deleteMany({});
-    for (let i=0;i<20;i++) {
+    for (let i=0;i<10;i++) {
         const a = addresses[Math.floor(Math.random() * addresses.length)]
         const c = new Addy({
             address1: a.address1,

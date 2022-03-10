@@ -1,8 +1,8 @@
 <%- include('../partials/head') %>
 
-<% if(user && user.isAdmin) { %> 
+<% if(user && user.type == 'ADMIN') { %> 
     <%- include('../partials/navbar_admin') %> 
-<% }  else if (user && user.isForwarder) { %> 
+<% }  else if (user && user.type == 'FW') { %> 
     <%- include('../partials/navbar_forwarder') %> 
 <% }  else if (user) { %> 
     <%- include('../partials/navbar_user') %> 

@@ -22,18 +22,16 @@ const userSchema = new Schema({
         ref: 'Addy'
     },
     mailbox: Number,
-    isClient: {
-        type: Boolean,
-        default: false
+    type: {
+        type: String,
+        enum: ['CLIENT','FW','ADMIN']
     },
-    isAdmin: {
-        type: Boolean,
-        default: false
+    balance: {
+        type: Number,
+        default: 0
     },
-    isForwarder: {
-        type: Boolean,
-        default: false
-    },
+    
+
     addresses: [
         {
             name: {
