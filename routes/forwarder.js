@@ -32,8 +32,6 @@ router.post('/account/payments', isForwarder, fw.addPayoutMethod)
 
 router.delete('/account/payments/:id', isForwarder, fw.deletePayoutMethod)
 
-router.get('/account/addresses',isForwarder, fw.address)
-router.get('/account/notifications',isForwarder, fw.notifications)
 
 
 module.exports = router;

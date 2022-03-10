@@ -105,31 +105,43 @@ app.get('/index', (req, res) => {
     res.render('home');
 })
 app.get('/faq', (req,res) => {
+    res.locals.title = "Addys FAQ"
+    res.locals.description = "All the answers to any questions you have about Addys and package forwarding"
     res.render('details/faq')
 })
 app.get('/cookies',(req,res) => {
+    res.locals.title = "Cookie policy"
+    res.locals.description = "View Addys' cookie policy"
     res.render('details/cookies')
 })
 app.get('/terms', (req,res) => {
+    res.locals.title = "Terms of Service"
+    res.locals.description = "View Addy's terms of service"
     res.render('details/terms')
 })
 app.get('/privacy', (req,res) => {
+    res.locals.title = "Privacy"
+    res.locals.description = "View Addys' privacy policy"
     res.render('details/privacy')
 })
 
 app.get('/disclaimer', (req,res) => {
+    res.locals.title = "Disclaimer"
+    res.locals.description = "View Addys' disclaimer"
     res.render('details/disclaimer')
 })
 
 app.get('/contact',(req,res) => {
+    res.locals.title = "Contact Us"
+    res.locals.description = "Any questions? Send us an email at contact@addys.io"
     res.render('contact')
 })
 app.get('/requirements',(req,res) => {
+    res.locals.title = "Forwarder Requirements"
+    res.locals.description = "View our detailed forwarder requirements and terms"
     res.render('requirements')
 })
-app.get('/reshipper', catchAsync(async(req,res, next) => {
-    res.render('reshipper')
-}))
+
 
 app.get("/sitemap.xml", function(req, res, next){
     res.sendFile(__dirname + '/public/assets/sitemap.xml'); 

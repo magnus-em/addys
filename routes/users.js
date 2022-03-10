@@ -50,7 +50,6 @@ router.get('/user/account/addresses',isClient, user.address)
 router.post('/user/account/addresses', isClient, user.saveAddress)
 router.delete('/user/account/addresses/:id', isClient, user.deleteAddress)
 
-router.get('/user/account/notifications',isClient, user.notifications)
 
 
 

@@ -11,21 +11,34 @@ module.exports.landing = (req,res) => {
 }
 
 module.exports.pending = catchAsync(async (req,res) => {
+    res.locals.title = 'Ready to ship'
+    res.locals.description = 'Packages that are ready to label and drop off'
+
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
     res.render('forwarder/dash/pending', {user})
 })
 
 module.exports.new = catchAsync(async (req,res) => {
+    res.locals.title = 'Awaiting'
+    res.locals.description = 'Packages that are awaiting a client to submit a forward request'
+
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
     res.render('forwarder/dash/new', {user})
 })
 
 module.exports.forwarded = catchAsync(async (req,res) => {
+    res.locals.title = 'Forwarded'
+    res.locals.description = 'Packages that you have forwarded in the past'
+
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
     res.render('forwarder/dash/forwarded', {user})
 })
 
 module.exports.uploadForm = (req,res) => {
+    res.locals.title = 'Upload Package'
+    res.locals.description = 'Upload a new package to your dashboard'
+
+
     res.render('forwarder/upload')
 }
 
@@ -73,14 +86,26 @@ module.exports.uploadReceipt = catchAsync(async (req,res) => {
 })
 
 module.exports.personal = catchAsync(async (req,res) => {
+    res.locals.title = 'Personal'
+    res.locals.description = 'View and edit your personal info'
+
+
     res.render('forwarder/account/personal')
 })
 
 module.exports.security = catchAsync(async (req,res) => {
+    res.locals.title = 'Security'
+    res.locals.description = 'View and edit your security info'
+
+
     res.render('forwarder/account/security')
 })
 
 module.exports.payments = catchAsync(async (req,res) => {
+    res.locals.title = 'Payments'
+    res.locals.description = 'View and edit your payment methods'
+
+
     const fw = await User.findById(req.user._id).populate('addy')
     const addy = await Addy.findById(fw.addy._id).populate('clients').populate('packages')
     fw.addy = addy;
@@ -128,21 +153,5 @@ module.exports.deletePayoutMethod = catchAsync(async(req,res) => {
         }
     });
     res.redirect('/forwarder/account/payments')
-})
-
-module.exports.address = catchAsync(async (req,res) => {
-    res.render('forwarder/account/addresses')
-})
-
-module.exports.forwards = catchAsync(async (req,res) => {
-    res.render('forwarder/account/forwards')
-})
-
-module.exports.preferences = catchAsync(async (req,res) => {
-    res.render('forwarder/account/preferences')
-})
-
-module.exports.notifications = catchAsync(async (req,res) => {
-    res.render('forwarder/account/notifications')
 })
 

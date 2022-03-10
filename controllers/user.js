@@ -7,10 +7,14 @@ const shippo = require('shippo')(process.env.SHIPPO_TEST);
 
 
 module.exports.renderLoginForm = async(req,res) => {
+    res.locals.title = "Addys Login"
+    res.locals.description = "Login to manage your packages"
     res.render('user/login')
 }
 
 module.exports.renderRegisterForm = catchAsync(async (req,res) => {
+    res.locals.title = "Sign up for Addys"
+    res.locals.description = "Sign up to start using residential addresses to forward you packages"
     console.log(req.query.addy)
     if (!req.query.addy) {
         return res.redirect('/addys')
@@ -20,6 +24,9 @@ module.exports.renderRegisterForm = catchAsync(async (req,res) => {
 })
 
 module.exports.resetForm = (req,res) => {
+    res.locals.title = "Reset password"
+    res.locals.description = "Can't remember your password? No worries, just complete this easy form."
+
     res.render('user/resetPw')
 }
 
@@ -69,14 +76,20 @@ module.exports.logout = (req,res) => {
 }
 
 module.exports.inbox = catchAsync((async (req,res) => {
+    res.locals.title = "New packages"
+    res.locals.description = "Newly uploaded packages that are ready for you to submit a forward request"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
     res.render('user/inbox/new', {user})
 }))
 module.exports.inboxPending = catchAsync((async (req,res) => {
+    res.locals.title = "Pending"
+    res.locals.description = "Packages that been forward requested and are awaiting drop off by your forwarder"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
     res.render('user/inbox/pending', {user})
 }))
 module.exports.inboxForwarded = catchAsync((async (req,res) => {
+    res.locals.title = "Forwarded"
+    res.locals.description = "Packages that have been forwarded"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
     res.render('user/inbox/forwarded', {user})
 }))
@@ -94,6 +107,9 @@ module.exports.inboxForwarded = catchAsync((async (req,res) => {
 // })
 
 module.exports.addressForm = catchAsync(async(req,res) => {
+    res.locals.title = 'Choose Address'
+    res.locals.description = "Choose which address you'd like to ship your package to"
+
     const {id} = req.params
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
@@ -129,6 +145,9 @@ module.exports.deleteAddress = catchAsync(async(req,res) => {
 })
 
 module.exports.shippingForm = catchAsync(async(req,res) => {
+    res.locals.title = 'Choose Shipping'
+    res.locals.description = 'Choose your preferred shipping service'
+
     const {id} = req.params
     console.log(req.query)
     res.locals.query = req.query
@@ -143,6 +162,9 @@ module.exports.shippingForm = catchAsync(async(req,res) => {
 })
 
 module.exports.paymentForm = catchAsync(async(req,res) => {
+    res.locals.title = 'Choose Payment'
+    res.locals.description = 'Choose the payment method you want to use to pay for your label and forward fee'
+
     res.locals.query = req.query
     const {id} = req.params
     const pkg = await Package.findById(id)
@@ -153,6 +175,9 @@ module.exports.paymentForm = catchAsync(async(req,res) => {
 })
 
 module.exports.overviewForm = catchAsync(async(req,res) => {
+    res.locals.title = 'Overview'
+    res.locals.description = 'Overview your forward request details'
+
     res.locals.query = req.query
     const {id} = req.params
     const pkg = await Package.findById(id)
@@ -192,30 +217,30 @@ module.exports.forward = catchAsync(async (req,res) => {
 
 
 module.exports.personal = catchAsync(async (req,res) => {
+    res.locals.title = 'Personal info'
+    res.locals.description = 'View and edit your personal information'
+
     res.render('user/account/personal')
 })
 
 module.exports.security = catchAsync(async (req,res) => {
+    res.locals.title = 'Security'
+    res.locals.description = 'View and edit your security information'
+
     res.render('user/account/security')
 })
 
 module.exports.payments = catchAsync(async (req,res) => {
+    res.locals.title = 'Payments'
+    res.locals.description = 'View and edit your payment methods'
     res.render('user/account/payments')
 })
 
 module.exports.address = catchAsync(async (req,res) => {
+    res.locals.title = 'Addresses'
+    res.locals.description = 'View and edit your addresses'
     res.render('user/account/addresses')
 })
 
-module.exports.forwards = catchAsync(async (req,res) => {
-    res.render('user/account/forwards')
-})
 
-module.exports.preferences = catchAsync(async (req,res) => {
-    res.render('user/account/preferences')
-})
-
-module.exports.notifications = catchAsync(async (req,res) => {
-    res.render('user/account/notifications')
-})
 
