@@ -66,7 +66,7 @@
 
 
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link" href="#propertyOverviewNavThree" id="propertyOverviewNavThree-tab"
+                                <a class="nav-link disabled" href="#propertyOverviewNavThree" id="propertyOverviewNavThree-tab"
                                     data-bs-toggle="tab" data-bs-target="#propertyOverviewNavThree" role="tab"
                                     aria-controls="propertyOverviewNavThree" aria-selected="false"
                                     style="min-width: 7rem;">Map</a>
@@ -107,14 +107,7 @@
                                         <dt class="col-6">Weight max:</dt>
                                         <dd class="col-6">20 lbs</dd>
 
-                                        <dt class="col-6">Forwarder:</dt>
-                                        <% if (addy.forwarder) { %> 
-                                        <dd class="col-6"><%= addy.forwarder.username %> </dd>
-                                        <% } %> 
-                                        <dt class="col-6">Forwarder email:</dt>
-                                        <% if (addy.forwarder) { %> 
-                                        <dd class="col-6"><%= addy.forwarder.email %> </dd>
-                                        <% } %> 
+                                        
                                     </dl>
                                     <!-- End Row -->
                                 </div>
@@ -267,26 +260,26 @@
                                 <div class="card-body">
                                     <!-- Media -->
                                     <div class="d-flex align-items-center mb-4">
-                                        <div class="flex-shrink-0">
+                                        <!-- <div class="flex-shrink-0">
                                             <img class="avatar avatar-circle" src="/public/assets/oc-mailbox.svg"
                                                 alt="Image Description">
-                                        </div>
+                                        </div> -->
                                         <div class="flex-grow-1 ms-3">
-                                            <h4 class="card-title">Choose this mailbox</h4>
+                                            <h4 class="card-title">Want to open a mailbox at this Addy?</h4>
                                         </div>
                                     </div>
                                     <!-- End Media -->
 
                                     <!-- Form -->
-                                    <form action="/register">
-                                        <select class="form-select mb-2">
+                                    <div>
+                                        <!-- <select class="form-select mb-2">
                                             <option selected="" disabled="">Est. package volume</option>
                                             <option value="aboutProperty1">1-5</option>
                                             <option value="aboutProperty2">5-10</option>
                                             <option value="aboutProperty3">10-20</option>
                                             <option value="aboutProperty3">20-30</option>
                                             <option value="aboutProperty3">30+</option>
-                                        </select>
+                                        </select> -->
 
                                         <input name='addy' type='hidden' value='<%= addy._id %>'>
 
@@ -295,9 +288,11 @@
 
 
                                         <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary">Sign up</button>
+                                            <!-- <button type="submit" class="btn btn-primary">Sign up</button> -->
+                                            <button data-tf-slider="Eiraucce" data-tf-width="550" data-tf-iframe-props="title=Registration Form" data-tf-medium="snippet" style="all:unset;font-family:Helvetica,Arial,sans-serif;display:inline-block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background-color:#377DFF;color:#FFFFFF;font-size:20px;border-radius:25px;padding:0 33px;font-weight:bold;height:50px;cursor:pointer;line-height:50px;text-align:center;margin:0;text-decoration:none;">Join our beta</button><script src="//embed.typeform.com/next/embed.js"></script>
+
                                         </div>
-                                    </form>
+                                    </div>
                                     <!-- End Form -->
                                 </div>
                                 <!-- End Card -->
