@@ -105,7 +105,7 @@ app.get('/index', (req, res) => {
     res.render('home');
 })
 app.get('/faq', (req,res) => {
-    res.locals.title = "Addys FAQ"
+    res.locals.title = "Addys - FAQ"
     res.locals.description = "All the answers to any questions you have about Addys and package forwarding"
     res.render('details/faq')
 })

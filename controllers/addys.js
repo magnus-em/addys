@@ -4,8 +4,9 @@ const catchAsync = require('../utils/catchAsync')
 
 //show all addys
 module.exports.index = catchAsync(async (req, res) => {
-    // res.locals.title = 'Addys - US Residential Addresses For Global Package Forwarding'
     res.locals.title = 'Addys - Browse Locations'
+    res.locals.description = 'See all addresses available for package forwarding'
+
     const addys = await Addy.find({})
     if (!addys) {
         throw new ExpressError('could not retreive any addys', 404)
@@ -38,6 +39,8 @@ module.exports.createAddy = catchAsync(async (req,res) => {
 })
 
 module.exports.showAddy = catchAsync(async (req, res, next) => {
+    res.locals.title = 'Addy Details'
+    res.locals.description = 'See more information and reviews about this Addy'
     const { id } = req.params;
     const addy = await Addy.findById(id)
                         .populate({
