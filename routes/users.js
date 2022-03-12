@@ -22,6 +22,8 @@ router.route('/register')
     .post(user.createUser)
 
 
+
+
 router.get('/reset', user.resetForm)
 
 router.get('/forward',(req,res) => {

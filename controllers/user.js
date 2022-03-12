@@ -49,7 +49,7 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         })
         console.log('NEW USER CREATED')
         console.log(user)
-        res.redirect('/user/inbox/new')
+        res.render('user/register/success', {user})
     } catch (err) {
         req.flash('error',err.message)
         console.log('in the user.createUser error handler', err.stack)
