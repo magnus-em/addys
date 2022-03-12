@@ -29,6 +29,12 @@ router.get('/forward',(req,res) => {
 
 router.get('/logout', user.logout)
 
+router.get('/clientform',(req,res) => {
+    res.render('user/typeform')
+})
+router.get('/forwarderform',(req,res) => {
+    res.render('forwarder/typeform')
+})
 
 router.get('/user/inbox/new', isClient, user.inbox)
 router.get('/user/inbox/pending', isClient, user.inboxPending)

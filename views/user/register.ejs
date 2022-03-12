@@ -7,10 +7,11 @@
     <div class="flex-grow-1 mx-auto" style="max-width: 28rem;">
       <!-- Heading -->
       <div class="text-center mb-5 mb-md-7">
+        <p>Your new address</p>
         <% if (addy) { %> 
-        <h1 class="h2"><%= addy.address1 %> </h1>
+        <h1 class="h2"><%= addy.address1 %></h1>
+        <h1 class="h2"><%= addy.city %>, <%= addy.state %></h1>
         <% } %> 
-        <p>Fill out the form to get started.</p>
       </div>
       <!-- End Heading -->
   
@@ -85,14 +86,17 @@
           <label class="form-label" for="invite">Invite code</label>
           <input type="text" class="form-control form-control-lg" name="invite" id="invite" placeholder="Unique" aria-label="email@site.com" required>
           <span class="invalid-feedback">Required</span>
+          <div class="text-center mb-2">
+            <a href='/clientform' class="card-text small">Need invite code? Get one here</a>
+          </div>
         </div>
         <!-- End Form -->
   
         <!-- Check -->
         <div class="form-check mb-3">
           <input type="checkbox" class="form-check-input" id="signupHeroFormPrivacyCheckEg1" name="signupFormPrivacyCheck" required>
-          <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg1"> By submitting this form I have read and acknowledged the <a href='/privacy'>Privacy Policy</a></label>
-          <span class="invalid-feedback">Please accept our Privacy Policy.</span>
+          <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg1">I have read and accept the <a href='/terms'>Terms of Service</a> and <a href='/privacy'>Privacy Policy</a></label>
+          <span class="invalid-feedback">Please accept our Terms and Privacy Policy.</span>
         </div>
         <!-- End Check -->
   

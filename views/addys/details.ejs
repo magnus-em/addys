@@ -257,35 +257,35 @@
                }">
                             <!-- Card -->
                             <div class="card card-bordered">
-                                <div class="card-header border-bottom">
-                                    <h4 class="card-title">Complete form to get started</h4>
-
-                                </div>
-                                <div class="card-body pt-0 px-1">
-                                   
-                                    <div data-tf-widget="Eiraucce" data-tf-opacity="0" data-tf-iframe-props="title=Registration Form" data-tf-medium="snippet" style="width:100%;height:500px;"></div><script src="//embed.typeform.com/next/embed.js"></script>
-
-
-                                    <!-- Form -->
-                                    <div>
-                                 
-
-                                        <input name='addy' type='hidden' value='<%= addy._id %>'>
-
-
-
-
-
-                                        <div class="d-grid">
-                                            <!-- <button type="submit" class="btn btn-primary">Sign up</button> -->
-                                            <!-- <button data-tf-slider="Eiraucce" data-tf-width="550" data-tf-iframe-props="title=Registration Form" data-tf-medium="snippet" style="all:unset;font-family:Helvetica,Arial,sans-serif;display:inline-block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background-color:#377DFF;color:#FFFFFF;font-size:20px;border-radius:25px;padding:0 33px;font-weight:bold;height:50px;cursor:pointer;line-height:50px;text-align:center;margin:0;text-decoration:none;">Join our beta</button><script src="//embed.typeform.com/next/embed.js"></script> -->
-
-                                        </div>
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                      
+                                      
                                     </div>
-                                    <!-- End Form -->
-                                </div>
+                
+                                    <form action="/register">
+                                        <input type="hidden" name="addy" value="<%=addy._id%>">
+                                        <div class="d-grid mb-2">
+                                          <button type="submit" class="btn btn-primary btn-transition" href="#">Open mailbox now</button>
+                                        </div>
+                                    </form>
+                
+                                    <div class="text-center mb-4">
+                                      <a href='/clientform' class="card-text small">Need invite code? Get one here</a>
+                                    </div>
+                
+                                    <h4 class="card-title">Basic plan includes</h4>
+                                      
+                                    <ul class="list-unstyled list-py-1">
+                                      <li><i class="bi-forward nav-icon"></i> 10 package forwards per month</li>
+                                      <li><i class="bi-box nav-icon"></i> Up to three days of free storage</li>
+                                      <li><i class="bi-chat nav-icon"></i> Unlimited chat support</li>
+                                      <li><i class="bi-stopwatch nav-icon"></i> 24/7 mail dashboard</li>
+                                      <li><i class="bi-phone nav-icon"></i> Access on mobile and Tablet</li>
+                                    </ul>
+                                  </div>
                                 <!-- End Card -->
-                            </div>
+                              </div>
                         </div>
                     </div>
                     <!-- End Sticky Block -->
