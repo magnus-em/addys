@@ -1,7 +1,11 @@
 
 <script src="/public/assets/js/bootstrap.bundle.js"></script>
-<script src="/public/assets/js/hs.core.js"></script>
 
+
+
+<!-- JS Implementing Plugins -->
+<!-- bundlejs:vendor [.] -->
+<script src="/public/assets/js/hs-header.js"></script>
 
 <script src="/public/assets/js/hs-toggle-password.js"></script>
 <script src="/public/assets/js/hs-toggle-state.min.js"></script>
@@ -9,7 +13,6 @@
 
 
 <script src="/public/assets/js/hs-show-animation.js"></script>
-<script src="/public/assets/js/hs-header.js"></script>
 <script src="/public/assets/js/hs-file-attach.js"></script>
 
    
@@ -19,13 +22,11 @@
 
 <script src="/public/assets/js/leaflet.js"></script>
 
-<script src="/public/assets/js/swiper-bundle.js"></script>
 <script src="/public/assets/js/tom-select.complete.min.js"></script>
 <script src="/public/assets/js/hs.tom-select.js"></script>
 
 
 
-<script src="/public/assets/js/hs.bs-validation.js"></script>
 <script src="/public/assets/js/hs.typed.js"></script>
 <script src="/public/assets/js/hs.leaflet.js"></script>
 
@@ -34,8 +35,19 @@
 <script src = "/public/assets/js/nouislider.min.js"></script>
 
 <script src="/public/assets/js/hs.bs-dropdown.js"></script>
-<script src="/public/assets/js/hs.nouislider.js"></script>
 <script src="/public/assets/js/fslightbox.js"></script>
+<!-- <script src="/public/assets/js/swiper-bundle.js"></script> -->
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+
+<!-- JS Front -->
+
+
+<!-- bundlejs:theme [.] -->
+<script src="/public/assets/js/hs.core.js"></script>
+<script src="/public/assets/js/hs.bs-validation.js"></script>
+
+
+<!-- JS Plugins Init. -->
 
 
 
@@ -95,45 +107,8 @@
             }
         })
 
-        // INITIALIZATION OF SWIPER
-      // =======================================================
-      var swiper = new Swiper('.js-swiper-hero-clients',{
-        slidesPerView: 2,
-        breakpoints: {
-          380: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-          768: {
-            slidesPerView: 4,
-            spaceBetween: 15,
-          },
-          1024: {
-            slidesPerView: 5,
-            spaceBetween: 15,
-          },
-        },
-      });
-
-      // Card Grid
-      var swiper = new Swiper('.js-swiper-card-blocks',{
-        slidesPerView: 1,
-        pagination: {
-          el: '.js-swiper-card-blocks-pagination',
-          dynamicBullets: true,
-          clickable: true,
-        },
-        breakpoints: {
-          580: {
-            slidesPerView: 2,
-            spaceBetween: 15,
-          },
-          992: {
-            slidesPerView: 3,
-            spaceBetween: 15,
-          },
-        },
-      });
+        
+     
       
     })()
 </script>
@@ -194,6 +169,8 @@
     HSCore.components.HSTomSelect.init('.js-select')
   });
 </script>
+
+
 
 </body>
 </html>
