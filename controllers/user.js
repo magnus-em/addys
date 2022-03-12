@@ -57,7 +57,7 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
 
 module.exports.login = catchAsync(async (req,res) => {
     if (req.user.type == 'ADMIN') {
-        return res.redirect('/admin')
+        return res.redirect('/admin/dash/all')
     } else if (req.user.type == 'FW') {
         return res.redirect('/forwarder/dash/pending')
     }

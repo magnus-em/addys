@@ -4,9 +4,12 @@ const router = express.Router()
 const admin = require('../controllers/admin')
 
 router.use(isAdmin)
-router.route('/').get(admin.all)
+router.route('/').get(admin.overview)
 
-router.route('/dash').get(admin.all)
+router.route('/dash/all').get(admin.all)
+router.get('/dash/new', admin.new)
+router.get('/dash/pending',admin.pending)
+router.get('/dash/forwarded', admin.forwarded)
 
 router.route('/forwarder')
     .get(admin.newFwForm)

@@ -3,9 +3,25 @@ const Package = require("../models/package")
 const User = require("../models/user")
 const catchAsync = require("../utils/catchAsync")
 
+module.exports.overview = catchAsync(async (req,res) => {
+    res.render('admin/overview')
+})
+
 module.exports.all = catchAsync( async (req,res) => {
     const packages = await Package.find({})
     res.render('admin/dash/all', {packages})
+})
+module.exports.new = catchAsync( async (req,res) => {
+    const packages = await Package.find({})
+    res.render('admin/dash/new', {packages})
+})
+module.exports.pending = catchAsync( async (req,res) => {
+    const packages = await Package.find({})
+    res.render('admin/dash/pending', {packages})
+})
+module.exports.forwarded = catchAsync( async (req,res) => {
+    const packages = await Package.find({})
+    res.render('admin/dash/forwarded', {packages})
 })
 
 module.exports.newFwForm = (req,res) => {
