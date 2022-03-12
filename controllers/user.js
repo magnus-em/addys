@@ -20,8 +20,10 @@ module.exports.renderRegisterForm = catchAsync(async (req,res) => {
         return res.redirect('/addys')
     }
     const addy = await Addy.findById(req.query.addy)
-    res.render('user/register', {addy})
+    res.render('user/register/register', {addy})
 })
+
+
 
 module.exports.resetForm = (req,res) => {
     res.locals.title = "Reset password"
@@ -35,10 +37,10 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         if (req.body.invite != 69420) {
             throw new Error('Invalid invite code')
         }
-        const {email,username,password} = req.body
+        const {email,username,password, invite} = req.body
         const addy = await Addy.findById(req.body.addy).populate('clients')
         const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
-        const user = new User({email,username,addy, mailbox, type: 'CLIENT'})
+        const user = new User({email,username,addy, mailbox, type: 'CLIENT', invite})
         await addy.clients.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
         const registeredUser = await User.register(user, password)
