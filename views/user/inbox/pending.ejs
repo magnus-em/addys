@@ -8,20 +8,19 @@
       <div class="row align-items-center">
         <div class="col">
           <div class="d-none d-lg-block">
-            <h1 class="h2 text-white">1456 N Capri Drive</h1>
+            <h1 class="h2 text-white"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %>   </h1>
           </div>
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Box 35</li>
+              <li class="breadcrumb-item">Mailbox #<b><%= user.mailbox %> </b></li>
               <li class="breadcrumb-item active" aria-current="page">Inbox</li>
             </ol>
           </nav>
           <!-- End Breadcrumb -->
         </div>
         <!-- End Col -->
-
         <div class="col-auto">
 
 

@@ -3,7 +3,11 @@ const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
 const {getShipment, createTransaction} = require('../shippo/test')
+const {sendEmail, sendForwardConfirm} = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+
 
 
 module.exports.renderLoginForm = async(req,res) => {
@@ -57,12 +61,66 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
     }
 })
 
+
+
 module.exports.login = catchAsync(async (req,res) => {
+      
+
     if (req.user.type == 'ADMIN') {
+        // let msg = {
+        //     to: 'melbournemagnus@gmail.com', // Change to your recipient
+        //     from: 'support@addys.io', // Change to your verified sender
+        //     subject: "Successful Admin login",
+        //     text: 'Signed in as Admin',
+        //     html: '<strong>Signed in as admin</strong>',
+        //   }
+        //   sgMail
+        //     .send(msg)
+        //     .then(() => {
+        //       console.log('Email sent')
+        //     })
+        //     .catch((error) => {
+        //       console.error(error)
+        //     })
+
+
         return res.redirect('/admin/dash/all')
     } else if (req.user.type == 'FW') {
+        let msg = {
+            to: 'melbournemagnus@gmail.com', // Change to your recipient
+            from: 'support@addys.io', // Change to your verified sender
+            subject: "Successful forwarder login",
+            text: 'Signed in as fw',
+            html: '<strong>Signed in as fw</strong>',
+          }
+          sgMail
+            .send(msg)
+            .then(() => {
+              console.log('Email sent')
+            })
+            .catch((error) => {
+              console.error(error)
+            })
         return res.redirect('/forwarder/dash/pending')
     }
+    sendEmail(req.user._id)
+    sendForwardConfirm(req.user._id)
+
+    // let msg = {
+    //     to: 'melbournemagnus@gmail.com', // Change to your recipient
+    //     from: 'support@addys.io', // Change to your verified sender
+    //     subject: "Successful client login",
+    //     text: 'Signed in as client',
+    //     html: '<strong>Signed in as client</strong>',
+    //   }
+    //   sgMail
+    //     .send(msg)
+    //     .then(() => {
+    //       console.log('Email sent')
+    //     })
+    //     .catch((error) => {
+    //       console.error(error)
+    //     })
     // const redirectUrl = req.session.returnTo || '/user/inbox/new'
     const redirectUrl = '/user/inbox/new'
     delete req.session.returnTo

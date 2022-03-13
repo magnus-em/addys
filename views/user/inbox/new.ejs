@@ -8,13 +8,13 @@
       <div class="row align-items-center">
         <div class="col">
           <div class="d-none d-lg-block">
-            <h1 class="h2 text-white">1456 N Capri Drive</h1>
+            <h1 class="h2 text-white"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %>   </h1>
           </div>
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Box: <%= user.mailbox %> </li>
+              <li class="breadcrumb-item">Mailbox #<b><%= user.mailbox %> </b></li>
               <li class="breadcrumb-item active" aria-current="page">Inbox</li>
             </ol>
           </nav>
@@ -106,7 +106,7 @@
           <div class="card">
             <div class="card-header border-bottom">
               <h4 class="card-header-title">New packages</h4>
-              <p class="card-text">Please submit forward request wthin three days of upload by your forwarder.</p>
+              <p class="card-text">Newly arrived packages will show up here. Please submit forward request wthin three days of upload by your forwarder.</p>
 
             </div>
 

@@ -39,11 +39,12 @@ module.exports.uploadForm = (req,res) => {
     res.locals.description = 'Upload a new package to your dashboard'
 
 
-    res.render('forwarder/upload')
+    res.render('forwarder/upload2')
 }
 
 module.exports.upload = catchAsync(async (req,res) => {
     const package = new Package(req.body.package)
+    package.status = 'NEW'
     const forwarder = await User.findById(req.user._id).populate({
                     path: 'addy',
                     populate: {

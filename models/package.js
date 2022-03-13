@@ -13,6 +13,8 @@ const packageSchema = new Schema({
         required: [true, 'Package must have a shipper']
     },
     weight: Number,
+    lbs: Number,
+    oz: Number,
     carrier: {
         type: String,
         enum: ['USPS', 'FEDEX', 'UPS', 'DHL', 'ONTRAC'],
