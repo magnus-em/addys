@@ -4,7 +4,8 @@ const Review = require('../models/review')
 const Package = require('../models/package')
 const User = require('../models/user')
 const cities = require('./cities')
-const titles = require('./seedHelpers')
+const titles = require('./seedHelpers');
+const User = require('../models/user');
 const addresses = require('./addresses.json').addresses
 
 
@@ -21,7 +22,7 @@ db.once("open", () => {
 
 const seedDb = async () => {
     await Addy.deleteMany({});
-    for (let i=0;i<10;i++) {
+    for (let i=0;i<1;i++) {
         const a = addresses[Math.floor(Math.random() * addresses.length)]
         const c = new Addy({
             address1: a.address1,

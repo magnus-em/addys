@@ -1,0 +1,133 @@
+<%- layout('layouts/boilerplate') %>
+<div class="container content-space-2 content-space-lg-3">
+    <div class="w-lg-75 mx-lg-auto mb-5 mb-md-7">
+        <!-- Heading -->
+        <div class="w-lg-75 text-center mx-auto mb-5 mb-sm-9">
+            <h2 class="h1">Upload new package</h2>
+        </div>
+        <!-- Card -->
+<div class="card">
+    <div class="card-header border-bottom">
+      <h5 class="card-header-title">Enter details</h5>
+      <h5 class="card-text">Make sure to enter accurate information. Inaccurate information can cause packages to get returned.</h5>
+    </div>
+  
+    <!-- Body -->
+    <div class="card-body">
+      <!-- Form -->
+      <form action="/forwarder/upload" method="post" class="needs-validation" enctype="multipart/form-data" novalidate>
+       
+        <div class="row mb-4">
+          <label for="tracking" class="col-sm-3 col-form-label form-label">Tracking</label>
+  
+          <div class="col-sm-9">
+            <input type="text" class="form-control" name="package[tracking]" id="tracking" required>
+            <div class="invalid-feedback">Required</div>
+            <div class="valid-feedback">Looks good</div>
+          </div>
+        </div>
+
+         <div class="row mb-4">
+            <label for="shipper" class="col-sm-3 col-form-label form-label">Shipper</label>
+    
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[shipper]" id="shipper" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="weight" class="col-sm-3 col-form-label form-label">Weight (lbs)</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[weight]" id="weight" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="length" class="col-sm-3 col-form-label form-label">Length (in)</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[length]" id="length" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="width" class="col-sm-3 col-form-label form-label">Wdith (in)</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[width]" id="width" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="height" class="col-sm-3 col-form-label form-label">Height (in)</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[height]" id="height" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          
+
+          <div class="row mb-4">
+            <label for="mailbox" class="col-sm-3 col-form-label form-label">Mailbox #</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" name="package[mailbox]" id="mailbox" required>
+              <div class="invalid-feedback">Required</div>
+              <div class="valid-feedback">Looks good</div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="carrier" class="col-sm-3 col-form-label form-label">Carrier</label>
+            <div class="col-sm-9">
+              <select class="form-select mb-2" name="package[carrier]">
+                <option value="USPS">USPS</option>
+                <option value="UPS">UPS</option>
+                <option value="FEDEX">FEDEX</option>
+                <option value="DHL">DHL</option>
+                <option value="ONTRAC">ONTRAC</option>
+            </select>
+          </div>
+          </div>
+
+          <div class="row mb-4">
+            <label for="status" class="col-sm-3 col-form-label form-label">Status</label>
+            <div class="col-sm-9">
+              <select class="form-select mb-2" name="package[status]">
+                <option value="NEW">New</option>
+                <option value="PENDING">Pending</option>
+                <option value="FORWARDED">Forwarded</option>
+            </select>
+          </div>
+          </div>
+
+          
+
+          <div class="row mb-4">
+            <label for="photo" class="js-file-attach col-sm-3 col-form-label form-label"
+            data-hs-file-attach-options='{
+             "textTarget": "[for=\"customFile\"]"
+            }'>Upload image of box</label>
+                     <input class="form-control" type="file" id="photo" name="image" multiple>
+          </div>
+         
+
+        <div class="d-flex justify-content-end gap-3">
+          <a class="btn btn-white" href="/user/inbox">Cancel</a>
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+      </form>
+      <!-- End Form -->
+    </div>
+    <!-- End Body -->
+  </div>
+  <!-- End Card -->
+    </div>
+</div>

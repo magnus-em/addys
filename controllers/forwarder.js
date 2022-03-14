@@ -34,12 +34,14 @@ module.exports.forwarded = catchAsync(async (req,res) => {
     res.render('forwarder/dash/forwarded', {user})
 })
 
-module.exports.uploadForm = (req,res) => {
+module.exports.uploadForm = async (req,res) => {
     res.locals.title = 'Upload Package'
     res.locals.description = 'Upload a new package to your dashboard'
 
+    const addy = await Addy.findById(req.user.addy._id).populate('clients')
+    console.log('found addy', addy)
 
-    res.render('forwarder/upload2')
+    res.render('forwarder/upload', {addy})
 }
 
 module.exports.upload = catchAsync(async (req,res) => {
@@ -66,9 +68,10 @@ module.exports.upload = catchAsync(async (req,res) => {
 
     // set reference on addy to new package
     addy.packages.push(package)
-    await addy.save()               
+    await addy.save()              
+    req.flash('success', 'successfully uploaded package') 
 
-    res.redirect('/forwarder/dash/pending')
+    res.redirect('/forwarder/dash/new')
 })
 
 module.exports.uploadReceipt = catchAsync(async (req,res) => {
@@ -156,3 +159,11 @@ module.exports.deletePayoutMethod = catchAsync(async(req,res) => {
     res.redirect('/forwarder/account/payments')
 })
 
+
+module.exports.clients = catchAsync(async (req,res) => {
+    const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
+    const addy = await Addy.findById(user.addy._id).populate('clients')
+    user.clients = addy.clients;
+
+    res.render('forwarder/dash/clients', {user})
+})

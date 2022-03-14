@@ -73,7 +73,7 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                     <li class="nav-item">
-                      <a class="nav-link active" href="/forwarder/dash/pending">
+                      <a class="nav-link" href="/forwarder/dash/pending">
                         <i class="bi-truck nav-icon"></i>
                         <span class="me-2">Ready to ship</span><span class="badge text-dark border rounded-pill">
                           <%= user.addy.totalPending %>
@@ -103,10 +103,10 @@
 
                   <ul class="nav nav-sm nav-tabs nav-vertical">
                     <li class="nav-item">
-                      <a class="nav-link " href="/forwarder/dash/clients">
+                      <a class="nav-link active" href="/forwarder/dash/forwarded">
                         <i class="bi-person nav-icon"></i>
-                        <span class="me-2">All</span><span class="badge text-dark border rounded-pill">
-                          <%= user.addy.totalForwarded %>
+                        <span class="me-2">Overview</span><span class="badge text-dark border rounded-pill">
+                          <%= user.clients.length %>
                         </span>
                       </a>
                     </li>
@@ -143,13 +143,68 @@
 
                   <div class="d-grid gap-5 mb-10">
 
-                    <% for (let p of user.addy.packages) { %>
-                      <% if (p.status !='PENDING' ) { continue;} %>
 
-                        <%- include('./pkg', {p}) %>
+                      <div class="table-responsive">
+                        <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+                          <thead class="thead-light">
+                            <tr>
+                              <th>Name</th>
+                              <th>Total Pkgs</th>
+                              <th>Access</th>
+                              <th>Mailbox</th>
+                              <th style="width: 5%;"></th>
+                            </tr>
+                          </thead>
+                  
+                          <tbody>
+                          <% for (let client of user.clients) { %> 
+                            <tr>
+                              <td>
+                                <div class="d-flex align-items-center">
+                                  <div class="flex-grow-1 ms-3">
+                                    <a class="d-inline-block link-dark" href="#">
+                                      <h6 class="text-hover-primary mb-0"><%= client.firstName %> <%= client.lastName %> </h6>
+                                    </a>
+                                    <small class="d-block"><%= client.username %> </small>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <!-- Select -->
+                                <!-- <select class="js-select form-select form-select-sm">
+                                  <option value="memberStatusLabelActive1" selected data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-success me-2"></span> Active</span>'>Active</option>
+                                  <option value="memberStatusLabelInactive1" data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-danger me-2"></span> Inactive</span>'>Inactive</option>
+                                </select> -->
+                                <!-- End Select -->
+                                <% if (client.addy) { %> 
+                                <h5><%= client.packages.length %> </h5>
+                                <% } %> 
+                              </td>
+                              <td>
+                                <!-- Select -->
+                                <!-- <select class="js-select form-select form-select-sm">
+                                  <option value="memberStatusLabelAdmin1" selected>Admin</option>
+                                  <option value="memberStatusLabelCanEdit1">Can edit</option>
+                                  <option value="memberStatusLabelCanView1">Can view</option>
+                                </select> -->
+                                <h5><%= client.type %> </h5>
+                                <!-- End Select -->
+                              </td>
+                              <td>
+                                <!-- <a class="text-body" href="javascript:;" data-bs-toggle="tooltip" data-bs-placement="top" title="Locked">
+                                  <i class="bi-lock-fill"></i>
+                                </a> -->
+                                <h5><%= client.mailbox %> </h5>
+                              </td>
+                            </tr>
+              
+                            <% } %> 
+              
+                          </tbody>
+                        </table>
+                      </div>
 
 
-                          <% } %>
 
                   </div>
 
@@ -195,9 +250,13 @@
                   </div>
                   </form>
                 </div>
-              </div>            
+              </div>
             </div>
             <!-- End Modal -->
+
+
+
+
           </div>
         </div>
         <!-- End Col -->

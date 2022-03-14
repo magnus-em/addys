@@ -118,6 +118,14 @@ userSchema.virtual('totalForwarded').get(function() {
     return i;
 })
 
+
+
 userSchema.plugin(passportLocalMongoose);
 
+userSchema.post('findOneAndDelete', async function (user) {
+    if (user.addy) {
+        await Addy.findByIdAndUpdate(user.addy, { $pull: { clients: user._id } })
+        await user.save()
+    } 
+})
 module.exports = mongoose.model("User", userSchema);

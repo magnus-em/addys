@@ -68,9 +68,10 @@
   
                 <div class="card-footer pt-0">
                   <ul class="list-inline list-separator small text-body">
-                    <li class="list-inline-item"><%= p.weight %> lbs</li>
+                    <li class="list-inline-item"><%= p.lbs %> lbs <%= p.oz %> oz </li>
                     <li class="list-inline-item">L: <%= p.length %> / W: <%= p.width %> / H: <%= p.height %></li>
                     <li class="list-inline-item">Uploaded <%= p.uploaded.getMonth() %> / <%= p.uploaded.getDate() %> </li>
+                    <li class="list-inline-item">Name on box: <%= p.name %></li>
                   </ul>
                   
                 </div>

@@ -11,10 +11,8 @@ const templates = {
 
 const supportEmail = 'support@addys.io'
 
-module.exports.sendEmail = async function(clientId) {
-    console.log('found client id', clientId)
-    const client = await User.findById(clientId).populate('addy')
-    console.log('found client', client)
+module.exports.sendWelcome = async function(user) {
+    const client = await User.findById(user._id).populate('addy')
 
     const addy = `${client.addy.address1}, #${client.mailbox}, ${client.addy.city}, ${client.addy.state}, ${client.addy.zip}`
 

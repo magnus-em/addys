@@ -49,5 +49,12 @@ module.exports.deletePackage = catchAsync(async (req,res) => {
     const {id} = req.params
     const pkg = await Package.findByIdAndDelete(id)
     console.log('deleted package: ' + pkg)
-    res.redirect('/admin/dash/')
+    res.redirect('/admin/dash/all')
+})
+
+
+module.exports.allClients = catchAsync(async (req,res) => {
+    const clients = await User.find({}).populate('addy')
+    res.render('admin/clients', {clients})
+
 })

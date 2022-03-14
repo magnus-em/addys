@@ -3,7 +3,7 @@ const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
 const {getShipment, createTransaction} = require('../shippo/test')
-const {sendEmail, sendForwardConfirm} = require('../sendgrid')
+const {sendWelcome, sendForwardConfirm} = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
@@ -41,10 +41,10 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         if (req.body.invite != 69420) {
             throw new Error('Invalid invite code')
         }
-        const {email,username,password, invite} = req.body
+        const {email,username,password, invite, firstName, lastName, phone} = req.body
         const addy = await Addy.findById(req.body.addy).populate('clients')
         const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
-        const user = new User({email,username,addy, mailbox, type: 'CLIENT', invite})
+        const user = new User({email,username,addy, mailbox, type: 'CLIENT', invite, firstName, lastName, phone})
         await addy.clients.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
         const registeredUser = await User.register(user, password)
@@ -53,6 +53,8 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         })
         console.log('NEW USER CREATED')
         console.log(user)
+        req.flash('success', 'New user successfully created')
+        sendWelcome(user)
         res.render('user/register/success', {user})
     } catch (err) {
         req.flash('error',err.message)
@@ -67,23 +69,6 @@ module.exports.login = catchAsync(async (req,res) => {
       
 
     if (req.user.type == 'ADMIN') {
-        // let msg = {
-        //     to: 'melbournemagnus@gmail.com', // Change to your recipient
-        //     from: 'support@addys.io', // Change to your verified sender
-        //     subject: "Successful Admin login",
-        //     text: 'Signed in as Admin',
-        //     html: '<strong>Signed in as admin</strong>',
-        //   }
-        //   sgMail
-        //     .send(msg)
-        //     .then(() => {
-        //       console.log('Email sent')
-        //     })
-        //     .catch((error) => {
-        //       console.error(error)
-        //     })
-
-
         return res.redirect('/admin/dash/all')
     } else if (req.user.type == 'FW') {
         let msg = {
@@ -103,24 +88,6 @@ module.exports.login = catchAsync(async (req,res) => {
             })
         return res.redirect('/forwarder/dash/pending')
     }
-    sendEmail(req.user._id)
-    sendForwardConfirm(req.user._id)
-
-    // let msg = {
-    //     to: 'melbournemagnus@gmail.com', // Change to your recipient
-    //     from: 'support@addys.io', // Change to your verified sender
-    //     subject: "Successful client login",
-    //     text: 'Signed in as client',
-    //     html: '<strong>Signed in as client</strong>',
-    //   }
-    //   sgMail
-    //     .send(msg)
-    //     .then(() => {
-    //       console.log('Email sent')
-    //     })
-    //     .catch((error) => {
-    //       console.error(error)
-    //     })
     // const redirectUrl = req.session.returnTo || '/user/inbox/new'
     const redirectUrl = '/user/inbox/new'
     delete req.session.returnTo
@@ -279,27 +246,35 @@ module.exports.forward = catchAsync(async (req,res) => {
 module.exports.personal = catchAsync(async (req,res) => {
     res.locals.title = 'Personal info'
     res.locals.description = 'View and edit your personal information'
+    const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
-    res.render('user/account/personal')
+
+    res.render('user/account/personal', {user})
 })
 
 module.exports.security = catchAsync(async (req,res) => {
     res.locals.title = 'Security'
     res.locals.description = 'View and edit your security information'
+    const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
-    res.render('user/account/security')
+
+    res.render('user/account/security', {user})
 })
 
 module.exports.payments = catchAsync(async (req,res) => {
     res.locals.title = 'Payments'
     res.locals.description = 'View and edit your payment methods'
-    res.render('user/account/payments')
+    const user = await User.findById(req.user._id).populate('packages').populate('addy');
+
+    res.render('user/account/payments', {user})
 })
 
 module.exports.address = catchAsync(async (req,res) => {
     res.locals.title = 'Addresses'
     res.locals.description = 'View and edit your addresses'
-    res.render('user/account/addresses')
+    const user = await User.findById(req.user._id).populate('packages').populate('addy');
+
+    res.render('user/account/addresses', {user})
 })
 
 

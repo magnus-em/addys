@@ -16,6 +16,8 @@ router.route('/dash/pending')
 router.get('/dash/new', isForwarder, fw.new)
 router.get('/dash/forwarded', isForwarder, fw.forwarded)
 
+router.get('/dash/clients', isForwarder, fw.clients)
+
 
 router.route('/upload')
     .get(isForwarder, fw.uploadForm)

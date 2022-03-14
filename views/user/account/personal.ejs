@@ -7,15 +7,17 @@
     <div class="container content-space-1 content-space-b-lg-3">
       <div class="row align-items-center">
         <div class="col">
-          <div class="d-none d-lg-block">
-            <h1 class="h2 text-white">Personal info</h1>
+          <div class="d-lg-block">
+            <h1 class="h2 text-white">Account</h1>
           </div>
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Account</li>
-              <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+              <li class="breadcrumb-item"> 
+              <%= user.addy.address1 %> #<%= user.mailbox %> <%= user.addy.city %>, <%= user.addy.state %>   
+              </li>
+              <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
             </ol>
           </nav>
           <!-- End Breadcrumb -->
@@ -54,9 +56,11 @@
             <div class="card flex-grow-1 mb-5">
               <div class="card-body">
                 <!-- Avatar -->
-                <div class="d-none d-lg-block text-center mb-5">
-                  <h4 class="card-title mb-0"><%= user.username %> </h4>
+                <div class="d-lg-block text-center mb-5">
+                  <h4 class="card-title mb-0"><%= user.firstName %> <%= user.lastName %> </h4>
                   <p class="card-text small"><%= user.email %> </p>
+                  
+                  <!-- <p class="card-text"><%= user.addy.address1 %> #<%= user.mailbox %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></p> -->
                 </div>
                 <!-- End Avatar -->
 
@@ -126,7 +130,7 @@
 
 
                 <!-- Form -->
-                <div class="row mb-4">
+                <!-- <div class="row mb-4">
                   <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Display name <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Shown on reviews" aria-label="Displayed on reviews."></i></label>
 
                   <div class="col-sm-9">
@@ -135,7 +139,7 @@
                       <input type="text" class="form-control" name="lastName" id="lastNameLabel" placeholder="Last" >
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <!-- End Form -->
 
                 <!-- Form -->
@@ -153,7 +157,7 @@
                   <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
 
                   <div class="col-sm-9">
-                    <input type="text" class="form-control" name="email" id="phone" placeholder="" aria-label="clarice@example.com">
+                    <input type="text" class="form-control" name="email" id="phone" placeholder="<%= user.phone %>" aria-label="clarice@example.com">
                   </div>
                 </div>
                 <!-- End Form -->
@@ -163,18 +167,18 @@
 
 
                 <!-- Form -->
-                <div class="row align-items-center">
+                <!-- <div class="row align-items-center">
                   <label for="disableAdCheckbox" class="col-sm-3 col-form-label form-label">Disable ads <span class="badge badge-primary text-uppercase ms-1">PRO</span></label>
 
-                  <div class="col-sm-9">
+                  <div class="col-sm-9"> -->
                     <!-- Check -->
-                    <div class="form-check">
+                    <!-- <div class="form-check">
                       <input type="checkbox" class="form-check-input" id="disableAdCheckbox">
                       <label class="form-check-label" for="disableAdCheckbox">With your Pro account, you can disable ads across the site.</label>
-                    </div>
+                    </div> -->
                     <!-- End Check -->
-                  </div>
-                </div>
+                  <!-- </div>
+                </div> -->
                 <!-- End Form -->
               </form>
             </div>
@@ -203,7 +207,7 @@
 
             <!-- Body -->
             <div class="card-body">
-              <p class="card-text">When you delete your account, you lose access to Front account services, and we permanently delete your personal data. You can cancel the deletion for 14 days.</p>
+              <p class="card-text">When you delete your account, you lose access immediately to Addys account services, and we permanently delete your personal data.</p>
 
               <div class="mb-4">
                 <!-- Check -->

@@ -8,15 +8,16 @@
         <div class="container content-space-1 content-space-b-lg-3">
           <div class="row align-items-center">
             <div class="col">
-              <div class="d-none d-lg-block">
-                <h1 class="h2 text-white"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %>   </h1>
+              <div class="d-lg-block">
+                <h1 class="h2 text-white">Inbox</h1>
               </div>
     
               <!-- Breadcrumb -->
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light mb-0">
-                  <li class="breadcrumb-item">Mailbox #<b><%= user.mailbox %> </b></li>
-                  <li class="breadcrumb-item active" aria-current="page">Inbox</li>
+                  <li class="breadcrumb-item"> 
+                  <%= user.addy.address1 %> #<b><%= user.mailbox %></b>, <%= user.addy.city %>, <%= user.addy.state %>   
+                  </li>
                 </ol>
               </nav>
               <!-- End Breadcrumb -->

@@ -6,6 +6,8 @@ const admin = require('../controllers/admin')
 router.use(isAdmin)
 router.route('/').get(admin.overview)
 
+router.get('/clients', admin.allClients)
+
 router.route('/dash/all').get(admin.all)
 router.get('/dash/new', admin.new)
 router.get('/dash/pending',admin.pending)

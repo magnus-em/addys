@@ -7,21 +7,22 @@
     <div class="container content-space-1 content-space-b-lg-3">
       <div class="row align-items-center">
         <div class="col">
-          <div class="d-none d-lg-block">
-            <h1 class="h2 text-white">Security</h1>
+          <div class="d-lg-block">
+            <h1 class="h2 text-white">Account</h1>
           </div>
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Account</li>
-              <li class="breadcrumb-item active" aria-current="page">Security</li>
+              <li class="breadcrumb-item"> 
+              <%= user.addy.address1 %> #<%= user.mailbox %> <%= user.addy.city %>, <%= user.addy.state %>   
+              </li>
+              <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
             </ol>
           </nav>
           <!-- End Breadcrumb -->
         </div>
         <!-- End Col -->
-
         <div class="col-auto">
 
 
@@ -55,7 +56,7 @@
               <div class="card-body">
                 <!-- Avatar -->
                 <div class="d-none d-lg-block text-center mb-5">
-                  <h4 class="card-title mb-0"><%= user.username %> </h4>
+                  <h4 class="card-title mb-0"><%= user.firstName %> <%= user.lastName %>  </h4>
                   <p class="card-text small"><%= user.email %> </p>
                 </div>
                 <!-- End Avatar -->
@@ -155,9 +156,9 @@
                       <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password">
                     </div>
 
-                    <h5>Password requirements:</h5>
+                    <h5>Password recommendations:</h5>
 
-                    <p class="card-text small">Ensure that these requirements are met:</p>
+                    <p class="card-text small">Please follow these guidelines:</p>
 
                     <ul class="small">
                       <li>Minimum 8 characters long - the more, the better</li>

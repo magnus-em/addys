@@ -22,6 +22,11 @@ const packageSchema = new Schema({
     length: Number,
     width: Number,
     height: Number,
+    name: String,
+    type: {
+        type: String,
+        enum: ['PACKAGE','ENVELOPE']
+    },
     uploaded: { type: Date, default: Date.now },
     forwardedDate: Date,
     images: [

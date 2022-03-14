@@ -1,0 +1,82 @@
+<%- layout('layouts/boilerplate') %> 
+
+<div class="container content-space-2 w-lg-75">
+    <!-- Card -->
+    <div class="card">
+        <div class="card-header">
+          <h5 class="card-header-title">All users</h5>
+        </div>
+    
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
+            <thead class="thead-light">
+              <tr>
+                <th>Name</th>
+                <th>Addy</th>
+                <th>Access</th>
+                <th>Mailbox</th>
+                <th style="width: 5%;"></th>
+              </tr>
+            </thead>
+    
+            <tbody>
+            <% for (let client of clients) { %> 
+              <tr>
+                <td>
+                  <div class="d-flex align-items-center">
+                    <div class="flex-grow-1 ms-3">
+                      <a class="d-inline-block link-dark" href="#">
+                        <h6 class="text-hover-primary mb-0"><%= client.firstName %> <%= client.lastName %> </h6>
+                      </a>
+                      <small class="d-block"><%= client.username %> </small>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <!-- Select -->
+                  <!-- <select class="js-select form-select form-select-sm">
+                    <option value="memberStatusLabelActive1" selected data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-success me-2"></span> Active</span>'>Active</option>
+                    <option value="memberStatusLabelInactive1" data-option-template='<span class="d-flex align-items-center"><span class="legend-indicator bg-danger me-2"></span> Inactive</span>'>Inactive</option>
+                  </select> -->
+                  <!-- End Select -->
+                  <% if (client.addy) { %> 
+                  <h5><%= client.addy.address1 %> </h5>
+                  <% } %> 
+                </td>
+                <td>
+                  <!-- Select -->
+                  <!-- <select class="js-select form-select form-select-sm">
+                    <option value="memberStatusLabelAdmin1" selected>Admin</option>
+                    <option value="memberStatusLabelCanEdit1">Can edit</option>
+                    <option value="memberStatusLabelCanView1">Can view</option>
+                  </select> -->
+                  <h5><%= client.type %> </h5>
+                  <!-- End Select -->
+                </td>
+                <td>
+                  <!-- <a class="text-body" href="javascript:;" data-bs-toggle="tooltip" data-bs-placement="top" title="Locked">
+                    <i class="bi-lock-fill"></i>
+                  </a> -->
+                  <h5><%= client.mailbox %> </h5>
+                </td>
+              </tr>
+
+              <% } %> 
+
+            </tbody>
+          </table>
+        </div>
+        <!-- End Table -->
+    
+        <!-- Footer -->
+        <div class="card-footer border-top">
+          <div class="d-flex justify-content-end gap-3">
+            <a class="btn btn-white" href="javascript:;">Cancel</a>
+            <a class="btn btn-primary" href="javascript:;">Save changes</a>
+          </div>
+        </div>
+        <!-- End Footer -->
+      </div>
+      <!-- End Card -->
+</div>

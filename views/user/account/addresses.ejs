@@ -7,24 +7,23 @@
       <div class="container content-space-1 content-space-b-lg-3">
         <div class="row align-items-center">
           <div class="col">
-            <div class="d-none d-lg-block">
-              <h1 class="h2 text-white">Addresses</h1>
+            <div class="d-lg-block">
+              <h1 class="h2 text-white">Account</h1>
             </div>
-
+  
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
-                <li class="breadcrumb-item">Account</li>
-                <li class="breadcrumb-item active" aria-current="page">Addresses</li>
+                <li class="breadcrumb-item"> 
+                <%= user.addy.address1 %> #<%= user.mailbox %> <%= user.addy.city %>, <%= user.addy.state %>   
+                </li>
               </ol>
             </nav>
             <!-- End Breadcrumb -->
           </div>
           <!-- End Col -->
-
+          
           <div class="col-auto">
-
-
             <!-- Responsive Toggle Button -->
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
               data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
@@ -58,7 +57,7 @@
                   <!-- Avatar -->
                   <div class="d-none d-lg-block text-center mb-5">
                     <h4 class="card-title mb-0">
-                      <%= user.username %>
+                      <%= user.firstName %> <%= user.lastName %> 
                     </h4>
                     <p class="card-text small">
                       <%= user.email %>
