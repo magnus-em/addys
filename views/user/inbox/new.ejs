@@ -8,7 +8,7 @@
       <div class="row align-items-center">
         <div class="col">
           <div class="d-lg-block">
-            <h1 class="h2 text-white">Inbox</h1>
+            <h1 class="h2 text-white"><%= user._id %> </h1>
           </div>
 
           <!-- Breadcrumb -->
@@ -142,5 +142,22 @@
   </div>
   <!-- End Content -->
 </div>
+
+<script>
+  window.intercomSettings = {
+    api_base: "https://api-iam.intercom.io",
+    app_id: "r1o1zoy1",
+    user_id: "<%= user._id%>",
+    name: "<% user.name %>", // Full name
+    email: "<%= user.email %>", // Email address
+    created_at: "<%= Math.floor(user.signUp.getTime() / 1000) %>" // Signup date as a Unix timestamp
+
+  };
+</script>
+
+<script>
+// We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/r1o1zoy1'
+(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/r1o1zoy1';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+</script>
 
   <%- include('../../partials/foot') %>

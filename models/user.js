@@ -52,7 +52,10 @@ const userSchema = new Schema({
             }
         }
     ],
-    
+    signUp: {
+        type: Date,
+        default: Date.now
+    },
 
     addresses: [
         {
@@ -116,6 +119,12 @@ userSchema.virtual('totalForwarded').get(function() {
         }
     }
     return i;
+})
+
+userSchema.virtual('name').get(function() {
+    const first = this.firstName;
+    const last = this.lastName;
+    return `${first} ${last}`
 })
 
 
