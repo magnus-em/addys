@@ -106,3 +106,8 @@ module.exports.createTransaction = function (rate) {
     })
 }
 
+// module.exports.getRate = function (rate) {
+//     return new Promise((resolve, reject) => {
+//         resolve()
+//     })
+// }

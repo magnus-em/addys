@@ -2,21 +2,23 @@ const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
-const {getShipment, createTransaction} = require('../shippo/test')
-const {sendWelcome, sendForwardConfirm} = require('../sendgrid')
+const { getShipment, createTransaction, getRate } = require('../shippo/test')
+const { sendWelcome, sendForwardConfirm } = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
+const { chargeCreditCard } = require('../authorize/index')
 
 
-module.exports.renderLoginForm = async(req,res) => {
+
+module.exports.renderLoginForm = async (req, res) => {
     res.locals.title = "Addys Login"
     res.locals.description = "Login to manage your packages"
     res.render('user/login')
 }
 
-module.exports.renderRegisterForm = catchAsync(async (req,res) => {
+module.exports.renderRegisterForm = catchAsync(async (req, res) => {
     res.locals.title = "Sign up for Addys"
     res.locals.description = "Sign up to start using residential addresses to forward you packages"
     console.log(req.query.addy)
@@ -24,27 +26,27 @@ module.exports.renderRegisterForm = catchAsync(async (req,res) => {
         return res.redirect('/addys')
     }
     const addy = await Addy.findById(req.query.addy)
-    res.render('user/register/register', {addy})
+    res.render('user/register/register', { addy })
 })
 
 
 
-module.exports.resetForm = (req,res) => {
+module.exports.resetForm = (req, res) => {
     res.locals.title = "Reset password"
     res.locals.description = "Can't remember your password? No worries, just complete this easy form."
 
     res.render('user/resetPw')
 }
 
-module.exports.createUser = catchAsync(async (req,res,next) => {
+module.exports.createUser = catchAsync(async (req, res, next) => {
     try {
         if (req.body.invite != 69420) {
             throw new Error('Invalid invite code')
         }
-        const {email,username,password, invite, firstName, lastName, phone} = req.body
+        const { email, username, password, invite, firstName, lastName, phone } = req.body
         const addy = await Addy.findById(req.body.addy).populate('clients')
         const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
-        const user = new User({email,username,addy, mailbox, type: 'CLIENT', invite, firstName, lastName, phone})
+        const user = new User({ email, username, addy, mailbox, type: 'CLIENT', invite, firstName, lastName, phone })
         await addy.clients.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
         const registeredUser = await User.register(user, password)
@@ -55,9 +57,9 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
         console.log(user)
         req.flash('success', 'New user successfully created')
         sendWelcome(user)
-        res.render('user/register/success', {user})
+        res.render('user/register/success', { user })
     } catch (err) {
-        req.flash('error',err.message)
+        req.flash('error', err.message)
         console.log('in the user.createUser error handler', err.stack)
         res.redirect(`/register?addy=${req.body.addy}`)
     }
@@ -65,8 +67,8 @@ module.exports.createUser = catchAsync(async (req,res,next) => {
 
 
 
-module.exports.login = catchAsync(async (req,res) => {
-      
+module.exports.login = catchAsync(async (req, res) => {
+
 
     if (req.user.type == 'ADMIN') {
         return res.redirect('/admin/dash/all')
@@ -77,48 +79,49 @@ module.exports.login = catchAsync(async (req,res) => {
             subject: "Successful forwarder login",
             text: 'Signed in as fw',
             html: '<strong>Signed in as fw</strong>',
-          }
-          sgMail
+        }
+        sgMail
             .send(msg)
             .then(() => {
-              console.log('Email sent')
+                console.log('Email sent')
             })
             .catch((error) => {
-              console.error(error)
+                console.error(error)
             })
         return res.redirect('/forwarder/dash/pending')
     }
     // const redirectUrl = req.session.returnTo || '/user/inbox/new'
     const redirectUrl = '/user/inbox/new'
     delete req.session.returnTo
+
     res.redirect(redirectUrl)
 })
 
 
 
-module.exports.logout = (req,res) => {
+module.exports.logout = (req, res) => {
     req.logout()
-    req.flash('success','Logged out')
+    req.flash('success', 'Logged out')
     res.redirect('/login')
 }
 
-module.exports.inbox = catchAsync((async (req,res) => {
+module.exports.inbox = catchAsync((async (req, res) => {
     res.locals.title = "New packages"
     res.locals.description = "Newly uploaded packages that are ready for you to submit a forward request"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inbox/new', {user})
+    res.render('user/inbox/new', { user })
 }))
-module.exports.inboxPending = catchAsync((async (req,res) => {
+module.exports.inboxPending = catchAsync((async (req, res) => {
     res.locals.title = "Pending"
     res.locals.description = "Packages that been forward requested and are awaiting drop off by your forwarder"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inbox/pending', {user})
+    res.render('user/inbox/pending', { user })
 }))
-module.exports.inboxForwarded = catchAsync((async (req,res) => {
+module.exports.inboxForwarded = catchAsync((async (req, res) => {
     res.locals.title = "Forwarded"
     res.locals.description = "Packages that have been forwarded"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inbox/forwarded', {user})
+    res.render('user/inbox/forwarded', { user })
 }))
 
 // module.exports.forwardForm = catchAsync(async (req,res) => {
@@ -133,19 +136,19 @@ module.exports.inboxForwarded = catchAsync((async (req,res) => {
 //     res.render('user/forward/forwardThreePayment', {user} )
 // })
 
-module.exports.addressForm = catchAsync(async(req,res) => {
+module.exports.addressForm = catchAsync(async (req, res) => {
     res.locals.title = 'Choose Address'
     res.locals.description = "Choose which address you'd like to ship your package to"
 
-    const {id} = req.params
+    const { id } = req.params
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/address', {user})
+    res.render('user/forward/address', { user })
 })
 
-module.exports.saveAddress = catchAsync(async (req,res) => {
+module.exports.saveAddress = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id)
     const address = {
         name: req.body.name,
@@ -161,9 +164,9 @@ module.exports.saveAddress = catchAsync(async (req,res) => {
     res.redirect('/user/account/addresses')
 })
 
-module.exports.deleteAddress = catchAsync(async(req,res) => { 
+module.exports.deleteAddress = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id)
-    const index = req.params.id  -1 ;
+    const index = req.params.id - 1;
     console.log(index)
     console.log(user.addresses[index])
     user.addresses.splice(index, 1)
@@ -171,11 +174,11 @@ module.exports.deleteAddress = catchAsync(async(req,res) => {
     res.redirect('/user/account/addresses')
 })
 
-module.exports.shippingForm = catchAsync(async(req,res) => {
+module.exports.shippingForm = catchAsync(async (req, res) => {
     res.locals.title = 'Choose Shipping'
     res.locals.description = 'Choose your preferred shipping service'
 
-    const {id} = req.params
+    const { id } = req.params
     console.log(req.query)
     res.locals.query = req.query
     const user = await User.findById(req.user._id).populate('addy')
@@ -185,28 +188,28 @@ module.exports.shippingForm = catchAsync(async(req,res) => {
     const addy = await Addy.findById(req.user.addy._id)
     user.pkg = pkg;
     user.shipment = await getShipment(address);
-    res.render('user/forward/shipping', {user})
+    res.render('user/forward/shipping', { user })
 })
 
-module.exports.paymentForm = catchAsync(async(req,res) => {
+module.exports.paymentForm = catchAsync(async (req, res) => {
     res.locals.title = 'Choose Payment'
     res.locals.description = 'Choose the payment method you want to use to pay for your label and forward fee'
 
     res.locals.query = req.query
-    const {id} = req.params
+    const { id } = req.params
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/payment', {user})
+    res.render('user/forward/payment', { user })
 })
 
-module.exports.overviewForm = catchAsync(async(req,res) => {
+module.exports.overviewForm = catchAsync(async (req, res) => {
     res.locals.title = 'Overview'
     res.locals.description = 'Overview your forward request details'
 
     res.locals.query = req.query
-    const {id} = req.params
+    const { id } = req.params
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
@@ -214,13 +217,12 @@ module.exports.overviewForm = catchAsync(async(req,res) => {
 
 
 
-    res.render('user/forward/overview', {user})
+    res.render('user/forward/overview', { user })
 })
 
 
-module.exports.forward = catchAsync(async (req,res) => {
-    const {id} = req.params
-    const {rate} = req.query
+module.exports.forward = catchAsync(async (req, res) => {
+    const { id } = req.params
 
     const user = await User.findById(req.user._id).populate('addy')
     const address = await user.addresses.id(req.body.address)
@@ -228,53 +230,84 @@ module.exports.forward = catchAsync(async (req,res) => {
     console.log('body.rate')
     console.log(req.body.rate)
     console.log(req.body.shipment)
-    const trx = await createTransaction(req.body.rate)
-    console.log(trx)
-    const pkg = await Package.findById(id);
-    pkg.shippo = trx;
-    pkg.label_url = trx.label_url;
-    pkg.tracking_number = trx.tracking_number;
-    pkg.tracking_url_provider = trx.tracking_url_provider;
-    pkg.status = 'PENDING'
-    pkg.save()
-    console.log(pkg)
-    console.log(req.body)
+    // const rate = await getRate(req.body.rate);
+    // console.log('found rate')
+    // console.log(rate)
+
+    // const paymentTrx = await chargeCreditCard({rate})
+    // console.log('paymentTrx')
+    // console.log(paymenTrx)
+
+    const shipment = await shippo.shipment.retrieve(req.body.shipment);
+    console.log('found shipment')
+    console.log(shipment)
+
+    const rate = await shippo.rate.retrieve(req.body.rate);
+    console.log('found rate')
+    console.log(rate.amount)
+
+
+
+    const response = await chargeCreditCard({ rate, user })
+    console.log('response -----')
+    console.log(response)
+
+    console.log('response code')
+    console.log(response.getTransactionResponse().responseCode)
+
+    if (response.getTransactionResponse().responseCode == 1) {
+        const trx = await createTransaction(req.body.rate)
+        console.log(trx)
+        console.log('trx created')
+        console.log(trx.tracking_url_provider)
+    }
+
+
+    // const pkg = await Package.findById(id);
+    // pkg.shippo = trx;
+    // pkg.label_url = trx.label_url;
+    // pkg.tracking_number = trx.tracking_number;
+    // pkg.tracking_url_provider = trx.tracking_url_provider;
+    // pkg.status = 'PENDING'
+    // pkg.save()
+    // console.log(pkg)
+    // console.log(req.body)
     res.redirect('/user/inbox/new')
 })
 
 
-module.exports.personal = catchAsync(async (req,res) => {
+module.exports.personal = catchAsync(async (req, res) => {
     res.locals.title = 'Personal info'
     res.locals.description = 'View and edit your personal information'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
 
-    res.render('user/account/personal', {user})
+    res.render('user/account/personal', { user })
 })
 
-module.exports.security = catchAsync(async (req,res) => {
+module.exports.security = catchAsync(async (req, res) => {
     res.locals.title = 'Security'
     res.locals.description = 'View and edit your security information'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
 
-    res.render('user/account/security', {user})
+    res.render('user/account/security', { user })
 })
 
-module.exports.payments = catchAsync(async (req,res) => {
+module.exports.payments = catchAsync(async (req, res) => {
     res.locals.title = 'Payments'
     res.locals.description = 'View and edit your payment methods'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
-    res.render('user/account/payments', {user})
+    res.render('user/account/payments', { user })
 })
 
-module.exports.address = catchAsync(async (req,res) => {
+module.exports.address = catchAsync(async (req, res) => {
     res.locals.title = 'Addresses'
     res.locals.description = 'View and edit your addresses'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
-    res.render('user/account/addresses', {user})
+    res.render('user/account/addresses', { user })
 })
 
 
