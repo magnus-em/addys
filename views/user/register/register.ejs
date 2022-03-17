@@ -1,6 +1,8 @@
 <%- layout('layouts/boilerplate') %>
     <div class="container content-space-2 content-space-lg-3">
         <div class="w-lg-75 mx-lg-auto">
+    <%- include('../../partials/flash') %>
+
             <!-- Heading -->
             <div class="text-center mb-2">
                 <span class="text-cap">Your new address</span>
@@ -283,7 +285,117 @@
                     </div>
                     <!-- End Row -->
 
+
+                    <h4 class="my-7">Payment information</h4>
+
+                    <div class="row">
+
+
+                    
+
+
+                        <div class="col-sm-6">
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label class="form-label" for="cardNumber">Card number</label>
+
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-prepend input-group-text">
+                                        <i class="bi-credit-card-fill"></i>
+                                    </span>
+                                    <input type="text" class="js-input-mask form-control" name="cardNumber"
+                                        id="cardNumber" placeholder="xxxx xxxx xxxx xxxx"
+                                        aria-label="xxxx xxxx xxxx xxxx" "mask" : "0000 0000 0000 0000" }'>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-sm-6">
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label class="form-label" for="expiration">Expiration</label>
+
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-prepend input-group-text">
+                                        <span class="svg-icon svg-icon-xs svg-inline text-muted me-1">
+                                            <i class="bi-calendar-date-fill"></i>
+                                        </span>
+                                    </span>
+                                    <input type="text" class="js-input-mask form-control" name="cardExp"
+                                        id="expiration" placeholder="MMYY" aria-label="xx/xxxx" data-hs-mask-options="{
+                    &quot;mask&quot;: &quot;00/0000&quot;
+                  }">
+                                </div>
+                            </div>
+                            <!-- End Form -->
+                        </div>
+                        <!-- End Col -->
+
+
+                    </div>
+                    <!-- End Row -->
+
+                    <div class="row">
+                       
+
+                        <div class="col-sm-6">
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label class="form-label" for="cvv">CVV</label>
+
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-prepend input-group-text">
+                                        <i class="bi-credit-card-2-back-fill"></i>
+                                    </span>
+                                    <input type="text" class="js-input-mask form-control" name="cvv" id="cvv"
+                                        placeholder="xxx" aria-label="xxx" data-hs-mask-options="{
+                    &quot;mask&quot;: &quot;000&quot;
+                  }">
+                                </div>
+                            </div>
+                            <!-- End Form -->
+                        </div>
+                        <!-- End Col -->
+                    </div>
+                    <!-- End Row -->
+
                     <h4 class="my-7">Billing address</h4>
+
+                    <div class="row">
+
+                        <div class="col-sm-6">
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label class="form-label" for="billingFirstName">First name</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-prepend input-group-text">
+                                        <i class="bi-person-fill"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-lg" id="billingFirstName" name="billingFirstName" placeholder="Virgil" aria-label="First name" required="">
+
+                                </div>
+
+                            </div>
+                            <!-- End Form -->
+                        </div>
+                        <div class="col-sm-6">
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label class="form-label" for="billingLastName">Last name</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-prepend input-group-text">
+                                        <i class="bi-person-fill"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-lg" id="billingLastName" name="billingLastName" placeholder="Abloh" aria-label="Last name" required="">
+                                </div>
+                            </div>
+                            <!-- End Form -->
+                        </div>
+                        <!-- End Col -->
+
+
+                    </div>
 
 
                     <div class="row">
@@ -409,13 +521,13 @@
                         <div class="col-sm-4">
                             <!-- Form -->
                             <div class="mb-4">
-                                <label class="form-label" for="postalCodeUploadForm">Postal code</label>
+                                <label class="form-label" for="zip">Postal code</label>
 
                                 <div class="input-group input-group-merge">
                                     <span class="input-group-prepend input-group-text">
                                         <i class="bi-envelope-open-fill"></i>
                                     </span>
-                                    <input type="text" class="form-control form-control-lg" id="postalCodeUploadForm"
+                                    <input type="text" class="form-control form-control-lg" name="zip" id="zip"
                                         placeholder="10001" aria-label="Postal code">
                                 </div>
                             </div>
@@ -430,91 +542,7 @@
 
 
 
-                    <h4 class="my-7">Payment information</h4>
 
-                    <div class="row">
-
-
-                        <div class="col-sm-6">
-                            <!-- Form -->
-                            <div class="mb-4">
-                                <label class="form-label" for="cardholder">Name on card</label>
-
-                                <div class="input-group input-group-merge">
-                                    <span class="input-group-prepend input-group-text">
-                                        <i class="bi-person-fill"></i>
-                                    </span>
-                                    <input type="text" class="form-control form-control-lg" id="cardholder"
-                                        name="cardholder" placeholder="Card Holder" aria-label="Listing agent name">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Col -->
-
-
-                        <div class="col-sm-6">
-                            <!-- Form -->
-                            <div class="mb-4">
-                                <label class="form-label" for="cardNumber">Card number</label>
-
-                                <div class="input-group input-group-merge">
-                                    <span class="input-group-prepend input-group-text">
-                                        <i class="bi-credit-card-fill"></i>
-                                    </span>
-                                    <input type="text" class="js-input-mask form-control" name="cardNumber"
-                                        id="cardNumber" placeholder="xxxx xxxx xxxx xxxx"
-                                        aria-label="xxxx xxxx xxxx xxxx" "mask" : "0000 0000 0000 0000" }'>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Col -->
-
-
-                    </div>
-                    <!-- End Row -->
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <!-- Form -->
-                            <div class="mb-4">
-                                <label class="form-label" for="expiration">Expiration</label>
-
-                                <div class="input-group input-group-merge">
-                                    <span class="input-group-prepend input-group-text">
-                                        <span class="svg-icon svg-icon-xs svg-inline text-muted me-1">
-                                            <i class="bi-calendar-date-fill"></i>
-                                        </span>
-                                    </span>
-                                    <input type="text" class="js-input-mask form-control" name="expiration"
-                                        id="expiration" placeholder="xx/xxxx" aria-label="xx/xxxx" data-hs-mask-options="{
-                    &quot;mask&quot;: &quot;00/0000&quot;
-                  }">
-                                </div>
-                            </div>
-                            <!-- End Form -->
-                        </div>
-                        <!-- End Col -->
-
-                        <div class="col-sm-6">
-                            <!-- Form -->
-                            <div class="mb-4">
-                                <label class="form-label" for="cvv">CVV</label>
-
-                                <div class="input-group input-group-merge">
-                                    <span class="input-group-prepend input-group-text">
-                                        <i class="bi-credit-card-2-back-fill"></i>
-                                    </span>
-                                    <input type="text" class="js-input-mask form-control" name="cvv" id="cvv"
-                                        placeholder="xxx" aria-label="xxx" data-hs-mask-options="{
-                    &quot;mask&quot;: &quot;000&quot;
-                  }">
-                                </div>
-                            </div>
-                            <!-- End Form -->
-                        </div>
-                        <!-- End Col -->
-                    </div>
-                    <!-- End Row -->
 
                     <h4 class="my-7 mb-0">Upload required documents</h4>
 

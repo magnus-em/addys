@@ -62,7 +62,7 @@
                 <!-- List -->
                 <ul id="fwFormProgress" class="js-step-progress step step-icon-xs step-border-last-0 mt-5">
                   <li class="step-item">
-                    <a class="step-content-wrapper"  href="/user/inbox/<%= user.pkg._id %>/forward/address"
+                    <a class="step-content-wrapper" 
                        data-hs-step-form-next-options='{
                         "targetSelector": "#fwFormStepAddress"
                       }'>
@@ -75,7 +75,7 @@
                   </li>
     
                   <li class="step-item">
-                    <a class="step-content-wrapper"  href="/user/inbox/<%= user.pkg._id %>/forward/shipping"
+                    <a class="step-content-wrapper"  
                        data-hs-step-form-next-options='{
                         "targetSelector": "#fwFormStepShipping"
                       }'>
@@ -104,7 +104,7 @@
   
     
                   <li class="step-item">
-                    <a class="step-content-wrapper" href="/user/inbox/<%= user.pkg._id %>/forward/overview"
+                    <a class="step-content-wrapper" 
                        data-hs-step-form-next-options='{
                         "targetSelector": "#fwFormStepOverview"
                       }'>
@@ -147,29 +147,69 @@
               <!-- End Header -->
               <!-- Body -->
               <div class="card-body">
-                <!-- Form -->
                 <div class="mb-4">
-                  <label class="form-label">Choose saved card</label>
-                  <div class="d-grid gap-2">
-                    <!-- Custom Radio -->
-                    <label class="form-control" for="jobTypeRadio1">
-                      <span class="form-check custom-radio">
-                        <input type="radio" class="form-check-input" name="payment" id="jobTypeRadio1" value="payment1" checked>
-                        <span class="form-check-label">Visa 0005</span>
-                      </span>
-                    </label>
-                    <!-- End Custom Radio -->
-                    <!-- Custom Radio -->
-                    <label class="form-control" for="jobTypeRadio2">
-                      <span class="form-check custom-radio">
-                        <input type="radio" class="form-check-input" name="payment" id="jobTypeRadio2" value="payment2">
-                        <span class="form-check-label">Amex 5002</span>
-                      </span>
-                    </label>
-                    <!-- End Custom Radio -->
-                  </div>
+                  <p>We currently support Visa, American Express, Mastercard, and Discover. Crypto payments coming soon.</p>
                 </div>
-                <!-- End Form -->
+  
+                <!-- List Group -->
+                <ul class="list-group mb-5">
+  
+                  <% for (let p of user.payments) { %> 
+                  <!-- Item -->
+                  <li class="list-group-item">
+                    <div class="mb-2">
+                      <h5><%= p.firstName %> <%= p.lastName %> <span class="badge bg-success ms-1">Selected</span></h5>
+                    </div>
+  
+                    <!-- Media -->
+                    <div class="d-flex">
+                      <div class="flex-shrink-0">
+                        <% if(p.cardType == 'Visa') { %> 
+                        <img class="avatar avatar-sm" src="/public/assets/svg/brands/visa.svg" alt="Image Description">
+                        <% } else if (p.cardType == 'Mastercard') { %> 
+                        <img class="avatar avatar-sm" src="/public/assets/svg/brands/mastercard.svg" alt="Image Description">
+                        <% } %> 
+                      </div>
+  
+                      <div class="flex-grow-1 ms-3">
+                        <div class="row">
+                          <div class="col-sm mb-3 mb-sm-0">
+                            <span class="d-block text-dark"><%= p.cardType %> <%= p.cardNumber.replace('XXXX','•••• ')%> </span>
+                            <small class="d-block text-muted">Debit - Expires 12/22</small>
+                          </div>
+                          <!-- End Col -->
+  
+                          <!-- <div class="col-sm-auto">
+                            <div class="d-flex gap-3">
+                              <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountEditCardModal">
+                                <i class="bi-pencil-fill me-1"></i> Edit
+                              </a>
+                              <button type="button" class="btn btn-white btn-xs">
+                                <i class="bi-trash me-1"></i> Delete
+                              </button>
+                            </div>
+                          </div> -->
+                          <!-- End Col -->
+                        </div>
+                        <!-- End Row -->
+                      </div>
+                    </div>
+                    <!-- End Media -->
+                  </li>
+                  <!-- End Item -->
+  
+                  <% } %> 
+                </ul>
+                <!-- End List Group -->
+  
+                <!-- Card -->
+                <!-- <a class="card card-dashed card-centered" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountAddCardModal">
+                  <div class="card-body card-dashed-body py-8">
+                    <img class="avatar avatar-lg avatar-4x3 mb-2" src="/public/assets/svg/illustrations/oc-add-card.svg" alt="Image Description">
+                    <span class="d-block"><i class="bi-plus"></i> Add a new card</span>
+                  </div>
+                </a> -->
+                <!-- End Card -->
               </div>
               <!-- End Body -->
 
@@ -181,9 +221,9 @@
 
               <div class="card-footer pt-0">
                 <div class="d-flex align-items-center">
-                  <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
+                  <!-- <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
                     <i class="bi-chevron-left small ms-1"></i> Previous step
-                  </a>
+                  </a> -->
                   <div class="ms-auto">
                     <button type="submit" class="btn btn-primary">
                       Save and continue <i class="bi-chevron-right small ms-1"></i>

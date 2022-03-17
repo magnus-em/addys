@@ -62,7 +62,7 @@
                 <!-- List -->
                 <ul id="fwFormProgress" class="js-step-progress step step-icon-xs step-border-last-0 mt-5">
                 <li class="step-item">
-                  <a class="step-content-wrapper"  href="/user/inbox/<%= user.pkg._id %>/forward/address"
+                  <a class="step-content-wrapper"  
                      data-hs-step-form-next-options='{
                       "targetSelector": "#fwFormStepAddress"
                     }'>
@@ -75,7 +75,7 @@
                 </li>
   
                 <li class="step-item">
-                  <a class="step-content-wrapper"  href="/user/inbox/<%= user.pkg._id %>/forward/shipping"
+                  <a class="step-content-wrapper"  
                      data-hs-step-form-next-options='{
                       "targetSelector": "#fwFormStepShipping"
                     }'>
@@ -88,7 +88,7 @@
                 </li>
   
                 <li class="step-item">
-                  <a class="step-content-wrapper"  href="/user/inbox/<%= user.pkg._id %>/forward/payment"
+                  <a class="step-content-wrapper"  
                      data-hs-step-form-next-options='{
                       "targetSelector": "#fwFormStepPayment"
                     }'>
@@ -185,9 +185,9 @@
               <!-- Footer -->
               <div class="card-footer pt-0">
                 <div class="d-flex align-items-center">
-                  <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/payment">
+                  <!-- <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/payment">
                     <i class="bi-chevron-left small ms-1"></i> Previous step
-                  </a>
+                  </a> -->
                   <div class="ms-auto">
                     <button type="submit" class="btn btn-primary" >
                       Submit

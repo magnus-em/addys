@@ -8,9 +8,28 @@
       </div>
       <div class="mb-4">
         <p class="fs-4 mb-0"><b>Error: <%= param.message %></b></p>
-        <p class="fs-4">If you think this is a problem with us, please <a class="link" href="#">tell us</a>.</p>
+        <p class="fs-4">If you think this is a problem with us, please let us know with live chat</p>
       </div>
       <a class="btn btn-primary" href="/">Go back home</a>
     </div>
   </div>
+  <script>
+    $('#pricingBtn').click(function() {
+      document.getElementById("pricing").scrollIntoView({ behavior: 'smooth',
+              block: 'center',
+              inline: 'center' });
+    })
+  </script>
+  
+  <script>
+    window.intercomSettings = {
+      api_base: "https://api-iam.intercom.io",
+      app_id: "r1o1zoy1"
+    };
+  </script>
+  
+  <script>
+  // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/r1o1zoy1'
+  (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/r1o1zoy1';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+  </script>
   <%- include('../partials/footEssential') %>   

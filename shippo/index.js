@@ -1,16 +1,6 @@
 var shippo = require('shippo')(process.env.SHIPPO_TEST);
 
-
 var addressFrom = {
-    "name": "Shawn Ippotle",
-    "street1": "1127 Evergreen Point Rd",
-    "city": "Medina",
-    "state": "WA",
-    "zip": "98039",
-    "country": "US"
-};
-
-var addressTo = {
     "name": "Mr Hippo",
     "street1": "10771 Bellagio Rd",
     "city": "Los Angeles",
@@ -29,46 +19,11 @@ var parcel = {
 };
 
 
-// shippo.shipment.create({
-//     "address_from": addressFrom,
-//     "address_to": addressTo,
-//     "parcels": [parcel],
-//     "async": false
-// }, function(err, shipment){
-
-//     if (err) {
-//         console.log('ERROR')
-//         console.log(err)
-//     }
-//     createTransaction(shipment);
-// });
-
-// function createTransaction(shipment) {
-//     let rate = null;
-//     for (let r of shipment.rates) {
-//         if (r.attributes.includes('CHEAPEST')) {
-//             console.log('cheapest rate: ')
-//             console.log(r)
-//             rate = r
-//         }
-//     }
-
-//     shippo.transaction.create({
-//         "rate": rate.object_id,
-//         "label_file_type": "PDF",
-//         "async": false
-//     }, function(err, transaction) {
-//        console.log(err)
-//        console.log('TRANSACTION')
-//        console.log(transaction)
-//     });
-// }
-
-module.exports.getShipment = function (address) {
+module.exports.getShipment = function (address, addy) {
     return new Promise((resolve, reject) => {
 
         shippo.shipment.create({
-            "address_from": {
+            "address_to": {
                 "name": address.name,
                 "street1": address.street1,
                 "city": address.city,
@@ -76,7 +31,14 @@ module.exports.getShipment = function (address) {
                 "zip": address.zip,
                 "country": address.country
             },
-            "address_to": addressTo,
+            "address_from": {
+                "name": "Addy Forwarder",
+                "street1": addy.address1,
+                "city": addy.city,
+                "state": addy.state,
+                "zip": addy.zip,
+                "country": "US"
+            },
             "parcels": [parcel],
             "async": false
         }, function (err, shipment) {
@@ -105,9 +67,3 @@ module.exports.createTransaction = function (rate) {
         });
     })
 }
-
-// module.exports.getRate = function (rate) {
-//     return new Promise((resolve, reject) => {
-//         resolve()
-//     })
-// }

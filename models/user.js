@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const {Schema} = mongoose;
 const passportLocalMongoose = require('passport-local-mongoose');
+var short = require('short-mongo-id');
+
 
 const userSchema = new Schema({
     email: {
@@ -30,6 +32,13 @@ const userSchema = new Schema({
     balance: {
         type: Number,
         default: 0
+    },
+    customerProfileId: String,
+    shortId: {
+        type: String,
+        default: function() {
+            return short(this._id);
+        }
     },
     payouts: [
         {

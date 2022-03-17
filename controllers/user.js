@@ -2,13 +2,14 @@ const catchAsync = require('../utils/catchAsync')
 const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
-const { getShipment, createTransaction, getRate } = require('../shippo/test')
+const { getShipment, createTransaction, getRate } = require('../shippo')
 const { sendWelcome, sendForwardConfirm } = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
-const { chargeCreditCard } = require('../authorize/index')
+
+const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate } = require('../authnet')
 
 
 
@@ -44,6 +45,27 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
             throw new Error('Invalid invite code')
         }
         const { email, username, password, invite, firstName, lastName, phone } = req.body
+
+        const details = {
+             cardNumber: req.body.cardNumber,
+             cardExp: req.body.cardExp,
+             cvv: req.body.cvv,
+             firstName: req.body.billingFirstName,
+             lastName: req.body.billingLastName,
+             street1: req.body.street1,
+             street2: req.body.street2,
+             city: req.body.city,
+             state: req.body.state,
+             zip: req.body.zip,
+             amount: '15'
+        }
+        const response = await initialAccountCharge(details)
+        console.log('response in user controller')
+        console.log(response)
+
+        if(response.getTransactionResponse().getResponseCode() != 1) {
+           return res.send(response.getTransactionResponse().getMessages().getMessage()[0].getDescription())
+        }
         const addy = await Addy.findById(req.body.addy).populate('clients')
         const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
         const user = new User({ email, username, addy, mailbox, type: 'CLIENT', invite, firstName, lastName, phone })
@@ -53,6 +75,18 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         req.login(registeredUser, err => {
             if (err) return next(err);
         })
+        details.client = user;
+
+        const createProfile  = await createCustomerProfileNoPayment(details)
+        if (createProfile.success) {
+            user.customerProfileId = createProfile.id
+            console.log('saved profile id ' + createProfile.id)
+            await user.save() 
+            details.customerProfileId = createProfile.id
+            const res = createCustomerPaymentProfile(details)
+
+        }
+        
         console.log('NEW USER CREATED')
         console.log(user)
         req.flash('success', 'New user successfully created')
@@ -68,6 +102,14 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
 
 
 module.exports.login = catchAsync(async (req, res) => {
+
+
+    const user = await User.findById(req.user._id)
+    getCustomerPaymentProfile(user.customerProfileId)
+
+
+
+
 
 
     if (req.user.type == 'ADMIN') {
@@ -182,12 +224,11 @@ module.exports.shippingForm = catchAsync(async (req, res) => {
     console.log(req.query)
     res.locals.query = req.query
     const user = await User.findById(req.user._id).populate('addy')
-    const address = await user.addresses.id(req.query.address)
-    console.log(address)
+    const addressTo = await user.addresses.id(req.query.address)
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
     user.pkg = pkg;
-    user.shipment = await getShipment(address);
+    user.shipment = await getShipment(addressTo, addy);
     res.render('user/forward/shipping', { user })
 })
 
@@ -201,6 +242,28 @@ module.exports.paymentForm = catchAsync(async (req, res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
+
+    const response = await getCustomerPaymentProfile(user.customerProfileId)
+    if (response) {
+        console.log('---response----')
+        console.log(response)
+        console.log('---getPaymentProfile----')
+        console.log(response.getPaymentProfile())
+        console.log('---getPayment()----')
+        console.log(response.getPaymentProfile().getPayment())
+        console.log('---getCreditCard()----')
+        console.log(response.getPaymentProfile().getPayment().getCreditCard())
+        console.log(response.getPaymentProfile().getPayment().getCreditCard().getCardNumber())
+    }
+
+    user.payments = [{
+        firstName: response.getPaymentProfile().getBillTo().getFirstName(),
+        lastName: response.getPaymentProfile().getBillTo().getLastName(),
+        cardNumber: response.getPaymentProfile().getPayment().getCreditCard().getCardNumber(),
+        cardType: response.getPaymentProfile().getPayment().getCreditCard().getCardType(),
+        cardExp: '0323'
+    }]
+
     res.render('user/forward/payment', { user })
 })
 
@@ -214,9 +277,6 @@ module.exports.overviewForm = catchAsync(async (req, res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-
-
-
     res.render('user/forward/overview', { user })
 })
 
@@ -246,9 +306,12 @@ module.exports.forward = catchAsync(async (req, res) => {
     console.log('found rate')
     console.log(rate.amount)
 
+    const paymentProfile = await getCustomerPaymentProfile(user.customerProfileId)
+
+    const paymentId = paymentProfile.getPaymentProfile().getCustomerPaymentProfileId()
 
 
-    const response = await chargeCreditCard({ rate, user })
+    const response = await chargeRate({rate, shipment}, user.customerProfileId, paymentId)
     console.log('response -----')
     console.log(response)
 
@@ -298,6 +361,30 @@ module.exports.payments = catchAsync(async (req, res) => {
     res.locals.title = 'Payments'
     res.locals.description = 'View and edit your payment methods'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
+
+    const response = await getCustomerPaymentProfile(user.customerProfileId)
+    if (response) {
+        console.log('---response----')
+        console.log(response)
+        console.log('---getPaymentProfile----')
+        console.log(response.getPaymentProfile())
+        console.log('---getPayment()----')
+        console.log(response.getPaymentProfile().getPayment())
+        console.log('---getCreditCard()----')
+        console.log(response.getPaymentProfile().getPayment().getCreditCard())
+        console.log(response.getPaymentProfile().getPayment().getCreditCard().getCardNumber())
+    }
+
+    user.payments = [{
+        firstName: response.getPaymentProfile().getBillTo().getFirstName(),
+        lastName: response.getPaymentProfile().getBillTo().getLastName(),
+        cardNumber: response.getPaymentProfile().getPayment().getCreditCard().getCardNumber(),
+        cardType: response.getPaymentProfile().getPayment().getCreditCard().getCardType(),
+        cardExp: '0323'
+    }]
+        
+    
+
 
     res.render('user/account/payments', { user })
 })

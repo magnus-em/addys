@@ -35,7 +35,7 @@ module.exports.sendWelcome = async function(user) {
        if (error) {
            console.log(error);
        } else {
-           console.log("That's wassup!");
+           console.log("Sendgrid email sent");
        }
     });
  }
@@ -66,7 +66,7 @@ module.exports.sendWelcome = async function(user) {
         if (error) {
             console.log(error);
         } else {
-            console.log("That's wassup!");
+            console.log("Sendgrid email sent");
         }
      });
  })
