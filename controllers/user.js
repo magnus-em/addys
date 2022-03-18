@@ -98,16 +98,6 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
 })
 
 module.exports.login = catchAsync(async (req, res) => {
-
-
-    const user = await User.findById(req.user._id)
-    getCustomerPaymentProfile(user.customerProfileId)
-
-
-
-
-
-
     if (req.user.type == 'ADMIN') {
         return res.redirect('/admin/dash/all')
     } else if (req.user.type == 'FW') {
