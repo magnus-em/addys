@@ -14,7 +14,7 @@ const upload = multer({storage})
 
 
 //post new package tied to specific addy
-router.post('/addys/:id/packages', isLoggedIn, upload.array('image'), packages.createPackage)
+router.post('/locations/:id/packages', isLoggedIn, upload.array('image'), packages.createPackage)
 
 //get all packages and show all
 router.get('/packages', packages.index)
@@ -23,9 +23,9 @@ router.get('/packages', packages.index)
 router.get('/packages/:id',packages.showPackage)
 
 //delete package under specific addy
-router.delete('/addys/:addyId/packages/:packageId', isLoggedIn, packages.deletePackage)
+router.delete('/locations/:addyId/packages/:packageId', isLoggedIn, packages.deletePackage)
 
 // get form to create new package tied to addy
-router.get('/addys/:id/packages/new', isLoggedIn, packages.renderNewForm)
+router.get('/locations/:id/packages/new', isLoggedIn, packages.renderNewForm)
 
 module.exports = router;

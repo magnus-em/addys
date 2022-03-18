@@ -87,9 +87,9 @@ app.use((req,res,next) => {
     next();
 })
 
-app.use('/addys',addyRoutes)
+app.use('/locations',addyRoutes)
 app.use('/',packageRoutes)
-app.use('/addys/:addyId/reviews',reviewRoutes)
+app.use('/locations/:addyId/reviews',reviewRoutes)
 app.use('/', userRoutes)
 app.use('/forwarder', fwRoutes)
 app.use('/admin', adminRoutes)

@@ -14,7 +14,7 @@
         <!-- Body -->
         <div class="card-body">
           <!-- Form -->
-          <form action="/addys/<%=addy._id%>?_method=PATCH" method="post" class='needs-validation' novalidate>
+          <form action="/locations/<%=addy._id%>?_method=PATCH" method="post" class='needs-validation' novalidate>
 
             <div class="row mb-4">
               <label for="title" class="col-sm-3 col-form-label form-label">Title</label>
@@ -38,7 +38,7 @@
               </div>
             </div>
             <div class="d-flex justify-content-end gap-3">
-              <a class="btn btn-white" href="/addys/<%= addy._id %> ">Cancel</a>
+              <a class="btn btn-white" href="/locations/<%= addy._id %> ">Cancel</a>
               <button type="submit" class="btn btn-primary">Update</button>
             </div>
           </form>

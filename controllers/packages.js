@@ -18,7 +18,7 @@ module.exports.createPackage = catchAsync(async(req,res,next) => {
     console.log(package)
     req.flash('success','Successfully added package')
     // res.render('addys/details', {addy, message: req.flash('success')})
-    res.redirect(`/addys/${id}`)
+    res.redirect(`/locations/${id}`)
 })
 
 module.exports.index = catchAsync(async(req,res,next) => {

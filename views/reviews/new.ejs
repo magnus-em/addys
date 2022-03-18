@@ -6,8 +6,8 @@
         <!-- Breadcrumb -->
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item"><a href="/addys">Addys</a></li>
-            <li class="breadcrumb-item"><a href="/addys/<%= addy._id %> "><%= addy.address1 %></a></li>
+            <li class="breadcrumb-item"><a href="/locations">Addys</a></li>
+            <li class="breadcrumb-item"><a href="/locations/<%= addy._id %> "><%= addy.address1 %></a></li>
             <li class="breadcrumb-item active" aria-current="page">New review</li>
           </ol>
         </nav>
@@ -31,7 +31,7 @@
       <!-- Card -->
       <div class="card card-lg border shadow-none">
         <div class="card-body">
-          <form action="/addys/<%= addy._id %>/reviews"method="post" novalidate class="needs-validation">
+          <form action="/locations/<%= addy._id %>/reviews"method="post" novalidate class="needs-validation">
             <div class="d-grid gap-4">
 
               <label for="rating" class="form-label">Review</label>

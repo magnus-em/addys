@@ -22,6 +22,7 @@
           <!-- End Breadcrumb -->
         </div>
         <!-- End Col -->
+
         <div class="col-auto">
 
 
@@ -53,6 +54,8 @@
             <!-- Card -->
             <div class="card flex-grow-1 mb-5">
               <div class="card-body">
+
+                
                 
                 <!-- Nav -->
                 <span class="text-cap">Categories</span>
@@ -60,14 +63,14 @@
                 <!-- List -->
                 <ul class="nav nav-sm nav-tabs nav-vertical">
                   <li class="nav-item">
-                    <a class="nav-link" href="/user/inbox/new">
+                    <a class="nav-link active" href="/client/inbox/new">
                       <i class="bi-box nav-icon"></i>
                       <span class="me-2">New packages</span><span class="badge text-dark border rounded-pill">
                         <%= user.totalNew %>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active" href="/user/inbox/pending">
+                    <a class="nav-link" href="/client/inbox/pending">
                       <i class="bi-hourglass-split nav-icon"></i>
                       <span class="me-2">Pending forward</span><span class="badge text-dark border rounded-pill">
                         <%= user.totalPending %>
@@ -75,7 +78,7 @@
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/user/inbox/forwarded">
+                    <a class="nav-link" href="/client/inbox/forwarded">
                       <i class="bi-forward-fill nav-icon"></i>
                       <span class="me-2">Forwarded</span><span class="badge text-dark border rounded-pill">
                         <%= user.totalForwarded %>
@@ -84,6 +87,7 @@
                   </li>
                 </ul>
                 <!-- End List -->
+
 
 
 
@@ -102,8 +106,9 @@
           <!-- Card -->
           <div class="card">
             <div class="card-header border-bottom">
-              <h4 class="card-header-title">Pending packages</h4>
-              <p class="card-text">Packages awaiting drop off by your forwarder</p>
+              <h4 class="card-header-title">New packages</h4>
+              <p class="card-text">Newly arrived packages will show up here. Please submit forward request wthin three days of upload by your forwarder.</p>
+
             </div>
 
             <!-- Body -->
@@ -113,14 +118,11 @@
               <div class="d-grid gap-5 mb-10">
 
                 <% for (let p of user.packages) { %>     
-                <% if (p.status != 'PENDING') { continue; } %> 
+                <% if (p.status != 'NEW') { continue; } %> 
                 <%- include('./pkg', {p}) %> 
-
+  
               <% } %> 
-
-              <% if (user.totalNew == 0) { %> 
-                
-              <% } %> 
+  
             </div>
             </div>
             <!-- End Body -->
@@ -141,6 +143,21 @@
   <!-- End Content -->
 </div>
 
+<script>
+  window.intercomSettings = {
+    api_base: "https://api-iam.intercom.io",
+    app_id: "r1o1zoy1",
+    user_id: "<%= user._id%>",
+    name: "<% user.name %>", // Full name
+    email: "<%= user.email %>", // Email address
+    created_at: "<%= Math.floor(user.signUp.getTime() / 1000) %>" // Signup date as a Unix timestamp
 
-<%- include('../../partials/intercom_user') %>
-<%- include('../../partials/foot') %>
+  };
+</script>
+
+<script>
+// We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/r1o1zoy1'
+(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/r1o1zoy1';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+</script>
+
+  <%- include('../../partials/foot') %>

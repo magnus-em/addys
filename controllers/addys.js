@@ -23,7 +23,7 @@ module.exports.renderEditForm = catchAsync(async (req, res, next) => {
     const addy = await Addy.findById(id)
     if (!addy) {
         req.flash('error','No Addy with that ID')
-        return res.redirect('/addys')
+        return res.redirect('/locations')
     }
     res.render('addys/edit', { addy })
 })
@@ -35,7 +35,7 @@ module.exports.createAddy = catchAsync(async (req,res) => {
     console.log('NEW DOCUMENT')
     console.log(addy)
     req.flash('success','succesfully created new addy')
-    res.redirect(`/addys/${addy._id}`)
+    res.redirect(`/locations/${addy._id}`)
 })
 
 module.exports.showAddy = catchAsync(async (req, res, next) => {
@@ -58,7 +58,7 @@ module.exports.showAddy = catchAsync(async (req, res, next) => {
                         .populate('forwarder')
     if (!addy) {
         req.flash('error','No Addy with that ID')
-        return res.redirect('/addys')
+        return res.redirect('/locations')
     }
     console.log('SHOW ADDY DETAILS')
     console.log(addy)
@@ -71,7 +71,7 @@ module.exports.updateAddy = catchAsync(async (req, res, next) => {
     const addy = await Addy.findById(id)
     if (!addy) {
         req.flash('error','No Addy with that ID')
-        return res.redirect('/addys')
+        return res.redirect('/locations')
     }
     addy.title = title;
     addy.city = city;
@@ -88,7 +88,7 @@ module.exports.deleteAddy = catchAsync(async (req, res, next) => {
     } 
     await addy.delete()
     req.flash('success','Addy deleted')
-    res.redirect('/addys')
+    res.redirect('/locations')
 })
 
 module.exports.showInbox = catchAsync(async (req,res) => {
@@ -103,7 +103,7 @@ module.exports.showInbox = catchAsync(async (req,res) => {
                         .populate('forwarder')
     if (!addy) {
         req.flash('error','No Addy with that ID')
-        return res.redirect('/addys')
+        return res.redirect('/locations')
     }
     res.render('users/inbox', {addy})
 })

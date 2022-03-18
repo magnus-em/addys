@@ -135,7 +135,7 @@
       <div class="col-lg-9">
         <div class="d-grid gap-3 gap-lg-5">
           <!-- Card -->
-          <form action="/user/inbox/<%= user.pkg._id %>/forward/payment">
+          <form action="/client/inbox/<%= user.pkg._id %>/forward/payment">
             <div id="fwFormStepAddress" class="card active">
               <!-- Header -->
               <div class="card-header border-bottom">
@@ -177,12 +177,12 @@
               <!-- End Body -->
               <div class="card-footer pt-0">
                 <div class="d-flex align-items-center">
-                  <!-- <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/address">
+                  <!-- <a type="button" class="btn btn-ghost-secondary" href="/client/inbox/<%= user.pkg._id %>/forward/address">
                     <i class="bi-chevron-left small ms-1"></i> Previous step
                   </a> -->
             
                   <div class="ms-auto">
-                    <button type="submit" class="btn btn-primary" href="/user/inbox/<%= user.pkg._id %>/forward/payment">
+                    <button type="submit" class="btn btn-primary" href="/client/inbox/<%= user.pkg._id %>/forward/payment">
                       Save and continue <i class="bi-chevron-right small ms-1"></i>
                     </button>
                   </div>

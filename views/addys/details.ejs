@@ -9,7 +9,7 @@
                         <!-- Breadcrumb -->
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb mb-0">
-                                <li class="breadcrumb-item"><a href="/addys">Addys</a></li>
+                                <li class="breadcrumb-item"><a href="/locations">Addys</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
                                     <%= addy.address1 %>
                                 </li>
@@ -163,13 +163,13 @@
                                             <% if (user && addy.forwarder.equals(user)) {%> 
                                             <div class="col-lg-auto align-self-lg-end text-lg-right">
                                                 <div class="d-flex gap-2">
-                                                     <a href="/addys/<%= addy._id %>/inbox" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">inbox</a>
+                                                     <a href="/locations/<%= addy._id %>/inbox" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">inbox</a>
 
                                                     <a class="btn btn-primary btn-sm"
-                                                        href="/addys/<%= addy._id %>/edit">
+                                                        href="/locations/<%= addy._id %>/edit">
                                                         <i class="bi-pencil-fill me-1"></i> Edit
                                                     </a>
-                                                    <form action="/addys/<%= addy._id %>?_method=DELETE" method="post">
+                                                    <form action="/locations/<%= addy._id %>?_method=DELETE" method="post">
                                                         <button class="btn btn-danger btn-sm">
                                                             <i class="bi-trash me-1"></i> Delete
                                                         </button>
@@ -191,7 +191,7 @@
                             <!-- Heading -->
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h4 class="mb-0">Packages</h4>
-                                <a class="link" href="/addys/<%= addy._id %>/packages/new">Add package <i
+                                <a class="link" href="/locations/<%= addy._id %>/packages/new">Add package <i
                                         class="bi-chevron-right small ms-1"></i></a>
                             </div>
                             <!-- End Heading -->
@@ -218,7 +218,7 @@
                                                     </div>
                                                     <div class="flex-shrink-0">
                                                         <form
-                                                            action="/addys/<%=addy._id%>/packages/<%= p._id %>?_method=DELETE"
+                                                            action="/locations/<%=addy._id%>/packages/<%= p._id %>?_method=DELETE"
                                                             method="post">
                                                             <button class="btn btn-danger btn-sm mx-1">
                                                                 <i class="bi-trash me-1"></i>
@@ -522,7 +522,7 @@
                                             <!-- <span>- Verified client</span> -->
                                             <% if(user && user.equals(r.author)) {%> 
                                             <form class="d-inline"
-                                                action="/addys/<%= addy._id %>/reviews/<%= r._id %>?_method=DELETE"
+                                                action="/locations/<%= addy._id %>/reviews/<%= r._id %>?_method=DELETE"
                                                 method="post">
                                                 <button type="submit" class="btn btn-ghost-danger d-inline">
                                                     <i class="bi-trash"></i>
@@ -543,7 +543,7 @@
                         <!-- End Comment -->
                         <% if (user) { %> 
                         <div class="d-sm-flex justify-content-sm-end gap-2">
-                            <a type="button" href="/addys/<%= addy._id %>/reviews/new"
+                            <a type="button" href="/locations/<%= addy._id %>/reviews/new"
                                 class="btn btn-primary btn-transition rounded-pill">Write a
                                 review</a>
                         </div>

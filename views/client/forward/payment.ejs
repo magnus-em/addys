@@ -133,7 +133,7 @@
           <div class="col-lg-9">
             <div class="d-grid gap-3 gap-lg-5">
 
-              <form action="/user/inbox/<%= user.pkg._id %>/forward/overview">
+              <form action="/client/inbox/<%= user.pkg._id %>/forward/overview">
                 <!-- Card -->
                 <div id="fwFormStepAddress" class="card active">
                   <!-- Header -->
@@ -196,7 +196,7 @@
                                 </a> -->
     
                                 
-                                  <form action="/user/inbox/<%= user.pkg._id %>/forward/overview">
+                                  <form action="/client/inbox/<%= user.pkg._id %>/forward/overview">
 
                                     <input type="hidden" value="<%= p.id %>" name="payment" />
                                     <input type="hidden" value="<%= query.address %>" name="address" />
@@ -242,7 +242,7 @@
 
               <div class="card-footer pt-0">
                 <div class="d-flex align-items-center">
-                  <!-- <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
+                  <!-- <a type="button" class="btn btn-ghost-secondary" href="/client/inbox/<%= user.pkg._id %>/forward/shipping">
                     <i class="bi-chevron-left small ms-1"></i> Previous step
                   </a> -->
                   <!-- <div class="ms-auto">

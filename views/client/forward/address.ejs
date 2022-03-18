@@ -146,7 +146,7 @@
             <div class="d-grid gap-3 gap-lg-5">
               <!-- Card -->
 
-              <form action="/user/inbox/<%= user.pkg._id %>/forward/shipping">
+              <form action="/client/inbox/<%= user.pkg._id %>/forward/shipping">
                 <div class="card">
                   <div class="card-header border-bottom">
                     <div class="flex-grow-1">
@@ -160,7 +160,7 @@
                       <% if (user.addresses.length == 0) { %> 
                         <div class="col-sm-6 mb-5 mb-sm-7">
                           <!-- Card -->
-                          <a class="card card-dashed card-centered" href="/user/account/addresses">
+                          <a class="card card-dashed card-centered" href="/client/account/addresses">
                             <div class="card-body card-dashed-body py-8">
                               <img class="avatar avatar-lg avatar-4x3 mb-2" src="/public/assets/svg/illustrations/oc-address.svg" alt="Image Description">
                               <span class="d-block"><i class="bi-plus"></i> Add a new address</span>
@@ -202,7 +202,7 @@
                   <!-- Footer -->
                   <div class="card-footer pt-0">
                     <div class="d-flex justify-content-end align-items-center">
-                      <button type="submit" class="btn btn-primary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
+                      <button type="submit" class="btn btn-primary" href="/client/inbox/<%= user.pkg._id %>/forward/shipping">
                         Save and continue <i class="bi-chevron-right small ms-1"></i>
                       </button>
                     </div>

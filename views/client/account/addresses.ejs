@@ -71,17 +71,17 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                     <li class="nav-item">
-                      <a class="nav-link " href="/user/account/personal">
+                      <a class="nav-link " href="/client/account/personal">
                         <i class="bi-person-badge nav-icon"></i> Personal info
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link " href="/user/account/security">
+                      <a class="nav-link " href="/client/account/security">
                         <i class="bi-shield-shaded nav-icon"></i> Security
                       </a>
                     </li>
                     <!-- <li class="nav-item">
-                    <a class="nav-link " href="/user/account/notifications">
+                    <a class="nav-link " href="/client/account/notifications">
                       <i class="bi-bell nav-icon"></i> Notifications
                     </a>
                   </li> -->
@@ -95,12 +95,12 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical">
                     <li class="nav-item">
-                      <a class="nav-link " href="/user/account/payments">
+                      <a class="nav-link " href="/client/account/payments">
                         <i class="bi-credit-card nav-icon"></i> Payments
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link active" href="/user/account/addresses">
+                      <a class="nav-link active" href="/client/account/addresses">
                         <i class="bi-geo-alt nav-icon"></i> Addresses
                       </a>
                     </li>
@@ -153,7 +153,7 @@
                       <!-- <a class="btn btn-white btn-xs" href="./account-overview.html#editAddressCard">
                         <i class="bi-pencil-fill me-1"></i> Edit address
                       </a> -->
-                      <form action="/user/account/addresses/<%= i %>?_method=DELETE" method="post">
+                      <form action="/client/account/addresses/<%= i %>?_method=DELETE" method="post">
                         <button type="submit" class="btn btn-white btn-xs" >
                           <i class="bi-trash2-fill me-1"></i> Delete address
                         </button>
@@ -215,7 +215,7 @@
         <!-- Body -->
         <div class="modal-body">
           <!-- Form -->
-          <form action="/user/account/addresses" method="post">
+          <form action="/client/account/addresses" method="post">
 
             <!-- Form -->
             <div class="row mb-4">

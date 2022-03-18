@@ -23,6 +23,7 @@
           <!-- End Breadcrumb -->
         </div>
         <!-- End Col -->
+
         <div class="col-auto">
 
 
@@ -44,7 +45,7 @@
   </div>
   <!-- End Breadcrumb -->
 
-  <!-- Content Section -->
+  <!-- Content -->
   <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
     <div class="row">
       <div class="col-lg-3">
@@ -55,9 +56,11 @@
             <div class="card flex-grow-1 mb-5">
               <div class="card-body">
                 <!-- Avatar -->
-                <div class="d-none d-lg-block text-center mb-5">
-                  <h4 class="card-title mb-0"><%= user.firstName %> <%= user.lastName %>  </h4>
+                <div class="d-lg-block text-center mb-5">
+                  <h4 class="card-title mb-0"><%= user.firstName %> <%= user.lastName %> </h4>
                   <p class="card-text small"><%= user.email %> </p>
+                  
+                  <!-- <p class="card-text"><%= user.addy.address1 %> #<%= user.mailbox %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></p> -->
                 </div>
                 <!-- End Avatar -->
 
@@ -67,17 +70,17 @@
                 <!-- List -->
                 <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                   <li class="nav-item">
-                    <a class="nav-link " href="/user/account/personal">
+                    <a class="nav-link active" href="#">
                       <i class="bi-person-badge nav-icon"></i> Personal info
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link active " href="/user/account/security">
+                    <a class="nav-link " href="/client/account/security">
                       <i class="bi-shield-shaded nav-icon"></i> Security
                     </a>
                   </li>
                   <!-- <li class="nav-item">
-                    <a class="nav-link " href="/user/account/notifications">
+                    <a class="nav-link " href="/client/account/notifications">
                       <i class="bi-bell nav-icon"></i> Notifications
                     </a>
                   </li> -->
@@ -91,12 +94,12 @@
                 <!-- List -->
                 <ul class="nav nav-sm nav-tabs nav-vertical">
                   <li class="nav-item">
-                    <a class="nav-link " href="/user/account/payments">
+                    <a class="nav-link " href="/client/account/payments">
                       <i class="bi-credit-card nav-icon"></i> Payments
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link " href="/user/account/addresses">
+                    <a class="nav-link " href="/client/account/addresses">
                       <i class="bi-geo-alt nav-icon"></i> Addresses
                     </a>
                   </li>
@@ -115,134 +118,119 @@
 
       <div class="col-lg-9">
         <div class="d-grid gap-3 gap-lg-5">
-
-
           <!-- Card -->
           <div class="card">
             <div class="card-header border-bottom">
-              <h5 class="card-header-title">Password</h5>
+              <h4 class="card-header-title">Basic info</h4>
             </div>
 
             <!-- Body -->
             <div class="card-body">
-              <!-- Form -->
               <form>
-                <!-- Form -->
-                <div class="row mb-4">
-                  <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">Current password</label>
 
-                  <div class="col-sm-9">
-                    <input type="password" class="form-control" name="currentPassword" id="currentPasswordLabel" placeholder="Enter current password" aria-label="Enter current password">
-                  </div>
-                </div>
-                <!-- End Form -->
 
                 <!-- Form -->
-                <div class="row mb-4">
-                  <label for="newPassword" class="col-sm-3 col-form-label form-label">New password</label>
+                <!-- <div class="row mb-4">
+                  <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Display name <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Shown on reviews" aria-label="Displayed on reviews."></i></label>
 
                   <div class="col-sm-9">
-                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Enter new password" aria-label="Enter new password">
-                  </div>
-                </div>
-                <!-- End Form -->
-
-                <!-- Form -->
-                <div class="row mb-4">
-                  <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label form-label">Confirm new password</label>
-
-                  <div class="col-sm-9">
-                    <div class="mb-3">
-                      <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password">
-                    </div>
-
-                    <h5>Password recommendations:</h5>
-
-                    <p class="card-text small">Please follow these guidelines:</p>
-
-                    <ul class="small">
-                      <li>Minimum 8 characters long - the more, the better</li>
-                      <li>At least one lowercase character</li>
-                      <li>At least one uppercase character</li>
-                      <li>At least one number, symbol, or whitespace character</li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- End Form -->
-
-                <div class="d-flex justify-content-end gap-3">
-                  <a class="btn btn-white" href="javascript:;">Cancel</a>
-                  <button type="submit" class="btn btn-primary">Update Password</button>
-                </div>
-              </form>
-              <!-- End Form -->
-            </div>
-            <!-- End Body -->
-          </div>
-          <!-- End Card -->
-
-          <!-- Card -->
-          <div class="card">
-            <div class="card-header border-bottom">
-              <h5 class="card-header-title">Connected accounts</h5>
-            </div>
-
-            <!-- Body -->
-            <div class="card-body">
-
-              <!-- Form -->
-              <form>
-                <!-- List Group -->
-                <div class="list-group list-group-flush list-group-no-gutters">
-                  <!-- Item -->
-                  <div class="list-group-item">
-                    <div class="d-flex">
-                      <div class="flex-shrink-0">
-                        <img class="avatar avatar-xs avatar-4x3" src="/public/assets/svg/brands/google-icon.svg" alt="Image Description">
-                      </div>
-
-                      <div class="flex-grow-1 ms-3">
-                        <div class="row align-items-center">
-                          <div class="col">
-                            <h6 class="mb-1">Google</h6>
-                            <span class="d-block small text-body">Email</span>
-                          </div>
-                          <!-- End Col -->
-
-                          <div class="col-auto">
-                            <!-- Form Switch -->
-                            <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" id="connectedAccounts1">
-                              <label class="form-check-label" for="connectedAccounts1"></label>
-                            </div>
-                            <!-- End Form Switch -->
-                          </div>
-                          <!-- End Col -->
-                        </div>
-                        <!-- End Row -->
-                      </div>
+                    <div class="input-group">
+                      <input type="text" class="form-control" name="firstName" id="firstNameLabel" placeholder="First" >
+                      <input type="text" class="form-control" name="lastName" id="lastNameLabel" placeholder="Last" >
                     </div>
                   </div>
-                  <!-- End Item -->
+                </div> -->
+                <!-- End Form -->
 
+                <!-- Form -->
+                <div class="row mb-4">
+                  <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
+
+                  <div class="col-sm-9">
+                    <input type="email" class="form-control" name="email" id="emailLabel" placeholder="<%= user.email %>" aria-label="<%= user.email %>" >
+                  </div>
                 </div>
-                <!-- End List Group -->
+                <!-- End Form -->
+
+                 <!-- Form -->
+                 <div class="row mb-4">
+                  <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
+
+                  <div class="col-sm-9">
+                    <input type="text" class="form-control" name="email" id="phone" placeholder="<%= user.phone %>" aria-label="clarice@example.com">
+                  </div>
+                </div>
+                <!-- End Form -->
+
+
+
+
+
+                <!-- Form -->
+                <!-- <div class="row align-items-center">
+                  <label for="disableAdCheckbox" class="col-sm-3 col-form-label form-label">Disable ads <span class="badge badge-primary text-uppercase ms-1">PRO</span></label>
+
+                  <div class="col-sm-9"> -->
+                    <!-- Check -->
+                    <!-- <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="disableAdCheckbox">
+                      <label class="form-check-label" for="disableAdCheckbox">With your Pro account, you can disable ads across the site.</label>
+                    </div> -->
+                    <!-- End Check -->
+                  <!-- </div>
+                </div> -->
+                <!-- End Form -->
               </form>
-              <!-- End Form -->
             </div>
             <!-- End Body -->
+
+            <!-- Footer -->
+            <div class="card-footer pt-0">
+              <div class="d-flex justify-content-end gap-3">
+                <a class="btn btn-white" href="javascript:;">Cancel</a>
+                <a class="btn btn-primary" href="javascript:;">Save changes</a>
+              </div>
+            </div>
+            <!-- End Footer -->
           </div>
           <!-- End Card -->
 
 
 
 
+
+          <!-- Card -->
+          <div class="card">
+            <div class="card-header border-bottom">
+              <h4 class="card-header-title">Delete your account</h4>
+            </div>
+
+            <!-- Body -->
+            <div class="card-body">
+              <p class="card-text">When you delete your account, you lose access immediately to Addys account services, and we permanently delete your personal data.</p>
+
+              <div class="mb-4">
+                <!-- Check -->
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox">
+                  <label class="form-check-label" for="deleteAccountCheckbox">Confirm that I want to delete my account.</label>
+                </div>
+                <!-- End Check -->
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+            <!-- End Body -->
+          </div>
+          <!-- End Card -->
         </div>
       </div>
       <!-- End Col -->
     </div>
     <!-- End Row -->
   </div>
-  <!-- End Content Section -->
+  <!-- End Content -->
 </div>
 

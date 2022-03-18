@@ -53,7 +53,7 @@ module.exports.isForwarder = (req,res,next) => {
 //         next()
 //     } else {
 //         req.flash('error','You must be the Addy forwarder')
-//         res.redirect(`/addys/${id}`)
+//         res.redirect(`/locations/${id}`)
 //     }
 // }
 
@@ -70,7 +70,7 @@ module.exports.isAuthor = async(req,res,next) => {
          next()
     } else {
         req.flash('error','You must be the review author')
-        res.redirect(`/addys/${addyId}`)
+        res.redirect(`/locations/${addyId}`)
     }
 
 }

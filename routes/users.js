@@ -27,40 +27,40 @@ router.route('/register')
 router.get('/reset', user.resetForm)
 
 router.get('/forward',(req,res) => {
-    res.render('user/forward/fwAddress')
+    res.render('client/forward/fwAddress')
 })
 
 router.get('/logout', user.logout)
 
 router.get('/clientform',(req,res) => {
-    res.render('user/typeform')
+    res.render('client/typeform')
 })
 router.get('/forwarderform',(req,res) => {
     res.render('forwarder/typeform')
 })
 
-router.get('/user/inbox/new', isClient, user.inbox)
-router.get('/user/inbox/pending', isClient, user.inboxPending)
-router.get('/user/inbox/forwarded', isClient, user.inboxForwarded)
+router.get('/client/inbox/new', isClient, user.inbox)
+router.get('/client/inbox/pending', isClient, user.inboxPending)
+router.get('/client/inbox/forwarded', isClient, user.inboxForwarded)
 
-router.get('/user/inbox/:id/forward/address', isClient, user.addressForm)
-router.get('/user/inbox/:id/forward/shipping', isClient, user.shippingForm)
-router.get('/user/inbox/:id/forward/payment', isClient, user.paymentForm)
-router.get('/user/inbox/:id/forward/overview', isClient, user.overviewForm)
+router.get('/client/inbox/:id/forward/address', isClient, user.addressForm)
+router.get('/client/inbox/:id/forward/shipping', isClient, user.shippingForm)
+router.get('/client/inbox/:id/forward/payment', isClient, user.paymentForm)
+router.get('/client/inbox/:id/forward/overview', isClient, user.overviewForm)
 
 
-router.post('/user/inbox/:id/forward', isClient, user.forward)
+router.post('/client/inbox/:id/forward', isClient, user.forward)
 
-router.get('/user/account/personal',isClient, user.personal)
-router.get('/user/account/security',isClient, user.security)
+router.get('/client/account/personal',isClient, user.personal)
+router.get('/client/account/security',isClient, user.security)
 
-router.get('/user/account/payments',isClient, user.payments)
-router.post('/user/account/payments', isClient, user.addPayment)
-router.delete('/user/account/payments/:id', isClient, user.deletePayment)
+router.get('/client/account/payments',isClient, user.payments)
+router.post('/client/account/payments', isClient, user.addPayment)
+router.delete('/client/account/payments/:id', isClient, user.deletePayment)
 
-router.get('/user/account/addresses',isClient, user.address)
-router.post('/user/account/addresses', isClient, user.saveAddress)
-router.delete('/user/account/addresses/:id', isClient, user.deleteAddress)
+router.get('/client/account/addresses',isClient, user.address)
+router.post('/client/account/addresses', isClient, user.saveAddress)
+router.delete('/client/account/addresses/:id', isClient, user.deleteAddress)
 
 
 

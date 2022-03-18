@@ -18,7 +18,7 @@ module.exports.createReview = catchAsync(async (req,res) => {
     await review.save()
     await addy.save();
     req.flash('success','Posted review')
-    res.redirect(`/addys/${addy._id}/`)
+    res.redirect(`/locations/${addy._id}/`)
 })
 
 module.exports.deleteReview = catchAsync(async(req,res) => {
@@ -26,5 +26,5 @@ module.exports.deleteReview = catchAsync(async(req,res) => {
     await Review.findByIdAndDelete(reviewId);
     await Addy.findByIdAndUpdate(addyId,{$pull: {reviews: reviewId}})
     req.flash('success','Deleted review')
-    res.redirect(`/addys/${addyId}/`)
+    res.redirect(`/locations/${addyId}/`)
 })

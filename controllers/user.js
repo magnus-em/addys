@@ -16,7 +16,7 @@ const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, dele
 module.exports.renderLoginForm = async (req, res) => {
     res.locals.title = "Addys Login"
     res.locals.description = "Login to manage your packages"
-    res.render('user/login')
+    res.render('client/login')
 }
 
 module.exports.renderRegisterForm = catchAsync(async (req, res) => {
@@ -24,17 +24,17 @@ module.exports.renderRegisterForm = catchAsync(async (req, res) => {
     res.locals.description = "Sign up to start using residential addresses to forward you packages"
     console.log(req.query.addy)
     if (!req.query.addy) {
-        return res.redirect('/addys')
+        return res.redirect('/locations')
     }
     const addy = await Addy.findById(req.query.addy)
-    res.render('user/register/register', { addy })
+    res.render('client/register/register', { addy })
 })
 
 module.exports.resetForm = (req, res) => {
     res.locals.title = "Reset password"
     res.locals.description = "Can't remember your password? No worries, just complete this easy form."
 
-    res.render('user/resetPw')
+    res.render('client/resetPw')
 }
 
 module.exports.createUser = catchAsync(async (req, res, next) => {
@@ -89,7 +89,7 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         console.log(user)
         req.flash('success', 'New user successfully created')
         sendWelcome(user)
-        res.render('user/register/success', { user })
+        res.render('client/register/success', { user })
     } catch (err) {
         req.flash('error', err.message)
         console.log('in the user.createUser error handler', err.stack)
@@ -128,8 +128,8 @@ module.exports.login = catchAsync(async (req, res) => {
             })
         return res.redirect('/forwarder/dash/pending')
     }
-    // const redirectUrl = req.session.returnTo || '/user/inbox/new'
-    const redirectUrl = '/user/inbox/new'
+    // const redirectUrl = req.session.returnTo || '/client/inbox/new'
+    const redirectUrl = '/client/inbox/new'
     delete req.session.returnTo
 
     res.redirect(redirectUrl)
@@ -145,19 +145,19 @@ module.exports.inbox = catchAsync((async (req, res) => {
     res.locals.title = "New packages"
     res.locals.description = "Newly uploaded packages that are ready for you to submit a forward request"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inbox/new', { user })
+    res.render('client/inbox/new', { user })
 }))
 module.exports.inboxPending = catchAsync((async (req, res) => {
     res.locals.title = "Pending"
     res.locals.description = "Packages that been forward requested and are awaiting drop off by your forwarder"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inbox/pending', { user })
+    res.render('client/inbox/pending', { user })
 }))
 module.exports.inboxForwarded = catchAsync((async (req, res) => {
     res.locals.title = "Forwarded"
     res.locals.description = "Packages that have been forwarded"
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    res.render('user/inbox/forwarded', { user })
+    res.render('client/inbox/forwarded', { user })
 }))
 
 module.exports.saveAddress = catchAsync(async (req, res) => {
@@ -173,7 +173,7 @@ module.exports.saveAddress = catchAsync(async (req, res) => {
     }
     user.addresses.push(address)
     await user.save()
-    res.redirect('/user/account/addresses')
+    res.redirect('/client/account/addresses')
 })
 
 module.exports.deleteAddress = catchAsync(async (req, res) => {
@@ -183,7 +183,7 @@ module.exports.deleteAddress = catchAsync(async (req, res) => {
     console.log(user.addresses[index])
     user.addresses.splice(index, 1)
     await user.save()
-    res.redirect('/user/account/addresses')
+    res.redirect('/client/account/addresses')
 })
 
 //forward flow
@@ -197,7 +197,7 @@ module.exports.addressForm = catchAsync(async (req, res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/address', { user })
+    res.render('client/forward/address', { user })
 })
 
 module.exports.shippingForm = catchAsync(async (req, res) => {
@@ -213,7 +213,7 @@ module.exports.shippingForm = catchAsync(async (req, res) => {
     const addy = await Addy.findById(req.user.addy._id)
     user.pkg = pkg;
     user.shipment = await getShipment(addressTo, addy);
-    res.render('user/forward/shipping', { user })
+    res.render('client/forward/shipping', { user })
 })
 
 module.exports.paymentForm = catchAsync(async (req, res) => {
@@ -251,7 +251,7 @@ module.exports.paymentForm = catchAsync(async (req, res) => {
     user.payments = payments;
 
 
-    res.render('user/forward/payment', { user })
+    res.render('client/forward/payment', { user })
 })
 
 module.exports.overviewForm = catchAsync(async (req, res) => {
@@ -264,7 +264,7 @@ module.exports.overviewForm = catchAsync(async (req, res) => {
     const addy = await Addy.findById(req.user.addy._id)
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
-    res.render('user/forward/overview', { user })
+    res.render('client/forward/overview', { user })
 })
 
 module.exports.forward = catchAsync(async (req, res) => {
@@ -306,7 +306,7 @@ module.exports.forward = catchAsync(async (req, res) => {
     // pkg.save()
     // console.log(pkg)
     // console.log(req.body)
-    res.redirect('/user/inbox/new')
+    res.redirect('/client/inbox/new')
 })
 
 
@@ -318,7 +318,7 @@ module.exports.personal = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
 
-    res.render('user/account/personal', { user })
+    res.render('client/account/personal', { user })
 })
 
 module.exports.security = catchAsync(async (req, res) => {
@@ -327,7 +327,7 @@ module.exports.security = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
 
-    res.render('user/account/security', { user })
+    res.render('client/account/security', { user })
 })
 
 module.exports.payments = catchAsync(async (req, res) => {
@@ -357,7 +357,7 @@ module.exports.payments = catchAsync(async (req, res) => {
 
     user.payments = payments
 
-    res.render('user/account/payments', { user })
+    res.render('client/account/payments', { user })
 })
 
 module.exports.addPayment = catchAsync(async (req, res) => {
@@ -380,7 +380,7 @@ module.exports.addPayment = catchAsync(async (req, res) => {
 
     console.log(response)
 
-    res.redirect('/user/account/payments')
+    res.redirect('/client/account/payments')
 
 
 })
@@ -394,7 +394,7 @@ module.exports.deletePayment = catchAsync(async (req, res) => {
     console.log(user)
 
 
-    res.redirect('/user/account/payments')
+    res.redirect('/client/account/payments')
 })
 
 
@@ -404,7 +404,7 @@ module.exports.address = catchAsync(async (req, res) => {
     res.locals.description = 'View and edit your addresses'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
 
-    res.render('user/account/addresses', { user })
+    res.render('client/account/addresses', { user })
 })
 
 
