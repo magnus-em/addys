@@ -1,204 +1,228 @@
 <%- include('../../partials/head') %>
-<%- include('../../partials/navbar_user') %> 
+  <%- include('../../partials/navbar_user') %>
 
-<div class=" content-space-t-2">
-  <!-- Breadcrumb -->
-  <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
-    <div class="container content-space-1 content-space-b-lg-3">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="d-none d-lg-block">
-            <h1 class="h2 text-white">1456 N Capri Drive</h1>
+    <div class=" content-space-t-2">
+      <!-- Breadcrumb -->
+      <div class="navbar-dark bg-dark"
+        style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+        <div class="container content-space-1 content-space-b-lg-3">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="d-none d-lg-block">
+                <h1 class="h2 text-white">1456 N Capri Drive</h1>
+              </div>
+
+              <!-- Breadcrumb -->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light mb-0">
+                  <li class="breadcrumb-item">Box 35</li>
+                  <li class="breadcrumb-item active" aria-current="page">Inbox</li>
+                </ol>
+              </nav>
+              <!-- End Breadcrumb -->
+            </div>
+            <!-- End Col -->
+
+            <div class="col-auto">
+
+
+              <!-- Responsive Toggle Button -->
+              <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-default">
+                  <i class="bi-list"></i>
+                </span>
+                <span class="navbar-toggler-toggled">
+                  <i class="bi-x"></i>
+                </span>
+              </button>
+              <!-- End Responsive Toggle Button -->
+            </div>
+            <!-- End Col -->
           </div>
-
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Box 35</li>
-              <li class="breadcrumb-item active" aria-current="page">Inbox</li>
-            </ol>
-          </nav>
-          <!-- End Breadcrumb -->
+          <!-- End Row -->
         </div>
-        <!-- End Col -->
-
-        <div class="col-auto">
-
-
-          <!-- Responsive Toggle Button -->
-          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-default">
-              <i class="bi-list"></i>
-            </span>
-            <span class="navbar-toggler-toggled">
-              <i class="bi-x"></i>
-            </span>
-          </button>
-          <!-- End Responsive Toggle Button -->
-        </div>
-        <!-- End Col -->
       </div>
-      <!-- End Row -->
-    </div>
-  </div>
-  <!-- End Breadcrumb -->
+      <!-- End Breadcrumb -->
 
-  <!-- Content -->
-  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
-    <div class="row">
-      <div class="col-lg-3">
-        <!-- Navbar -->
-        <div class="navbar-expand-lg navbar-light">
-          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
-            <!-- Card -->
-            <div class="card flex-grow-1 mb-5">
-              <div class="card-body">
+      <!-- Content -->
+      <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+        <div class="row">
+          <div class="col-lg-3">
+            <!-- Navbar -->
+            <div class="navbar-expand-lg navbar-light">
+              <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+                <!-- Card -->
+                <div class="card flex-grow-1 mb-5">
+                  <div class="card-body">
 
-                
-                
-                <!-- Nav -->
-                <span class="text-cap">Steps</span>
 
-                <!-- List -->
-                <ul id="fwFormProgress" class="js-step-progress step step-icon-xs step-border-last-0 mt-5">
-                  <li class="step-item">
-                    <a class="step-content-wrapper" 
-                       data-hs-step-form-next-options='{
+
+                    <!-- Nav -->
+                    <span class="text-cap">Steps</span>
+
+                    <!-- List -->
+                    <ul id="fwFormProgress" class="js-step-progress step step-icon-xs step-border-last-0 mt-5">
+                      <li class="step-item">
+                        <a class="step-content-wrapper" data-hs-step-form-next-options='{
                         "targetSelector": "#fwFormStepAddress"
                       }'>
-                      <span class="step-icon step-icon-soft-dark">1</span>
-                      <div class="step-content">
-                        <span class="step-title">Address</span>
-                        <span class="step-title-description step-text">Specify where to forward</span>
-                      </div>
-                    </a>
-                  </li>
-    
-                  <li class="step-item">
-                    <a class="step-content-wrapper"  
-                       data-hs-step-form-next-options='{
+                          <span class="step-icon step-icon-soft-dark">1</span>
+                          <div class="step-content">
+                            <span class="step-title">Address</span>
+                            <span class="step-title-description step-text">Specify where to forward</span>
+                          </div>
+                        </a>
+                      </li>
+
+                      <li class="step-item">
+                        <a class="step-content-wrapper" data-hs-step-form-next-options='{
                         "targetSelector": "#fwFormStepShipping"
                       }'>
-                      <span class="step-icon step-icon-soft-dark">2</span>
-                      <div class="step-content">
-                        <span class="step-title">Shipping</span>
-                        <span class="step-title-description step-text">Choose shipping service</span>
-                      </div>
-                    </a>
-                  </li>
-    
-                  <li class="step-item active focus">
-                    <a class="step-content-wrapper" href="#"
-                       data-hs-step-form-next-options='{
+                          <span class="step-icon step-icon-soft-dark">2</span>
+                          <div class="step-content">
+                            <span class="step-title">Shipping</span>
+                            <span class="step-title-description step-text">Choose shipping service</span>
+                          </div>
+                        </a>
+                      </li>
+
+                      <li class="step-item active focus">
+                        <a class="step-content-wrapper" href="#" data-hs-step-form-next-options='{
                         "targetSelector": "#fwFormStepPayment"
                       }'>
-                      <span class="step-icon step-icon-soft-dark">3</span>
-                      <div class="step-content">
-                        <span class="step-title">Payment</span>
-                        <span class="step-title-description step-text">Choose your payment method</span>
-                      </div>
-                    </a>
-                  </li>
-      
-  
-  
-    
-                  <li class="step-item">
-                    <a class="step-content-wrapper" 
-                       data-hs-step-form-next-options='{
+                          <span class="step-icon step-icon-soft-dark">3</span>
+                          <div class="step-content">
+                            <span class="step-title">Payment</span>
+                            <span class="step-title-description step-text">Choose your payment method</span>
+                          </div>
+                        </a>
+                      </li>
+
+
+
+
+                      <li class="step-item">
+                        <a class="step-content-wrapper" data-hs-step-form-next-options='{
                         "targetSelector": "#fwFormStepOverview"
                       }'>
-                      <span class="step-icon step-icon-soft-dark">4</span>
-                      <div class="step-content">
-                        <span class="step-title">Overview</span>
-                        <span class="step-title-description step-text">Confirm your forward</span>
-                      </div>
-                    </a>
-                  </li>
-                </ul>
-                <!-- End List -->
+                          <span class="step-icon step-icon-soft-dark">4</span>
+                          <div class="step-content">
+                            <span class="step-title">Overview</span>
+                            <span class="step-title-description step-text">Confirm your forward</span>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                    <!-- End List -->
 
 
 
 
 
+                  </div>
+                </div>
+                <!-- End Card -->
               </div>
             </div>
-            <!-- End Card -->
+            <!-- End Navbar -->
           </div>
-        </div>
-        <!-- End Navbar -->
-      </div>
-      <!-- End Col -->
+          <!-- End Col -->
 
-      <div class="col-lg-9">
-        <div class="d-grid gap-3 gap-lg-5">
+          <div class="col-lg-9">
+            <div class="d-grid gap-3 gap-lg-5">
 
-          <form action="/user/inbox/<%= user.pkg._id %>/forward/overview">
-            <!-- Card -->
-            <div id="fwFormStepAddress" class="card active">
-              <!-- Header -->
-              <div class="card-header border-bottom">
+              <form action="/user/inbox/<%= user.pkg._id %>/forward/overview">
+                <!-- Card -->
+                <div id="fwFormStepAddress" class="card active">
+                  <!-- Header -->
+                  <div class="card-header border-bottom">
                     <div class="flex-grow-1">
                       <span class="d-lg-none">Step 3 of 4</span>
                       <h3 class="card-header-title">Payment details</h3>
                     </div>
                   </div>
-              <!-- End Header -->
-              <!-- Body -->
-              <div class="card-body">
-                <div class="mb-4">
-                  <p>We currently support Visa, American Express, Mastercard, and Discover. Crypto payments coming soon.</p>
-                </div>
-  
-                <!-- List Group -->
-                <ul class="list-group mb-5">
-  
-                  <% for (let p of user.payments) { %> 
-                  <!-- Item -->
-                  <li class="list-group-item">
-                    <div class="mb-2">
-                      <h5><%= p.firstName %> <%= p.lastName %> <span class="badge bg-success ms-1">Selected</span></h5>
+                  <!-- End Header -->
+                  <!-- Body -->
+                  <div class="card-body">
+                    <div class="mb-4">
+                      <p>We currently support Visa, American Express, Mastercard, and Discover. Crypto payments coming
+                        soon.</p>
                     </div>
-  
-                    <!-- Media -->
-                    <div class="d-flex">
-                      <div class="flex-shrink-0">
-                        <% if(p.cardType == 'Visa') { %> 
-                        <img class="avatar avatar-sm" src="/public/assets/svg/brands/visa.svg" alt="Image Description">
-                        <% } else if (p.cardType == 'Mastercard') { %> 
-                        <img class="avatar avatar-sm" src="/public/assets/svg/brands/mastercard.svg" alt="Image Description">
-                        <% } %> 
-                      </div>
-  
-                      <div class="flex-grow-1 ms-3">
-                        <div class="row">
-                          <div class="col-sm mb-3 mb-sm-0">
-                            <span class="d-block text-dark"><%= p.cardType %> <%= p.cardNumber.replace('XXXX','•••• ')%> </span>
-                            <small class="d-block text-muted">Debit - Expires 12/22</small>
+
+                    <!-- List Group -->
+                    <ul class="list-group mb-5">
+
+                      <% for (let p of user.payments) { %>
+                        <!-- Item -->
+                        <li class="list-group-item">
+                          <div class="mb-2">
+                            <h5>
+                              <%= p.firstName %>
+                                <%= p.lastName %>
+                                  <% if (p.default) { %>
+                                    <span class="badge bg-primary ms-1">Primary</span>
+                                    <% } %>
+                            </h5>
                           </div>
-                          <!-- End Col -->
-  
-                          <!-- <div class="col-sm-auto">
-                            <div class="d-flex gap-3">
-                              <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountEditCardModal">
-                                <i class="bi-pencil-fill me-1"></i> Edit
-                              </a>
-                              <button type="button" class="btn btn-white btn-xs">
-                                <i class="bi-trash me-1"></i> Delete
-                              </button>
+
+                          <!-- Media -->
+                          <div class="d-flex">
+                            <div class="flex-shrink-0">
+                              <% if(p.cardType=='Visa' ) { %>
+                                <img class="avatar avatar-sm" src="/public/assets/svg/brands/visa.svg"
+                                  alt="Image Description">
+                                <% } else if (p.cardType=='MasterCard' ) { %>
+                                  <img class="avatar avatar-sm" src="/public/assets/svg/brands/mastercard.svg"
+                                    alt="Image Description">
+                                  <% } %>
                             </div>
-                          </div> -->
-                          <!-- End Col -->
+
+                            <div class="flex-grow-1 ms-3">
+                              <div class="row">
+                                <div class="col-sm mb-3 mb-sm-0">
+                                  <span class="d-block text-dark">
+                                    <%= p.cardType %>
+                                      <%= p.cardNumber.replace('XXXX','•••• ')%> </span>
+                              <small class="d-block text-muted">Debit - Expires 12/69</small>
+                            </div>
+                            <!-- End Col -->
+    
+                            <div class="col-sm-auto">
+                              <div class="d-flex gap-3">
+                                <!-- <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountEditCardModal">
+                                  <i class="bi-pencil-fill me-1"></i> Edit
+                                </a> -->
+    
+                                
+                                  <form action="/user/inbox/<%= user.pkg._id %>/forward/overview">
+
+                                    <input type="hidden" value="<%= p.id %>" name="payment" />
+                                    <input type="hidden" value="<%= query.address %>" name="address" />
+                                    <input type="hidden" value="<%= query.shipment%>" name="shipment" />
+                                    <input type="hidden" value="<%= query.rate %>" name="rate" />
+                                    <button type="submit" class="btn btn-white btn-sm">
+                                      <i class="bi-check2-circle me-1"></i> Select
+                                    </button>
+                                  </form>
+                                <!-- <div class="ms-auto">
+                                  <button type="submit" class="btn btn-primary">
+                                    Select and continue <i class="bi-chevron-right small ms-1"></i>
+                                  </button>
+                                </div> -->
+                              </div>
+                            </div>
+                            <!-- End Col -->
+                          </div>
+                          <!-- End Row -->
                         </div>
-                        <!-- End Row -->
                       </div>
-                    </div>
-                    <!-- End Media -->
-                  </li>
-                  <!-- End Item -->
-  
-                  <% } %> 
+                      <!-- End Media -->
+                    </li>
+                    <!-- End Item -->
+    
+                    <% } %> 
                 </ul>
                 <!-- End List Group -->
   
@@ -213,9 +237,6 @@
               </div>
               <!-- End Body -->
 
-              <input type="hidden" value="<%= query.address %>" name="address" />
-              <input type="hidden" value="<%= query.shipment%>" name="shipment" />
-              <input type="hidden" value="<%= query.rate %>" name="rate" />
 
 
 
@@ -224,35 +245,33 @@
                   <!-- <a type="button" class="btn btn-ghost-secondary" href="/user/inbox/<%= user.pkg._id %>/forward/shipping">
                     <i class="bi-chevron-left small ms-1"></i> Previous step
                   </a> -->
-                  <div class="ms-auto">
+                  <!-- <div class="ms-auto">
                     <button type="submit" class="btn btn-primary">
                       Save and continue <i class="bi-chevron-right small ms-1"></i>
                     </button>
-                  </div>
+                  </div> -->
                   <!-- <div class="ms-auto">
                     <button type="button" class="btn btn-primary"
-                            data-hs-step-form-next-options='{
-                              "targetSelector": "#fwFormStepOverview"
-                            }'>
-                      Save and continue <i class="bi-chevron-right small ms-1"></i>
-                    </button>
-                  </div> -->
-                </div>
-              </div>
+                            data-hs-step-form-next-options=' { "targetSelector" : "#fwFormStepOverview" }'>
+                                        Save and continue <i class="bi-chevron-right small ms-1"></i>
+                                        </button>
+                                </div> -->
+                              </div>
+                            </div>
+                          </div>
+                          <!-- End Card -->
+              </form>
+
+
+
+
             </div>
-            <!-- End Card -->
-          </form>
-
-
-
-
+          </div>
+          <!-- End Col -->
         </div>
+        <!-- End Row -->
       </div>
-      <!-- End Col -->
+      <!-- End Content -->
     </div>
-    <!-- End Row -->
-  </div>
-  <!-- End Content -->
-</div>
 
-  <%- include('../../partials/foot') %>
+    <%- include('../../partials/foot') %>

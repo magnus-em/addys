@@ -198,7 +198,11 @@
                 <!-- Item -->
                 <li class="list-group-item">
                   <div class="mb-2">
-                    <h5><%= p.firstName %> <%= p.lastName %> <span class="badge bg-primary ms-1">Primary</span></h5>
+                    <h5><%= p.firstName %> <%= p.lastName %> 
+                      <% if (p.default) { %> 
+                      <span class="badge bg-primary ms-1">Primary</span>
+                      <% } %> 
+                    </h5>
                   </div>
 
                   <!-- Media -->
@@ -206,7 +210,7 @@
                     <div class="flex-shrink-0">
                       <% if(p.cardType == 'Visa') { %> 
                       <img class="avatar avatar-sm" src="/public/assets/svg/brands/visa.svg" alt="Image Description">
-                      <% } else if (p.cardType == 'Mastercard') { %> 
+                      <% } else if (p.cardType == 'MasterCard') { %> 
                       <img class="avatar avatar-sm" src="/public/assets/svg/brands/mastercard.svg" alt="Image Description">
                       <% } %> 
                     </div>
@@ -215,18 +219,21 @@
                       <div class="row">
                         <div class="col-sm mb-3 mb-sm-0">
                           <span class="d-block text-dark"><%= p.cardType %> <%= p.cardNumber.replace('XXXX','•••• ')%> </span>
-                          <small class="d-block text-muted">Debit - Expires 12/22</small>
+                          <small class="d-block text-muted">Debit - Expires 12/69</small>
                         </div>
                         <!-- End Col -->
 
                         <div class="col-sm-auto">
                           <div class="d-flex gap-3">
-                            <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountEditCardModal">
+                            <!-- <a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountEditCardModal">
                               <i class="bi-pencil-fill me-1"></i> Edit
-                            </a>
-                            <button type="button" class="btn btn-white btn-xs">
-                              <i class="bi-trash me-1"></i> Delete
-                            </button>
+                            </a> -->
+
+                            <form action="/user/account/payments/<%=p.id%>?_method=DELETE" method="post">
+                              <button type="submit" class="btn btn-white btn-xs">
+                                <i class="bi-trash me-1"></i> Delete
+                              </button>
+                            </form>
                           </div>
                         </div>
                         <!-- End Col -->
@@ -317,4 +324,261 @@
     <!-- End Row -->
   </div>
   <!-- End Content Section -->
+</div>
+
+<div class="modal fade" id="accountAddCardModal" tabindex="-1" aria-labelledby="accountAddCardModalLabel" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <!-- Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" id="accountAddCardModalLabel">Add card</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- End Header -->
+
+      <!-- Body -->
+      <div class="modal-body">
+        <!-- Form -->
+        <form action="/user/account/payments" method="post">
+          <!-- Radio Button Group -->
+          <div class="btn-group btn-group-segment d-flex mb-4" role="group" aria-label="Account add card radio button group">
+            <input type="radio" class="btn-check" name="accountAddCardBtnRadio" id="accountAddCardBtnRadioOption1" autocomplete="off" checked="">
+            <label class="btn btn-sm" for="accountAddCardBtnRadioOption1">Credit or Debit card</label>
+
+            <input type="radio" class="btn-check" name="accountAddCardBtnRadio" id="accountAddCardBtnRadioOption2" autocomplete="off" disabled="">
+            <label class="btn btn-sm" for="accountAddCardBtnRadioOption2">Crypto <span class="badge bg-soft-primary text-primary">Coming soon</span></label>
+          </div>
+          <!-- End Radio Button Group -->
+
+
+          <!-- Form -->
+          <div class="mb-4">
+            <label for="cardNumberLabel" class="form-label">Card number</label>
+            <input type="text" class="js-input-mask form-control" name="cardNumber" id="cardNumberLabel" placeholder="xxxx xxxx xxxx xxxx" aria-label="xxxx xxxx xxxx xxxx" data-hs-mask-options="{
+                    &quot;mask&quot;: &quot;0000 0000 0000 0000&quot;
+                  }">
+          </div>
+          <!-- End Form -->
+
+          <div class="row">
+            <div class="col-sm-6">
+              <!-- Form -->
+              <div class="mb-4">
+                <label for="expirationDateLabel" class="form-label">Expiration date</label>
+                <input type="text" class="js-input-mask form-control" name="cardExp" id="expirationDateLabel" placeholder="MMYY" data-hs-mask-options="{
+                        &quot;mask&quot;: &quot;00/0000&quot;
+                      }">
+              </div>
+              <!-- End Form -->
+            </div>
+
+            <div class="col-sm-6">
+              <!-- Form -->
+              <div class="mb-4">
+                <label for="securityCodeLabel" class="form-label">CVV Code <i class="bi-question-circle text-body ml-1" data-toggle="tooltip" data-placement="top" title="A 3 - digit number, typically printed on the back of a card."></i></label>
+                <input type="text" class="js-input-mask form-control" name="cvv" id="securityCodeLabel" placeholder="xxx" aria-label="xxx" data-hs-mask-options="{
+                        &quot;mask&quot;: &quot;000&quot;
+                      }">
+              </div>
+              <!-- End Form -->
+            </div>
+          </div>
+          <!-- End Row -->
+
+
+
+          <h4 class="my-5">Billing address</h4>
+
+
+          <div class="row">
+
+            <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="billingFirstName">First name</label>
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-prepend input-group-text">
+                            <i class="bi-person-fill"></i>
+                        </span>
+                        <input type="text" class="form-control form-control-lg" id="billingFirstName" name="billingFirstName" placeholder="Virgil" aria-label="First name" required="">
+
+                    </div>
+
+                </div>
+                <!-- End Form -->
+            </div>
+            <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="billingLastName">Last name</label>
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-prepend input-group-text">
+                            <i class="bi-person-fill"></i>
+                        </span>
+                        <input type="text" class="form-control form-control-lg" id="billingLastName" name="billingLastName" placeholder="Abloh" aria-label="Last name" required="">
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+            <!-- End Col -->
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="street1">Street line 1</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-prepend input-group-text">
+                            <i class="bi-geo-alt-fill"></i>
+                        </span>
+                        <input type="text" class="form-control form-control-lg" id="street1" name="street1"
+                            placeholder="123 Main St" aria-label="Address">
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+            <!-- End Col -->
+
+            <div class="col-sm-6">
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="street2">Street line 2</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-prepend input-group-text">
+                            <i class="bi-geo-alt-fill"></i>
+                        </span>
+                        <input type="text" class="form-control form-control-lg" id="street2" name="street2"
+                            placeholder="Apt 5" aria-label="Address">
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+            <!-- End Col -->
+        </div>
+        <!-- End Row -->
+
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="city">City</label>
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-prepend input-group-text">
+                            <i class="bi-building"></i>
+                        </span>
+                        <input type="text" class="form-control form-control-lg" id="city" name="city"
+                            placeholder="LA" aria-label="City/Province">
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+
+            <div class="col-sm-4">
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="state">State</label>
+                    <div class="tom-select-custom">
+                        <select class="js-select form-select form-select-lg" id="state" name="state" autocomplete="off"
+                            data-hs-tom-select-options='{
+                "placeholder": "Select a person...",
+                "hideSearch": true
+              }'>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option selected value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="DC">District Of Columbia</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+
+            <div class="col-sm-4">
+                <!-- Form -->
+                <div class="mb-4">
+                    <label class="form-label" for="zip">Postal code</label>
+
+                    <div class="input-group input-group-merge">
+                        <span class="input-group-prepend input-group-text">
+                            <i class="bi-envelope-open-fill"></i>
+                        </span>
+                        <input type="text" class="form-control form-control-lg" name="zip" id="zip"
+                            placeholder="10001" aria-label="Postal code">
+                    </div>
+                </div>
+                <!-- End Form -->
+            </div>
+            <!-- End Col -->
+        </div>
+
+                  <!-- Custom Checkbox -->
+                  <div class="form-check mb-4">
+                    <input type="checkbox" class="form-check-input" id="makePrimaryCheckbox1">
+                    <label class="form-check-label" for="makePrimaryCheckbox1">Make this primary card</label>
+                  </div>
+                  <!-- End Custom Checkbox -->
+
+          <div class="d-flex justify-content-end gap-3">
+            <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </form>
+        <!-- End Form -->
+      </div>
+      <!-- End Body -->
+    </div>
+  </div>
 </div>

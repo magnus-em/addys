@@ -34,6 +34,7 @@ const userSchema = new Schema({
         default: 0
     },
     customerProfileId: String,
+    customerPaymentIds: [String],
     shortId: {
         type: String,
         default: function() {

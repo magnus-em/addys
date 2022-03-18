@@ -596,16 +596,14 @@ module.exports.deleteCustomerProfile = function (customerProfileId) {
 	});
 }
 
-module.exports.getCustomerPaymentProfile = function (customerProfileId) {
+module.exports.getCustomerPaymentProfile = function (customerProfileId, customerPaymentId) {
 	return new Promise((resolve, reject) => {
 
 		var getRequest = new ApiContracts.GetCustomerPaymentProfileRequest();
 		getRequest.setMerchantAuthentication(merchantAuthenticationType);
 		getRequest.setCustomerProfileId(customerProfileId);
-		// getRequest.setCustomerPaymentProfileId(customerPaymentProfileId);
+		getRequest.setCustomerPaymentProfileId(customerPaymentId);
 
-		//pretty print request
-		//console.log(JSON.stringify(createRequest.getJSON(), null, 2));
 
 		var ctrl = new ApiControllers.GetCustomerProfileController(getRequest.getJSON());
 
@@ -645,67 +643,114 @@ module.exports.getCustomerPaymentProfile = function (customerProfileId) {
 
 }
 
-module.exports.createCustomerPaymentProfile = function (details) {
+module.exports.createCustomerPaymentProfile = function (details, profileId, setDefault) {
+	return new Promise((resolve, reject) => {
+		const creditCard = new ApiContracts.CreditCardType();
+		creditCard.setCardNumber(details.cardNumber);
+		creditCard.setExpirationDate(details.cardExp);
+		creditCard.setCardCode(details.cvv)
+
+		const paymentType = new ApiContracts.PaymentType();
+		paymentType.setCreditCard(creditCard);
+
+		const customerAddress = new ApiContracts.CustomerAddressType();
+		customerAddress.setFirstName(details.firstName);
+		customerAddress.setLastName(details.lastName);
+		customerAddress.setAddress(details.street1 + " " + details.street2);
+		customerAddress.setCity(details.city);
+		customerAddress.setState(details.state);
+		customerAddress.setZip(details.zip);
+		customerAddress.setCountry('USA');
 
 
-	const creditCard = new ApiContracts.CreditCardType();
-	creditCard.setCardNumber(details.cardNumber);
-	creditCard.setExpirationDate(details.cardExp);
-	creditCard.setCardCode(details.cvv)
+		var profile = new ApiContracts.CustomerPaymentProfileType();
+		profile.setBillTo(customerAddress);
+		profile.setPayment(paymentType);
+		profile.setDefaultPaymentProfile(setDefault);
 
-	const paymentType = new ApiContracts.PaymentType();
-	paymentType.setCreditCard(creditCard);
+		var createRequest = new ApiContracts.CreateCustomerPaymentProfileRequest();
 
-	const customerAddress = new ApiContracts.CustomerAddressType();
-	customerAddress.setFirstName(details.firstName);
-	customerAddress.setLastName(details.lastName);
-	customerAddress.setAddress(details.street1 + " " + details.street2);
-	customerAddress.setCity(details.city);
-	customerAddress.setState(details.state);
-	customerAddress.setZip(details.zip);
-	customerAddress.setCountry('USA');
+		createRequest.setMerchantAuthentication(merchantAuthenticationType);
+		createRequest.setCustomerProfileId(profileId);
+		createRequest.setPaymentProfile(profile);
 
+		//pretty print request
+		//console.log(JSON.stringify(createRequest.getJSON(), null, 2));
 
-	var profile = new ApiContracts.CustomerPaymentProfileType();
-	profile.setBillTo(customerAddress);
-	profile.setPayment(paymentType);
-	profile.setDefaultPaymentProfile(true);
+		var ctrl = new ApiControllers.CreateCustomerPaymentProfileController(createRequest.getJSON());
 
-	var createRequest = new ApiContracts.CreateCustomerPaymentProfileRequest();
-
-	createRequest.setMerchantAuthentication(merchantAuthenticationType);
-	createRequest.setCustomerProfileId(details.customerProfileId);
-	createRequest.setPaymentProfile(profile);
-
-	//pretty print request
-	//console.log(JSON.stringify(createRequest.getJSON(), null, 2));
-
-	var ctrl = new ApiControllers.CreateCustomerPaymentProfileController(createRequest.getJSON());
-
-	ctrl.setEnvironment(SDKConstants.endpoint.production);
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
 
 
-	ctrl.execute(function () {
+		ctrl.execute(function () {
 
-		var apiResponse = ctrl.getResponse();
+			var apiResponse = ctrl.getResponse();
 
-		var response = new ApiContracts.CreateCustomerPaymentProfileResponse(apiResponse);
+			var response = new ApiContracts.CreateCustomerPaymentProfileResponse(apiResponse);
 
-		//pretty print response
-		console.log(JSON.stringify(response, null, 2));
+			//pretty print response
+			console.log(JSON.stringify(response, null, 2));
 
-		if (response != null) {
-			if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
-				console.log('createCustomerPaymentProfile: Successfully created a customer payment profile with id: ' + response.getCustomerPaymentProfileId());
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					console.log('createCustomerPaymentProfile: Successfully created a customer payment profile with id: ' + response.getCustomerPaymentProfileId());
+					resolve(response)
+				}
+				else {
+					console.log('Result Code: ' + response.getMessages().getResultCode());
+					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
 			}
 			else {
-				console.log('Result Code: ' + response.getMessages().getResultCode());
-				console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
-				console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+				console.log('Null response received');
+				reject(null)
 			}
-		}
-		else {
-			console.log('Null response received');
-		}
-	});
+		});
+	})
+}
+
+module.exports.deleteCustomerPaymentProfile = function (customerProfileId, customerPaymentProfileId) {
+	return new Promise((resolve, reject) => {
+		var deleteRequest = new ApiContracts.DeleteCustomerPaymentProfileRequest();
+		deleteRequest.setMerchantAuthentication(merchantAuthenticationType);
+		deleteRequest.setCustomerProfileId(customerProfileId);
+		deleteRequest.setCustomerPaymentProfileId(customerPaymentProfileId);
+
+
+
+		var ctrl = new ApiControllers.DeleteCustomerPaymentProfileController(deleteRequest.getJSON());
+
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+
+		ctrl.execute(function () {
+
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.DeleteCustomerPaymentProfileResponse(apiResponse);
+
+			//pretty print response
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					console.log('Successfully deleted a customer payment profile with id: ' + customerPaymentProfileId);
+					resolve(response)
+				}
+				else {
+					//console.log('Result Code: ' + response.getMessages().getResultCode());
+					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
+			}
+			else {
+				console.log('Null response received');
+				reject(null)
+			}
+
+		});
+	})
 }

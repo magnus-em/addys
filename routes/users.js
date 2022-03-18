@@ -53,7 +53,10 @@ router.post('/user/inbox/:id/forward', isClient, user.forward)
 
 router.get('/user/account/personal',isClient, user.personal)
 router.get('/user/account/security',isClient, user.security)
+
 router.get('/user/account/payments',isClient, user.payments)
+router.post('/user/account/payments', isClient, user.addPayment)
+router.delete('/user/account/payments/:id', isClient, user.deletePayment)
 
 router.get('/user/account/addresses',isClient, user.address)
 router.post('/user/account/addresses', isClient, user.saveAddress)

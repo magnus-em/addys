@@ -1,4 +1,4 @@
-
+<!-- JS Global Compulsory hs-builder:build-delete -->
 <script src="/public/assets/js/bootstrap.bundle.js"></script>
 
 
@@ -25,6 +25,9 @@
 <script src="/public/assets/js/tom-select.complete.min.js"></script>
 <script src="/public/assets/js/hs.tom-select.js"></script>
 
+<script src="/public/assets/js/imask.js"></script>
+
+
 
 
 <script src="/public/assets/js/hs.typed.js"></script>
@@ -40,7 +43,7 @@
 <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
 <!-- JS Front -->
-
+<script src="/public/assets/js/hs.imask.js"></script>
 
 <!-- bundlejs:theme [.] -->
 <script src="/public/assets/js/hs.core.js"></script>
@@ -171,6 +174,13 @@
   });
 </script>
 
+<script>
+  (function() {
+    // INITIALIZATION OF INPUT MASK
+    // =======================================================
+    HSCore.components.HSMask.init('.js-input-mask')
+  });
+</script>
 
 
 

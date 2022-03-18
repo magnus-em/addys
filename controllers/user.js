@@ -9,7 +9,7 @@ const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 
-const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate } = require('../authnet')
+const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile } = require('../authnet')
 
 
 
@@ -30,8 +30,6 @@ module.exports.renderRegisterForm = catchAsync(async (req, res) => {
     res.render('user/register/register', { addy })
 })
 
-
-
 module.exports.resetForm = (req, res) => {
     res.locals.title = "Reset password"
     res.locals.description = "Can't remember your password? No worries, just complete this easy form."
@@ -47,24 +45,24 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         const { email, username, password, invite, firstName, lastName, phone } = req.body
 
         const details = {
-             cardNumber: req.body.cardNumber,
-             cardExp: req.body.cardExp,
-             cvv: req.body.cvv,
-             firstName: req.body.billingFirstName,
-             lastName: req.body.billingLastName,
-             street1: req.body.street1,
-             street2: req.body.street2,
-             city: req.body.city,
-             state: req.body.state,
-             zip: req.body.zip,
-             amount: '15'
+            cardNumber: req.body.cardNumber,
+            cardExp: req.body.cardExp,
+            cvv: req.body.cvv,
+            firstName: req.body.billingFirstName,
+            lastName: req.body.billingLastName,
+            street1: req.body.street1,
+            street2: req.body.street2,
+            city: req.body.city,
+            state: req.body.state,
+            zip: req.body.zip,
+            amount: '15'
         }
         const response = await initialAccountCharge(details)
         console.log('response in user controller')
         console.log(response)
 
-        if(response.getTransactionResponse().getResponseCode() != 1) {
-           return res.send(response.getTransactionResponse().getMessages().getMessage()[0].getDescription())
+        if (response.getTransactionResponse().getResponseCode() != 1) {
+            return res.send(response.getTransactionResponse().getMessages().getMessage()[0].getDescription())
         }
         const addy = await Addy.findById(req.body.addy).populate('clients')
         const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
@@ -77,16 +75,16 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         })
         details.client = user;
 
-        const createProfile  = await createCustomerProfileNoPayment(details)
+        const createProfile = await createCustomerProfileNoPayment(details)
         if (createProfile.success) {
             user.customerProfileId = createProfile.id
             console.log('saved profile id ' + createProfile.id)
-            await user.save() 
-            details.customerProfileId = createProfile.id
-            const res = createCustomerPaymentProfile(details)
+            const newPaymentProfileResponse = await createCustomerPaymentProfile(details, createProfile.id, true)
+            user.customerPaymentIds.push(newPaymentProfileResponse.getCustomerPaymentProfileId())
+            await user.save()
 
         }
-        
+
         console.log('NEW USER CREATED')
         console.log(user)
         req.flash('success', 'New user successfully created')
@@ -98,8 +96,6 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         res.redirect(`/register?addy=${req.body.addy}`)
     }
 })
-
-
 
 module.exports.login = catchAsync(async (req, res) => {
 
@@ -139,8 +135,6 @@ module.exports.login = catchAsync(async (req, res) => {
     res.redirect(redirectUrl)
 })
 
-
-
 module.exports.logout = (req, res) => {
     req.logout()
     req.flash('success', 'Logged out')
@@ -166,30 +160,6 @@ module.exports.inboxForwarded = catchAsync((async (req, res) => {
     res.render('user/inbox/forwarded', { user })
 }))
 
-// module.exports.forwardForm = catchAsync(async (req,res) => {
-//     const {id} = req.params
-//     const pkg = await Package.findById(id);
-//     const addy = await Addy.findById(req.user.addy._id)
-//     const user = await User.findById(req.user._id).populate('addy')
-//     user.pkg = pkg;
-//     user.shipment = await getShipment();
-//     console.log('USER RATES')
-//     console.log(user.shipment)
-//     res.render('user/forward/forwardThreePayment', {user} )
-// })
-
-module.exports.addressForm = catchAsync(async (req, res) => {
-    res.locals.title = 'Choose Address'
-    res.locals.description = "Choose which address you'd like to ship your package to"
-
-    const { id } = req.params
-    const pkg = await Package.findById(id)
-    const addy = await Addy.findById(req.user.addy._id)
-    const user = await User.findById(req.user._id).populate('addy')
-    user.pkg = pkg;
-    res.render('user/forward/address', { user })
-})
-
 module.exports.saveAddress = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id)
     const address = {
@@ -214,6 +184,20 @@ module.exports.deleteAddress = catchAsync(async (req, res) => {
     user.addresses.splice(index, 1)
     await user.save()
     res.redirect('/user/account/addresses')
+})
+
+//forward flow
+
+module.exports.addressForm = catchAsync(async (req, res) => {
+    res.locals.title = 'Choose Address'
+    res.locals.description = "Choose which address you'd like to ship your package to"
+
+    const { id } = req.params
+    const pkg = await Package.findById(id)
+    const addy = await Addy.findById(req.user.addy._id)
+    const user = await User.findById(req.user._id).populate('addy')
+    user.pkg = pkg;
+    res.render('user/forward/address', { user })
 })
 
 module.exports.shippingForm = catchAsync(async (req, res) => {
@@ -243,26 +227,29 @@ module.exports.paymentForm = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
 
-    const response = await getCustomerPaymentProfile(user.customerProfileId)
-    if (response) {
-        console.log('---response----')
-        console.log(response)
-        console.log('---getPaymentProfile----')
-        console.log(response.getPaymentProfile())
-        console.log('---getPayment()----')
-        console.log(response.getPaymentProfile().getPayment())
-        console.log('---getCreditCard()----')
-        console.log(response.getPaymentProfile().getPayment().getCreditCard())
-        console.log(response.getPaymentProfile().getPayment().getCreditCard().getCardNumber())
+    const payments = []
+
+    try {
+        for (let id of user.customerPaymentIds) {
+            let response = await getCustomerPaymentProfile(user.customerProfileId, id)
+            payments.push({
+                id: response.getPaymentProfile().getCustomerPaymentProfileId(),
+                firstName: response.getPaymentProfile().getBillTo().getFirstName(),
+                lastName: response.getPaymentProfile().getBillTo().getLastName(),
+                cardNumber: response.getPaymentProfile().getPayment().getCreditCard().getCardNumber(),
+                cardType: response.getPaymentProfile().getPayment().getCreditCard().getCardType(),
+                cardExp: response.getPaymentProfile().getPayment().getCreditCard().getExpirationDate(),
+                default: response.getPaymentProfile().getDefaultPaymentProfile()
+            })
+        }
+
+    } catch (error) {
+        console.log(error)
+        user.payments = []
     }
 
-    user.payments = [{
-        firstName: response.getPaymentProfile().getBillTo().getFirstName(),
-        lastName: response.getPaymentProfile().getBillTo().getLastName(),
-        cardNumber: response.getPaymentProfile().getPayment().getCreditCard().getCardNumber(),
-        cardType: response.getPaymentProfile().getPayment().getCreditCard().getCardType(),
-        cardExp: '0323'
-    }]
+    user.payments = payments;
+
 
     res.render('user/forward/payment', { user })
 })
@@ -280,23 +267,11 @@ module.exports.overviewForm = catchAsync(async (req, res) => {
     res.render('user/forward/overview', { user })
 })
 
-
 module.exports.forward = catchAsync(async (req, res) => {
     const { id } = req.params
 
     const user = await User.findById(req.user._id).populate('addy')
-    const address = await user.addresses.id(req.body.address)
-    // const shipment = getShipment(address)
-    console.log('body.rate')
-    console.log(req.body.rate)
-    console.log(req.body.shipment)
-    // const rate = await getRate(req.body.rate);
-    // console.log('found rate')
-    // console.log(rate)
 
-    // const paymentTrx = await chargeCreditCard({rate})
-    // console.log('paymentTrx')
-    // console.log(paymenTrx)
 
     const shipment = await shippo.shipment.retrieve(req.body.shipment);
     console.log('found shipment')
@@ -306,12 +281,8 @@ module.exports.forward = catchAsync(async (req, res) => {
     console.log('found rate')
     console.log(rate.amount)
 
-    const paymentProfile = await getCustomerPaymentProfile(user.customerProfileId)
 
-    const paymentId = paymentProfile.getPaymentProfile().getCustomerPaymentProfileId()
-
-
-    const response = await chargeRate({rate, shipment}, user.customerProfileId, paymentId)
+    const response = await chargeRate({ rate, shipment }, user.customerProfileId, req.body.payment)
     console.log('response -----')
     console.log(response)
 
@@ -339,6 +310,8 @@ module.exports.forward = catchAsync(async (req, res) => {
 })
 
 
+// account pages
+
 module.exports.personal = catchAsync(async (req, res) => {
     res.locals.title = 'Personal info'
     res.locals.description = 'View and edit your personal information'
@@ -361,33 +334,70 @@ module.exports.payments = catchAsync(async (req, res) => {
     res.locals.title = 'Payments'
     res.locals.description = 'View and edit your payment methods'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
+    const payments = []
 
-    const response = await getCustomerPaymentProfile(user.customerProfileId)
-    if (response) {
-        console.log('---response----')
-        console.log(response)
-        console.log('---getPaymentProfile----')
-        console.log(response.getPaymentProfile())
-        console.log('---getPayment()----')
-        console.log(response.getPaymentProfile().getPayment())
-        console.log('---getCreditCard()----')
-        console.log(response.getPaymentProfile().getPayment().getCreditCard())
-        console.log(response.getPaymentProfile().getPayment().getCreditCard().getCardNumber())
+    try {
+        for (let id of user.customerPaymentIds) {
+            let response = await getCustomerPaymentProfile(user.customerProfileId, id)
+            payments.push({
+                id: response.getPaymentProfile().getCustomerPaymentProfileId(),
+                firstName: response.getPaymentProfile().getBillTo().getFirstName(),
+                lastName: response.getPaymentProfile().getBillTo().getLastName(),
+                cardNumber: response.getPaymentProfile().getPayment().getCreditCard().getCardNumber(),
+                cardType: response.getPaymentProfile().getPayment().getCreditCard().getCardType(),
+                cardExp: response.getPaymentProfile().getPayment().getCreditCard().getExpirationDate(),
+                default: response.getPaymentProfile().getDefaultPaymentProfile()
+            })
+        }
+
+    } catch (error) {
+        console.log(error)
+        user.payments = []
     }
 
-    user.payments = [{
-        firstName: response.getPaymentProfile().getBillTo().getFirstName(),
-        lastName: response.getPaymentProfile().getBillTo().getLastName(),
-        cardNumber: response.getPaymentProfile().getPayment().getCreditCard().getCardNumber(),
-        cardType: response.getPaymentProfile().getPayment().getCreditCard().getCardType(),
-        cardExp: '0323'
-    }]
-        
-    
-
+    user.payments = payments
 
     res.render('user/account/payments', { user })
 })
+
+module.exports.addPayment = catchAsync(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    const details = {
+        cardNumber: req.body.cardNumber,
+        cardExp: req.body.cardExp,
+        cvv: req.body.cvv,
+        firstName: req.body.billingFirstName,
+        lastName: req.body.billingLastName,
+        street1: req.body.street1,
+        street2: req.body.street2,
+        city: req.body.city,
+        state: req.body.state,
+        zip: req.body.zip,
+    }
+    const response = await createCustomerPaymentProfile(details, req.user.customerProfileId, true)
+    user.customerPaymentIds.push(response.getCustomerPaymentProfileId())
+    await user.save()
+
+    console.log(response)
+
+    res.redirect('/user/account/payments')
+
+
+})
+
+module.exports.deletePayment = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    console.log(req.user)
+    await deleteCustomerPaymentProfile(req.user.customerProfileId, id)
+    const user = await User.findByIdAndUpdate(req.user, { $pull: { customerPaymentIds: id } }, { new: true })
+    console.log('deleted customerPaymentId from following client')
+    console.log(user)
+
+
+    res.redirect('/user/account/payments')
+})
+
+
 
 module.exports.address = catchAsync(async (req, res) => {
     res.locals.title = 'Addresses'
