@@ -7,9 +7,10 @@ const { sendWelcome, sendForwardConfirm } = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
+const {getSubAmount} = require('../utils/constants')
 
 
-const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile } = require('../authnet')
+const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment } = require('../authnet')
 
 
 
@@ -55,7 +56,7 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
             city: req.body.city,
             state: req.body.state,
             zip: req.body.zip,
-            amount: '15'
+            amount: '0.01'
         }
         const response = await initialAccountCharge(details)
         console.log('response in user controller')
@@ -80,8 +81,19 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
             user.customerProfileId = createProfile.id
             console.log('saved profile id ' + createProfile.id)
             const newPaymentProfileResponse = await createCustomerPaymentProfile(details, createProfile.id, true)
-            user.customerPaymentIds.push(newPaymentProfileResponse.getCustomerPaymentProfileId())
+            const customerPaymentId = newPaymentProfileResponse.getCustomerPaymentProfileId()
+            user.customerPaymentIds.push(customerPaymentId)
+
+            const subscription = {
+                tier: 'BASIC',
+            }
+            const newSubscriptionId = await createSubscription(subscription, user.customerProfileId, customerPaymentId)
+            subscription.id = newSubscriptionId;
+            user.subscription = subscription;
+            user.subscription.payment = customerPaymentId
             await user.save()
+            console.log('USER POST SAVE WITH SUBSCRIPTION')
+            console.log(user)
 
         }
 
@@ -340,6 +352,14 @@ module.exports.payments = catchAsync(async (req, res) => {
             })
         }
 
+        const sub = await getSubscription(user.subscription.id)
+        user.subscription.name = sub.getName(),
+        user.subscription.startDate = sub.getPaymentSchedule().getStartDate().slice(8,10),
+        user.subscription.amount = sub.getAmount(),
+        user.subscription.status = sub.getStatus()
+        user.subscription.transactions = sub.getArbTransactions()
+        
+        console.log(sub.getArbTransactions())
     } catch (error) {
         console.log(error)
         user.payments = []
@@ -387,6 +407,39 @@ module.exports.deletePayment = catchAsync(async (req, res) => {
     res.redirect('/client/account/payments')
 })
 
+module.exports.changeSubscription = catchAsync(async (req,res) => {
+    const {subscription} = req.body;
+    const user = await User.findById(req.user._id)
+
+    console.log('-----getSubAmount(subscription)-------')
+    console.log( getSubAmount(subscription))
+    console.log('-----getSubAmount(user.subscription.tier)-------')
+    console.log(getSubAmount(user.subscription.tier))
+    console.log('-----UPGRADE FEE-------')
+
+
+    const upgradeFee = getSubAmount(subscription) - getSubAmount(user.subscription.tier)
+    console.log(upgradeFee)
+    if (upgradeFee > 0) {
+        await chargeUpgrade(upgradeFee, user.customerProfileId, user.subscription.payment)
+    }
+    user.subscription.tier = subscription
+    await user.save()
+    const response = await changeSubscriptionTier(subscription, user.subscription.id)
+    console.log('subscription from req.body')
+    console.log(subscription)
+    res.redirect('/client/account/payments')
+})
+
+module.exports.changeSubscriptionPayment = catchAsync(async (req,res) => {
+    const {payment} = req.body;
+    const user = await User.findById(req.user._id)
+    user.subscription.payment = payment
+    await  changeSubscriptionPayment(user.subscription.id, user.customerProfileId, payment)
+    await user.save()
+    res.redirect('/client/account/payments')
+
+})
 
 
 module.exports.address = catchAsync(async (req, res) => {

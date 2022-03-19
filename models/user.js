@@ -35,6 +35,14 @@ const userSchema = new Schema({
     },
     customerProfileId: String,
     customerPaymentIds: [String],
+    subscription: {
+        tier: {
+            type: String,
+            enum: ['BASIC','PLUS','MAX'],
+        },
+        id: String,  
+        payment: String
+    },
     shortId: {
         type: String,
         default: function() {

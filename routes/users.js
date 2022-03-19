@@ -48,7 +48,6 @@ router.get('/client/inbox/:id/forward/shipping', isClient, user.shippingForm)
 router.get('/client/inbox/:id/forward/payment', isClient, user.paymentForm)
 router.get('/client/inbox/:id/forward/overview', isClient, user.overviewForm)
 
-
 router.post('/client/inbox/:id/forward', isClient, user.forward)
 
 router.get('/client/account/personal',isClient, user.personal)
@@ -61,6 +60,9 @@ router.delete('/client/account/payments/:id', isClient, user.deletePayment)
 router.get('/client/account/addresses',isClient, user.address)
 router.post('/client/account/addresses', isClient, user.saveAddress)
 router.delete('/client/account/addresses/:id', isClient, user.deleteAddress)
+
+router.post('/client/account/subscription', isClient, user.changeSubscription)
+router.post('/client/account/subscription/payment', isClient, user.changeSubscriptionPayment)
 
 
 

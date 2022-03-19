@@ -1,6 +1,8 @@
 const ApiContracts = require('authorizenet').APIContracts;
 const ApiControllers = require('authorizenet').APIControllers;
 const SDKConstants = require('authorizenet').Constants;
+const { getSubAmount } = require('../utils/constants')
+const moment = require('moment')
 
 const merchantAuthenticationType = new ApiContracts.MerchantAuthenticationType();
 merchantAuthenticationType.setName(process.env.AUTHORIZE_LOGIN_ID);
@@ -736,21 +738,346 @@ module.exports.deleteCustomerPaymentProfile = function (customerProfileId, custo
 
 			if (response != null) {
 				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
-					console.log('Successfully deleted a customer payment profile with id: ' + customerPaymentProfileId);
+					// console.log('Successfully deleted a customer payment profile with id: ' + customerPaymentProfileId);
 					resolve(response)
 				}
 				else {
 					//console.log('Result Code: ' + response.getMessages().getResultCode());
+					// console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					// console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
+			}
+			else {
+				// console.log('Null response received');
+				reject(null)
+			}
+
+		});
+	})
+}
+
+module.exports.createSubscription = function createSubscriptionFromCustomerProfile(subscription, customerProfileId, customerPaymentProfileId) {
+
+	return new Promise((resolve, reject) => {
+		var interval = new ApiContracts.PaymentScheduleType.Interval();
+		interval.setLength(1);
+		interval.setUnit(ApiContracts.ARBSubscriptionUnitEnum.MONTHS);
+
+		var paymentScheduleType = new ApiContracts.PaymentScheduleType();
+		paymentScheduleType.setInterval(interval);
+		// paymentScheduleType.setStartDate(moment(new Date()).add(1,'months').format("YYYY-MM-DD"));
+		paymentScheduleType.setStartDate(moment(new Date()).format("YYYY-MM-DD"));
+		paymentScheduleType.setTotalOccurrences(9999);
+
+		var customerProfileIdType = new ApiContracts.CustomerProfileIdType();
+		customerProfileIdType.setCustomerProfileId(customerProfileId);
+		customerProfileIdType.setCustomerPaymentProfileId(customerPaymentProfileId);
+
+		var arbSubscription = new ApiContracts.ARBSubscriptionType();
+		arbSubscription.setName(subscription.tier);
+		arbSubscription.setPaymentSchedule(paymentScheduleType);
+		arbSubscription.setAmount(getSubAmount(subscription.tier));
+		arbSubscription.setProfile(customerProfileIdType);
+
+		var createRequest = new ApiContracts.ARBCreateSubscriptionRequest();
+		createRequest.setMerchantAuthentication(merchantAuthenticationType);
+		createRequest.setSubscription(arbSubscription);
+
+
+		var ctrl = new ApiControllers.ARBCreateSubscriptionController(createRequest.getJSON());
+
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+
+		ctrl.execute(function () {
+
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.ARBCreateSubscriptionResponse(apiResponse);
+
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					// console.log('Subscription Id : ' + response.getSubscriptionId());
+					// console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
+					// console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+					resolve(response.getSubscriptionId())
+				}
+				else {
+					// console.log('Result Code: ' + response.getMessages().getResultCode());
+					// console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					// console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
+			}
+			else {
+				// console.log('Null Response.');
+				reject(null)
+			}
+		});
+	})
+}
+
+module.exports.getSubscription = function (subscriptionId) {
+	return new Promise((resolve, reject) => {
+		var getRequest = new ApiContracts.ARBGetSubscriptionRequest();
+		getRequest.setMerchantAuthentication(merchantAuthenticationType);
+		getRequest.setSubscriptionId(subscriptionId);
+
+		console.log(JSON.stringify(getRequest.getJSON(), null, 2));
+
+		var ctrl = new ApiControllers.ARBGetSubscriptionController(getRequest.getJSON());
+
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+
+		ctrl.execute(function () {
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.ARBGetSubscriptionResponse(apiResponse);
+
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					console.log('Subscription Name : ' + response.getSubscription().getName());
+					console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+					resolve(response.getSubscription())
+				}
+				else {
+					console.log('Result Code: ' + response.getMessages().getResultCode());
 					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
 					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
 					reject(response)
 				}
 			}
 			else {
-				console.log('Null response received');
+				console.log('Null Response.');
+				reject(response)
+			}
+		});
+	})
+
+}
+
+module.exports.changeSubscriptionTier = function (subscription, subscriptionId) {
+	return new Promise((resolve, reject) => {
+		var arbSubscription = new ApiContracts.ARBSubscriptionType();
+		arbSubscription.setName(subscription);
+		arbSubscription.setAmount(getSubAmount(subscription));
+
+
+		var updateRequest = new ApiContracts.ARBUpdateSubscriptionRequest();
+		updateRequest.setMerchantAuthentication(merchantAuthenticationType);
+		updateRequest.setSubscriptionId(subscriptionId);
+		updateRequest.setSubscription(arbSubscription);
+
+		console.log(JSON.stringify(updateRequest.getJSON(), null, 2));
+
+		var ctrl = new ApiControllers.ARBUpdateSubscriptionController(updateRequest.getJSON());
+
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+
+		ctrl.execute(function () {
+
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.ARBUpdateSubscriptionResponse(apiResponse);
+
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					// console.log('successfully updated subscription')
+					// console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
+					// console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+					resolve(response)
+				}
+				else {
+					// console.log('failed to update subscription')
+					// console.log('Result Code: ' + response.getMessages().getResultCode());
+					// console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					// console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
+			}
+			else {
+				// console.log('Null Response.');
 				reject(null)
+			}
+		});
+	})
+
+}
+
+module.exports.changeSubscriptionPayment = function (subscriptionId, customerProfileId, customerPaymentProfileId) {
+	return new Promise((resolve, reject) => {
+
+		var customerProfileIdType = new ApiContracts.CustomerProfileIdType();
+		customerProfileIdType.setCustomerProfileId(customerProfileId);
+		customerProfileIdType.setCustomerPaymentProfileId(customerPaymentProfileId);
+
+		var arbSubscription = new ApiContracts.ARBSubscriptionType();
+		arbSubscription.setProfile(customerProfileIdType);
+
+
+
+		var updateRequest = new ApiContracts.ARBUpdateSubscriptionRequest();
+		updateRequest.setMerchantAuthentication(merchantAuthenticationType);
+		updateRequest.setSubscriptionId(subscriptionId);
+		updateRequest.setSubscription(arbSubscription);
+
+		console.log(JSON.stringify(updateRequest.getJSON(), null, 2));
+
+		var ctrl = new ApiControllers.ARBUpdateSubscriptionController(updateRequest.getJSON());
+
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+
+		ctrl.execute(function () {
+
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.ARBUpdateSubscriptionResponse(apiResponse);
+
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					console.log('successfully updated subscription payment')
+					console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+					resolve(response)
+				}
+				else {
+					console.log('failed to update subscription payment')
+					console.log('Result Code: ' + response.getMessages().getResultCode());
+					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
+			}
+			else {
+				console.log('Null Response.');
+				reject(null)
+			}
+		});
+	})
+
+}
+
+module.exports.chargeUpgrade = function (amount, customerProfileId, customerPaymentProfileId) {
+	return new Promise((resolve, reject) => {
+
+		var profileToCharge = new ApiContracts.CustomerProfilePaymentType();
+		profileToCharge.setCustomerProfileId(customerProfileId);
+
+		var paymentProfile = new ApiContracts.PaymentProfile();
+		paymentProfile.setPaymentProfileId(customerPaymentProfileId);
+		profileToCharge.setPaymentProfile(paymentProfile);
+
+		var orderDetails = new ApiContracts.OrderType();
+		orderDetails.setInvoiceNumber('none');
+		orderDetails.setDescription('Subscription upgrade difference')
+
+		var transactionSetting1 = new ApiContracts.SettingType();
+		transactionSetting1.setSettingName('duplicateWindow');
+		transactionSetting1.setSettingValue('10');
+
+
+		var transactionSettingList = [];
+		transactionSettingList.push(transactionSetting1);
+
+		var transactionSettings = new ApiContracts.ArrayOfSetting();
+		transactionSettings.setSetting(transactionSettingList);
+
+		// var lineItem_id1 = new ApiContracts.LineItemType();
+		// lineItem_id1.setItemId('1');
+		// lineItem_id1.setName('Subscription change');
+		// lineItem_id1.setDescription('Difference between current subscription and upgraded subscription');
+		// lineItem_id1.setQuantity('1');
+		// lineItem_id1.setUnitPrice(amount);
+
+		// var lineItemList = [];
+		// lineItemList.push(lineItem_id1);
+
+		// var lineItems = new ApiContracts.ArrayOfLineItem();
+		// lineItems.setLineItem(lineItemList);
+
+		var transactionRequestType = new ApiContracts.TransactionRequestType();
+		transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
+		transactionRequestType.setProfile(profileToCharge);
+		transactionRequestType.setAmount(amount/100);
+		// transactionRequestType.setLineItems(lineItems);
+		transactionRequestType.setOrder(orderDetails);
+		transactionRequestType.setTransactionSettings(transactionSettings);
+
+
+		var createRequest = new ApiContracts.CreateTransactionRequest();
+		createRequest.setMerchantAuthentication(merchantAuthenticationType);
+		createRequest.setTransactionRequest(transactionRequestType);
+
+		//pretty print request
+		console.log(JSON.stringify(createRequest.getJSON(), null, 2));
+
+		var ctrl = new ApiControllers.CreateTransactionController(createRequest.getJSON());
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+		ctrl.execute(function () {
+
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.CreateTransactionResponse(apiResponse);
+
+
+			//pretty print response
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					if (response.getTransactionResponse().getMessages() != null) {
+						console.log('Successfully created transaction with Transaction ID: ' + response.getTransactionResponse().getTransId());
+						console.log('Response Code: ' + response.getTransactionResponse().getResponseCode());
+						console.log('Message Code: ' + response.getTransactionResponse().getMessages().getMessage()[0].getCode());
+						console.log('Description: ' + response.getTransactionResponse().getMessages().getMessage()[0].getDescription());
+						resolve(response)
+					}
+					else {
+						console.log('Failed Transaction.');
+						if (response.getTransactionResponse().getErrors() != null) {
+							console.log('Error Code: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorCode());
+							console.log('Error message: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorText());
+							reject(response)
+						}
+					}
+				}
+				else {
+					console.log('Failed Transaction. ');
+					if (response.getTransactionResponse() != null && response.getTransactionResponse().getErrors() != null) {
+						console.log('Error Code: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorCode());
+						console.log('Error message: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorText());
+						reject(response)
+					}
+					else {
+						// console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+						// console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+						reject(response)
+
+					}
+				}
+			}
+			else {
+				// console.log('Null Response.');
+				reject(null)
+
 			}
 
 		});
+
 	})
+
 }
