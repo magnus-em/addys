@@ -1,13 +1,13 @@
 module.exports.getSubAmount = function (tier) {
     switch (tier) {
         case 'BASIC':
-            return 15;
+            return 1;
             break;
         case 'PLUS':
-            return 35;
+            return 2;
             break;
         case 'MAX':
-            return 55;
+            return 3;
             break;
     }
 }
