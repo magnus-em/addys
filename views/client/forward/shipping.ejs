@@ -150,6 +150,7 @@
                 <div class="mb-4">
                     <div class="d-grid gap-2">
                         <% for (let r of user.shipment.rates) { %>
+                          <% if (r.provider != 'USPS') continue; %> 
             
                       <!-- Custom Radio -->
                       <label class="form-control" for="<%= r.servicelevel.token %>">

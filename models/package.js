@@ -51,7 +51,9 @@ const packageSchema = new Schema({
     label_url: String,
     tracking_number: String,
     tracking_url_provider: String,
-    shippo: {}
+    shippo: {},
+    labelAmount: Number
+    
 })
 
 packageSchema.post('findOneAndDelete', async function (package) {

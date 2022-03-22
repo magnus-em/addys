@@ -52,6 +52,7 @@ router.post('/client/inbox/:id/forward', isClient, user.forward)
 
 router.get('/client/account/personal',isClient, user.personal)
 router.post('/client/account/personal', isClient, user.changeEmailPhone)
+router.post('/client/account/personal/delete', isClient, user.deleteAccount) 
 
 router.get('/client/account/security',isClient, user.security)
 router.post('/client/account/security/reset', isClient, user.changePassword)

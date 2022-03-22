@@ -7,7 +7,7 @@ const { sendWelcome, sendForwardConfirm } = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-const { getSubAmount } = require('../utils/constants')
+const { getSubAmount, getTierQuota } = require('../utils/constants')
 
 
 const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment } = require('../authnet')
@@ -224,11 +224,19 @@ module.exports.deleteAddress = catchAsync(async (req, res) => {
 module.exports.addressForm = catchAsync(async (req, res) => {
     res.locals.title = 'Choose Address'
     res.locals.description = "Choose which address you'd like to ship your package to"
+    const user = await User.findById(req.user._id).populate('addy')    
+    const monthlyForwards = await Package.find({client: req.user._id, 
+        status: 'FORWARDED',
+        forwardedDate: {$gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))}
+    })
+    if (monthlyForwards.length >= getTierQuota(user.subscription.tier)) {
+        req.flash('error', 'Monthly forward limit reached. Please upgrade your plan or wait for your limit to lower.')
+        return res.redirect('/client/inbox/new')
+    }
 
     const { id } = req.params
     const pkg = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
-    const user = await User.findById(req.user._id).populate('addy')
     user.pkg = pkg;
     res.render('client/forward/address', { user })
 })
@@ -306,6 +314,7 @@ module.exports.forward = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id).populate('addy')
 
 
+
     const shipment = await shippo.shipment.retrieve(req.body.shipment);
     console.log('found shipment')
     console.log(shipment)
@@ -327,16 +336,21 @@ module.exports.forward = catchAsync(async (req, res) => {
         console.log(trx)
         console.log('trx created')
         console.log(trx.tracking_url_provider)
+        const pkg = await Package.findById(id);
+        pkg.shippo = trx;
+        pkg.label_url = trx.label_url;
+        pkg.tracking_number = trx.tracking_number;
+        pkg.tracking_url_provider = trx.tracking_url_provider;
+        pkg.forwardedDate = Date.now();
+        pkg.labelAmount = rate.amount
+        pkg.status = 'PENDING'
+        pkg.save()
+        req.flash('success', 'Package forwarded')
+        return res.redirect('/client/inbox/new')
     }
 
 
-    // const pkg = await Package.findById(id);
-    // pkg.shippo = trx;
-    // pkg.label_url = trx.label_url;
-    // pkg.tracking_number = trx.tracking_number;
-    // pkg.tracking_url_provider = trx.tracking_url_provider;
-    // pkg.status = 'PENDING'
-    // pkg.save()
+
     // console.log(pkg)
     // console.log(req.body)
     res.redirect('/client/inbox/new')
@@ -353,6 +367,10 @@ module.exports.personal = catchAsync(async (req, res) => {
 
     res.render('client/account/personal', { user })
 })
+module.exports.deleteAccount = catchAsync(async (req,res) => {
+    req.flash('error', 'Please contact support via email or live chat to finalize account closure')
+    res.redirect('/client/account/personal')
+})
 
 module.exports.security = catchAsync(async (req, res) => {
     res.locals.title = 'Security'
@@ -368,6 +386,15 @@ module.exports.payments = catchAsync(async (req, res) => {
     res.locals.description = 'View and edit your payment methods'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
     const payments = []
+
+    const monthlyForwards = await Package.find({client: user._id, 
+        status: 'FORWARDED',
+        forwardedDate: {$gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))}
+    })
+
+    console.log('monthly forwards -----------------')
+    console.log(monthlyForwards)
+
 
     try {
         for (let id of user.customerPaymentIds) {
@@ -397,6 +424,9 @@ module.exports.payments = catchAsync(async (req, res) => {
     }
 
     user.payments = payments
+    user.monthlyForwards = monthlyForwards;
+
+    user.monthlyPercentage = monthlyForwards.length / getTierQuota(user.subscription.tier) * 100;
 
     res.render('client/account/payments', { user })
 })

@@ -11,3 +11,17 @@ module.exports.getSubAmount = function (tier) {
             break;
     }
 }
+
+module.exports.getTierQuota = function (tier) {
+    switch (tier) {
+        case 'BASIC':
+            return 10;
+            break;
+        case 'PLUS':
+            return 25;
+            break;
+        case 'MAX':
+            return 1000;
+            break;
+    }
+}

@@ -79,17 +79,17 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                     <li class="nav-item">
-                      <a class="nav-link active" href="#">
+                      <a class="nav-link one-click active" href="#">
                         <i class="bi-person-badge nav-icon"></i> Personal info
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link " href="/client/account/security">
+                      <a class="nav-link one-click " href="/client/account/security">
                         <i class="bi-shield-shaded nav-icon"></i> Security
                       </a>
                     </li>
                     <!-- <li class="nav-item">
-                    <a class="nav-link " href="/client/account/notifications">
+                    <a class="nav-link one-click " href="/client/account/notifications">
                       <i class="bi-bell nav-icon"></i> Notifications
                     </a>
                   </li> -->
@@ -103,12 +103,12 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical">
                     <li class="nav-item">
-                      <a class="nav-link " href="/client/account/payments">
+                      <a class="nav-link one-click " href="/client/account/payments">
                         <i class="bi-credit-card nav-icon"></i> Payments
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link " href="/client/account/addresses">
+                      <a class="nav-link one-click " href="/client/account/addresses">
                         <i class="bi-geo-alt nav-icon"></i> Addresses
                       </a>
                     </li>
@@ -215,17 +215,20 @@
 
                 <div class="mb-4">
                   <!-- Check -->
+                <form action="/client/account/personal/delete" method="post">
+
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox">
+                    <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox" required>
                     <label class="form-check-label" for="deleteAccountCheckbox">Confirm that I want to delete my account
                       and I have no packages in my inbox or in the mail.</label>
                   </div>
                   <!-- End Check -->
                 </div>
 
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                  </div>
+                </form>
               </div>
               <!-- End Body -->
             </div>

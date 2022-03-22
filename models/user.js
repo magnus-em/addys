@@ -33,6 +33,7 @@ const userSchema = new Schema({
         type: Number,
         default: 0
     },
+    
     customerProfileId: String,
     customerPaymentIds: [String],
     subscription: {
@@ -74,7 +75,6 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now
     },
-
     addresses: [
         {
             name: {
