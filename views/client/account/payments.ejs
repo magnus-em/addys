@@ -101,7 +101,7 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical">
                     <li class="nav-item">
-                      <a class="nav-link active " href="/client/account/payments">
+                      <a class="nav-link active one-click " href="/client/account/payments">
                         <i class="bi-credit-card nav-icon"></i> Payments
                       </a>
                     </li>
@@ -265,16 +265,17 @@
                             <% if (p.id != user.subscription.payment) { %> 
                             <form action="/client/account/subscription/payment" method="post">
                               <input type="hidden" name="payment" value="<%= p.id %>">
-                              <button type="submit" class="btn btn-white btn-xs">
+                              <button type="submit" class="btn btn-white btn-xs one-click">
                                 <i class="bi-check2-circle me-1"></i> Use for subscription
                               </button>
                             </form>
-                            <% } %> 
                             <form action="/client/account/payments/<%=p.id%>?_method=DELETE" method="post">
-                              <button type="submit" class="btn btn-white btn-xs">
+                              <button type="submit" class="btn btn-white btn-xs one-click">
                                 <i class="bi-trash me-1"></i> Delete
                               </button>
                             </form>
+                            <% } %> 
+                            
                           </div>
                         </div>
                         <!-- End Col -->

@@ -7,7 +7,7 @@ const { sendWelcome, sendForwardConfirm } = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-const {getSubAmount} = require('../utils/constants')
+const { getSubAmount } = require('../utils/constants')
 
 
 const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment } = require('../authnet')
@@ -142,6 +142,37 @@ module.exports.logout = (req, res) => {
     req.flash('success', 'Logged out')
     res.redirect('/login')
 }
+
+module.exports.changePassword = catchAsync(async (req, res) => {
+    const { password } = req.body
+    const user = await User.findById(req.user._id)
+    await user.setPassword(password)
+
+    user.save()
+    req.flash('success', 'Successfully changed password :)')
+
+    res.redirect('/client/account/security')
+})
+
+module.exports.changeEmailPhone = catchAsync(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    const { email, phone } = req.body;
+    if (phone && email) {
+        user.email = email
+        user.phone = phone
+        req.flash('success', 'Successfully changed email and password')
+    } else if (phone) {
+        user.phone = phone
+        req.flash('success', 'Successfully changed phone')
+    } else {
+        user.email = email
+        req.flash('success', 'Successfully changed email')
+    }
+    user.save()
+    res.redirect('/client/account/personal')
+})
+
+
 
 module.exports.inbox = catchAsync((async (req, res) => {
     res.locals.title = "New packages"
@@ -354,11 +385,11 @@ module.exports.payments = catchAsync(async (req, res) => {
 
         const sub = await getSubscription(user.subscription.id)
         user.subscription.name = sub.getName(),
-        user.subscription.startDate = sub.getPaymentSchedule().getStartDate().slice(8,10),
-        user.subscription.amount = sub.getAmount(),
-        user.subscription.status = sub.getStatus()
+            user.subscription.startDate = sub.getPaymentSchedule().getStartDate().slice(8, 10),
+            user.subscription.amount = sub.getAmount(),
+            user.subscription.status = sub.getStatus()
         user.subscription.transactions = sub.getArbTransactions()
-        
+
         console.log(sub.getArbTransactions())
     } catch (error) {
         console.log(error)
@@ -407,12 +438,12 @@ module.exports.deletePayment = catchAsync(async (req, res) => {
     res.redirect('/client/account/payments')
 })
 
-module.exports.changeSubscription = catchAsync(async (req,res) => {
-    const {subscription} = req.body;
+module.exports.changeSubscription = catchAsync(async (req, res) => {
+    const { subscription } = req.body;
     const user = await User.findById(req.user._id)
 
     console.log('-----getSubAmount(subscription)-------')
-    console.log( getSubAmount(subscription))
+    console.log(getSubAmount(subscription))
     console.log('-----getSubAmount(user.subscription.tier)-------')
     console.log(getSubAmount(user.subscription.tier))
     console.log('-----UPGRADE FEE-------')
@@ -431,11 +462,11 @@ module.exports.changeSubscription = catchAsync(async (req,res) => {
     res.redirect('/client/account/payments')
 })
 
-module.exports.changeSubscriptionPayment = catchAsync(async (req,res) => {
-    const {payment} = req.body;
+module.exports.changeSubscriptionPayment = catchAsync(async (req, res) => {
+    const { payment } = req.body;
     const user = await User.findById(req.user._id)
     user.subscription.payment = payment
-    await  changeSubscriptionPayment(user.subscription.id, user.customerProfileId, payment)
+    await changeSubscriptionPayment(user.subscription.id, user.customerProfileId, payment)
     await user.save()
     res.redirect('/client/account/payments')
 

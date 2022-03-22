@@ -51,7 +51,11 @@ router.get('/client/inbox/:id/forward/overview', isClient, user.overviewForm)
 router.post('/client/inbox/:id/forward', isClient, user.forward)
 
 router.get('/client/account/personal',isClient, user.personal)
+router.post('/client/account/personal', isClient, user.changeEmailPhone)
+
 router.get('/client/account/security',isClient, user.security)
+router.post('/client/account/security/reset', isClient, user.changePassword)
+
 
 router.get('/client/account/payments',isClient, user.payments)
 router.post('/client/account/payments', isClient, user.addPayment)

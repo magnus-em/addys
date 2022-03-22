@@ -161,8 +161,8 @@
                             <h5>
                               <%= p.firstName %>
                                 <%= p.lastName %>
-                                  <% if (p.default) { %>
-                                    <span class="badge bg-primary ms-1">Primary</span>
+                                  <% if (p.id == user.subscription.payment) { %>
+                                    <span class="badge bg-primary ms-1">Subscription</span>
                                     <% } %>
                             </h5>
                           </div>
@@ -202,7 +202,7 @@
                                     <input type="hidden" value="<%= query.address %>" name="address" />
                                     <input type="hidden" value="<%= query.shipment%>" name="shipment" />
                                     <input type="hidden" value="<%= query.rate %>" name="rate" />
-                                    <button type="submit" class="btn btn-white btn-sm">
+                                    <button type="submit" class="btn btn-white btn-sm one-click">
                                       <i class="bi-check2-circle me-1"></i> Select
                                     </button>
                                   </form>

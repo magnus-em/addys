@@ -1,132 +1,142 @@
-<%- layout('layouts/boilerplate') %> 
+<%- layout('layouts/boilerplate') %>
 
 
-<div class=" content-space-t-2">
-  <!-- Breadcrumb -->
-  <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
-    <div class="container content-space-1 content-space-b-lg-3">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="d-lg-block">
-            <h1 class="h2 text-white">Account</h1>
+  <div class=" content-space-t-2">
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark"
+      style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-lg-block">
+              <h1 class="h2 text-white">Account</h1>
+            </div>
+
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                <li class="breadcrumb-item">
+                  <%= user.addy.address1 %> #<%= user.mailbox %>
+                      <%= user.addy.city %>, <%= user.addy.state %>
+                </li>
+                <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
           </div>
+          <!-- End Col -->
 
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item"> 
-              <%= user.addy.address1 %> #<%= user.mailbox %> <%= user.addy.city %>, <%= user.addy.state %>   
-              </li>
-              <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
-            </ol>
-          </nav>
-          <!-- End Breadcrumb -->
+          <div class="col-auto">
+
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
         </div>
-        <!-- End Col -->
-
-        <div class="col-auto">
-
-
-          <!-- Responsive Toggle Button -->
-          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-default">
-              <i class="bi-list"></i>
-            </span>
-            <span class="navbar-toggler-toggled">
-              <i class="bi-x"></i>
-            </span>
-          </button>
-          <!-- End Responsive Toggle Button -->
-        </div>
-        <!-- End Col -->
+        <!-- End Row -->
       </div>
-      <!-- End Row -->
     </div>
-  </div>
-  <!-- End Breadcrumb -->
+    <!-- End Breadcrumb -->
 
-  <!-- Content -->
-  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
-    <div class="row">
-      <div class="col-lg-3">
-        <!-- Navbar -->
-        <div class="navbar-expand-lg navbar-light">
-          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
-            <!-- Card -->
-            <div class="card flex-grow-1 mb-5">
-              <div class="card-body">
-                <!-- Avatar -->
-                <div class="d-lg-block text-center mb-5">
-                  <h4 class="card-title mb-0"><%= user.firstName %> <%= user.lastName %> </h4>
-                  <p class="card-text small"><%= user.email %> </p>
-                  
-                  <!-- <p class="card-text"><%= user.addy.address1 %> #<%= user.mailbox %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></p> -->
-                </div>
-                <!-- End Avatar -->
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg navbar-light">
+            <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+              <!-- Card -->
+              <div class="card flex-grow-1 mb-5">
+                <div class="card-body">
+                  <!-- Avatar -->
+                  <div class="d-lg-block text-center mb-5">
+                    <h4 class="card-title mb-0">
+                      <%= user.firstName %>
+                        <%= user.lastName %>
+                    </h4>
+                    <p class="card-text small">
+                      <%= user.email %>
+                    </p>
 
-                <!-- Nav -->
-                <span class="text-cap">Account</span>
+                    <!-- <p class="card-text"><%= user.addy.address1 %> #<%= user.mailbox %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></p> -->
+                  </div>
+                  <!-- End Avatar -->
 
-                <!-- List -->
-                <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#">
-                      <i class="bi-person-badge nav-icon"></i> Personal info
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="/client/account/security">
-                      <i class="bi-shield-shaded nav-icon"></i> Security
-                    </a>
-                  </li>
-                  <!-- <li class="nav-item">
+                  <!-- Nav -->
+                  <span class="text-cap">Account</span>
+
+                  <!-- List -->
+                  <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">
+                        <i class="bi-person-badge nav-icon"></i> Personal info
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="/client/account/security">
+                        <i class="bi-shield-shaded nav-icon"></i> Security
+                      </a>
+                    </li>
+                    <!-- <li class="nav-item">
                     <a class="nav-link " href="/client/account/notifications">
                       <i class="bi-bell nav-icon"></i> Notifications
                     </a>
                   </li> -->
 
-                </ul>
-                <!-- End List -->
+                  </ul>
+                  <!-- End List -->
 
 
-                <span class="text-cap">Billing</span>
+                  <span class="text-cap">Billing</span>
 
-                <!-- List -->
-                <ul class="nav nav-sm nav-tabs nav-vertical">
-                  <li class="nav-item">
-                    <a class="nav-link " href="/client/account/payments">
-                      <i class="bi-credit-card nav-icon"></i> Payments
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="/client/account/addresses">
-                      <i class="bi-geo-alt nav-icon"></i> Addresses
-                    </a>
-                  </li>
-                </ul>
-                <!-- End List -->
+                  <!-- List -->
+                  <ul class="nav nav-sm nav-tabs nav-vertical">
+                    <li class="nav-item">
+                      <a class="nav-link " href="/client/account/payments">
+                        <i class="bi-credit-card nav-icon"></i> Payments
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link " href="/client/account/addresses">
+                        <i class="bi-geo-alt nav-icon"></i> Addresses
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- End List -->
 
 
+                </div>
               </div>
+              <!-- End Card -->
             </div>
-            <!-- End Card -->
           </div>
+          <!-- End Navbar -->
         </div>
-        <!-- End Navbar -->
-      </div>
-      <!-- End Col -->
+        <!-- End Col -->
 
-      <div class="col-lg-9">
-        <div class="d-grid gap-3 gap-lg-5">
-          <!-- Card -->
-          <div class="card">
-            <div class="card-header border-bottom">
-              <h4 class="card-header-title">Basic info</h4>
-            </div>
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h4 class="card-header-title">Basic info</h4>
+              </div>
 
-            <!-- Body -->
-            <div class="card-body">
-              <form>
+              <!-- Body -->
+              <div class="card-body">
+                <%- include('../../partials/flash') %>
+
 
 
                 <!-- Form -->
@@ -142,101 +152,89 @@
                 </div> -->
                 <!-- End Form -->
 
-                <!-- Form -->
-                <div class="row mb-4">
-                  <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
-
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" name="email" id="emailLabel" placeholder="<%= user.email %>" aria-label="<%= user.email %>" >
+                <form action="/client/account/personal" method="post" class="js-validate" novalidate>
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" name="email" id="emailLabel"
+                        placeholder="<%= user.email %>" aria-label="<%= user.email %>" required>
+                    </div>
                   </div>
-                </div>
-                <!-- End Form -->
-
-                 <!-- Form -->
-                 <div class="row mb-4">
-                  <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
-
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="email" id="phone" placeholder="<%= user.phone %>" aria-label="clarice@example.com">
+                  <!-- End Form -->
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="phone" id="phone" placeholder="<%= user.phone %>"
+                        aria-label="clarice@example.com" required>
+                    </div>
                   </div>
-                </div>
-                <!-- End Form -->
+                  <!-- End Form -->
 
 
 
 
 
-                <!-- Form -->
-                <!-- <div class="row align-items-center">
-                  <label for="disableAdCheckbox" class="col-sm-3 col-form-label form-label">Disable ads <span class="badge badge-primary text-uppercase ms-1">PRO</span></label>
-
-                  <div class="col-sm-9"> -->
-                    <!-- Check -->
-                    <!-- <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="disableAdCheckbox">
-                      <label class="form-check-label" for="disableAdCheckbox">With your Pro account, you can disable ads across the site.</label>
-                    </div> -->
-                    <!-- End Check -->
-                  <!-- </div>
-                </div> -->
-                <!-- End Form -->
-              </form>
-            </div>
-            <!-- End Body -->
-
-            <!-- Footer -->
-            <div class="card-footer pt-0">
-              <div class="d-flex justify-content-end gap-3">
-                <a class="btn btn-white" href="javascript:;">Cancel</a>
-                <a class="btn btn-primary" href="javascript:;">Save changes</a>
               </div>
+              <!-- End Body -->
+
+              <!-- Footer -->
+              <div class="card-footer pt-0">
+                <div class="d-flex justify-content-end gap-3">
+                  <button 
+                  type="submit" class="btn btn-primary">Save changes</a>
+                </div>
+              </div>
+              <!-- End Footer -->
+              </form>
+
             </div>
-            <!-- End Footer -->
-          </div>
-          <!-- End Card -->
+            <!-- End Card -->
 
 
 
 
 
-          <!-- Card -->
-          <div class="card">
-            <div class="card-header border-bottom">
-              <h4 class="card-header-title">Delete your account and cancel subscription</h4>
-            </div>
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h4 class="card-header-title">Delete your account and cancel subscription</h4>
+              </div>
 
-            <!-- Body -->
-            <div class="card-body">
-              <p class="card-text">Account closure is immediate and permanent:
+              <!-- Body -->
+              <div class="card-body">
+                <p class="card-text">Account closure is immediate and permanent:
                 <ul>
                   <li>Your subscription will be cancelled</li>
                   <li>Your personal data will be irreversibly deleted</li>
                   <li>Any unforwarded packages become inaccessible</li>
                 </ul>
-                Therefore, please be absolutely certain you have no additional packages in the mail. We can not make any guarantees of package recovery after account closure.</p>
+                Therefore, please be absolutely certain you have no additional packages in the mail. We can not make any
+                guarantees of package recovery after account closure.</p>
 
-              <div class="mb-4">
-                <!-- Check -->
-                <div class="form-check">
-                  <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox">
-                  <label class="form-check-label" for="deleteAccountCheckbox">Confirm that I want to delete my account and I have no packages in my inbox or in the mail.</label>
+                <div class="mb-4">
+                  <!-- Check -->
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox">
+                    <label class="form-check-label" for="deleteAccountCheckbox">Confirm that I want to delete my account
+                      and I have no packages in my inbox or in the mail.</label>
+                  </div>
+                  <!-- End Check -->
                 </div>
-                <!-- End Check -->
-              </div>
 
-              <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-danger">Delete</button>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
               </div>
+              <!-- End Body -->
             </div>
-            <!-- End Body -->
+            <!-- End Card -->
           </div>
-          <!-- End Card -->
         </div>
+        <!-- End Col -->
       </div>
-      <!-- End Col -->
+      <!-- End Row -->
     </div>
-    <!-- End Row -->
+    <!-- End Content -->
   </div>
-  <!-- End Content -->
-</div>
-

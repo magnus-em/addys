@@ -28,7 +28,7 @@ const userSchema = new Schema({
         type: String,
         enum: ['CLIENT','FW','ADMIN']
     },
-    invite: Number,
+    invite: String,
     balance: {
         type: Number,
         default: 0

@@ -53,6 +53,16 @@
 <!-- JS Plugins Init. -->
 
 
+<script>
+  $(".one-click").click(function(e) {
+    if($(this).hasClass( "click-signifier" )) {
+        e.preventDefault();
+    } else {
+        $(this).addClass('click-signifier');
+        //you can also run other stuff you need once
+    }
+});
+</script>
 
 
 <script>
