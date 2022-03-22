@@ -13,8 +13,12 @@
                           <h3 class="card-title"><%= p.shipper %> 
                           </h3>
                           <div class="mt-3">
-                            <h6 class="card-title"><%= p.carrier %>: <%= p.tracking %> 
+                            <h6 class="card-title">Inbound: <%= p.carrier %>: <%= p.tracking %> 
                             </h6>
+                            <% if (p.status != 'NEW') {%> 
+                            <h6 class="card-title">Outbound: <%= p.tracking_number %> 
+                            </h6>
+                            <% } %> 
                           </div>
                         </div>
                         <!-- End Col -->
@@ -38,10 +42,18 @@
                 
                           
                           <div class="d-flex gap-2 mt-1">
+                            <form action="/sendemail" method="post">
+                              <input type="hidden" name="id" value="<%= p._id  %>">
+                              <button type="submit" href="/client/inbox/<%= p._id %>/forward/address" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">send email</button>
+
+                            </form>
 
                             <% if (p.status == 'NEW') { %> 
                             <a type="button" href="/client/inbox/<%= p._id %>/forward/address" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</a>
                             <% } %> 
+                            <% if (p.status != 'NEW') { %> 
+                              <a type="button" href="<%= p.tracking_url_provider %>" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Track forward</a>
+                              <% } %> 
                             <% if (p.images.length != 0) { %> 
                             <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer"  href="<%= p.images[0].url %>" data-fslightbox="gallerye<%=p._id %>">
                               <i class="bi-image me-1"></i>Box
@@ -52,6 +64,8 @@
                                   <i class="bi-image me-1"></i>Receipts
                                 </a>
                                 <% } %> 
+                               
+
 
 
 

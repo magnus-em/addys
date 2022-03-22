@@ -41,12 +41,12 @@ module.exports.sendWelcome = async function(user) {
  }
 
 
- module.exports.sendForwardConfirm = catchAsync(async(clientId) => {
-    const client = await User.findById(clientId).populate('addy')
+ module.exports.sendForwardConfirm = catchAsync(async(details) => {
+    const client = await User.findById(details.user._id).populate('addy')
 
 
     const msg = {
-        to: 'melbournemagnus@gmail.com',
+        to: client.email,
         from: {
          "email": "support@addys.io",
          "name": "Addys Team"
@@ -56,9 +56,11 @@ module.exports.sendWelcome = async function(user) {
          "name": "Addys Support"
        },
         templateId: templates.forwardConfirm,
-        dynamic_template_data: {
-           first_name: client.firstName
-        }
+        dynamicTemplateData: {
+            firstName: 'Testing Templates',
+            tracking: 'Some One',
+            city: 'Denver',
+          },
      };
 
 

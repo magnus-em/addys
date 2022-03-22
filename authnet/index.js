@@ -825,6 +825,7 @@ module.exports.getSubscription = function (subscriptionId) {
 		var getRequest = new ApiContracts.ARBGetSubscriptionRequest();
 		getRequest.setMerchantAuthentication(merchantAuthenticationType);
 		getRequest.setSubscriptionId(subscriptionId);
+		getRequest.setIncludeTransactions(true)
 
 		console.log(JSON.stringify(getRequest.getJSON(), null, 2));
 
@@ -845,7 +846,7 @@ module.exports.getSubscription = function (subscriptionId) {
 					console.log('Subscription Name : ' + response.getSubscription().getName());
 					console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
 					console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
-					resolve(response.getSubscription())
+					resolve(response)
 				}
 				else {
 					console.log('Result Code: ' + response.getMessages().getResultCode());
@@ -1011,7 +1012,7 @@ module.exports.chargeUpgrade = function (amount, customerProfileId, customerPaym
 		var transactionRequestType = new ApiContracts.TransactionRequestType();
 		transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
 		transactionRequestType.setProfile(profileToCharge);
-		transactionRequestType.setAmount(amount/100);
+		transactionRequestType.setAmount(amount / 100);
 		// transactionRequestType.setLineItems(lineItems);
 		transactionRequestType.setOrder(orderDetails);
 		transactionRequestType.setTransactionSettings(transactionSettings);
@@ -1080,4 +1081,66 @@ module.exports.chargeUpgrade = function (amount, customerProfileId, customerPaym
 
 	})
 
+}
+
+module.exports.getTransactionListForCustomer = function (customerProfileId) {
+	return new Promise((resolve, reject) => {
+		var paging = new ApiContracts.Paging();
+		paging.setLimit(50);
+		paging.setOffset(1);
+
+		var sorting = new ApiContracts.TransactionListSorting();
+		sorting.setOrderBy(ApiContracts.TransactionListOrderFieldEnum.ID);
+		sorting.setOrderDescending(true);
+
+		var getRequest = new ApiContracts.GetTransactionListForCustomerRequest();
+		getRequest.setMerchantAuthentication(merchantAuthenticationType);
+		getRequest.setCustomerProfileId(customerProfileId);
+		getRequest.setPaging(paging);
+		getRequest.setSorting(sorting);
+
+
+		console.log(JSON.stringify(getRequest.getJSON(), null, 2));
+
+		var ctrl = new ApiControllers.GetTransactionListForCustomerController(getRequest.getJSON());
+
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+
+		ctrl.execute(function () {
+
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.GetTransactionListResponse(apiResponse);
+
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+					if (response.getTransactions() != null) {
+						var transactions = response.getTransactions().getTransaction();
+						for (var i = 0; i < transactions.length; i++) {
+							console.log('Transaction Id : ' + transactions[i].getTransId());
+							console.log('Transaction Status : ' + transactions[i].getTransactionStatus());
+							console.log('Amount Type : ' + transactions[i].getAccountType());
+							console.log('Settle Amount : ' + transactions[i].getSettleAmount());
+							resolve(response)
+						}
+					}
+				}
+				else {
+					console.log('Result Code: ' + response.getMessages().getResultCode());
+					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
+			}
+			else {
+				console.log('Null Response.');
+				reject(null)
+			}
+		});
+	})
 }

@@ -50,6 +50,8 @@ router.get('/client/inbox/:id/forward/overview', isClient, user.overviewForm)
 
 router.post('/client/inbox/:id/forward', isClient, user.forward)
 
+router.post('/sendemail',isClient, user.sendEmail)
+
 router.get('/client/account/personal',isClient, user.personal)
 router.post('/client/account/personal', isClient, user.changeEmailPhone)
 router.post('/client/account/personal/delete', isClient, user.deleteAccount) 

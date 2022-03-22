@@ -10,7 +10,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const { getSubAmount, getTierQuota } = require('../utils/constants')
 
 
-const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment } = require('../authnet')
+const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment, getTransactionListForCustomer } = require('../authnet')
 
 
 
@@ -224,10 +224,11 @@ module.exports.deleteAddress = catchAsync(async (req, res) => {
 module.exports.addressForm = catchAsync(async (req, res) => {
     res.locals.title = 'Choose Address'
     res.locals.description = "Choose which address you'd like to ship your package to"
-    const user = await User.findById(req.user._id).populate('addy')    
-    const monthlyForwards = await Package.find({client: req.user._id, 
+    const user = await User.findById(req.user._id).populate('addy')
+    const monthlyForwards = await Package.find({
+        client: req.user._id,
         status: 'FORWARDED',
-        forwardedDate: {$gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))}
+        forwardedDate: { $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000))) }
     })
     if (monthlyForwards.length >= getTierQuota(user.subscription.tier)) {
         req.flash('error', 'Monthly forward limit reached. Please upgrade your plan or wait for your limit to lower.')
@@ -346,7 +347,10 @@ module.exports.forward = catchAsync(async (req, res) => {
         pkg.status = 'PENDING'
         pkg.save()
         req.flash('success', 'Package forwarded')
+        sendForwardConfirm({pkg, user})
         return res.redirect('/client/inbox/new')
+
+
     }
 
 
@@ -367,7 +371,7 @@ module.exports.personal = catchAsync(async (req, res) => {
 
     res.render('client/account/personal', { user })
 })
-module.exports.deleteAccount = catchAsync(async (req,res) => {
+module.exports.deleteAccount = catchAsync(async (req, res) => {
     req.flash('error', 'Please contact support via email or live chat to finalize account closure')
     res.redirect('/client/account/personal')
 })
@@ -386,10 +390,13 @@ module.exports.payments = catchAsync(async (req, res) => {
     res.locals.description = 'View and edit your payment methods'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
     const payments = []
+    const transactionList = []
+    const arbTrxList = []
 
-    const monthlyForwards = await Package.find({client: user._id, 
+    const monthlyForwards = await Package.find({
+        client: user._id,
         status: 'FORWARDED',
-        forwardedDate: {$gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000)))}
+        forwardedDate: { $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000))) }
     })
 
     console.log('monthly forwards -----------------')
@@ -397,6 +404,24 @@ module.exports.payments = catchAsync(async (req, res) => {
 
 
     try {
+        const allTransactionsResponse = await getTransactionListForCustomer(user.customerProfileId)
+        var transactions = allTransactionsResponse.getTransactions().getTransaction();
+        for (var i = 0; i < transactions.length; i++) {
+            transactionList.push({
+                id: transactions[i].getTransId(),
+                status: transactions[i].getTransactionStatus(),
+                type: transactions[i].getAccountType(),
+                amount: transactions[i].getSettleAmount(),
+                time: transactions[i].getSubmitTimeLocal()
+            })
+            console.log('Transaction Id : ' + transactions[i].getTransId());
+            console.log('Transaction Status : ' + transactions[i].getTransactionStatus());
+            console.log('Amount Type : ' + transactions[i].getAccountType());
+            console.log('Settle Amount : ' + transactions[i].getSettleAmount());
+        }
+
+
+
         for (let id of user.customerPaymentIds) {
             let response = await getCustomerPaymentProfile(user.customerProfileId, id)
             payments.push({
@@ -410,21 +435,43 @@ module.exports.payments = catchAsync(async (req, res) => {
             })
         }
 
-        const sub = await getSubscription(user.subscription.id)
+
+        const subResponse = await getSubscription(user.subscription.id)
+        const sub = subResponse.getSubscription()
         user.subscription.name = sub.getName(),
             user.subscription.startDate = sub.getPaymentSchedule().getStartDate().slice(8, 10),
             user.subscription.amount = sub.getAmount(),
             user.subscription.status = sub.getStatus()
-        user.subscription.transactions = sub.getArbTransactions()
 
-        console.log(sub.getArbTransactions())
+        // console.log(' sub.getArbTransactions()' )
+        // console.log(sub.getArbTransactions())
+        // console.log('get single arb')
+        // console.log(sub.getArbTransactions().getArbTransaction())
+
+        // // console.log(sub.getArbTransactions().getARBTransactionList())
+        // // console.log(sub.getArbTransactions().getArbTransactionList())
+        // arbTrxList.push[{
+        //     id: sub.getArbTransactions().getArbTransaction().getArbTransaction().getTransId()
+        // }]
+
+        // for when i figure out how to get multiple arb transactions from the shitty authnet api
+        // for (let trx of sub.getArbTransactions().getARBTransactionList()) {
+        //     arbTrxList.push[{
+        //         id: trx.getTransId()
+        //     }]
+        // } 
+
     } catch (error) {
         console.log(error)
         user.payments = []
+        user.transactionList = []
+        user.arbTransactionList = []
     }
 
     user.payments = payments
     user.monthlyForwards = monthlyForwards;
+    user.transactionList = transactionList;
+    user.arbTransactionList = arbTrxList;
 
     user.monthlyPercentage = monthlyForwards.length / getTierQuota(user.subscription.tier) * 100;
 
@@ -511,5 +558,14 @@ module.exports.address = catchAsync(async (req, res) => {
     res.render('client/account/addresses', { user })
 })
 
+module.exports.sendEmail = async (req,res) => {
+    const pkg = await Package.findById(req.body.id)
+    console.log(pkg)
+    const user = await User.findById(req.user._id)
+    console.log(user)
+    sendForwardConfirm({pkg, user})
+    res.redirect('/client/inbox/pending')
+
+}
 
 

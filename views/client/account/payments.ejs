@@ -222,7 +222,8 @@
               <!-- Body -->
               <div class="card-body">
                 <div class="mb-4">
-                  <p>We currently support Visa, American Express, Mastercard, and Discover. Crypto payments coming soon.
+                  <p>We currently support Visa, American Express, Mastercard, and Discover. Crypto payments coming soon. 
+                    <%= user.subscription.transactions %> 
                   </p>
                 </div>
 
@@ -312,11 +313,11 @@
           </div>
           <!-- End Card -->
 
-          <!-- Card -->
+
           <div class="card">
             <!-- Header -->
             <div class="card-header">
-              <h5 class="card-header-title">Forward history</h5>
+              <h5 class="card-header-title">Payment history</h5>
             </div>
             <!-- End Header -->
 
@@ -328,39 +329,23 @@
                     <th>Reference</th>
                     <th>Status</th>
                     <th>Amount</th>
-                    <th>Updated</th>
-                    <th>Invoice</th>
+                    <th>Time</th>
+                    <!-- <th>Invoice</th> -->
                     <th></th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  <!-- <tr>
-                    <td><a href="#">#3682303</a></td>
-                    <td><span class="badge bg-soft-warning text-warning">Pending</span></td>
-                    <td>$264</td>
-                    <td>22/04/2020</td>
-                    <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td>
-                    <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td>
-                  </tr>
-
+                  <% for (let trx of user.transactionList) { %> 
                   <tr>
-                    <td><a href="#">#2333234</a></td>
-                    <td><span class="badge bg-soft-success text-success">Successful</span></td>
-                    <td>$264</td>
-                    <td>22/04/2019</td>
-                    <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td>
-                    <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td>
+                    <td><a href="#"><%= trx.id %> </a></td>
+                    <td><span class="badge bg-soft-success text-success"><%= trx.status %> </span></td>
+                    <td>$<%= trx.amount %> </td>
+                    <td><%= trx.time %> </td>
+                    <!-- <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td> -->
+                    <!-- <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td> -->
                   </tr>
-
-                  <tr>
-                    <td><a href="#">#9834283</a></td>
-                    <td><span class="badge bg-soft-success text-success">Successful</span></td>
-                    <td>$264</td>
-                    <td>22/04/2018</td>
-                    <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td>
-                    <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td>
-                  </tr> -->
+                  <% } %> 
                 </tbody>
               </table>
             </div>
@@ -368,60 +353,7 @@
           </div>
           <!-- End Card -->
 
-          <div class="card">
-            <!-- Header -->
-            <div class="card-header">
-              <h5 class="card-header-title">Subscription history</h5>
-            </div>
-            <!-- End Header -->
 
-            <!-- Table -->
-            <div class="table-responsive">
-              <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Reference</th>
-                    <th>Status</th>
-                    <th>Amount</th>
-                    <th>Updated</th>
-                    <th>Invoice</th>
-                    <th></th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <!-- <tr>
-                    <td><a href="#">#3682303</a></td>
-                    <td><span class="badge bg-soft-warning text-warning">Pending</span></td>
-                    <td>$264</td>
-                    <td>22/04/2020</td>
-                    <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td>
-                    <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td>
-                  </tr>
-
-                  <tr>
-                    <td><a href="#">#2333234</a></td>
-                    <td><span class="badge bg-soft-success text-success">Successful</span></td>
-                    <td>$264</td>
-                    <td>22/04/2019</td>
-                    <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td>
-                    <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td>
-                  </tr>
-
-                  <tr>
-                    <td><a href="#">#9834283</a></td>
-                    <td><span class="badge bg-soft-success text-success">Successful</span></td>
-                    <td>$264</td>
-                    <td>22/04/2018</td>
-                    <td><a class="btn btn-white btn-xs" href="./page-invoice.html"><i class="bi-file-earmark-arrow-down-fill me-1"></i> PDF</a></td>
-                    <td><a class="btn btn-white btn-xs" href="javascript:;" data-bs-toggle="modal" data-bs-target="#accountInvoiceReceiptModal"><i class="bi-eye-fill me-1"></i> Quick view</a></td>
-                  </tr> -->
-                </tbody>
-              </table>
-            </div>
-            <!-- End Table -->
-          </div>
-          <!-- End Card -->
         </div>
       </div>
       <!-- End Col -->
