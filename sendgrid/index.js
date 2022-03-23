@@ -23,10 +23,10 @@ module.exports.sendWelcome = async function(user) {
     const addy = `${client.addy.address1}, #${client.mailbox}, ${client.addy.city}, ${client.addy.state}, ${client.addy.zip}`
 
     const msg = {
-       to: 'melbournemagnus@gmail.com',
+       to: client.email,
        from: {
         "email": "support@addys.io",
-        "name": "Addys Team"
+        "name": "Addys"
       },
       reply_to: {
         "email": "support@addys.io",

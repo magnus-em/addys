@@ -58,13 +58,15 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
             zip: req.body.zip,
             amount: '0.01'
         }
-        const response = await initialAccountCharge(details)
-        console.log('response in user controller')
-        console.log(response)
 
-        if (response.getTransactionResponse().getResponseCode() != 1) {
-            return res.send(response.getTransactionResponse().getMessages().getMessage()[0].getDescription())
+        try {
+            const response = await initialAccountCharge(details)
+
+        } catch (err) {
+            req.flash('error', err.getTransactionResponse().getErrors().getError()[0].getErrorText())
+            return res.redirect(`/register?addy=${req.body.addy}`)
         }
+
         const addy = await Addy.findById(req.body.addy).populate('clients')
         const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
         const user = new User({ email, username, addy, mailbox, type: 'CLIENT', invite, firstName, lastName, phone })
@@ -76,18 +78,42 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         })
         details.client = user;
 
-        const createProfile = await createCustomerProfileNoPayment(details)
+        let createProfile = null;
+        try {
+            createProfile = await createCustomerProfileNoPayment(details)
+
+        } catch (err) {
+            req.flash('error', err.getMessages().getMessage()[0].getText())
+            return res.redirect(`/register?addy=${req.body.addy}`)
+        }
+
         if (createProfile.success) {
             user.customerProfileId = createProfile.id
             console.log('saved profile id ' + createProfile.id)
-            const newPaymentProfileResponse = await createCustomerPaymentProfile(details, createProfile.id, true)
+
+            let newPaymentProfileResponse = null;
+            try {
+                newPaymentProfileResponse = await createCustomerPaymentProfile(details, createProfile.id, true)
+
+            } catch (err) {
+                req.flash('error', err.getMessages().getMessage()[0].getText())
+                return res.redirect(`/register?addy=${req.body.addy}`)
+            }
             const customerPaymentId = newPaymentProfileResponse.getCustomerPaymentProfileId()
             user.customerPaymentIds.push(customerPaymentId)
 
             const subscription = {
                 tier: 'BASIC',
             }
-            const newSubscriptionId = await createSubscription(subscription, user.customerProfileId, customerPaymentId)
+
+            let newSubscriptionId = null;
+            try {
+                newSubscriptionId = await createSubscription(subscription, user.customerProfileId, customerPaymentId)
+            } catch (err) {
+                req.flash('error', err.getMessages().getMessage()[0].getText())
+                return res.redirect(`/register?addy=${req.body.addy}`)
+            } 
+            
             subscription.id = newSubscriptionId;
             user.subscription = subscription;
             user.subscription.payment = customerPaymentId
@@ -284,14 +310,24 @@ module.exports.paymentForm = catchAsync(async (req, res) => {
 module.exports.overviewForm = catchAsync(async (req, res) => {
     res.locals.title = 'Overview'
     res.locals.description = 'Overview your forward request details'
+    const user = await User.findById(req.user._id).populate('addy')
+
 
     res.locals.query = req.query
     const { id } = req.params
-    const pkg = await Package.findById(id)
+    const { shipment} = req.query
+    const rate = await shippo.rate.retrieve(req.query.rate);
+    const address = await user.addresses.id(req.query.address)
+
+
+    console.log('rate, shipment, query')
+    console.log(rate)
+    console.log(shipment)
+    console.log(address)
+    const package = await Package.findById(id)
     const addy = await Addy.findById(req.user.addy._id)
-    const user = await User.findById(req.user._id).populate('addy')
-    user.pkg = pkg;
-    res.render('client/forward/overview', { user })
+    user.pkg = package;
+    res.render('client/forward/overview', { user, rate, address, package })
 })
 
 module.exports.forward = catchAsync(async (req, res) => {
@@ -316,36 +352,40 @@ module.exports.forward = catchAsync(async (req, res) => {
     console.log(rate.amount)
 
 
-    const response = await chargeRate({ rate, shipment }, client.customerProfileId, req.body.payment)
-    console.log('response -----')
-    console.log(response)
+    try {
+        const response = await chargeRate({ rate, shipment }, client.customerProfileId, req.body.payment)
+        console.log('response -----')
+        console.log(response)
 
-    console.log('response code')
-    console.log(response.getTransactionResponse().responseCode)
+        console.log('response code')
+        console.log(response.getTransactionResponse().responseCode)
 
-    if (response.getTransactionResponse().responseCode == 1) {
-        const trx = await createTransaction(req.body.rate)
-        console.log(trx)
-        console.log('trx created')
-        console.log(trx.tracking_url_provider)
-        const pkg = await Package.findById(id);
-        pkg.shippo = trx;
-        pkg.label_url = trx.label_url;
-        pkg.tracking_number = trx.tracking_number;
-        pkg.tracking_url_provider = trx.tracking_url_provider;
-        pkg.forwardedDate = Date.now();
-        pkg.status = 'NEW'
-        pkg.paymentId = response.getTransactionResponse().getTransId()
-        pkg.paymentType = response.getTransactionResponse().getAccountType();
-        pkg.paymentCard = response.getTransactionResponse().getAccountNumber();
-        pkg.labelAmount = rate.amount;
-        pkg.forwardAmount = getTierForwardFee(client.subscription.tier);
-        pkg.addressTo = addressTo;
-        pkg.save()
-        req.flash('success', 'Package forwarded')
-        sendForwardConfirm({pkg, client})
-        sendFwNewRequest(pkg, client)
-        return res.redirect('/client/inbox/new')
+        if (response.getTransactionResponse().responseCode == 1) {
+            const trx = await createTransaction(req.body.rate)
+            console.log(trx)
+            console.log('trx created')
+            console.log(trx.tracking_url_provider)
+            const pkg = await Package.findById(id);
+            pkg.shippo = trx;
+            pkg.label_url = trx.label_url;
+            pkg.tracking_number = trx.tracking_number;
+            pkg.tracking_url_provider = trx.tracking_url_provider;
+            pkg.forwardedDate = Date.now();
+            pkg.status = 'PENDING'
+            pkg.paymentId = response.getTransactionResponse().getTransId()
+            pkg.paymentType = response.getTransactionResponse().getAccountType();
+            pkg.paymentCard = response.getTransactionResponse().getAccountNumber();
+            pkg.labelAmount = rate.amount;
+            pkg.forwardAmount = getTierForwardFee(client.subscription.tier);
+            pkg.addressTo = addressTo;
+            pkg.save()
+            req.flash('success', 'Package forwarded')
+            sendForwardConfirm({ pkg, client })
+            sendFwNewRequest(pkg, client)
+            return res.redirect('/client/inbox/new')
+        }
+    } catch (error) {
+        req.flash('error', error.getTransactionResponse().getErrors().getError()[0].getErrorText())
     }
     res.redirect('/client/inbox/new')
 })
@@ -516,11 +556,24 @@ module.exports.changeSubscription = catchAsync(async (req, res) => {
     const upgradeFee = getSubAmount(subscription) - getSubAmount(user.subscription.tier)
     console.log(upgradeFee)
     if (upgradeFee > 0) {
-        await chargeUpgrade(upgradeFee, user.customerProfileId, user.subscription.payment)
+        try {
+            await chargeUpgrade(upgradeFee, user.customerProfileId, user.subscription.payment)
+
+        } catch (err) {
+            req.flash('error', err.getTransactionResponse().getErrors().getError()[0].getErrorText())
+            return res.redirect('/client/account/payments')
+
+        }
+    }
+    try {
+        const response = await changeSubscriptionTier(subscription, user.subscription.id)
+
+    } catch (err) {
+        req.flash('error', response.getMessages().getMessage()[0].getText())
+        return res.redirect('/client/account/payments')
     }
     user.subscription.tier = subscription
     await user.save()
-    const response = await changeSubscriptionTier(subscription, user.subscription.id)
     console.log('subscription from req.body')
     console.log(subscription)
     res.redirect('/client/account/payments')
@@ -545,12 +598,12 @@ module.exports.address = catchAsync(async (req, res) => {
     res.render('client/account/addresses', { user })
 })
 
-module.exports.sendEmail = async (req,res) => {
+module.exports.sendEmail = async (req, res) => {
     const pkg = await Package.findById(req.body.id)
     console.log(pkg)
     const user = await User.findById(req.user._id)
     console.log(user)
-    sendForwardConfirm({pkg, user})
+    sendForwardConfirm({ pkg, user })
     res.redirect('/client/inbox/pending')
 
 }

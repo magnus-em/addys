@@ -16,8 +16,8 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
                 <li class="breadcrumb-item">
-                  <%= user.addy.address1 %> #<%= user.mailbox %>
-                      <%= user.addy.city %>, <%= user.addy.state %>
+                  <%= user.addy.address1 %> #<b><%= user.mailbox %></b>, <%= user.addy.city %>, <%= user.addy.state %>   
+
                 </li>
                 <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
               </ol>
@@ -135,6 +135,8 @@
 
               <!-- Body -->
               <div class="card-body">
+                <%- include('../../partials/flash') %>
+
                 <div class="row">
                   <div class="col-md mb-4 mb-md-0">
                     <div class="mb-4">

@@ -16,8 +16,8 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
                 <li class="breadcrumb-item">
-                  <%= user.addy.address1 %> #<%= user.mailbox %>
-                      <%= user.addy.city %>, <%= user.addy.state %>
+                  <%= user.addy.address1 %> #<b><%= user.mailbox %></b>, <%= user.addy.city %>, <%= user.addy.state %>   
+
                 </li>
                 <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
               </ol>
@@ -59,6 +59,7 @@
               <!-- Card -->
               <div class="card flex-grow-1 mb-5">
                 <div class="card-body">
+                  
                   <!-- Avatar -->
                   <div class="d-lg-block text-center mb-5">
                     <h4 class="card-title mb-0">

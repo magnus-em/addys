@@ -1,217 +1,244 @@
 <%- include('../../partials/head') %>
-<%- include('../../partials/navbar_user') %> 
+  <%- include('../../partials/navbar_user') %>
 
-<div class=" content-space-t-2">
-  <!-- Breadcrumb -->
-  <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
-    <div class="container content-space-1 content-space-b-lg-3">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="d-none d-lg-block">
-            <h1 class="h2 text-white">1456 N Capri Drive</h1>
+    <div class=" content-space-t-2">
+      <!-- Breadcrumb -->
+      <div class="navbar-dark bg-dark"
+        style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+        <div class="container content-space-1 content-space-b-lg-3">
+          <div class="row align-items-center">
+            <div class="col">
+              <div class="d-none d-lg-block">
+                <h1 class="h2 text-white">1456 N Capri Drive</h1>
+              </div>
+
+              <!-- Breadcrumb -->
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-light mb-0">
+                  <li class="breadcrumb-item">Box 35</li>
+                  <li class="breadcrumb-item active" aria-current="page">Inbox</li>
+                </ol>
+              </nav>
+              <!-- End Breadcrumb -->
+            </div>
+            <!-- End Col -->
+
+            <div class="col-auto">
+
+
+              <!-- Responsive Toggle Button -->
+              <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-default">
+                  <i class="bi-list"></i>
+                </span>
+                <span class="navbar-toggler-toggled">
+                  <i class="bi-x"></i>
+                </span>
+              </button>
+              <!-- End Responsive Toggle Button -->
+            </div>
+            <!-- End Col -->
           </div>
-
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Box 35</li>
-              <li class="breadcrumb-item active" aria-current="page">Inbox</li>
-            </ol>
-          </nav>
-          <!-- End Breadcrumb -->
+          <!-- End Row -->
         </div>
-        <!-- End Col -->
-
-        <div class="col-auto">
-
-
-          <!-- Responsive Toggle Button -->
-          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-default">
-              <i class="bi-list"></i>
-            </span>
-            <span class="navbar-toggler-toggled">
-              <i class="bi-x"></i>
-            </span>
-          </button>
-          <!-- End Responsive Toggle Button -->
-        </div>
-        <!-- End Col -->
       </div>
-      <!-- End Row -->
-    </div>
-  </div>
-  <!-- End Breadcrumb -->
+      <!-- End Breadcrumb -->
 
-  <!-- Content -->
-  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
-    <div class="row">
-      <div class="col-lg-3">
-        <!-- Navbar -->
-        <div class="navbar-expand-lg navbar-light">
-          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
-            <!-- Card -->
-            <div class="card flex-grow-1 mb-5">
-              <div class="card-body">
+      <!-- Content -->
+      <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+        <div class="row">
+          <div class="col-lg-3">
+            <!-- Navbar -->
+            <div class="navbar-expand-lg navbar-light">
+              <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+                <!-- Card -->
+                <div class="card flex-grow-1 mb-5">
+                  <div class="card-body">
 
-                
-                
-                <!-- Nav -->
-                <span class="text-cap">Steps</span>
 
-                <!-- List -->
-                <ul id="fwFormProgress" class="js-step-progress step step-icon-xs step-border-last-0 mt-5">
-                <li class="step-item">
-                  <a class="step-content-wrapper"  
-                     data-hs-step-form-next-options='{
+
+                    <!-- Nav -->
+                    <span class="text-cap">Steps</span>
+
+                    <!-- List -->
+                    <ul id="fwFormProgress" class="js-step-progress step step-icon-xs step-border-last-0 mt-5">
+                      <li class="step-item">
+                        <a class="step-content-wrapper" data-hs-step-form-next-options='{
                       "targetSelector": "#fwFormStepAddress"
                     }'>
-                    <span class="step-icon step-icon-soft-dark">1</span>
-                    <div class="step-content">
-                      <span class="step-title">Choose address</span>
-                      <span class="step-title-description step-text">Specify where to forward</span>
-                    </div>
-                  </a>
-                </li>
-  
-                <li class="step-item">
-                  <a class="step-content-wrapper"  
-                     data-hs-step-form-next-options='{
+                          <span class="step-icon step-icon-soft-dark">1</span>
+                          <div class="step-content">
+                            <span class="step-title">Choose address</span>
+                            <span class="step-title-description step-text">Specify where to forward</span>
+                          </div>
+                        </a>
+                      </li>
+
+                      <li class="step-item">
+                        <a class="step-content-wrapper" data-hs-step-form-next-options='{
                       "targetSelector": "#fwFormStepShipping"
                     }'>
-                    <span class="step-icon step-icon-soft-dark">2</span>
-                    <div class="step-content">
-                      <span class="step-title">Shipping</span>
-                      <span class="step-title-description step-text">Choose shipping service</span>
-                    </div>
-                  </a>
-                </li>
-  
-                <li class="step-item">
-                  <a class="step-content-wrapper"  
-                     data-hs-step-form-next-options='{
+                          <span class="step-icon step-icon-soft-dark">2</span>
+                          <div class="step-content">
+                            <span class="step-title">Shipping</span>
+                            <span class="step-title-description step-text">Choose shipping service</span>
+                          </div>
+                        </a>
+                      </li>
+
+                      <li class="step-item">
+                        <a class="step-content-wrapper" data-hs-step-form-next-options='{
                       "targetSelector": "#fwFormStepPayment"
                     }'>
-                    <span class="step-icon step-icon-soft-dark">3</span>
-                    <div class="step-content">
-                      <span class="step-title">Payment</span>
-                      <span class="step-title-description step-text">Choose your payment method</span>
-                    </div>
-                  </a>
-                </li>
-    
+                          <span class="step-icon step-icon-soft-dark">3</span>
+                          <div class="step-content">
+                            <span class="step-title">Payment</span>
+                            <span class="step-title-description step-text">Choose your payment method</span>
+                          </div>
+                        </a>
+                      </li>
 
 
-  
-                <li class="step-item active focus">
-                  <a class="step-content-wrapper" href="#"
-                     data-hs-step-form-next-options='{
+
+
+                      <li class="step-item active focus">
+                        <a class="step-content-wrapper" href="#" data-hs-step-form-next-options='{
                       "targetSelector": "#fwFormStepOverview"
                     }'>
-                    <span class="step-icon step-icon-soft-dark">4</span>
-                    <div class="step-content">
-                      <span class="step-title">Overview</span>
-                      <span class="step-title-description step-text">Confirm your forward</span>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-                <!-- End List -->
+                          <span class="step-icon step-icon-soft-dark">4</span>
+                          <div class="step-content">
+                            <span class="step-title">Overview</span>
+                            <span class="step-title-description step-text">Confirm your forward</span>
+                          </div>
+                        </a>
+                      </li>
+                    </ul>
+                    <!-- End List -->
 
 
 
 
 
+                  </div>
+                </div>
+                <!-- End Card -->
               </div>
             </div>
-            <!-- End Card -->
+            <!-- End Navbar -->
           </div>
-        </div>
-        <!-- End Navbar -->
-      </div>
-      <!-- End Col -->
+          <!-- End Col -->
 
-      <div class="col-lg-9">
-        <div class="d-grid gap-3 gap-lg-5">
-          <!-- Card -->
-          <form action="/client/inbox/<%= user.pkg._id %>/forward/" method="post">
-            <div id="fwFormStepAddress" class="card active">
-              <div class="card-header border-bottom">
-                <div class="flex-grow-1">
-                  <span class="d-lg-none">Step 4 of 4</span>
-                  <h3 class="card-header-title">Forward overview</h3>
-                </div>
-              </div>
-              <!-- End Header -->
-              <!-- Body -->
-              <div class="card-body">
-                <div class="row justify-content-md-between">
-                    <div class="col-md-5">
-                      <dl class="row">
-                        <dt class="col-6">Address Id:</dt>
-                        <dd class="col-6"><%= query.address %> </dd>
-                        <dt class="col-6">Shipment</dt>
-                        <dd class="col-6"><%= user.shipment %> </dd>
-                        <dt class="col-6">Cost:</dt>
-                        <dd class="col-6">$10</dd>
-                      </dl>
-                      <!-- End Row -->
+          <div class="col-lg-9">
+            <div class="d-grid gap-3 gap-lg-5">
+              <!-- Card -->
+              <form action="/client/inbox/<%= user.pkg._id %>/forward/" method="post">
+                <div id="fwFormStepAddress" class="card active">
+                  <div class="card-header border-bottom">
+                    <div class="flex-grow-1">
+                      <span class="d-lg-none">Step 4 of 4</span>
+                      <h3 class="card-header-title">Forward overview</h3>
                     </div>
-                    <!-- End Col -->
-                    <div class="col-md-5">
-                      <dl class="row">
-                        <dt class="col-6">Package:</dt>
-                        <dd class="col-6">Amazon</dd>
-                        <dt class="col-6">Weight:</dt>
-                        <dd class="col-6">12 lbs</dd>
-                        <dt class="col-6">Est days:</dt>
-                        <dd class="col-6">2</dd>
-                      </dl>
-                      <!-- End Row -->
-                    </div>
-                    <!-- End Col -->
                   </div>
-            
-              </div>
-              <!-- End Body -->
+                  <!-- End Header -->
+                  <!-- Body -->
+                  <div class="card-body">
+                    <div class="row justify-content-md-between">
+                      <div class="col-md-5">
+                        <dl class="row">
+                          <dt class="col-6">Address:</dt>
+                          <dd class="col-6">
+                            <div class="w-100 h-100">
+                              <span class="h5 d-block">
+                                <%= address.name %>
+                              </span>
+                              <span class="d-block mb-2">
+                                <%= address.street1 %> <br>
+                                  <% if (address.street2) { %>
+                                    <%= address.street2 %> <br>
+                                      <% } %>
+                                        <%= address.city %>, <%= address.zip %><br>
+                                            <%= address.country %> <img class="avatar avatar-xss avatar-circle me-1"
+                                                src="/public/assets/svg/flags/1x1/<%= address.country %>.svg"
+                                                alt="Great Britain Flag">
+                              </span>
+                            </div>
+                            <dt class="col-6">Weight:</dt>
+                          <dd class="col-6">
+                            <%= package.lbs %> lbs <%= package.oz %> oz
+                          </dd>
+                          <dt class="col-6">Inbound tracking:</dt>
+                          <dd class="col-6">
+                            <%= package.tracking %>
+                          </dd>
+
+                         
+                        </dl>
+                        <!-- End Row -->
+                      </div>
+                      <!-- End Col -->
+                      <div class="col-md-5">
+                        <dl class="row">
+                          <dt class="col-6">Package:</dt>
+                          <dd class="col-6">
+                            <%= package.shipper %>
+                          </dd>
+                          
+                          <dt class="col-6">Label price:</dt>
+                          <dd class="col-6">$<%= rate.amount %>
+                          </dd>
+                          <dt class="col-6">Forward fee:</dt>
+                          <dd class="col-6">$19.99
+                          </dd>
+                          <dt class="col-6">Total:</dt>
+                          <dd class="col-6">$<%= (Number(rate.amount) + 19.99) %></dd>
+                        </dl>
+                        <!-- End Row -->
+                      </div>
+                      <!-- End Col -->
+                    </div>
+
+                  </div>
+                  <!-- End Body -->
 
 
-              <input type="hidden" value="<%= query.address %>" name="address" />
-              <input type="hidden" value="<%= query.shipment%>" name="shipment" />
-              <input type="hidden" value="<%= query.rate %>" name="rate" />
-              <input type="hidden" value="<%= query.payment %>" name="payment" />
+                  <input type="hidden" value="<%= query.address %>" name="address" />
+                  <input type="hidden" value="<%= query.shipment%>" name="shipment" />
+                  <input type="hidden" value="<%= query.rate %>" name="rate" />
+                  <input type="hidden" value="<%= query.payment %>" name="payment" />
 
 
-              <!-- Footer -->
-              <div class="card-footer pt-0">
-                <div class="d-flex align-items-center">
-                  <!-- <a type="button" class="btn btn-ghost-secondary" href="/client/inbox/<%= user.pkg._id %>/forward/payment">
+                  <!-- Footer -->
+                  <div class="card-footer pt-0">
+                    <div class="d-flex align-items-center">
+                      <!-- <a type="button" class="btn btn-ghost-secondary" href="/client/inbox/<%= user.pkg._id %>/forward/payment">
                     <i class="bi-chevron-left small ms-1"></i> Previous step
                   </a> -->
-                  <div class="ms-auto">
-                    <button type="submit" class="btn btn-primary one-click" >
-                      Submit
-                    </button>
-                    <!-- <button  type="submit"  class="btn btn-primary">
+                      <div class="ms-auto">
+                        <button type="submit" class="btn btn-primary one-click">
+                          Purchase forward
+                        </button>
+                        <!-- <button  type="submit"  class="btn btn-primary">
                         Save and continue <i class="bi-chevron-right small ms-1"></i>
                       </button> -->
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </form>
+              <!-- End Card -->
+
+
+
+
             </div>
-          </form>
-          <!-- End Card -->
-
-
-
-
+          </div>
+          <!-- End Col -->
         </div>
+        <!-- End Row -->
       </div>
-      <!-- End Col -->
+      <!-- End Content -->
     </div>
-    <!-- End Row -->
-  </div>
-  <!-- End Content -->
-</div>
 
-  <%- include('../../partials/foot') %>
+    <%- include('../../partials/foot') %>

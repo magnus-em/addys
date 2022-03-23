@@ -42,11 +42,11 @@
                 
                           
                           <div class="d-flex gap-2 mt-1">
-                            <form action="/sendemail" method="post">
+                            <!-- <form action="/sendemail" method="post">
                               <input type="hidden" name="id" value="<%= p._id  %>">
                               <button type="submit" href="/client/inbox/<%= p._id %>/forward/address" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">send email</button>
 
-                            </form>
+                            </form> -->
 
                             <% if (p.status == 'NEW') { %> 
                             <a type="button" href="/client/inbox/<%= p._id %>/forward/address" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</a>
