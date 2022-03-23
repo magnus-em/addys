@@ -27,6 +27,8 @@ router.post('/upload/receipt', upload.array('image'),fw.uploadReceipt)
 
 
 router.get('/account/personal',isForwarder, fw.personal)
+router.post('/account/personal', isForwarder, fw.changeEmailPhone)
+
 router.get('/account/security',isForwarder, fw.security)
 
 router.get('/account/payments',isForwarder, fw.payments)

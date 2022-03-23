@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Schema} = mongoose;
+const { Schema } = mongoose;
 const passportLocalMongoose = require('passport-local-mongoose');
 var short = require('short-mongo-id');
 
@@ -15,7 +15,7 @@ const userSchema = new Schema({
     phone: String,
     packages: [
         {
-            type: Schema.Types.ObjectId, 
+            type: Schema.Types.ObjectId,
             ref: 'Package'
         }
     ],
@@ -26,27 +26,27 @@ const userSchema = new Schema({
     mailbox: Number,
     type: {
         type: String,
-        enum: ['CLIENT','FW','ADMIN']
+        enum: ['CLIENT', 'FW', 'ADMIN']
     },
     invite: String,
     balance: {
         type: Number,
         default: 0
     },
-    
+
     customerProfileId: String,
     customerPaymentIds: [String],
     subscription: {
         tier: {
             type: String,
-            enum: ['BASIC','PLUS','MAX'],
+            enum: ['BASIC', 'PLUS', 'MAX'],
         },
-        id: String,  
+        id: String,
         payment: String
     },
     shortId: {
         type: String,
-        default: function() {
+        default: function () {
             return short(this._id);
         }
     },
@@ -54,7 +54,7 @@ const userSchema = new Schema({
         {
             type: {
                 type: String,
-                enum: ['CASHAPP','VENMO','PAYPAL'],
+                enum: ['CASHAPP', 'VENMO', 'PAYPAL'],
                 required: true
             },
             username: {
@@ -111,35 +111,35 @@ const userSchema = new Schema({
     ]
 })
 
-userSchema.virtual('totalNew').get(function() {
+userSchema.virtual('totalNew').get(function () {
     let i = 0;
     for (let p of this.packages) {
-        if (p.status == "NEW"){
+        if (p.status == "NEW") {
             i++;
         }
     }
     return i;
 })
-userSchema.virtual('totalPending').get(function() {
+userSchema.virtual('totalPending').get(function () {
     let i = 0;
     for (let p of this.packages) {
-        if (p.status == "PENDING"){
+        if (p.status == "PENDING") {
             i++;
         }
     }
     return i;
 })
-userSchema.virtual('totalForwarded').get(function() {
+userSchema.virtual('totalForwarded').get(function () {
     let i = 0;
     for (let p of this.packages) {
-        if (p.status == "FORWARDED"){
+        if (p.status == "FORWARDED") {
             i++;
         }
     }
     return i;
 })
 
-userSchema.virtual('name').get(function() {
+userSchema.virtual('name').get(function () {
     const first = this.firstName;
     const last = this.lastName;
     return `${first} ${last}`
@@ -153,6 +153,6 @@ userSchema.post('findOneAndDelete', async function (user) {
     if (user.addy) {
         await Addy.findByIdAndUpdate(user.addy, { $pull: { clients: user._id } })
         await user.save()
-    } 
+    }
 })
 module.exports = mongoose.model("User", userSchema);

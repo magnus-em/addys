@@ -3,6 +3,7 @@ const catchAsync = require("../utils/catchAsync")
 const Package = require('../models/package')
 const Addy = require('../models/addy')
 const moment = require('moment')
+const { sendClientPackageDroppedOff, sendClientNewPackageArrived } = require("../sendgrid")
 
 module.exports.landing = (req,res) => {
     res.locals.title = 'Get Paid to Forward Packages From Your Home'
@@ -71,6 +72,9 @@ module.exports.upload = catchAsync(async (req,res) => {
     await addy.save()              
     req.flash('success', 'successfully uploaded package') 
 
+    //send email to client regarding new package
+    sendClientNewPackageArrived(package, client)
+
     res.redirect('/forwarder/dash/new')
 })
 
@@ -82,9 +86,11 @@ module.exports.uploadReceipt = catchAsync(async (req,res) => {
     package.status = 'FORWARDED'
     package.forwardedDate = Date.now()
     await package.save();
-    const client = await User.findById(req.user._id)
-    client.balance += 15;
-    await client.save();
+    const fw = await User.findById(req.user._id)
+    fw.balance += 15;
+    await fw.save();
+    const client = await User.findById(package.client)
+    sendClientPackageDroppedOff({pkg: package, user: client})
     req.flash('success', 'Drop off confirmed & $15 added to balance')
     res.redirect('/forwarder/dash/forwarded')
 })
@@ -166,4 +172,22 @@ module.exports.clients = catchAsync(async (req,res) => {
     user.clients = addy.clients;
 
     res.render('forwarder/dash/clients', {user})
+})
+
+module.exports.changeEmailPhone = catchAsync(async (req, res) => {
+    const user = await User.findById(req.user._id)
+    const { email, phone } = req.body;
+    if (phone && email) {
+        user.email = email
+        user.phone = phone
+        req.flash('success', 'Successfully changed email and password')
+    } else if (phone) {
+        user.phone = phone
+        req.flash('success', 'Successfully changed phone')
+    } else if (email) {
+        user.email = email
+        req.flash('success', 'Successfully changed email')
+    }
+    await user.save()
+    res.redirect('/forwarder/account/personal')
 })

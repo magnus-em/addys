@@ -25,3 +25,17 @@ module.exports.getTierQuota = function (tier) {
             break;
     }
 }
+
+module.exports.getTierForwardFee = function (tier) {
+    switch (tier) {
+        case 'BASIC':
+            return 19.99;
+            break;
+        case 'PLUS':
+            return 18.99;
+            break;
+        case 'MAX':
+            return 17.99;
+            break;
+    }
+}

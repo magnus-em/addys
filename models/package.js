@@ -41,6 +41,7 @@ const packageSchema = new Schema({
             filename: String
         }
     ],
+    addressTo: {},
     mailbox: Number,
     status: {
         type: String,
@@ -52,7 +53,11 @@ const packageSchema = new Schema({
     tracking_number: String,
     tracking_url_provider: String,
     shippo: {},
-    labelAmount: Number
+    paymentId: String,
+    paymentType: String,
+    paymentCard: String,
+    labelAmount: Number,
+    forwardAmount: Number,
     
 })
 

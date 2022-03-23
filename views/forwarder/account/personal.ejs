@@ -122,72 +122,48 @@
 
             <!-- Body -->
             <div class="card-body">
-              <form>
 
 
                 <!-- Form -->
-                <div class="row mb-4">
-                  <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Display name <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Shown on reviews" aria-label="Displayed on reviews."></i></label>
 
-                  <div class="col-sm-9">
-                    <div class="input-group">
-                      <input type="text" class="form-control" name="firstName" id="firstNameLabel" placeholder="First" >
-                      <input type="text" class="form-control" name="lastName" id="lastNameLabel" placeholder="Last" >
+                <!-- End Form -->
+
+                <form action="/forwarder/account/personal" method="post"  class="js-validate" novalidate>
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
+                    <div class="col-sm-9">
+                      <input type="email" class="form-control" name="email" id="emailLabel"
+                        placeholder="<%= user.email %>" aria-label="<%= user.email %>" >
                     </div>
                   </div>
-                </div>
-                <!-- End Form -->
-
-                <!-- Form -->
-                <div class="row mb-4">
-                  <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
-
-                  <div class="col-sm-9">
-                    <input type="email" class="form-control" name="email" id="emailLabel" placeholder="<%= user.email %>" aria-label="<%= user.email %>" >
-                  </div>
-                </div>
-                <!-- End Form -->
-
-                 <!-- Form -->
-                 <div class="row mb-4">
-                  <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
-
-                  <div class="col-sm-9">
-                    <input type="text" class="form-control" name="email" id="phone" placeholder="" aria-label="clarice@example.com">
-                  </div>
-                </div>
-                <!-- End Form -->
-
-
-
-
-
-                <!-- Form -->
-                <div class="row align-items-center">
-                  <label for="disableAdCheckbox" class="col-sm-3 col-form-label form-label">Disable ads <span class="badge badge-primary text-uppercase ms-1">PRO</span></label>
-
-                  <div class="col-sm-9">
-                    <!-- Check -->
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="disableAdCheckbox">
-                      <label class="form-check-label" for="disableAdCheckbox">With your Pro account, you can disable ads across the site.</label>
+                  <!-- End Form -->
+                  <!-- Form -->
+                  <div class="row mb-4">
+                    <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
+                    <div class="col-sm-9">
+                      <input type="text" class="form-control" name="phone" id="phone" placeholder="<%= user.phone %>"
+                        aria-label="clarice@example.com" >
                     </div>
-                    <!-- End Check -->
                   </div>
-                </div>
-                <!-- End Form -->
-              </form>
-            </div>
-            <!-- End Body -->
+                  <!-- End Form -->
 
-            <!-- Footer -->
-            <div class="card-footer pt-0">
-              <div class="d-flex justify-content-end gap-3">
-                <a class="btn btn-white" href="javascript:;">Cancel</a>
-                <a class="btn btn-primary" href="javascript:;">Save changes</a>
+
+
+
+
               </div>
-            </div>
-            <!-- End Footer -->
+              <!-- End Body -->
+
+              <!-- Footer -->
+              <div class="card-footer pt-0">
+                <div class="d-flex justify-content-end gap-3">
+                  <button 
+                  type="submit" class="btn btn-primary">Save changes</a>
+                </div>
+              </div>
+              <!-- End Footer -->
+              </form>
           </div>
           <!-- End Card -->
 

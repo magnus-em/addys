@@ -3,11 +3,11 @@ const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
 const { getShipment, createTransaction, getRate } = require('../shippo')
-const { sendWelcome, sendForwardConfirm } = require('../sendgrid')
+const { sendWelcome, sendForwardConfirm, sendFwNewRequest } = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-const { getSubAmount, getTierQuota } = require('../utils/constants')
+const { getSubAmount, getTierQuota, getTierForwardFee } = require('../utils/constants')
 
 
 const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment, getTransactionListForCustomer } = require('../authnet')
@@ -168,7 +168,7 @@ module.exports.changeEmailPhone = catchAsync(async (req, res) => {
         user.email = email
         req.flash('success', 'Successfully changed email')
     }
-    user.save()
+    await user.save()
     res.redirect('/client/account/personal')
 })
 
@@ -312,9 +312,15 @@ module.exports.overviewForm = catchAsync(async (req, res) => {
 module.exports.forward = catchAsync(async (req, res) => {
     const { id } = req.params
 
-    const user = await User.findById(req.user._id).populate('addy')
+    const client = await User.findById(req.user._id).populate('addy')
 
+    console.log('req.body.address')
+    console.log(req.body.address)
 
+    const addressTo = await client.addresses.id(req.body.address)
+
+    console.log('address to -----')
+    console.log(addressTo)
 
     const shipment = await shippo.shipment.retrieve(req.body.shipment);
     console.log('found shipment')
@@ -325,7 +331,7 @@ module.exports.forward = catchAsync(async (req, res) => {
     console.log(rate.amount)
 
 
-    const response = await chargeRate({ rate, shipment }, user.customerProfileId, req.body.payment)
+    const response = await chargeRate({ rate, shipment }, client.customerProfileId, req.body.payment)
     console.log('response -----')
     console.log(response)
 
@@ -343,20 +349,19 @@ module.exports.forward = catchAsync(async (req, res) => {
         pkg.tracking_number = trx.tracking_number;
         pkg.tracking_url_provider = trx.tracking_url_provider;
         pkg.forwardedDate = Date.now();
-        pkg.labelAmount = rate.amount
-        pkg.status = 'PENDING'
+        pkg.status = 'NEW'
+        pkg.paymentId = response.getTransactionResponse().getTransId()
+        pkg.paymentType = response.getTransactionResponse().getAccountType();
+        pkg.paymentCard = response.getTransactionResponse().getAccountNumber();
+        pkg.labelAmount = rate.amount;
+        pkg.forwardAmount = getTierForwardFee(client.subscription.tier);
+        pkg.addressTo = addressTo;
         pkg.save()
         req.flash('success', 'Package forwarded')
-        sendForwardConfirm({pkg, user})
+        sendForwardConfirm({pkg, client})
+        sendFwNewRequest(pkg, client)
         return res.redirect('/client/inbox/new')
-
-
     }
-
-
-
-    // console.log(pkg)
-    // console.log(req.body)
     res.redirect('/client/inbox/new')
 })
 
