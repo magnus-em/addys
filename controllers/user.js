@@ -113,21 +113,6 @@ module.exports.login = catchAsync(async (req, res) => {
     if (req.user.type == 'ADMIN') {
         return res.redirect('/admin/dash/all')
     } else if (req.user.type == 'FW') {
-        let msg = {
-            to: 'melbournemagnus@gmail.com', // Change to your recipient
-            from: 'support@addys.io', // Change to your verified sender
-            subject: "Successful forwarder login",
-            text: 'Signed in as fw',
-            html: '<strong>Signed in as fw</strong>',
-        }
-        sgMail
-            .send(msg)
-            .then(() => {
-                console.log('Email sent')
-            })
-            .catch((error) => {
-                console.error(error)
-            })
         return res.redirect('/forwarder/dash/pending')
     }
     // const redirectUrl = req.session.returnTo || '/client/inbox/new'
@@ -394,9 +379,6 @@ module.exports.payments = catchAsync(async (req, res) => {
     res.locals.title = 'Payments'
     res.locals.description = 'View and edit your payment methods'
     const user = await User.findById(req.user._id).populate('packages').populate('addy');
-    const payments = []
-    const transactionList = []
-    const arbTrxList = []
 
     const monthlyForwards = await Package.find({
         client: user._id,
@@ -407,8 +389,8 @@ module.exports.payments = catchAsync(async (req, res) => {
     console.log('monthly forwards -----------------')
     console.log(monthlyForwards)
 
-
     try {
+        const transactionList = []
         const allTransactionsResponse = await getTransactionListForCustomer(user.customerProfileId)
         var transactions = allTransactionsResponse.getTransactions().getTransaction();
         for (var i = 0; i < transactions.length; i++) {
@@ -425,7 +407,17 @@ module.exports.payments = catchAsync(async (req, res) => {
             console.log('Settle Amount : ' + transactions[i].getSettleAmount());
         }
 
+        user.transactionList = transactionList;
 
+
+    } catch (e) {
+        user.transactionList = [];
+        console.log(e)
+    }
+
+
+    try {
+        const payments = []
 
         for (let id of user.customerPaymentIds) {
             let response = await getCustomerPaymentProfile(user.customerProfileId, id)
@@ -439,7 +431,16 @@ module.exports.payments = catchAsync(async (req, res) => {
                 default: response.getPaymentProfile().getDefaultPaymentProfile()
             })
         }
+        user.payments = payments
 
+
+    } catch (e) {
+        user.payments = []
+        console.log(e)
+    }
+
+
+    try {
 
         const subResponse = await getSubscription(user.subscription.id)
         const sub = subResponse.getSubscription()
@@ -448,35 +449,16 @@ module.exports.payments = catchAsync(async (req, res) => {
             user.subscription.amount = sub.getAmount(),
             user.subscription.status = sub.getStatus()
 
-        // console.log(' sub.getArbTransactions()' )
-        // console.log(sub.getArbTransactions())
-        // console.log('get single arb')
-        // console.log(sub.getArbTransactions().getArbTransaction())
-
-        // // console.log(sub.getArbTransactions().getARBTransactionList())
-        // // console.log(sub.getArbTransactions().getArbTransactionList())
-        // arbTrxList.push[{
-        //     id: sub.getArbTransactions().getArbTransaction().getArbTransaction().getTransId()
-        // }]
-
-        // for when i figure out how to get multiple arb transactions from the shitty authnet api
-        // for (let trx of sub.getArbTransactions().getARBTransactionList()) {
-        //     arbTrxList.push[{
-        //         id: trx.getTransId()
-        //     }]
-        // } 
-
     } catch (error) {
         console.log(error)
-        user.payments = []
-        user.transactionList = []
-        user.arbTransactionList = []
+        user.subscription.name = 'N/A',
+            user.subscription.startDate = 'N/A',
+            user.subscription.amount = 'N/A',
+            user.subscription.status = 'N/A'
+        arbTransactionList = []
     }
 
-    user.payments = payments
     user.monthlyForwards = monthlyForwards;
-    user.transactionList = transactionList;
-    user.arbTransactionList = arbTrxList;
 
     user.monthlyPercentage = monthlyForwards.length / getTierQuota(user.subscription.tier) * 100;
 

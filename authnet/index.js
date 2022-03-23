@@ -1114,11 +1114,13 @@ module.exports.getTransactionListForCustomer = function (customerProfileId) {
 			var response = new ApiContracts.GetTransactionListResponse(apiResponse);
 
 			console.log(JSON.stringify(response, null, 2));
+			console.log('IN GET TRX LIST FOR CUST')
 
 			if (response != null) {
 				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
 					console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
 					console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+
 					if (response.getTransactions() != null) {
 						var transactions = response.getTransactions().getTransaction();
 						for (var i = 0; i < transactions.length; i++) {
@@ -1128,6 +1130,8 @@ module.exports.getTransactionListForCustomer = function (customerProfileId) {
 							console.log('Settle Amount : ' + transactions[i].getSettleAmount());
 							resolve(response)
 						}
+					} else {
+						reject(response)
 					}
 				}
 				else {
