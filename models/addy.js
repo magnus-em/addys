@@ -119,6 +119,9 @@ addySchema.virtual('totalPackages').get(function() {
     return i;
 })
 
+addySchema.virtual('streetNoNumber').get(function() {
+    return  this.address1.replace(/[0-9]/g, '');
+})
 
 
 

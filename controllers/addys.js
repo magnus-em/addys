@@ -1,6 +1,7 @@
 const Addy = require('../models/addy')
 const ExpressError = require('../utils/ExpressError')
 const catchAsync = require('../utils/catchAsync')
+const User = require('../models/user')
 
 //show all addys
 module.exports.index = catchAsync(async (req, res) => {
@@ -60,9 +61,13 @@ module.exports.showAddy = catchAsync(async (req, res, next) => {
         req.flash('error','No Addy with that ID')
         return res.redirect('/locations')
     }
+    let user = null;
+    if (req.isAuthenticated()) {
+        user = await User.findById(req.user._id).populate('addy')
+    }
     console.log('SHOW ADDY DETAILS')
     console.log(addy)
-    res.render('addys/details', { addy })
+    res.render('addys/details', { addy, user })
 })
 
 module.exports.updateAddy = catchAsync(async (req, res, next) => {

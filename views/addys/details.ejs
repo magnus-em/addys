@@ -11,7 +11,7 @@
                             <ol class="breadcrumb mb-0">
                                 <li class="breadcrumb-item"><a href="/locations">Addys</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    <%= addy.address1 %>
+                                    <%= addy.streetNoNumber %>
                                 </li>
                             </ol>
                         </nav>
@@ -28,7 +28,7 @@
                     <div class="row justify-content-lg-between mb-7">
                         <div class="col-12 col-sm-6 mb-5 mb-sm-0">
                             <h1 class="h2 mb-0">
-                                <%= addy.address1 %>
+                                <%= addy.streetNoNumber %>
                             </h1>
                             <span class="d-block text-dark mb-3">
                                 <%= addy.city %>, <%= addy.state %>
@@ -505,7 +505,8 @@
                                             <div class="flex-grow-1 ms-3">
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h5 class="mb-0"><%= r.author.username %> </h5>
-                                                    <span class="d-block small text-muted">January 2, 2022</span>
+                                                    <span class="d-block small text-muted"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(r.created) %>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -541,7 +542,7 @@
 
                         </ul>
                         <!-- End Comment -->
-                        <% if (user) { %> 
+                        <% if (user && user.addy.equals(addy)) { %> 
                         <div class="d-sm-flex justify-content-sm-end gap-2">
                             <a type="button" href="/locations/<%= addy._id %>/reviews/new"
                                 class="btn btn-primary btn-transition rounded-pill">Write a
