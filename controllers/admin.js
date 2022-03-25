@@ -1,5 +1,6 @@
 const Addy = require("../models/addy")
 const Package = require("../models/package")
+const { Payout } = require("../models/payout")
 const User = require("../models/user")
 const catchAsync = require("../utils/catchAsync")
 
@@ -56,5 +57,17 @@ module.exports.deletePackage = catchAsync(async (req,res) => {
 module.exports.allClients = catchAsync(async (req,res) => {
     const clients = await User.find({}).populate('addy')
     res.render('admin/clients', {clients})
+})
 
+module.exports.indexPendingPayouts = catchAsync(async(req,res) => {
+    const forwarders = await User.find({type: 'FW'})
+    res.render('admin/indexes/pendingPayouts', {forwarders})
+})
+
+module.exports.submitPayout = catchAsync(async(req,res) => {
+    const {id} = req.body
+    const {type, username, name, transaction, amount} = req.body
+    const payout = new Payout({type,username,name,transaction,amount})
+    const fw = await User.findById()
+    res.redirect('/admin/fw/pendingpayouts')
 })

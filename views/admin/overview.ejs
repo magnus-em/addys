@@ -1,1 +1,357 @@
-<%- layout('layouts/boilerplate') %> 
+<%- layout('layouts/boilerplate') %>
+    <main id="content" role="main">
+
+
+        <!-- Card Grid -->
+        <div class="container content-space-b-2  content-space-t-3 content-space-b-lg-3">
+            <div class="row col-lg-divider">
+                <div class="col-lg-3">
+                    <!-- Navbar -->
+                    <div class="navbar-expand-lg">
+                        <!-- Navbar Toggle -->
+                        <div class="d-grid">
+                            <button type="button" class="navbar-toggler btn btn-white mb-3" data-bs-toggle="collapse"
+                                data-bs-target="#navbarVerticalNavMenu" aria-label="Toggle navigation"
+                                aria-expanded="false" aria-controls="navbarVerticalNavMenu">
+                                <span class="d-flex justify-content-between align-items-center">
+                                    <span class="text-dark">Menu</span>
+
+                                    <span class="navbar-toggler-default">
+                                        <i class="bi-list"></i>
+                                    </span>
+
+                                    <span class="navbar-toggler-toggled">
+                                        <i class="bi-x"></i>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+                        <!-- End Navbar Toggle -->
+
+                        <!-- Navbar Collapse -->
+                        <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
+                            <div class="d-grid gap-4 flex-grow-1">
+                                <div class="d-grid">
+                                    <a class="dropdown-item d-flex justify-content-between active" href="#">Actions</a>
+                                    <h5 class="dropdown-header">Packages</h5>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">All <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">New <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">Pending <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">Forwarded <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                </div>
+
+                                <div class="d-grid">
+                                    <h5 class="dropdown-header">Clients</h5>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">View all <span
+                                            class="badge text-dark border rounded-pill">20</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="/admin/fw/pendingpayouts">Pending payouts
+                                        <span class="badge text-dark border rounded-pill">1</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Navbar Collapse -->
+                    </div>
+                    <!-- End Navbar -->
+                </div>
+                <!-- End Col -->
+
+                <div class="col-lg-9">
+                    <div class="ps-lg-2">
+
+                        <!-- End Row -->
+
+                        <!-- Heading -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">User actions</h4>
+                        </div>
+                        <!-- End Heading -->
+
+                        <div class="row gx-3 mx-n2 mb-7">
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                        <img class="avatar avatar-xs" src="/public/assets/svg/brands/spotify-icon.svg" alt="Logo">
+                      </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Addy</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Create new addy</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                        <img class="avatar avatar-xs" src="/public/assets/svg/brands/slack-icon.svg" alt="Logo">
+                      </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Forwarder</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Create new forwarder</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                        <img class="avatar avatar-xs" src="/public/assets/svg/brands/google-drive-icon.svg" alt="Logo">
+                      </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Client</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Create new client</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                        <img class="avatar avatar-xs" src="/public/assets/svg/brands/atlassian-icon.svg" alt="Logo">
+                      </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Addy</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Edit Addy</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                        <img class="avatar avatar-xs" src="/public/assets/svg/brands/behance-icon.svg" alt="Logo">
+                      </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Forwarder</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Edit forwarder</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                        <img class="avatar avatar-xs" src="/public/assets/svg/brands/invision-studio-icon.svg" alt="Logo">
+                      </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Client</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Edit client</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+                        </div>
+                        <!-- End Row -->
+
+                        <!-- Heading -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">Other actions</h4>
+                        </div>
+                        <!-- End Heading -->
+
+                        <div class="row gx-3 mx-n2 mb-7">
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                                      <img class="avatar avatar-xs" src="/public/assets/svg/brands/spotify-icon.svg" alt="Logo">
+                                    </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Addy</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Create new addy</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                                      <img class="avatar avatar-xs" src="/public/assets/svg/brands/slack-icon.svg" alt="Logo">
+                                    </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Forwarder</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Create new forwarder</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                                      <img class="avatar avatar-xs" src="/public/assets/svg/brands/google-drive-icon.svg" alt="Logo">
+                                    </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Client</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Create new client</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                                      <img class="avatar avatar-xs" src="/public/assets/svg/brands/atlassian-icon.svg" alt="Logo">
+                                    </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Addy</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Edit Addy</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                                      <img class="avatar avatar-xs" src="/public/assets/svg/brands/behance-icon.svg" alt="Logo">
+                                    </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Forwarder</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Edit forwarder</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+
+                            <div class="col-sm-6 col-md-4 mb-3">
+                                <!-- Card -->
+                                <div class="card card-bordered card-transition shadow-none h-100">
+                                    <a class="card-body" href="/public/demo-app-marketplace/app-overview.html">
+                                        <div class="d-flex">
+                                            <!-- <div class="flex-shrink-0">
+                                      <img class="avatar avatar-xs" src="/public/assets/svg/brands/invision-studio-icon.svg" alt="Logo">
+                                    </div> -->
+
+                                            <div class="flex-grow-1 ms-3">
+                                                <div class="d-flex align-items-center">
+                                                    <h5 class="card-title mb-0">Client</h5>
+                                                </div>
+                                                <p class="card-text text-body small">Edit client</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- End Card -->
+                            </div>
+                            <!-- End Col -->
+                        </div>
+                        <!-- End Row -->
+
+
+                    </div>
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Row -->
+        </div>
+        <!-- End Card Grid -->
+    </main>

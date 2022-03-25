@@ -21,6 +21,10 @@ router.post('/forwarders/register', admin.createFw)
 
 router.delete('/package/:id', admin.deletePackage)
 
+router.get('/fw/pendingpayouts', admin.indexPendingPayouts)
+
+router.post('/fw/submitpayout',admin.submitPayout)
+
 
 
 

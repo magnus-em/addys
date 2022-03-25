@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const {payoutSchema} = require('./payout')
 const passportLocalMongoose = require('passport-local-mongoose');
 var short = require('short-mongo-id');
+
 
 
 const userSchema = new Schema({
@@ -50,7 +52,8 @@ const userSchema = new Schema({
             return short(this._id);
         }
     },
-    payouts: [
+    payouts: [payoutSchema],
+    payoutMethods: [
         {
             type: {
                 type: String,
@@ -111,6 +114,7 @@ const userSchema = new Schema({
     ]
 })
 
+
 userSchema.virtual('totalNew').get(function () {
     let i = 0;
     for (let p of this.packages) {
@@ -138,6 +142,8 @@ userSchema.virtual('totalForwarded').get(function () {
     }
     return i;
 })
+
+
 
 userSchema.virtual('name').get(function () {
     const first = this.firstName;

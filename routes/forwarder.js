@@ -35,7 +35,7 @@ router.post('/account/security/reset', isForwarder, fw.changePassword)
 
 router.get('/account/payments',isForwarder, fw.payments)
 router.post('/account/payments', isForwarder, fw.addPayoutMethod)
-
+router.post('/account/payments/primary/:id', isForwarder, fw.makePayoutPrimary)
 router.delete('/account/payments/:id', isForwarder, fw.deletePayoutMethod)
 
 

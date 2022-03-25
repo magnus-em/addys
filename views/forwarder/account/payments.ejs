@@ -216,13 +216,13 @@
               <!-- Body -->
               <div class="card-body">
                 <div class="mb-4">
-                  <p>We currently only offer payouts via Cash App, PayPal, and Venmo. Debit card and crypto support
+                  <p>Payouts issued every Sunday to your primary payout method. We currently offer payouts via Cash App, PayPal, and Venmo. Debit card and crypto support
                     coming soon.</p>
                 </div>
 
                 <!-- List Group -->
                 <ul class="list-group mb-5">
-                    <% for (let p of user.payouts) { %>
+                    <% for (let p of user.payoutMethods) { %>
                     <!-- Item -->
                     <li class="list-group-item">
                       <div class="mb-2">
@@ -266,11 +266,19 @@
                                   data-bs-target="#accountEditCardModal">
                                   <i class="bi-pencil-fill me-1"></i> Edit
                                 </a> -->
+                                <% if (!p.isPrimary) {%> 
+                                <form action="/forwarder/account/payments/primary/<%= p._id %>" method="post">
+                                  <input type="hidden" name="payment" value="<%= p.id %>">
+                                  <button type="submit" class="btn btn-white btn-xs one-click">
+                                    <i class="bi-check2-circle me-1"></i>Make primary
+                                  </button>
+                                </form>
                                 <form action="/forwarder/account/payments/<%= p._id %>?_method=DELETE" method="post">
                                   <button type="submit" class="btn btn-white btn-xs">
                                     <i class="bi-trash me-1"></i> Delete
                                   </button>
                                 </form>
+                                <% } %> 
                               </div>
                             </div>
                             <!-- End Col -->
