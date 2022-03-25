@@ -1,74 +1,73 @@
-<%- layout('layouts/boilerplate') %> 
+<%- layout('layouts/boilerplate') %>
 
-<div class=" content-space-t-2">
-  <!-- Breadcrumb -->
-  <div class="navbar-dark bg-dark" style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
-    <div class="container content-space-1 content-space-b-lg-3">
-      <div class="row align-items-center">
-        <div class="col">
-          <div class="d-none d-lg-block">
+  <div class=" content-space-t-2">
+    <!-- Breadcrumb -->
+    <div class="navbar-dark bg-dark"
+      style="background-image: url(/public/assets/svg/components/wave-pattern-light.svg);">
+      <div class="container content-space-1 content-space-b-lg-3">
+        <div class="row align-items-center">
+          <div class="col">
+            <div class="d-lg-block">
+              <h1 class="h2 text-white">Dashboard</h1>
+            </div>
 
-            <h1 class="h2 text-white">Dashboard</h1>
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb breadcrumb-light mb-0">
+                  <li class="breadcrumb-item active"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></li>
+                </li>
+              </ol>
+            </nav>
+            <!-- End Breadcrumb -->
           </div>
+          <!-- End Col -->
 
-          <!-- Breadcrumb -->
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item"><%= user.addy.address1 %> </li>
-              <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-            </ol>
-          </nav>
-          <!-- End Breadcrumb -->
+          <div class="col-auto">
+
+
+            <!-- Responsive Toggle Button -->
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+              data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-default">
+                <i class="bi-list"></i>
+              </span>
+              <span class="navbar-toggler-toggled">
+                <i class="bi-x"></i>
+              </span>
+            </button>
+            <!-- End Responsive Toggle Button -->
+          </div>
+          <!-- End Col -->
         </div>
-        <!-- End Col -->
-
-        <div class="col-auto">
-
-
-          <!-- Responsive Toggle Button -->
-          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarNav" aria-controls="sidebarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-default">
-              <i class="bi-list"></i>
-            </span>
-            <span class="navbar-toggler-toggled">
-              <i class="bi-x"></i>
-            </span>
-          </button>
-          <!-- End Responsive Toggle Button -->
-        </div>
-        <!-- End Col -->
+        <!-- End Row -->
       </div>
-      <!-- End Row -->
     </div>
-  </div>
-  <!-- End Breadcrumb -->
+    <!-- End Breadcrumb -->
 
-  <!-- Content -->
-  <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
-    <div class="row">
-      <div class="col-lg-3">
-        <!-- Navbar -->
-        <div class="navbar-expand-lg navbar-light">
-          <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
-            <!-- Card -->
-            <div class="card mb-5">
-              <div class="card-body">
+    <!-- Content -->
+    <div class="container content-space-1 content-space-t-lg-0 content-space-b-lg-2 mt-lg-n10">
+      <div class="row">
+        <div class="col-lg-3">
+          <!-- Navbar -->
+          <div class="navbar-expand-lg navbar-light">
+            <div id="sidebarNav" class="collapse navbar-collapse navbar-vertical">
+              <!-- Card -->
+              <div class="card mb-5">
+                <div class="card-body">
 
-                <div class="d-lg-block text-center mb-5">
-                  <div class="text-center mb-5">
-                    <a class="btn btn-sm btn-block btn-primary transition-3d-hover" href="/forwarder/upload">Upload new package</a>
+                  <div class=" d-lg-block text-center mb-5">
+                    <div class="text-center mb-5">
+                      <a class="btn btn-sm btn-block btn-primary transition-3d-hover" href="/forwarder/upload">Upload
+                        new package</a>
+                    </div>
                   </div>
-                  </div>
-
-                
-                
-                <!-- Nav -->
-                <span class="text-cap">Categories</span>
-
+                  <!-- Nav -->
+                  <span class="text-cap">Packages</span>
                   <!-- List -->
-                  <ul class="nav nav-sm nav-tabs nav-vertical">
+                  <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                     <li class="nav-item">
-                      <a class="nav-link " href="/forwarder/dash/pending">
+                      <a class="nav-link" href="/forwarder/dash/pending">
                         <i class="bi-truck nav-icon"></i>
                         <span class="me-2">Ready to ship</span><span class="badge text-dark border rounded-pill">
                           <%= user.addy.totalPending %>
@@ -82,7 +81,6 @@
                           <%= user.addy.totalNew %>
                         </span>
                       </a>
-
                     </li>
                     <li class="nav-item">
                       <a class="nav-link active" href="/forwarder/dash/forwarded">
@@ -95,63 +93,71 @@
                   </ul>
                   <!-- End List -->
 
+                  <span class="text-cap">Clients</span>
 
+                  <ul class="nav nav-sm nav-tabs nav-vertical">
+                    <li class="nav-item">
+                      <a class="nav-link" href="/forwarder/dash/clients">
+                        <i class="bi-person nav-icon"></i>
+                        <span class="me-2">Overview</span><span class="badge text-dark border rounded-pill">
+                          <%= addy.clients.length %>
+                        </span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- End Card -->
+            </div>
+          </div>
+          <!-- End Navbar -->
+        </div>
+        <!-- End Col -->
 
+        <div class="col-lg-9">
+          <div class="d-grid gap-3 gap-lg-5">
+            <!-- Card -->
+            <div class="card">
+              <div class="card-header border-bottom">
+                <h4 class="card-header-title">Forwarded packages</h4>
+                <p class="card-text">All your previously completed forwards. Find payout details under Account / Payments</p>
 
 
               </div>
+
+              <!-- Body -->
+              <div class="card-body">
+                <%- include('../../partials/flash') %>
+
+
+                  <div class="d-grid gap-5 mb-10">
+
+                    <% for (let p of user.addy.packages) { %>
+                      <% if (p.status !='FORWARDED' ) { continue;} %>
+                        <%- include('./pkg', {p}) %>
+
+                          <% } %>
+
+                  </div>
+
+
+              </div>
+              <!-- End Body -->
+
+
             </div>
             <!-- End Card -->
-          </div>
-        </div>
-        <!-- End Navbar -->
-      </div>
-      <!-- End Col -->
-
-      <div class="col-lg-9">
-        <div class="d-grid gap-3 gap-lg-5">
-          <!-- Card -->
-          <div class="card">
-            <div class="card-header border-bottom">
-              <h4 class="card-header-title">Forwarded packages</h4>
-              <p class="card-text">Find payout details under Account / Payments</p>
 
 
-            </div>
-
-            <!-- Body -->
-            <div class="card-body">
-              <%- include('../../partials/flash') %> 
-
-
-              <div class="d-grid gap-5 mb-10">
-
-                <% for (let p of user.addy.packages) { %> 
-                  <% if (p.status != 'FORWARDED') { continue;} %> 
-                  <%- include('./pkg', {p}) %> 
-
-                <% } %> 
-    
-              </div>
-    
-
-            </div>
-            <!-- End Body -->
 
 
           </div>
-          <!-- End Card -->
-
-
-
-
         </div>
+        <!-- End Col -->
       </div>
-      <!-- End Col -->
+      <!-- End Row -->
     </div>
-    <!-- End Row -->
+    <!-- End Content -->
   </div>
-  <!-- End Content -->
-</div>
 
-<%- include('../../partials/intercom_user') %>
+  <%- include('../../partials/intercom_user') %>

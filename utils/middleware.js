@@ -9,14 +9,14 @@ module.exports.isClient = (req, res, next) => {
         return next();
     } 
     req.session.returnTo = req.originalUrl;
-    req.flash('error', 'Must be client')
+    req.flash('error', 'You gotta be a client to do that')
     res.redirect('/login') 
 }
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
-        req.flash('error', 'Must be logged in')
+        req.flash('error', 'You gotta be logged in to do that')
         return res.redirect('/login')
     } 
     next()
@@ -27,7 +27,7 @@ module.exports.isAdmin = (req, res, next) => {
         return next()
     } 
     req.session.returnTo = req.originalUrl;
-    req.flash('error', 'Must be admin')
+    req.flash('error', 'You gotta be an admin to do that')
     res.redirect('/login') 
 }
 
@@ -36,7 +36,7 @@ module.exports.isForwarder = (req,res,next) => {
         return next();
     }
     req.session.returnTo = req.originalUrl;
-    req.flash('error', 'Must be forwarder')
+    req.flash('error', 'You gotta be a forwarder to do that')
     res.redirect('/login') 
 
 }

@@ -7,15 +7,14 @@
     <div class="container content-space-1 content-space-b-lg-3">
       <div class="row align-items-center">
         <div class="col">
-          <div class="d-none d-lg-block">
+          <div class="d-lg-block">
             <h1 class="h2 text-white">Account</h1>
           </div>
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Account</li>
-              <li class="breadcrumb-item active" aria-current="page">Personal Info</li>
+              <li class="breadcrumb-item active"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></li>
             </ol>
           </nav>
           <!-- End Breadcrumb -->
@@ -53,6 +52,7 @@
             <!-- Card -->
             <div class="card flex-grow-1 mb-5">
               <div class="card-body">
+
                 <!-- Avatar -->
                 <div class="d-none d-lg-block text-center mb-5">
                   <h4 class="card-title mb-0"><%= user.username %> </h4>
@@ -122,9 +122,11 @@
 
             <!-- Body -->
             <div class="card-body">
+              <%- include('../../partials/flash') %>
 
 
-                <!-- Form -->
+
+                <!-- Form --> 
 
                 <!-- End Form -->
 

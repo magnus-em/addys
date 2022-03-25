@@ -7,17 +7,15 @@
       <div class="container content-space-1 content-space-b-lg-3">
         <div class="row align-items-center">
           <div class="col">
-            <div class="d-none d-lg-block">
+            <div class="d-lg-block">
               <h1 class="h2 text-white">Dashboard</h1>
             </div>
 
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
-                <li class="breadcrumb-item">
-                  <%= user.addy.address1 %>
+                  <li class="breadcrumb-item active"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></li>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Overview</li>
               </ol>
             </nav>
             <!-- End Breadcrumb -->
@@ -64,12 +62,8 @@
                         new package</a>
                     </div>
                   </div>
-
-
-
                   <!-- Nav -->
-                  <span class="text-cap">Categories</span>
-
+                  <span class="text-cap">Packages</span>
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                     <li class="nav-item">
@@ -99,25 +93,18 @@
                   </ul>
                   <!-- End List -->
 
-                  <span class="text-cap">Your clients</span>
+                  <span class="text-cap">Clients</span>
 
                   <ul class="nav nav-sm nav-tabs nav-vertical">
                     <li class="nav-item">
-                      <a class="nav-link " href="/forwarder/dash/clients">
+                      <a class="nav-link" href="/forwarder/dash/clients">
                         <i class="bi-person nav-icon"></i>
-                        <span class="me-2">All</span><span class="badge text-dark border rounded-pill">
-                          <%= user.addy.totalForwarded %>
+                        <span class="me-2">Overview</span><span class="badge text-dark border rounded-pill">
+                          <%= addy.clients.length %>
                         </span>
                       </a>
                     </li>
                   </ul>
-
-
-
-
-
-
-
                 </div>
               </div>
               <!-- End Card -->

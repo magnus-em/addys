@@ -14,25 +14,34 @@ module.exports.landing = (req,res) => {
 module.exports.pending = catchAsync(async (req,res) => {
     res.locals.title = 'Ready to ship'
     res.locals.description = 'Packages that are ready to label and drop off'
-
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
-    res.render('forwarder/dash/pending', {user})
+    const addy = await Addy.findById(user.addy._id).populate('clients')
+    res.render('forwarder/dash/pending', {user, addy})
 })
 
 module.exports.new = catchAsync(async (req,res) => {
     res.locals.title = 'Awaiting'
     res.locals.description = 'Packages that are awaiting a client to submit a forward request'
-
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
-    res.render('forwarder/dash/new', {user})
+    const addy = await Addy.findById(user.addy._id).populate('clients')
+    res.render('forwarder/dash/new', {user, addy})
 })
 
 module.exports.forwarded = catchAsync(async (req,res) => {
     res.locals.title = 'Forwarded'
     res.locals.description = 'Packages that you have forwarded in the past'
-
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
-    res.render('forwarder/dash/forwarded', {user})
+    const addy = await Addy.findById(user.addy._id).populate('clients')
+    res.render('forwarder/dash/forwarded', {user, addy})
+})
+
+module.exports.clients = catchAsync(async (req,res) => {
+    res.locals.title = 'Your Clients'
+    res.locals.description = 'View all your active clients who rent mailboxes with you'
+    const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
+    const addy = await Addy.findById(user.addy._id).populate('clients')
+
+    res.render('forwarder/dash/clients', {user, addy})
 })
 
 module.exports.uploadForm = async (req,res) => {
@@ -98,30 +107,23 @@ module.exports.uploadReceipt = catchAsync(async (req,res) => {
 module.exports.personal = catchAsync(async (req,res) => {
     res.locals.title = 'Personal'
     res.locals.description = 'View and edit your personal info'
-
-
-    res.render('forwarder/account/personal')
+    const user = await User.findById(req.user._id).populate('addy')
+    res.render('forwarder/account/personal', {user})
 })
 
 module.exports.security = catchAsync(async (req,res) => {
     res.locals.title = 'Security'
     res.locals.description = 'View and edit your security info'
-
-
-    res.render('forwarder/account/security')
+    const user = await User.findById(req.user._id).populate('addy')
+    res.render('forwarder/account/security', {user})
 })
 
 module.exports.payments = catchAsync(async (req,res) => {
     res.locals.title = 'Payments'
     res.locals.description = 'View and edit your payment methods'
-
-
     const fw = await User.findById(req.user._id).populate('addy')
     const addy = await Addy.findById(fw.addy._id).populate('clients').populate('packages')
     fw.addy = addy;
-    console.log('fw: ' + fw)
-    console.log('addy: ' + addy)
-
     const today = moment();
     const weekStart = today.startOf('week').toDate()
     const weekEnd = today.endOf('week').toDate()
@@ -133,9 +135,8 @@ module.exports.payments = catchAsync(async (req,res) => {
             $lte: weekEnd
         }
     })
-
     console.log('forwarded last week' + weekPkgs)
-    res.render('forwarder/account/payments', {fw, moment, weekPkgs})
+    res.render('forwarder/account/payments', {fw, moment, weekPkgs, user:fw})
 })
 
 module.exports.addPayoutMethod = catchAsync(async(req,res) => {
@@ -166,13 +167,7 @@ module.exports.deletePayoutMethod = catchAsync(async(req,res) => {
 })
 
 
-module.exports.clients = catchAsync(async (req,res) => {
-    const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
-    const addy = await Addy.findById(user.addy._id).populate('clients')
-    user.clients = addy.clients;
 
-    res.render('forwarder/dash/clients', {user})
-})
 
 module.exports.changeEmailPhone = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id)
@@ -190,4 +185,15 @@ module.exports.changeEmailPhone = catchAsync(async (req, res) => {
     }
     await user.save()
     res.redirect('/forwarder/account/personal')
+})
+
+module.exports.changePassword = catchAsync(async (req, res) => {
+    const { password } = req.body
+    const user = await User.findById(req.user._id)
+    await user.setPassword(password)
+
+    user.save()
+    req.flash('success', 'Successfully changed password :)')
+
+    res.redirect('/forwarder/account/security')
 })

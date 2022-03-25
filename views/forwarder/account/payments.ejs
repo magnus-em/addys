@@ -7,15 +7,14 @@
       <div class="container content-space-1 content-space-b-lg-3">
         <div class="row align-items-center">
           <div class="col">
-            <div class="d-none d-lg-block">
+            <div class="d-lg-block">
               <h1 class="h2 text-white">Account</h1>
             </div>
 
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
-                <li class="breadcrumb-item">Account</li>
-                <li class="breadcrumb-item active" aria-current="page">Payments</li>
+                <li class="breadcrumb-item active"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></li>
               </ol>
             </nav>
             <!-- End Breadcrumb -->

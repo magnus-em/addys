@@ -39,7 +39,7 @@
                                 <label class="form-label" for="mailbox">Mailbox # (double check)</label>
                                 <select class="form-select mb-2" id="mailbox" name="package[mailbox]" required>
                                     <% for (let client of addy.clients) { %> 
-                                        <option value="<%= client.mailbox %>"><%= client.firstName %>, #<%= client.mailbox %> </option>
+                                        <option value="<%= client.mailbox %>"><b><%= client.mailbox %></b> (<%= client.firstName %> <%= client.lastName %>)</option>
                                     <% } %> 
                                     
                                 </select>
@@ -163,11 +163,11 @@
 
 
                     </div>
-                    <h4 class="my-7">Package type</h4>
+                    <!-- <h4 class="my-7">Package type</h4> -->
 
-                    <div class="row gx-3">
+                    <!-- <div class="row gx-3">
                         <div class="col-6 mb-3">
-                            <!-- Radio Check -->
+
                             <div class="form-check form-check-card text-center">
                                 <input class="form-check-input" type="radio" name="subscription" id="box">
                                 <label class="form-check-label" for="box">
@@ -181,12 +181,12 @@
                                 </label>
 
                             </div>
-                            <!-- End Radio Check -->
+
                         </div>
-                        <!-- End Col -->
+
 
                         <div class="col-6 mb-3">
-                            <!-- Radio Check -->
+
                             <div class="form-check form-check-card text-center">
                                 <input class="form-check-input" type="radio" name="subscription" id="envelope">
                                 <label class="form-check-label" for="envelope">
@@ -200,11 +200,11 @@
                                 </label>
 
                             </div>
-                            <!-- End Radio Check -->
+
                         </div>
-                        <!-- End Col -->
-                    </div>
-                    <!-- End Row -->
+
+                    </div> -->
+
 
                     <h4 class="my-7">Sender information</h4>
 
@@ -243,8 +243,8 @@
 
 
 
-                            <!-- File Attachment Input -->
-                            <div id="idImage" class="js-dropzone dz-dropzone dz-dropzone-card">
+
+                            <!-- <div id="idImage" class="js-dropzone dz-dropzone dz-dropzone-card">
                                 <div class="dz-message">
                                     <img class="avatar mb-3" src="/public/assets/svg/illustrations/add-file.svg"
                                         alt="SVG">
@@ -252,11 +252,11 @@
                                     <span class="d-block text-muted small">Make sure that the shipping label is
                                         visible</span>
                                 </div>
-                            </div>
+                            </div> -->
 
                             
                             <input class="form-control" type="file" id="photo" name="image" multiple>
-                            <!-- End File Attachment Input -->
+
                         </div>
 
 
@@ -271,8 +271,7 @@
                                 above information is accurate. I have read and
                                 accept the <a href='/terms'>Terms of Service</a>, <a href='/privacy'>Privacy
                                     Policy</a>, and <a href="/disclaimer">Disclaimer</a>. I understand Addys has strict
-                                policies to ensure platorm security and a zero tolerance policy for service
-                                misuse.</label>
+                                policies to ensure platorm security and will prosecute any instances of theft.</label>
                             <span class="invalid-feedback">You must accept</span>
                         </div>
                         <!-- End Check -->

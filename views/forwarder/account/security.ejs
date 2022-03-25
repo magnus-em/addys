@@ -7,15 +7,14 @@
     <div class="container content-space-1 content-space-b-lg-3">
       <div class="row align-items-center">
         <div class="col">
-          <div class="d-none d-lg-block">
+          <div class="d-lg-block">
             <h1 class="h2 text-white">Account</h1>
           </div>
 
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-light mb-0">
-              <li class="breadcrumb-item">Account</li>
-              <li class="breadcrumb-item active" aria-current="page">Security</li>
+              <li class="breadcrumb-item active"><%= user.addy.address1 %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></li>
             </ol>
           </nav>
           <!-- End Breadcrumb -->
@@ -85,7 +84,7 @@
                 <!-- End List -->
 
 
-                <span class="text-cap">Billing</span>
+                <span class="text-cap">Earnings</span>
 
                 <!-- List -->
                 <ul class="nav nav-sm nav-tabs nav-vertical">
@@ -116,122 +115,117 @@
         <div class="d-grid gap-3 gap-lg-5">
 
 
+
           <!-- Card -->
           <div class="card">
             <div class="card-header border-bottom">
               <h5 class="card-header-title">Password</h5>
             </div>
 
-            <!-- Body -->
-            <div class="card-body">
-              <!-- Form -->
-              <form>
+            <form action="/forwarder/account/security/reset" method="post" class="js-validate needs-validation"
+              novalidate>
+
+
+              <!-- Body -->
+              <div class="card-body">
                 <!-- Form -->
-                <div class="row mb-4">
-                  <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">Current password</label>
+                <form>
+                  <!-- Form -->
+                  <%- include('../../partials/flash') %>
 
-                  <div class="col-sm-9">
-                    <input type="password" class="form-control" name="currentPassword" id="currentPasswordLabel" placeholder="Enter current password" aria-label="Enter current password">
-                  </div>
-                </div>
-                <!-- End Form -->
+                    <div class="row mb-4">
+                      <label for="currentPasswordLabel" class="col-sm-3 col-form-label form-label">Current
+                        password</label>
 
-                <!-- Form -->
-                <div class="row mb-4">
-                  <label for="newPassword" class="col-sm-3 col-form-label form-label">New password</label>
-
-                  <div class="col-sm-9">
-                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="Enter new password" aria-label="Enter new password">
-                  </div>
-                </div>
-                <!-- End Form -->
-
-                <!-- Form -->
-                <div class="row mb-4">
-                  <label for="confirmNewPasswordLabel" class="col-sm-3 col-form-label form-label">Confirm new password</label>
-
-                  <div class="col-sm-9">
-                    <div class="mb-3">
-                      <input type="password" class="form-control" name="confirmNewPassword" id="confirmNewPasswordLabel" placeholder="Confirm your new password" aria-label="Confirm your new password">
-                    </div>
-
-                    <h5>Password requirements:</h5>
-
-                    <p class="card-text small">Ensure that these requirements are met:</p>
-
-                    <ul class="small">
-                      <li>Minimum 8 characters long - the more, the better</li>
-                      <li>At least one lowercase character</li>
-                      <li>At least one uppercase character</li>
-                      <li>At least one number, symbol, or whitespace character</li>
-                    </ul>
-                  </div>
-                </div>
-                <!-- End Form -->
-
-                <div class="d-flex justify-content-end gap-3">
-                  <a class="btn btn-white" href="javascript:;">Cancel</a>
-                  <button type="submit" class="btn btn-primary">Update Password</button>
-                </div>
-              </form>
-              <!-- End Form -->
-            </div>
-            <!-- End Body -->
-          </div>
-          <!-- End Card -->
-
-          <!-- Card -->
-          <div class="card">
-            <div class="card-header border-bottom">
-              <h5 class="card-header-title">Connected accounts</h5>
-            </div>
-
-            <!-- Body -->
-            <div class="card-body">
-
-              <!-- Form -->
-              <form>
-                <!-- List Group -->
-                <div class="list-group list-group-flush list-group-no-gutters">
-                  <!-- Item -->
-                  <div class="list-group-item">
-                    <div class="d-flex">
-                      <div class="flex-shrink-0">
-                        <img class="avatar avatar-xs avatar-4x3" src="/public/assets/svg/brands/google-icon.svg" alt="Image Description">
+                      <div class="col-sm-9">
+                        <input type="password" class="form-control" name="currentPassword" id="currentPasswordLabel"
+                          placeholder="Enter current password" aria-label="Enter current password" required>
                       </div>
+                    </div>
+                    <!-- End Form -->
 
-                      <div class="flex-grow-1 ms-3">
-                        <div class="row align-items-center">
-                          <div class="col">
-                            <h6 class="mb-1">Google</h6>
-                            <span class="d-block small text-body">Email</span>
-                          </div>
-                          <!-- End Col -->
+                    <!-- Form -->
+                    <div class="row mb-4">
+                      <label for="signupSimpleSignupPassword" class="col-sm-3 col-form-label form-label">New
+                        password</label>
 
-                          <div class="col-auto">
-                            <!-- Form Switch -->
-                            <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" id="connectedAccounts1">
-                              <label class="form-check-label" for="connectedAccounts1"></label>
-                            </div>
-                            <!-- End Form Switch -->
-                          </div>
-                          <!-- End Col -->
+                      <div class="col-sm-9">
+                        <div class="input-group input-group-merge" data-hs-validation-validate-class>
+                          <input type="password" class="js-toggle-password form-control form-control-lg"
+                            name="password" id="signupSimpleSignupPassword" placeholder="8+ characters required"
+                            aria-label="8+ characters required" required data-hs-toggle-password-options='{
+                             "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
+                             "defaultClass": "bi-eye",
+                             "showClass": "bi-eye-slash",
+                             "classChangeTarget": ".js-toggle-passowrd-show-icon-1"
+                           }'>
+                          <a class="js-toggle-password-target-1 input-group-append input-group-text"
+                            href="javascript:;">
+                            <i class="js-toggle-passowrd-show-icon-1 bi-eye"></i>
+                          </a>
                         </div>
-                        <!-- End Row -->
+                        <span class="invalid-feedback">Your password is invalid. Please try again.</span>
+
                       </div>
                     </div>
-                  </div>
-                  <!-- End Item -->
+                    <!-- End Form -->
 
-                </div>
-                <!-- End List Group -->
-              </form>
-              <!-- End Form -->
-            </div>
-            <!-- End Body -->
+                    <!-- Form -->
+                    <div class="row mb-4">
+                      <label for="signupSimpleSignupConfirmPassword"
+                        class="col-sm-3 col-form-label form-label">Confirm new
+                        password</label>
+
+                      <div class="col-sm-9">
+                        <div class="mb-3">
+                          <div class="input-group input-group-merge" data-hs-validation-validate-class>
+                            <input type="password" class="js-toggle-password form-control form-control-lg"
+                              name="confirmPassword" id="signupSimpleSignupConfirmPassword"
+                              placeholder="8+ characters required" aria-label="8+ characters required" required
+                              data-hs-validation-equal-field="#signupSimpleSignupPassword"
+                              data-hs-toggle-password-options='{
+                                   "target": [".js-toggle-password-target-1", ".js-toggle-password-target-2"],
+                                   "defaultClass": "bi-eye",
+                                   "showClass": "bi-eye-slash",
+                                   "classChangeTarget": ".js-toggle-passowrd-show-icon-2"
+                                 }'>
+                            <a class="js-toggle-password-target-2 input-group-append input-group-text"
+                              href="javascript:;">
+                              <i class="js-toggle-passowrd-show-icon-2 bi-eye"></i>
+                            </a>
+                          </div>
+                          <span class="invalid-feedback">Passwords don't match.</span>
+                        </div>
+
+
+                        <h5>Password recommendations:</h5>
+
+                        <p class="card-text small">Please follow these guidelines:</p>
+
+                        <ul class="small">
+                          <li>Minimum 8 characters long - the more, the better</li>
+                          <li>At least one lowercase character</li>
+                          <li>At least one uppercase character</li>
+                          <li>At least one number, symbol, or whitespace character</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- End Form -->
+
+                    <div class="d-flex justify-content-end gap-3">
+                      <a class="btn btn-white" href="javascript:;">Cancel</a>
+                      <button type="submit" class="btn btn-primary">Update Password</button>
+                    </div>
+                </form>
+                <!-- End Form -->
+              </div>
+              <!-- End Body -->
           </div>
           <!-- End Card -->
+
+          </form>
+
+
 
 
 

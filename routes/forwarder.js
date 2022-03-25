@@ -30,6 +30,8 @@ router.get('/account/personal',isForwarder, fw.personal)
 router.post('/account/personal', isForwarder, fw.changeEmailPhone)
 
 router.get('/account/security',isForwarder, fw.security)
+router.post('/account/security/reset', isForwarder, fw.changePassword)
+
 
 router.get('/account/payments',isForwarder, fw.payments)
 router.post('/account/payments', isForwarder, fw.addPayoutMethod)
