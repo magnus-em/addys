@@ -20,7 +20,7 @@ const supportEmail = 'support@addys.io'
 module.exports.sendWelcome = async function(user) {
     const client = await User.findById(user._id).populate('addy')
 
-    const addy = `${client.addy.address1}, #${client.mailbox}, ${client.addy.city}, ${client.addy.state}, ${client.addy.zip}`
+    const addy = `${client.addy.street1}, #${client.mailbox}, ${client.addy.city}, ${client.addy.state}, ${client.addy.zip}`
 
     const msg = {
        to: client.email,

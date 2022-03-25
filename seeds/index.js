@@ -24,12 +24,12 @@ const seedDb = async () => {
     for (let i=0;i<3;i++) {
         const a = addresses[Math.floor(Math.random() * addresses.length)]
         const c = new Addy({
-            address1: a.address1,
+            street1: a.street1,
             city: a.city,
             state: a.state,
             zip: a.postalCode
         })
-        console.log(c.address1)
+        console.log(c.street1)
         await c.save()
     }
     console.log('Addys deleted and seeded')

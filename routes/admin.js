@@ -25,6 +25,10 @@ router.get('/fw/pendingpayouts', admin.indexPendingPayouts)
 
 router.post('/fw/submitpayout',admin.submitPayout)
 
+router.post('/addy/create',admin.createAddy)
+
+router.post('/fw/create', admin.createFw)
+
 
 
 

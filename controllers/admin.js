@@ -31,10 +31,10 @@ module.exports.newFwForm = (req,res) => {
 
 module.exports.createFw = catchAsync(async (req,res) => {
     try {
-        const {email,username,password,addyId,firstName,lastName} = req.body
+        const {email,username,password,addyId,firstName,lastName, phone, invite} = req.body
         const addy = await Addy.findById(addyId)
         console.log(addy)
-        const fw = new User({email,username,addy,firstName,lastName, type: 'FW'})
+        const fw = new User({email,username,addy,firstName,lastName,phone,invite, type: 'FW'})
         addy.forwarder = fw._id;
         await addy.save()
         const registeredUser = await User.register(fw,password)
@@ -70,4 +70,14 @@ module.exports.submitPayout = catchAsync(async(req,res) => {
     const payout = new Payout({type,username,name,transaction,amount})
     const fw = await User.findById()
     res.redirect('/admin/fw/pendingpayouts')
+})
+
+module.exports.createAddy = catchAsync(async(req,res) => {
+    const newAddy = new Addy(req.body)
+    console.log('new addy')
+    console.log(newAddy)
+    await newAddy.save()
+    req.flash('success','Successfully created Addy')
+    res.redirect('/locations')
+
 })

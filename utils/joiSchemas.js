@@ -1,7 +1,7 @@
 const Joi = require("joi");
 module.exports.addySchema = Joi.object({
     addy: Joi.object({
-        address1: Joi.string().required(),
+        street1: Joi.string().required(),
         city: Joi.string().required()
     }).required()
 })

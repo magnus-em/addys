@@ -33,7 +33,7 @@ module.exports.getShipment = function (address, addy) {
             },
             "address_from": {
                 "name": "Addy Forwarder",
-                "street1": addy.address1,
+                "street1": addy.street1,
                 "city": addy.city,
                 "state": addy.state,
                 "zip": addy.zip,

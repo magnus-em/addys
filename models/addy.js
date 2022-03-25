@@ -6,11 +6,15 @@ const moment = require('moment')
 
 
 const addySchema = new Schema({
-    address1: String,
-    address2: String,
+    street1: String,
+    street2: String,
     city: String,
     state: String,
     zip: String,
+    signedUp: {
+        type: Date,
+        default: Date.now
+    },
     forwarder: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -120,7 +124,7 @@ addySchema.virtual('totalPackages').get(function() {
 })
 
 addySchema.virtual('streetNoNumber').get(function() {
-    return  this.address1.replace(/[0-9]/g, '');
+    return  this.street1.replace(/[0-9]/g, '');
 })
 
 
