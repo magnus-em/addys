@@ -32,6 +32,8 @@ router.post('/fw/create', admin.createFw)
 router.get('/account/security', admin.security)
 router.post('/account/security/reset', admin.changePassword)
 
+router.get('/subscriptions', admin.indexSubscriptions)
+
 
 
 

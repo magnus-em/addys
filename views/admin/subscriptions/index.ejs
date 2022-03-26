@@ -1,0 +1,252 @@
+<%- layout('layouts/boilerplate') %>
+    <main id="content" role="main">
+
+
+        <!-- Card Grid -->
+        <div class="container content-space-b-2  content-space-t-3 content-space-b-lg-3">
+            <div class="row col-lg-divider">
+                <div class="col-lg-3">
+                    <!-- Navbar -->
+                    <div class="navbar-expand-lg">
+                        <!-- Navbar Toggle -->
+                        <div class="d-grid">
+                            <button type="button" class="navbar-toggler btn btn-white mb-3" data-bs-toggle="collapse"
+                                data-bs-target="#navbarVerticalNavMenu" aria-label="Toggle navigation"
+                                aria-expanded="false" aria-controls="navbarVerticalNavMenu">
+                                <span class="d-flex justify-content-between align-items-center">
+                                    <span class="text-dark">Menu</span>
+
+                                    <span class="navbar-toggler-default">
+                                        <i class="bi-list"></i>
+                                    </span>
+
+                                    <span class="navbar-toggler-toggled">
+                                        <i class="bi-x"></i>
+                                    </span>
+                                </span>
+                            </button>
+                        </div>
+                        <!-- End Navbar Toggle -->
+
+                        <!-- Navbar Collapse -->
+                        <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
+                            <div class="d-grid gap-4 flex-grow-1">
+                                <div class="d-grid">
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">Actions</a>
+                                    <h5 class="dropdown-header">Packages</h5>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">All <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">New <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">Pending <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">Forwarded <span
+                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                </div>
+
+                                <div class="d-grid">
+                                    <h5 class="dropdown-header">Clients</h5>
+                                    <a class="dropdown-item d-flex justify-content-between" href="/admin/clients">
+                                        All <span class="badge text-dark border rounded-pill">20</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between"
+                                        href="/admin/fw/pendingpayouts">Pending payouts
+                                        <span class="badge text-dark border rounded-pill">1</span></a>
+                                </div>
+
+                                <div class="d-grid">
+                                    <h5 class="dropdown-header">Subscriptions</h5>
+                                    <a class="dropdown-item d-flex justify-content-between active" href="/admin/clients">
+                                        All <span class="badge text-dark border rounded-pill">20</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="/admin/clients">Active
+                                        <span class="badge text-dark border rounded-pill">10</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between"
+                                        href="/admin/fw/pendingpayouts">Cancelled
+                                        <span class="badge text-dark border rounded-pill">1</span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Navbar Collapse -->
+                    </div>
+                    <!-- End Navbar -->
+                </div>
+                <!-- End Col -->
+                <div class="col-lg-9">
+                    <!-- Card List -->
+                    <div class="d-grid gap-5 mb-10">
+
+                        <% for (let sub of subList) {%> 
+                            <!-- Card -->
+                            <div class="card card-bordered ">
+                                <div class="card-body">
+                                    <!-- Media -->
+                                    <div class="d-sm-flex">
+                                        <!-- Media -->
+                                        <div class="flex-grow-1">
+                                            <div class="row">
+                                                <div class="col col-md-8">
+                                                    <div class="mb-2">
+                                                        <a class="link-sm link-secondary" href="#">Sub ID: <%= sub.id %></a>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <% if (sub.user) { %> 
+                                                        <a class="link-sm link-secondary" href="#">Username: <%= sub.user.username %></a>
+                                                        <% } else { %> 
+                                                        <a class="link-sm link-secondary" href="#">Username: null</a>
+                                                            <% } %> 
+                                                    </div>
+                                                    <h3 class="card-title"><%= sub.firstName %> 
+                                                        <%= sub.lastName %>
+                                                    </h3>
+                                                    <!-- <div class="mt-3">
+                                            <h6 class="card-title">Inbound: USPS: 67896789098767890 
+                                            </h6>
+                                          </div> -->
+                                                </div>
+                                                <!-- End Col -->
+
+
+                                                <div class="col-12 col-md mt-3 mt-md-0">
+
+
+                                                    <span class="badge bg-soft-success text-success me-2 mb-2">
+                                                        <span class="legend-indicator bg-success"></span> <%= sub.status %> 
+                                                    </span>
+
+
+
+                                                    <div class="d-flex gap-2 mt-1">
+                                                        <!-- <form action="/sendemail" method="post">
+                                              <input type="hidden" name="id" value="623528790b7847456b1f9b5c">
+                                              <button type="submit" href="/client/inbox/623528790b7847456b1f9b5c/forward/address" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">send email</button>
+                
+                                            </form> -->
+
+
+                                                        <a type="button" ref="javascript:;" data-bs-toggle="modal"
+                                                            data-bs-target="#exampleModalCenter"
+                                                            class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Cancel Subscription
+                                                            </a>
+
+
+
+                                                        <!-- <a type="button" class="btn btn-soft-secondary btn-sm btn-transition rounded-pill media-viewer" href="https://res.cloudinary.com/addys/image/upload/v1647650937/Addys/axuhan1eleiyo5rnx80g.jpg" data-fslightbox="gallerye623528790b7847456b1f9b5c">
+                                              <i class="bi-image me-1"></i>Box
+                                            </a> -->
+
+
+
+
+
+
+
+                                                    </div>
+                                                    <!-- <button type="button" class="d-block btn btn-outline-primary btn-sm btn-transition rounded-pill">Forward</button> -->
+                                                </div>
+                                                <!-- End Col -->
+                                            </div>
+                                            <!-- End Row -->
+                                        </div>
+                                    </div>
+                                    <!-- End Media -->
+                                </div>
+
+                                <div class="card-footer pt-0">
+                                    <ul class="list-inline list-separator small text-body">
+                                        <li class="list-inline-item">Tier: <%= sub.name %> </li>
+                                        <li class="list-inline-item">Card: <%= sub.accountNumber %> </li>
+                                        <li class="list-inline-item">Created: <%= sub.createTimeStampUTC %> </li>
+                                        <li class="list-inline-item">customerId: <%= sub.customerProfileId %> </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                            <% } %> 
+
+                    </div>
+                    <!-- End Card List -->
+
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Row -->
+        </div>
+        <!-- End Card Grid -->
+
+        <div id="exampleModalCenter" class="modal fade" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="accountAddCardModalLabel">Confirm payout details</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- End Header -->
+
+                    <!-- Body -->
+                    <div class="modal-body">
+
+                        <!-- Form -->
+                        <form action="/admin/fw/submitpayout" class="js-validate needs-validation" novalidate
+                            method="post">
+
+
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label for="cardNameLabel" class="form-label">Account type</label>
+                                <!-- Select -->
+                                <div class="tom-select-custom">
+                                    <select class="js-select form-select" id='type' name='type' required>
+                                        <option value=""></option>
+                                        <option value="CASHAPP">Cash App</option>
+                                        <option value="VENMO">Venmo</option>
+                                        <option value="PAYPAL">PayPal</option>
+                                    </select>
+                                </div>
+                                <!-- End Select -->
+                            </div>
+                            <!-- End Form -->
+
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label for="username" class="form-label">Username (email for paypal)</label>
+                                <input type="text" class="form-control" name="username" id="username" required>
+                            </div>
+                            <!-- End Form -->
+
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label for="name" class="form-label">Account name</label>
+                                <input type="text" class="form-control" name="name" id="name" required>
+                            </div>
+                            <!-- End Form -->
+
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label for="transaction" class="form-label">Transaction ID</label>
+                                <input type="text" class="form-control" name="transaction" id="transaction" required>
+                            </div>
+                            <!-- End Form -->
+
+                            <!-- Form -->
+                            <div class="mb-4">
+                                <label for="amount" class="form-label">Amount USD</label>
+                                <input type="text" class="form-control" name="amount" id="amount" required>
+                            </div>
+                            <!-- End Form -->
+
+
+                            <div class="d-flex justify-content-end gap-3">
+                                <button type="button" class="btn btn-white" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </form>
+                        <!-- End Form -->
+                    </div>
+                    <!-- End Body -->
+                </div>
+            </div>
+        </div>
+
+    </main>

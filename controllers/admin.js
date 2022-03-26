@@ -1,3 +1,4 @@
+const { getListOfSubscriptions } = require("../authnet")
 const Addy = require("../models/addy")
 const Package = require("../models/package")
 const { Payout } = require("../models/payout")
@@ -61,7 +62,7 @@ module.exports.allClients = catchAsync(async (req,res) => {
 
 module.exports.indexPendingPayouts = catchAsync(async(req,res) => {
     const forwarders = await User.find({type: 'FW'})
-    res.render('admin/indexes/pendingPayouts', {forwarders})
+    res.render('admin/payouts/pending', {forwarders})
 })
 
 module.exports.submitPayout = catchAsync(async(req,res) => {
@@ -95,4 +96,28 @@ module.exports.changePassword = catchAsync(async (req, res) => {
     user.save()
     req.flash('success', 'Successfully changed password :)')
     res.redirect('/admin/account/security')
+})
+
+module.exports.indexSubscriptions = catchAsync(async (req,res) => {
+    res.locals.title = 'Subscriptions'
+    res.locals.description = 'View all subscriptions'
+    const subResponse = await getListOfSubscriptions();
+    const subList = subResponse.getSubscriptionDetails().getSubscriptionDetail();
+    for (let sub of subList) {
+        const user = await User.findOne({customerProfileId: sub.customerProfileId})
+        if (!user) {
+            sub.user = null;
+            continue;
+        }
+        console.log('found user ')
+        console.log(user)
+        console.log('user.email')
+        console.log(user.email)
+        sub.user = user;
+    }
+    console.log('subList with users')
+    console.log(subList)
+
+    res.render('admin/subscriptions/index', {subList})
+
 })
