@@ -81,3 +81,18 @@ module.exports.createAddy = catchAsync(async(req,res) => {
     res.redirect('/locations')
 
 })
+
+module.exports.security = catchAsync(async (req,res) => {
+    res.locals.title = 'Security'
+    res.locals.description = 'View and edit your security info'
+    const user = await User.findById(req.user._id).populate('addy')
+    res.render('admin/account/security', {user})
+})
+module.exports.changePassword = catchAsync(async (req, res) => {
+    const { password } = req.body
+    const user = await User.findById(req.user._id)
+    await user.setPassword(password)
+    user.save()
+    req.flash('success', 'Successfully changed password :)')
+    res.redirect('/admin/account/security')
+})

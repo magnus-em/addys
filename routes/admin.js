@@ -29,6 +29,10 @@ router.post('/addy/create',admin.createAddy)
 
 router.post('/fw/create', admin.createFw)
 
+router.get('/account/security', admin.security)
+router.post('/account/security/reset', admin.changePassword)
+
+
 
 
 

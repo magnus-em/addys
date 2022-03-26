@@ -118,6 +118,15 @@ module.exports.security = catchAsync(async (req,res) => {
     res.render('forwarder/account/security', {user})
 })
 
+module.exports.changePassword = catchAsync(async (req, res) => {
+    const { password } = req.body
+    const user = await User.findById(req.user._id)
+    await user.setPassword(password)
+    user.save()
+    req.flash('success', 'Successfully changed password :)')
+    res.redirect('/forwarder/account/security')
+})
+
 module.exports.payments = catchAsync(async (req,res) => {
     res.locals.title = 'Payments'
     res.locals.description = 'View and edit your payment methods'
@@ -200,13 +209,3 @@ module.exports.changeEmailPhone = catchAsync(async (req, res) => {
     res.redirect('/forwarder/account/personal')
 })
 
-module.exports.changePassword = catchAsync(async (req, res) => {
-    const { password } = req.body
-    const user = await User.findById(req.user._id)
-    await user.setPassword(password)
-
-    user.save()
-    req.flash('success', 'Successfully changed password :)')
-
-    res.redirect('/forwarder/account/security')
-})
