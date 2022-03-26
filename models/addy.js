@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Package = require('./package');
 const Review = require('./review');
-const moment = require('moment')
+
 
 
 const addySchema = new Schema({
@@ -36,7 +36,11 @@ const addySchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'User'
         }
-    ]
+    ],
+    mailboxCounter: {
+        type: Number,
+        default: 33
+    }
 })
 
 addySchema.post('findOneAndDelete', async function(addy) {

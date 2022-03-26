@@ -38,7 +38,7 @@ module.exports.initialAccountCharge = function (details) {
 
 		var transactionSetting1 = new ApiContracts.SettingType();
 		transactionSetting1.setSettingName('duplicateWindow');
-		transactionSetting1.setSettingValue('120');
+		transactionSetting1.setSettingValue('5');
 
 		var transactionSetting2 = new ApiContracts.SettingType();
 		transactionSetting2.setSettingName('recurringBilling');

@@ -45,6 +45,19 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         }
         const { email, username, password, invite, firstName, lastName, phone } = req.body
 
+        const overlappingUser = await User.findOne({
+            $or: [
+                {username: username},
+                {email: email},
+                {phone: phone}
+            ]
+        })
+
+        if (overlappingUser) {
+            req.flash('error', 'Email / Username / Phone already in use')
+            return res.redirect(`/register?addy=${req.body.addy}`)
+        }
+
         const details = {
             cardNumber: req.body.cardNumber,
             cardExp: req.body.cardExp,
@@ -61,18 +74,21 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
 
         try {
             const response = await initialAccountCharge(details)
-
         } catch (err) {
             req.flash('error', err.getTransactionResponse().getErrors().getError()[0].getErrorText())
             return res.redirect(`/register?addy=${req.body.addy}`)
         }
 
         const addy = await Addy.findById(req.body.addy).populate('clients')
-        const mailbox = addy.clients.length + 33; // make it seem like there are more people reshipping
+        addy.mailboxCounter += 1;
+        const mailbox = addy.mailboxCounter;
         const user = new User({ email, username, addy, mailbox, type: 'CLIENT', invite, firstName, lastName, phone })
         await addy.clients.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
+
         const registeredUser = await User.register(user, password)
+
+
         req.login(registeredUser, err => {
             if (err) return next(err);
         })
@@ -112,8 +128,8 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
             } catch (err) {
                 req.flash('error', err.getMessages().getMessage()[0].getText())
                 return res.redirect(`/register?addy=${req.body.addy}`)
-            } 
-            
+            }
+
             subscription.id = newSubscriptionId;
             user.subscription = subscription;
             user.subscription.payment = customerPaymentId
@@ -125,7 +141,6 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
 
         console.log('NEW USER CREATED')
         console.log(user)
-        req.flash('success', 'New user successfully created')
         sendWelcome(user)
         res.render('client/register/success', { user })
     } catch (err) {
@@ -315,7 +330,7 @@ module.exports.overviewForm = catchAsync(async (req, res) => {
 
     res.locals.query = req.query
     const { id } = req.params
-    const { shipment} = req.query
+    const { shipment } = req.query
     const rate = await shippo.rate.retrieve(req.query.rate);
     const address = await user.addresses.id(req.query.address)
 
