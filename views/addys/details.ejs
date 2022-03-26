@@ -542,7 +542,7 @@
 
                         </ul>
                         <!-- End Comment -->
-                        <% if (user.type == 'ADMIN') { %> 
+                        <% if (user && user.type == 'ADMIN') { %> 
                             <div class="d-sm-flex justify-content-sm-end gap-2">
                                 <a type="button" href="/locations/<%= addy._id %>/reviews/new"
                                     class="btn btn-primary btn-transition rounded-pill">Write a
