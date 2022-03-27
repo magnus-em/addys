@@ -10,7 +10,7 @@ sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const { getSubAmount, getTierQuota, getTierForwardFee } = require('../utils/constants')
 
 
-const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment, getTransactionListForCustomer } = require('../authnet')
+const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment, getTransactionListForCustomer, cancelSubscription } = require('../authnet')
 
 
 
@@ -47,9 +47,9 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
 
         const overlappingUser = await User.findOne({
             $or: [
-                {username: username},
-                {email: email},
-                {phone: phone}
+                { username: username },
+                { email: email },
+                { phone: phone }
             ]
         })
 
@@ -257,6 +257,10 @@ module.exports.addressForm = catchAsync(async (req, res) => {
         forwardedDate: { $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000))) }
     })
     if (monthlyForwards.length >= getTierQuota(user.subscription.tier)) {
+        if (user.subscription.tier == 'NONE') {
+            req.flash('error', 'Please buy a subscription if you wish to forward packages')
+            return res.redirect('/client/account/payments/')
+        }
         req.flash('error', 'Monthly forward limit reached. Please upgrade your plan or wait for your limit to lower.')
         return res.redirect('/client/inbox/new')
     }
@@ -441,8 +445,6 @@ module.exports.payments = catchAsync(async (req, res) => {
         forwardedDate: { $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000))) }
     })
 
-    console.log('monthly forwards -----------------')
-    console.log(monthlyForwards)
 
     try {
         const transactionList = []
@@ -456,10 +458,6 @@ module.exports.payments = catchAsync(async (req, res) => {
                 amount: transactions[i].getSettleAmount(),
                 time: transactions[i].getSubmitTimeLocal()
             })
-            console.log('Transaction Id : ' + transactions[i].getTransId());
-            console.log('Transaction Status : ' + transactions[i].getTransactionStatus());
-            console.log('Amount Type : ' + transactions[i].getAccountType());
-            console.log('Settle Amount : ' + transactions[i].getSettleAmount());
         }
 
         user.transactionList = transactionList;
@@ -496,26 +494,36 @@ module.exports.payments = catchAsync(async (req, res) => {
 
 
     try {
-
-        const subResponse = await getSubscription(user.subscription.id)
-        const sub = subResponse.getSubscription()
-        user.subscription.name = sub.getName(),
-            user.subscription.startDate = sub.getPaymentSchedule().getStartDate().slice(8, 10),
-            user.subscription.amount = sub.getAmount(),
+        if (user.subscription.tier == 'NONE') {
+            user.subscription.name = 'None'
+            user.subscription.startDate = 'N/A'
+            user.subscription.amount = '0'
+            user.subscription.status = 'Cancelled'
+        } else {
+            const subResponse = await getSubscription(user.subscription.id)
+            const sub = subResponse.getSubscription()
+            user.subscription.name = sub.getName()
+            user.subscription.startDate = sub.getPaymentSchedule().getStartDate().slice(8, 10)
+            user.subscription.amount = sub.getAmount()
             user.subscription.status = sub.getStatus()
+        }
 
     } catch (error) {
         console.log(error)
-        user.subscription.name = 'N/A',
+        user.subscription.name = 'NONE',
             user.subscription.startDate = 'N/A',
-            user.subscription.amount = 'N/A',
+            user.subscription.amount = '0',
             user.subscription.status = 'N/A'
         arbTransactionList = []
     }
 
     user.monthlyForwards = monthlyForwards;
 
-    user.monthlyPercentage = monthlyForwards.length / getTierQuota(user.subscription.tier) * 100;
+    if (user.subscription.tier == 'NONE') {
+        user.monthlyPercentage = 0
+    } else {
+        user.monthlyPercentage = monthlyForwards.length / getTierQuota(user.subscription.tier) * 100;
+    }
 
     res.render('client/account/payments', { user })
 })
@@ -561,15 +569,33 @@ module.exports.changeSubscription = catchAsync(async (req, res) => {
     const { subscription } = req.body;
     const user = await User.findById(req.user._id)
 
-    console.log('-----getSubAmount(subscription)-------')
-    console.log(getSubAmount(subscription))
     console.log('-----getSubAmount(user.subscription.tier)-------')
     console.log(getSubAmount(user.subscription.tier))
-    console.log('-----UPGRADE FEE-------')
+
+    if (user.subscription.tier == 'NONE') {
+        try {
+            const upgradeFee = getSubAmount(subscription) - getSubAmount(user.subscription.tier)
+
+            await chargeUpgrade(upgradeFee, user.customerProfileId, user.subscription.payment)
+            newSubscriptionId = await createSubscription({ tier: subscription }, user.customerProfileId, user.subscription.payment)
+            user.subscription.id = newSubscriptionId;
+            user.subscription.tier = subscription;
+            await user.save()
+            return res.redirect('/client/account/payments')
+
+
+        } catch (err) {
+            req.flash('error', err.errorMsg)
+            console.log('change sub error')
+            console.log(err)
+            return res.redirect('/client/account/payments')
+
+        }
+
+    }
 
 
     const upgradeFee = getSubAmount(subscription) - getSubAmount(user.subscription.tier)
-    console.log(upgradeFee)
     if (upgradeFee > 0) {
         try {
             await chargeUpgrade(upgradeFee, user.customerProfileId, user.subscription.payment)
@@ -604,6 +630,16 @@ module.exports.changeSubscriptionPayment = catchAsync(async (req, res) => {
 
 })
 
+module.exports.cancelSubscription = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    const deleteResponse = await cancelSubscription(id)
+    const client = await User.findOne({ 'subscription.id': id })
+    client.subscription.tier = 'NONE'
+    client.save()
+    console.log('found client for subscription deletion')
+    console.log(client)
+    res.redirect('/client/account/payments')
+})
 
 module.exports.address = catchAsync(async (req, res) => {
     res.locals.title = 'Addresses'

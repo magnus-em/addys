@@ -55,8 +55,9 @@
 
                                 <div class="d-grid">
                                     <h5 class="dropdown-header">Subscriptions</h5>
-                                    <a class="dropdown-item d-flex justify-content-between active" href="/admin/clients">
-                                        All <span class="badge text-dark border rounded-pill">20</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between active"
+                                        href="/admin/clients">
+                                        All <span class="badge text-dark border rounded-pill"><%= subList.length %> </span></a>
                                     <a class="dropdown-item d-flex justify-content-between" href="/admin/clients">Active
                                         <span class="badge text-dark border rounded-pill">10</span></a>
                                     <a class="dropdown-item d-flex justify-content-between"
@@ -74,7 +75,7 @@
                     <!-- Card List -->
                     <div class="d-grid gap-5 mb-10">
 
-                        <% for (let sub of subList) {%> 
+                        <% for (let sub of subList) {%>
                             <!-- Card -->
                             <div class="card card-bordered ">
                                 <div class="card-body">
@@ -85,17 +86,21 @@
                                             <div class="row">
                                                 <div class="col col-md-8">
                                                     <div class="mb-2">
-                                                        <a class="link-sm link-secondary" href="#">Sub ID: <%= sub.id %></a>
+                                                        <a class="link-sm link-secondary" href="#">Sub ID: <%= sub.id %>
+                                                                </a>
                                                     </div>
                                                     <div class="mb-2">
-                                                        <% if (sub.user) { %> 
-                                                        <a class="link-sm link-secondary" href="#">Username: <%= sub.user.username %></a>
-                                                        <% } else { %> 
-                                                        <a class="link-sm link-secondary" href="#">Username: null</a>
-                                                            <% } %> 
+                                                        <% if (sub.user) { %>
+                                                            <a class="link-sm link-secondary" href="#">Username: <%=
+                                                                    sub.user.username %></a>
+                                                            <% } else { %>
+                                                                <a class="link-sm link-secondary" href="#">Username:
+                                                                    null</a>
+                                                                <% } %>
                                                     </div>
-                                                    <h3 class="card-title"><%= sub.firstName %> 
-                                                        <%= sub.lastName %>
+                                                    <h3 class="card-title">
+                                                        <%= sub.firstName %>
+                                                            <%= sub.lastName %>
                                                     </h3>
                                                     <!-- <div class="mt-3">
                                             <h6 class="card-title">Inbound: USPS: 67896789098767890 
@@ -109,7 +114,8 @@
 
 
                                                     <span class="badge bg-soft-success text-success me-2 mb-2">
-                                                        <span class="legend-indicator bg-success"></span> <%= sub.status %> 
+                                                        <span class="legend-indicator bg-success"></span>
+                                                        <%= sub.status %>
                                                     </span>
 
 
@@ -122,10 +128,12 @@
                                             </form> -->
 
 
-                                                        <a type="button" ref="javascript:;" data-bs-toggle="modal"
-                                                            data-bs-target="#exampleModalCenter"
-                                                            class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Cancel Subscription
-                                                            </a>
+                                                        <form action="/admin/subscriptions/<%= sub.id %>?_method=DELETE" method="post">
+                                                            <button type="submit" 
+                                                                class="btn btn-outline-primary btn-sm btn-transition rounded-pill">Cancel
+                                                                Subscription
+                                                        </button>
+                                                        </form>
 
 
 
@@ -152,16 +160,20 @@
 
                                 <div class="card-footer pt-0">
                                     <ul class="list-inline list-separator small text-body">
-                                        <li class="list-inline-item">Tier: <%= sub.name %> </li>
-                                        <li class="list-inline-item">Card: <%= sub.accountNumber %> </li>
-                                        <li class="list-inline-item">Created: <%= sub.createTimeStampUTC %> </li>
-                                        <li class="list-inline-item">customerId: <%= sub.customerProfileId %> </li>
+                                        <li class="list-inline-item">Tier: <%= sub.name %>
+                                        </li>
+                                        <li class="list-inline-item">Card: <%= sub.accountNumber %>
+                                        </li>
+                                        <li class="list-inline-item">Created: <%= sub.createTimeStampUTC %>
+                                        </li>
+                                        <li class="list-inline-item">customerId: <%= sub.customerProfileId %>
+                                        </li>
                                     </ul>
 
                                 </div>
                             </div>
                             <!-- End Card -->
-                            <% } %> 
+                            <% } %>
 
                     </div>
                     <!-- End Card List -->

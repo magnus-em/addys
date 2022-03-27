@@ -41,7 +41,7 @@ const userSchema = new Schema({
     subscription: {
         tier: {
             type: String,
-            enum: ['BASIC', 'PLUS', 'MAX'],
+            enum: ['BASIC', 'PLUS', 'MAX', 'NONE'],
         },
         id: String,
         payment: String

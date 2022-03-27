@@ -70,6 +70,7 @@ router.delete('/client/account/addresses/:id', isClient, user.deleteAddress)
 
 router.post('/client/account/subscription', isClient, user.changeSubscription)
 router.post('/client/account/subscription/payment', isClient, user.changeSubscriptionPayment)
+router.delete('/client/account/subscription/:id', isClient, user.cancelSubscription)
 
 
 

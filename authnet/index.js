@@ -757,7 +757,7 @@ module.exports.deleteCustomerPaymentProfile = function (customerProfileId, custo
 	})
 }
 
-module.exports.createSubscription = function createSubscriptionFromCustomerProfile(subscription, customerProfileId, customerPaymentProfileId) {
+module.exports.createSubscription = function (subscription, customerProfileId, customerPaymentProfileId, ) {
 
 	return new Promise((resolve, reject) => {
 		var interval = new ApiContracts.PaymentScheduleType.Interval();
@@ -800,25 +800,66 @@ module.exports.createSubscription = function createSubscriptionFromCustomerProfi
 
 			if (response != null) {
 				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
-					// console.log('Subscription Id : ' + response.getSubscriptionId());
-					// console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
-					// console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+					console.log('Subscription Id : ' + response.getSubscriptionId());
+					console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
 					resolve(response.getSubscriptionId())
 				}
 				else {
-					// console.log('Result Code: ' + response.getMessages().getResultCode());
-					// console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
-					// console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					console.log('Result Code: ' + response.getMessages().getResultCode());
+					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					response.errorMsg = response.getMessages().getMessage()[0].getText()
 					reject(response)
 				}
 			}
 			else {
-				// console.log('Null Response.');
+				console.log('Null Response.');
 				reject(null)
 			}
 		});
 	})
 }
+
+module.exports.cancelSubscription = function (subscriptionId) {
+	return new Promise((resolve, reject) => {
+
+		var cancelRequest = new ApiContracts.ARBCancelSubscriptionRequest();
+		cancelRequest.setMerchantAuthentication(merchantAuthenticationType);
+		cancelRequest.setSubscriptionId(subscriptionId);
+
+		var ctrl = new ApiControllers.ARBCancelSubscriptionController(cancelRequest.getJSON());
+		ctrl.setEnvironment(SDKConstants.endpoint.production);
+
+		ctrl.execute(function () {
+
+			var apiResponse = ctrl.getResponse();
+
+			var response = new ApiContracts.ARBCancelSubscriptionResponse(apiResponse);
+
+			console.log(JSON.stringify(response, null, 2));
+
+			if (response != null) {
+				if (response.getMessages().getResultCode() == ApiContracts.MessageTypeEnum.OK) {
+					console.log('Message Code : ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Message Text : ' + response.getMessages().getMessage()[0].getText());
+					resolve(response)
+				}
+				else {
+					console.log('Result Code: ' + response.getMessages().getResultCode());
+					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
+					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
+					reject(response)
+				}
+			}
+			else {
+				console.log('Null Response.');
+				reject(null)
+			}
+		});
+	})
+}
+
 
 module.exports.getSubscription = function (subscriptionId) {
 	return new Promise((resolve, reject) => {
@@ -1052,6 +1093,7 @@ module.exports.chargeUpgrade = function (amount, customerProfileId, customerPaym
 						if (response.getTransactionResponse().getErrors() != null) {
 							console.log('Error Code: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorCode());
 							console.log('Error message: ' + response.getTransactionResponse().getErrors().getError()[0].getErrorText());
+							response.errorMsg = response.getTransactionResponse().getErrors().getError()[0].getErrorText()
 							reject(response)
 						}
 					}

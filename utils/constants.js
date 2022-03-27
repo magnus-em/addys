@@ -9,11 +9,17 @@ module.exports.getSubAmount = function (tier) {
         case 'MAX':
             return 3;
             break;
+        case 'NONE':
+            return 0;
+            break;
     }
 }
 
 module.exports.getTierQuota = function (tier) {
     switch (tier) {
+        case 'NONE':
+            return 0;
+            break;
         case 'BASIC':
             return 10;
             break;

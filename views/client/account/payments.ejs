@@ -168,9 +168,16 @@
 
                   <div class="col-md-auto">
                     <div class="d-grid d-md-flex gap-3">
-                      <a class="btn btn-white btn-sm" href="/client/account/personal">Cancel subscription</a>
-                      <a class="btn btn-primary btn-sm btn-transition" data-bs-toggle="modal"
-                        data-bs-target="#signupModal">Switch plan</a>
+                      <% if (user.subscription.tier == 'NONE') {%> 
+                        <a class="btn btn-primary btn-sm btn-transition" data-bs-toggle="modal"
+                        data-bs-target="#signupModal">Buy plan</a>
+                        <% } else  {%> 
+                          <form action="/client/account/subscription/<%= user.subscription.id %>?_method=DELETE" method="post">
+                          <button type="submit" class="btn btn-white btn-sm">Cancel subscription</button>
+                            </form>
+                          <a class="btn btn-primary btn-sm btn-transition" data-bs-toggle="modal"
+                          data-bs-target="#signupModal">Switch Plan</a>
+                          <% } %> 
                     </div>
                   </div>
                   <!-- End Col -->
@@ -190,6 +197,11 @@
                   <!-- End Col -->
 
                   <div class="col-auto">
+
+                    <% if (user.subscription.tier == 'NONE') {%> 
+                      None
+                      <% } else { %> 
+
                     <span class="text-dark fw-semi-bold"><%= user.monthlyForwards.length %> </span> 
                     forwarded of
                     <% if (user.subscription.tier == 'BASIC') { %> 
@@ -198,6 +210,7 @@
                      25
                      <% } else if (user.subscription.tier == 'MAX') { %> 
                       Unlimited :)
+                      <% } %> 
                       <% } %> 
                   </div>
                   <!-- End Col -->

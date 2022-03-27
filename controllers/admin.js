@@ -1,4 +1,4 @@
-const { getListOfSubscriptions } = require("../authnet")
+const { getListOfSubscriptions, cancelSubscription } = require("../authnet")
 const Addy = require("../models/addy")
 const Package = require("../models/package")
 const { Payout } = require("../models/payout")
@@ -102,22 +102,28 @@ module.exports.indexSubscriptions = catchAsync(async (req,res) => {
     res.locals.title = 'Subscriptions'
     res.locals.description = 'View all subscriptions'
     const subResponse = await getListOfSubscriptions();
-    const subList = subResponse.getSubscriptionDetails().getSubscriptionDetail();
-    for (let sub of subList) {
+    const allSubList = subResponse.getSubscriptionDetails().getSubscriptionDetail();
+    const subList = []
+    for (let sub of allSubList) {
         const user = await User.findOne({customerProfileId: sub.customerProfileId})
         if (!user) {
             sub.user = null;
             continue;
+        } else {
+            subList.push(sub)
         }
-        console.log('found user ')
-        console.log(user)
-        console.log('user.email')
-        console.log(user.email)
         sub.user = user;
     }
-    console.log('subList with users')
-    console.log(subList)
-
     res.render('admin/subscriptions/index', {subList})
+})
 
+module.exports.cancelSubscription = catchAsync(async (req,res) => {
+    const {id} = req.params;
+    const deleteResponse = await cancelSubscription(id)
+    const client = await User.findOne({'subscription.id': id})
+    client.subscription.tier = 'NONE'
+    client.save()
+    console.log('found client for subscription deletion')
+    console.log(client)
+    res.redirect('/admin/subscriptions')
 })
