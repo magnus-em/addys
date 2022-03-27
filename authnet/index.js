@@ -162,6 +162,21 @@ module.exports.chargeRate = function (details, customerProfileId, customerPaymen
 		var lineItems = new ApiContracts.ArrayOfLineItem();
 		lineItems.setLineItem(lineItemList);
 
+		var transactionSetting1 = new ApiContracts.SettingType();
+		transactionSetting1.setSettingName('duplicateWindow');
+		transactionSetting1.setSettingValue('5');
+
+		var transactionSetting2 = new ApiContracts.SettingType();
+		transactionSetting2.setSettingName('recurringBilling');
+		transactionSetting2.setSettingValue('false');
+
+		var transactionSettingList = [];
+		transactionSettingList.push(transactionSetting1);
+		transactionSettingList.push(transactionSetting2);
+
+		var transactionSettings = new ApiContracts.ArrayOfSetting();
+		transactionSettings.setSetting(transactionSettingList);
+
 		var shipTo = new ApiContracts.CustomerAddressType();
 		shipTo.setFirstName(details.shipment.address_to.name);
 		shipTo.setAddress(details.shipment.address_to.street1 + ' ' + details.shipment.address_to.street2);
@@ -177,6 +192,8 @@ module.exports.chargeRate = function (details, customerProfileId, customerPaymen
 		transactionRequestType.setLineItems(lineItems);
 		transactionRequestType.setOrder(orderDetails);
 		transactionRequestType.setShipTo(shipTo);
+		transactionRequestType.setTransactionSettings(transactionSettings);
+
 
 		var createRequest = new ApiContracts.CreateTransactionRequest();
 		createRequest.setMerchantAuthentication(merchantAuthenticationType);

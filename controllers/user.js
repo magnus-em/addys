@@ -221,6 +221,20 @@ module.exports.inboxForwarded = catchAsync((async (req, res) => {
 
 module.exports.saveAddress = catchAsync(async (req, res) => {
     const user = await User.findById(req.user._id)
+    const shippoAddress = await shippo.address.create({
+        name: req.body.name,
+        street1: req.body.street1,
+        street2: req.body.street2,
+        city: req.body.city,
+        state: req.body.state,
+        country: req.body.country,
+        zip: req.body.zip,
+        validate: true
+    })
+    if (!shippoAddress.validation_results.is_valid){
+        req.flash('error','Invalid address')
+        return res.redirect('/client/account/addresses')
+    }
     const address = {
         name: req.body.name,
         street1: req.body.street1,
@@ -230,6 +244,7 @@ module.exports.saveAddress = catchAsync(async (req, res) => {
         country: req.body.country,
         zip: req.body.zip
     }
+    address.shippo = shippoAddress;
     user.addresses.push(address)
     await user.save()
     res.redirect('/client/account/addresses')
