@@ -14,7 +14,7 @@
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
-                <li class="breadcrumb-item active"><%= user.addy.street1 %>, <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></li>
+                <li class="breadcrumb-item active"><%= user.addy.street1 %> <%= user.addy.street2 %> – <%= user.addy.city %>, <%= user.addy.state %> <%= user.addy.zip %></li>
               </ol>
             </nav>
             <!-- End Breadcrumb -->
@@ -71,12 +71,12 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical mb-4">
                     <li class="nav-item">
-                      <a class="nav-link " href="/forwarder/account/personal">
+                      <a class="nav-link one-click" href="/forwarder/account/personal">
                         <i class="bi-person-badge nav-icon"></i> Personal info
                       </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="/forwarder/account/security">
+                      <a class="nav-link one-click" href="/forwarder/account/security">
                         <i class="bi-shield-shaded nav-icon"></i> Security
                       </a>
                     </li>
@@ -95,7 +95,7 @@
                   <!-- List -->
                   <ul class="nav nav-sm nav-tabs nav-vertical">
                     <li class="nav-item">
-                      <a class="nav-link active " href="/forwarder/account/payments">
+                      <a class="nav-link active one-click " href="/forwarder/account/payments">
                         <i class="bi-credit-card nav-icon"></i> Payments
                       </a>
                     </li>
@@ -274,7 +274,7 @@
                                   </button>
                                 </form>
                                 <form action="/forwarder/account/payments/<%= p._id %>?_method=DELETE" method="post">
-                                  <button type="submit" class="btn btn-white btn-xs">
+                                  <button type="submit" class="btn btn-white btn-xs one-click">
                                     <i class="bi-trash me-1"></i> Delete
                                   </button>
                                 </form>
