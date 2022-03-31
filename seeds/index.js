@@ -8,7 +8,7 @@ const titles = require('./seedHelpers');
 const addresses = require('./addresses.json').addresses
 
 
-const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/proDb?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/devDb?retryWrites=true&w=majority';
 mongoose.connect(uri)
 
 
@@ -35,6 +35,12 @@ const seedDb = async () => {
     console.log('Addys deleted and seeded')
 }
 
+const clearAddys = async () => {
+    await Addy.deleteMany({});
+    console.log('Addys deleted')
+}
+
+
 const clearReviews = async () => {
     await Review.deleteMany({})
     console.log('Reviews deleted')
@@ -47,13 +53,19 @@ const clearPackages = async() => {
 
 const clearUsers = async() => {
     await User.deleteMany({})
-    console.log('Users deleted')
+    const user = new User({ email:'admin@addys.io', username:'admin', type: 'ADMIN', firstName: 'Magnus', lastName: 'Melbourne', phone:'4243336392' })
+    const registeredUser = await User.register(user, 'Mail3kd@')
+    console.log('Users deleted and admin created')
+    console.log(registeredUser)
 }
+
 
 clearReviews();
 clearPackages();
 clearUsers();
-seedDb();
+clearAddys();
+
+
 
 
 

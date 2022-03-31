@@ -1,13 +1,13 @@
 module.exports.getSubAmount = function (tier) {
     switch (tier) {
         case 'BASIC':
-            return 1;
+            return process.env.BASIC_SUB_AMOUNT;
             break;
         case 'PLUS':
-            return 2;
+            return process.env.PLUS_SUB_AMOUNT;
             break;
         case 'MAX':
-            return 3;
+            return process.env.MAX_SUB_AMOUNT;
             break;
         case 'NONE':
             return 0;
@@ -38,10 +38,10 @@ module.exports.getTierForwardFee = function (tier) {
             return 19.99;
             break;
         case 'PLUS':
-            return 18.99;
+            return 19.99;
             break;
         case 'MAX':
-            return 17.99;
+            return 19.99;
             break;
     }
 }

@@ -69,7 +69,7 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
             city: req.body.city,
             state: req.body.state,
             zip: req.body.zip,
-            amount: '0.01'
+            amount: process.env.INITIAL_ACCOUNT_CHARGE
         }
 
         try {
@@ -271,6 +271,12 @@ module.exports.addressForm = catchAsync(async (req, res) => {
         status: 'FORWARDED',
         forwardedDate: { $gte: new Date((new Date().getTime() - (30 * 24 * 60 * 60 * 1000))) }
     })
+    console.log('monthly forwards')
+    console.log(monthlyForwards.length)
+    console.log('subscription tier')
+    console.log(user.subscription.tier)
+    console.log('tierQuota')
+    console.log(getTierQuota(user.subscription.tier))
     if (monthlyForwards.length >= getTierQuota(user.subscription.tier)) {
         if (user.subscription.tier == 'NONE') {
             req.flash('error', 'Please buy a subscription if you wish to forward packages')
@@ -369,6 +375,7 @@ module.exports.forward = catchAsync(async (req, res) => {
 
     const client = await User.findById(req.user._id).populate('addy')
 
+
     console.log('req.body.address')
     console.log(req.body.address)
 
@@ -424,9 +431,7 @@ module.exports.forward = catchAsync(async (req, res) => {
     res.redirect('/client/inbox/new')
 })
 
-
 // account pages
-
 module.exports.personal = catchAsync(async (req, res) => {
     res.locals.title = 'Personal info'
     res.locals.description = 'View and edit your personal information'

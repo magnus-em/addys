@@ -188,7 +188,7 @@ module.exports.chargeRate = function (details, customerProfileId, customerPaymen
 		var transactionRequestType = new ApiContracts.TransactionRequestType();
 		transactionRequestType.setTransactionType(ApiContracts.TransactionTypeEnum.AUTHCAPTURETRANSACTION);
 		transactionRequestType.setProfile(profileToCharge);
-		transactionRequestType.setAmount('0.01');
+		transactionRequestType.setAmount(details.rate.amount);
 		transactionRequestType.setLineItems(lineItems);
 		transactionRequestType.setOrder(orderDetails);
 		transactionRequestType.setShipTo(shipTo);

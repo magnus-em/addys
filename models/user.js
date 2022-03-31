@@ -35,13 +35,13 @@ const userSchema = new Schema({
         type: Number,
         default: 0
     },
-
     customerProfileId: String,
     customerPaymentIds: [String],
     subscription: {
         tier: {
             type: String,
             enum: ['BASIC', 'PLUS', 'MAX', 'NONE'],
+            default: 'NONE'
         },
         id: String,
         payment: String

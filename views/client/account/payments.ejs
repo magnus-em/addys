@@ -169,13 +169,13 @@
                   <div class="col-md-auto">
                     <div class="d-grid d-md-flex gap-3">
                       <% if (user.subscription.tier == 'NONE') {%> 
-                        <a class="btn btn-primary btn-sm btn-transition" data-bs-toggle="modal"
+                        <a class="btn btn-primary btn-sm btn-transition one-click" data-bs-toggle="modal"
                         data-bs-target="#signupModal">Buy plan</a>
                         <% } else  {%> 
                           <form action="/client/account/subscription/<%= user.subscription.id %>?_method=DELETE" method="post">
-                          <button type="submit" class="btn btn-white btn-sm">Cancel subscription</button>
+                          <button type="submit" class="btn btn-white btn-sm one-click">Cancel subscription</button>
                             </form>
-                          <a class="btn btn-primary btn-sm btn-transition" data-bs-toggle="modal"
+                          <a class="btn btn-primary btn-sm btn-transition one-click" data-bs-toggle="modal"
                           data-bs-target="#signupModal">Switch Plan</a>
                           <% } %> 
                     </div>
@@ -683,7 +683,7 @@
                           <% } else { %> 
                             <form action="/client/account/subscription" method="post">
                               <input type="hidden" name="subscription" value="BASIC">
-                              <button type="submit" class="btn btn-primary">Switch to Basic</button>
+                              <button type="submit" class="btn btn-primary one-click">Switch to Basic</button>
                             </form>
                             <% } %> 
                         </div>
@@ -730,7 +730,7 @@
                               <% } else { %> 
                                 <form action="/client/account/subscription" method="post">
                                   <input type="hidden" name="subscription" value="PLUS">
-                                  <button type="submit" class="btn btn-primary">Switch to Plus</button>
+                                  <button type="submit" class="btn btn-primary one-click">Switch to Plus</button>
                                 </form>
                                 <% } %> 
                           </div>
@@ -791,7 +791,7 @@
                             <% } else { %> 
                               <form action="/client/account/subscription" method="post">
                                 <input type="hidden" name="subscription" value="MAX">
-                                <button type="submit" class="btn btn-primary">Switch to Max</button>
+                                <button type="submit" class="btn btn-primary one-click">Switch to Max</button>
                               </form>
                               <% } %> 
                         </div>
