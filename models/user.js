@@ -115,7 +115,6 @@ const userSchema = new Schema({
     ]
 })
 
-
 userSchema.virtual('totalNew').get(function () {
     let i = 0;
     for (let p of this.packages) {
@@ -144,15 +143,11 @@ userSchema.virtual('totalForwarded').get(function () {
     return i;
 })
 
-
-
 userSchema.virtual('name').get(function () {
     const first = this.firstName;
     const last = this.lastName;
     return `${first} ${last}`
 })
-
-
 
 userSchema.plugin(passportLocalMongoose);
 

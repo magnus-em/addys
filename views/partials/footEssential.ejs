@@ -52,6 +52,13 @@
 
 <!-- JS Plugins Init. -->
 
+<% if (user) {%> 
+  <%- include('./intercom_user') %>
+  <% } else { %> 
+  <%- include('./intercom_visitor') %>
+<% } %> 
+
+
 
 <script>
   $(".one-click").click(function(e) {
