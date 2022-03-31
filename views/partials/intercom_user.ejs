@@ -4,7 +4,7 @@
       api_base: "https://api-iam.intercom.io",
       app_id: "r1o1zoy1",
       user_id: "<%= user._id%>",
-      name: "<% user.name %>", // Full name
+      name: "<%= user.name %>", // Full name
       email: "<%= user.email %>", // Email address
       created_at: "<%= Math.floor(user.signUp.getTime() / 1000) %>" // Signup date as a Unix timestamp
   
