@@ -40,6 +40,11 @@ const addySchema = new Schema({
     mailboxCounter: {
         type: Number,
         default: 33
+    },
+    status: {
+        type: String,
+        enum: ['AVAILABLE','HIDDEN'],
+        default: 'AVAILABLE'
     }
 })
 
