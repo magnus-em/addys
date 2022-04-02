@@ -75,6 +75,8 @@ router.post('/client/account/subscription/payment', isClient, user.changeSubscri
 router.delete('/client/account/subscription/:id', isClient, user.cancelSubscription)
 
 
+router.get('/successdemo',user.successDemo)
+
 
 router.use(bodyParser.json());
 router.use(bodyParser.text());
@@ -84,7 +86,6 @@ router.post('/verification/reviewed', user.verificationReviewed)
 router.post("/passbase-webhooks", user.webhooks);
   
 
-router.get('/successdemo',user.successDemo)
 
 
 

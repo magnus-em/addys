@@ -16,7 +16,10 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
                 <li class="breadcrumb-item">
-                  <%= user.addy.street1.toUpperCase() %> <%= user.addy.street2.toUpperCase() %> # <%= user.mailbox %><br><%= user.addy.city.toUpperCase() %>, <%= user.addy.state.toUpperCase() %> <%= user.addy.zip %>    
+                  <%= user.addy.street1.toUpperCase() %>
+                    <%= user.addy.street2.toUpperCase() %> # <%= user.mailbox %><br>
+                        <%= user.addy.city.toUpperCase() %>, <%= user.addy.state.toUpperCase() %>
+                            <%= user.addy.zip %>
                 </li>
                 <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
               </ol>
@@ -128,55 +131,76 @@
         <div class="col-lg-9">
           <div class="d-grid gap-3 gap-lg-5">
 
-            <% if (!user.verified) { %> 
-            <div class="card">
-              <div class="card-header border-bottom">
-                <h3 class="card-header-title"><span class="badge bg-soft-danger text-danger">Your account is unverified </span></h3>
+            <% if (!user.verified) { %>
+              <div class="card">
+                <div class="card-header border-bottom">
+                  <h3 class="card-header-title"><span class="badge bg-soft-danger text-danger">Your account is
+                      unverified </span></h3>
+                </div>
+
+                <!-- Body -->
+                <div class="card-body">
+                  <p class="card-text">While your account remains unverified:
+                  <ul>
+                    <li>You cannot forward packages</li>
+                    <li>You can still ship packages to your addy</li>
+                    <li>If you don't verify your account within a week you may be subject to account closure</li>
+                    <li>identityAccessKey: <%= user.identityAccessKey %>
+                    </li>
+                  </ul>
+
+
+                  <div class="d-flex justify-content-center">
+                    <div id="passbase-button"></div>
+                    <script type="text/javascript">
+                      const element = document.getElementById("passbase-button")
+                      const apiKey = "<%=process.env.PASSBASE_PUBLIC%>"
+
+                      Passbase.renderButton(element, apiKey, {
+                        onSubmitted: (identityAccessKey) => {
+                          console.log(identityAccessKey)
+                          console.log('PASSBASE IDENTITY ACCESS KEY onSubmitted')
+                          console.log(identityAccessKey)
+                          user.identityAccessKey = identityAccessKey;
+                          user.save()
+                        },
+                        onFinish: (identityAccessKey) => {
+                          // Open new window for end user to prevent duplicate verifications
+                          console.log('PASSBASE IDENTITY ACCESS KEY onFinish')
+                          console.log(identityAccessKey)
+                          user.identityAccessKey = identityAccessKey;
+                          user.save()
+                          window.location.href = ("https://addys.io/client/account/personal")
+                        },
+                        onError: (errorCode) => { console.log('PASSBASE ERROR') },
+                        onStart: () => { console.log('PASSBASE STARTED') },
+                        prefillAttributes: {
+                          email: '<%= user.email%>'
+                        }
+                      })        
+                    </script>
+
+                  </div>
+                  </form>
+                </div>
+                <!-- End Body -->
               </div>
+              <% } %>
 
-              <!-- Body -->
-              <div class="card-body">
-                <p class="card-text">While your account remains unverified:
-                <ul>
-                  <li>You cannot forward packages</li>
-                  <li>You can still ship packages to your addy</li>
-                  <li>If you don't verify your account within a week you may be subject to account closure</li>
-                </ul>
-                
+                <!-- Card -->
+                <div class="card">
+                  <div class="card-header border-bottom">
+                    <h4 class="card-header-title">Basic info</h4>
+                  </div>
 
-                <div class="d-flex justify-content-center">
-                  <div id="passbase-button"></div>
-                  <script type="text/javascript">
-                    Passbase.renderButton(
-                      document.getElementById("passbase-button"),
-                      "i20gNdG3ZldsD9PnvFZr6ZtbNrRTd30jUhjqKqqhEyU0ykDaDNWjtYFAmIDB3HoK",
-                      {
-                        onStart: () => { },
-                        onError: (errorCode) => { },
-                        onFinish: (identityAccessKey) => { },
-                      }
-                    );
-                  </script>                </div>
-                </form>
-              </div>
-              <!-- End Body -->
-            </div>
-            <% } %> 
-
-            <!-- Card -->
-            <div class="card">
-              <div class="card-header border-bottom">
-                <h4 class="card-header-title">Basic info</h4>
-              </div>
-
-              <!-- Body -->
-              <div class="card-body">
-                <%- include('../../partials/flash') %>
+                  <!-- Body -->
+                  <div class="card-body">
+                    <%- include('../../partials/flash') %>
 
 
 
-                  <!-- Form -->
-                  <!-- <div class="row mb-4">
+                      <!-- Form -->
+                      <!-- <div class="row mb-4">
                   <label for="firstNameLabel" class="col-sm-3 col-form-label form-label">Display name <i class="bi-question-circle text-body ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="" data-bs-original-title="Shown on reviews" aria-label="Displayed on reviews."></i></label>
 
                   <div class="col-sm-9">
@@ -186,90 +210,91 @@
                     </div>
                   </div>
                 </div> -->
-                  <!-- End Form -->
+                      <!-- End Form -->
 
-                  <form action="/client/account/personal" method="post" class="js-validate" novalidate>
-                    <!-- Form -->
-                    <div class="row mb-4">
-                      <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
-                      <div class="col-sm-9">
-                        <input type="email" class="form-control" name="email" id="emailLabel"
-                          placeholder="<%= user.email %>" aria-label="<%= user.email %>" required>
-                      </div>
+                      <form action="/client/account/personal" method="post" class="js-validate" novalidate>
+                        <!-- Form -->
+                        <div class="row mb-4">
+                          <label for="emailLabel" class="col-sm-3 col-form-label form-label">Email</label>
+                          <div class="col-sm-9">
+                            <input type="email" class="form-control" name="email" id="emailLabel"
+                              placeholder="<%= user.email %>" aria-label="<%= user.email %>" required>
+                          </div>
+                        </div>
+                        <!-- End Form -->
+                        <!-- Form -->
+                        <div class="row mb-4">
+                          <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="phone" id="phone"
+                              placeholder="<%= user.phone %>" aria-label="clarice@example.com" required>
+                          </div>
+                        </div>
+                        <!-- End Form -->
+
+
+
+
+
+
+                  </div>
+                  <!-- End Body -->
+
+                  <!-- Footer -->
+                  <div class="card-footer pt-0">
+                    <div class="d-flex justify-content-end gap-3">
+                      <button type="submit" class="btn btn-primary">Save changes</a>
                     </div>
-                    <!-- End Form -->
-                    <!-- Form -->
-                    <div class="row mb-4">
-                      <label for="phone" class="col-sm-3 col-form-label form-label">Phone</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" name="phone" id="phone" placeholder="<%= user.phone %>"
-                          aria-label="clarice@example.com" required>
-                      </div>
+                  </div>
+                  <!-- End Footer -->
+                  </form>
+
+                </div>
+                <!-- End Card -->
+
+
+
+
+
+                <!-- Card -->
+                <div class="card">
+                  <div class="card-header border-bottom">
+                    <h4 class="card-header-title">Delete your account</h4>
+                  </div>
+
+                  <!-- Body -->
+                  <div class="card-body">
+                    <p class="card-text">Account closure is immediate and permanent:
+                    <ul>
+                      <li>Your subscription will be cancelled</li>
+                      <li>Your personal data will be irreversibly deleted</li>
+                      <li>Any unforwarded packages become inaccessible</li>
+                    </ul>
+                    Therefore, please be absolutely certain you have no additional packages in the mail. We can not make
+                    any
+                    guarantees of package recovery after account closure.</p>
+
+                    <div class="mb-4">
+                      <!-- Check -->
+                      <form action="/client/account/personal/delete" method="post">
+
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox" required>
+                          <label class="form-check-label" for="deleteAccountCheckbox">Confirm that I want to delete my
+                            account
+                            and I have no packages in my inbox or in the mail.</label>
+                        </div>
+                        <!-- End Check -->
                     </div>
-                    <!-- End Form -->
 
-                  
-
-
-
-
-              </div>
-              <!-- End Body -->
-
-              <!-- Footer -->
-              <div class="card-footer pt-0">
-                <div class="d-flex justify-content-end gap-3">
-                  <button type="submit" class="btn btn-primary">Save changes</a>
-                </div>
-              </div>
-              <!-- End Footer -->
-              </form>
-
-            </div>
-            <!-- End Card -->
-
-
-
-
-
-            <!-- Card -->
-            <div class="card">
-              <div class="card-header border-bottom">
-                <h4 class="card-header-title">Delete your account</h4>
-              </div>
-
-              <!-- Body -->
-              <div class="card-body">
-                <p class="card-text">Account closure is immediate and permanent:
-                <ul>
-                  <li>Your subscription will be cancelled</li>
-                  <li>Your personal data will be irreversibly deleted</li>
-                  <li>Any unforwarded packages become inaccessible</li>
-                </ul>
-                Therefore, please be absolutely certain you have no additional packages in the mail. We can not make any
-                guarantees of package recovery after account closure.</p>
-
-                <div class="mb-4">
-                  <!-- Check -->
-                  <form action="/client/account/personal/delete" method="post">
-
-                    <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox" required>
-                      <label class="form-check-label" for="deleteAccountCheckbox">Confirm that I want to delete my
-                        account
-                        and I have no packages in my inbox or in the mail.</label>
+                    <div class="d-flex justify-content-end">
+                      <button type="submit" class="btn btn-danger">Delete</button>
                     </div>
-                    <!-- End Check -->
+                    </form>
+                  </div>
+                  <!-- End Body -->
                 </div>
-
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
-                </form>
-              </div>
-              <!-- End Body -->
-            </div>
-            <!-- End Card -->
+                <!-- End Card -->
           </div>
         </div>
         <!-- End Col -->

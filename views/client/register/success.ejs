@@ -27,23 +27,67 @@
 
                   <figcaption class="blockquote-footer">
                     <div class="d-flex justify-content-center">
+
+                      
                       <div id="passbase-button"></div>
+
                       <script type="text/javascript">
-                        Passbase.renderButton(
-                          document.getElementById("passbase-button"),
-                          "i20gNdG3ZldsD9PnvFZr6ZtbNrRTd30jUhjqKqqhEyU0ykDaDNWjtYFAmIDB3HoK",
-                          {
-                            onStart: () => { },
-                            onError: (errorCode) => { },
-                            onFinish: (identityAccessKey) => { },
-                          }
-                        );
+                        const element = document.getElementById("passbase-button")
+                        const apiKey = "<%=process.env.PASSBASE_PUBLIC%>"
+                      
+                        Passbase.renderButton(element, apiKey, {
+                          onSubmitted: (identityAccessKey) => {
+                            console.log(identityAccessKey)
+                            // Make a request to your backend/db and save the key
+                          },
+                          onFinish: (identityAccessKey) => {
+                            // Open new window for end user to prevent duplicate verifications
+                            window.location.href =("https://passbase.com/")
+                          },
+                          onError: (errorCode) => {console.log('PASSBASE ERROR')},
+                          onStart: () => {console.log('PASSBASE STARTED')},
+                          prefillAttributes: {
+                              email: '<%= user.email%>'
+                            }
+                        })        
                       </script>
 
+                      <!-- <script type="text/javascript">
+
+                        Passbase.renderButton(
+                          document.getElementById("passbase-button"),
+                          'WaTSp7NduHscyqaFh5fafwbhuDT9lY4e04JA3rHETntzA9q4ikQvNVXb36k9tOnR',
+                          {
+                            onStart: () => {
+                              console.log('STARTED onStart')
+                              console.log()
+                            },
+                            onError: (errorCode) => { console.log(errorCode) },
+                            onFinish: (identityAccessKey) => {
+                              user.identityAccessKey = identityAccessKey;
+                              user.save()
+                              window.location.href = ("https://addys.io/client/inbox/new")
+                            },
+                            onSubmitted: (identityAccessKey) => {
+                              console.log('PASSBASE IDENTITY ACCESS KEY')
+                              console.log(identityAccessKey)
+                              user.identityAccessKey = identityAccessKey;
+                              user.save()
+
+                              // Make a request to your backend/db and save the key
+                            },
+                            prefillAttributes: {
+                              email: '<%= user.email%>'
+                            }
+
+                          }
+                        );
+                      </script> -->
 
 
 
-                    
+
+
                       <!-- <a class="btn btn-primary" href="#">
                               <i class="bi-briefcase-fill me-1"></i> Dashboard
                             </a> -->

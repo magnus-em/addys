@@ -292,7 +292,8 @@ module.exports.addressForm = catchAsync(async (req, res) => {
         return res.redirect('/client/inbox/new')
     }
 
-    if (!user.verified) {req.flash('error', 'You can not forward packages until your account has been verified')
+    if (!user.verified) {
+        req.flash('error', 'You can not forward packages until your account has been verified')
         return res.redirect('/client/account/personal')
     }
 
@@ -707,20 +708,22 @@ module.exports.verificationReviewed = catchAsync(async (req, res) => {
 
 })
 
-module.exports.webhooks = catchAsync(async (req,res) => {
-        const webhook = webhookHelper.decryptWebhookIfNeeded(req);
-        console.log(webhook);
-      
-        switch (webhook.event) {
-          case "VERIFICATION_COMPLETED":
-            // Do logic here for VERIFICATION_COMPLETED event
+module.exports.webhooks = catchAsync(async (req, res) => {
+    const webhook = webhookHelper.decryptWebhookIfNeeded(req);
+    console.log(webhook);
+
+    switch (webhook.event) {
+        case "VERIFICATION_COMPLETED":
+
             break;
-          case "VERIFICATION_REVIEWED":
+        case "VERIFICATION_REVIEWED":
             // Do logic here for VERIFICATION_REVIEWED event
             break;
-          default:
+        default:
             console.log("Couldn't process webhook event");
-        }
+    }
+    res.status(200).send('webhook received') // Responding is important
+
 
 })
 

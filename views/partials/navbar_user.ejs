@@ -61,6 +61,16 @@
                         </li>
                         <!-- End Portfolio -->
 
+                        <% if (!user.verified) { %> 
+                            <li class="hs-has-sub-menu nav-item">
+                                <a id="blogMegaMenu" class="hs-mega-menu-invoker nav-link one-click" href="/client/account/personal" role="button"
+                                    aria-expanded="false"><span class="badge bg-soft-danger text-danger">Unverified</span></a>
+                            </li>
+                        <% }  %> 
+                            
+                       
+                        
+
 
                         <!-- Blog -->
                     

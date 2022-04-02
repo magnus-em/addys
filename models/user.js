@@ -11,6 +11,7 @@ const userSchema = new Schema({
         type: Boolean,
         default: false
     },
+    identityAccessKey: String,
     email: {
         type: String,
         required: [true, 'email cannot be blank'],
