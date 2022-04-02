@@ -136,10 +136,10 @@ app.get('/contact',(req,res) => {
     res.locals.description = "Any questions? Send us an email at contact@addys.io"
     res.render('contact')
 })
-app.get('/requirements',(req,res) => {
-    res.locals.title = "Forwarder Requirements"
-    res.locals.description = "View our detailed forwarder requirements and terms"
-    res.render('requirements')
+app.get('/riskdisclosure',(req,res) => {
+    res.locals.title = "Risk Disclosure Statement"
+    res.locals.description = "View our risk disclosure statement"
+    res.render('details/risk_disclosure_statement')
 })
 
 

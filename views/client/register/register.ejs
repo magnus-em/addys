@@ -532,60 +532,17 @@
 
 
 
-                    <h4 class="my-7 mb-3">Upload ID</h4>
-<!-- 
-                    <div class="mb-7"><a class="card-text small" href="https://about.usps.com/forms/ps1583.pdf">Need a
-                            1583 form? Click here</a></div> -->
+                    <h4 class="my-7 mb-3">Terms & Conditions and ID Check</h4>
+
 
                     <div class="row">
-                        <!-- <div class="col-lg-6 mb-3">
-                            <label class="form-label">Personal ID</label>
-
-                            <div id="idImage" class="js-dropzone dz-dropzone dz-dropzone-card">
-                                <div class="dz-message">
-                                    <img class="avatar mb-3" src="/public/assets/svg/illustrations/add-file.svg"
-                                        alt="SVG">
-                                    <span class="d-block">Upload any state or national ID</span>
-                                    <span class="d-block text-muted small">Maximum file size is 2MB</span>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <div class="mb-3">
-
-                            <div id="passbase-button"></div>
-
-                            <script type="text/javascript">
-                                const element = document.getElementById("passbase-button")
-                                const apiKey = "YOUR_API_KEY"
-                              
-                                Passbase.renderButton(element, apiKey, {
-                                  onSubmitted: (identityAccessKey) => {
-                                      console.log(identityAccessKey)
-                                      console.log('onSubmitted')
-                                  },
-                                  onFinish: (identityAccessKey) => {
-                                      console.log(identityAccessKey)
-                                      console.log('onFinish')
-                                  },
-                                  onError: (errorCode) => {},
-                                  onStart: () => {}
-                                })        
-                              </script>
-
-                            <input class="form-control" type="file" id="photo" name="image" multiple>
-
-
-                            <!-- <div id="1583" class="js-dropzone dz-dropzone dz-dropzone-card">
-                                <div class="dz-message">
-                                    <img class="avatar mb-3" src="/public/assets/svg/illustrations/add-file.svg"
-                                        alt="SVG">
-                                    <span class="d-block">Upload USPS 1583 form</span>
-                                    <span class="d-block text-muted small">Maximum file size is 1MB</span>
-                                </div>
-                            </div> -->
+                        <div class="form-check my-3">
+                            <input type="checkbox" class="form-check-input" id="signupHeroFormPrivacyCheckEg1"
+                                name="signupFormPrivacyCheck" required>
+                            <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg1">I understand that I must pass an identity verification check before I can forward any packages. This will be handled by a trusted identity verification partner and consist of taking a photo of my ID along with a selfie video. </label>
+                            <span class="invalid-feedback">You must accept</span>
                         </div>
-                    </div> 
+                    </div>
 
                     <div class="row">
                         <div class="form-check my-3">
@@ -593,7 +550,7 @@
                                 name="signupFormPrivacyCheck" required>
                             <label class="form-check-label small" for="signupHeroFormPrivacyCheckEg1">I have read and
                                 accept the <a href='/terms'>Terms of Service</a>, <a href='/privacy'>Privacy
-                                    Policy</a>, and <a href="/disclaimer">Disclaimer</a>. I understand Addys has strict policies to ensure platorm reliability and a zero tolerance policy for service misuse.</label>
+                                    Policy</a>, <a href="/disclaimer">Disclaimer</a>, and <a href="/disclaimer">Risk Disclosure Statement</a>. I understand Addys has strict policies to ensure platorm reliability and a zero tolerance policy for service misuse. Addys actively assists any law enforcement investigations of wrongdoing.</label>
                             <span class="invalid-feedback">You must accept</span>
                         </div>
                     </div>
