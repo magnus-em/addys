@@ -25,7 +25,8 @@ const LocalStrategy = require('passport-local')
 const User = require('./models/user')
 
 
-mongoose.connect(process.env.MONGO_DB)
+// mongoose.connect(process.env.MONGO_DB)
+mongoose.connect('mongodb://localhost:27017/devDb')
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));

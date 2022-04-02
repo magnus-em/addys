@@ -1,8 +1,8 @@
 const sgMail = require('@sendgrid/mail');
+const Addy = require('../models/addy');
 const User = require('../models/user');
 const catchAsync = require('../utils/catchAsync');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-
 
 const clientTemplates = {
     welcome: "d-6b49570d916d43f4bb3f22fc6053852a",
@@ -46,8 +46,7 @@ module.exports.sendWelcome = async function(user) {
     });
  }
 
-
- module.exports.sendForwardConfirm = catchAsync(async(details) => {
+module.exports.sendForwardConfirm = catchAsync(async(details) => {
     const client = await User.findById(details.client._id).populate('addy')
 
 
@@ -92,7 +91,7 @@ module.exports.sendWelcome = async function(user) {
      });
  })
 
- module.exports.sendClientPackageDroppedOff = catchAsync(async(details) => {
+module.exports.sendClientPackageDroppedOff = catchAsync(async(details) => {
     const client = await User.findById(details.user._id).populate('addy')
 
 
@@ -137,7 +136,7 @@ module.exports.sendWelcome = async function(user) {
      });
  })
 
- module.exports.sendClientNewPackageArrived = catchAsync(async(package, client) => {
+module.exports.sendClientNewPackageArrived = catchAsync(async(package, client) => {
     // const client = await User.findById(details.user._id).populate('addy')
 
 
@@ -172,8 +171,7 @@ module.exports.sendWelcome = async function(user) {
      });
  })
 
-
- module.exports.sendFwNewRequest = catchAsync(async(package, client) => {
+module.exports.sendFwNewRequest = catchAsync(async(package, client) => {
     // const client = await User.findById(details.user._id).populate('addy')
     const fw = await User.findById(client.addy.forwarder)
 
@@ -208,3 +206,34 @@ module.exports.sendWelcome = async function(user) {
      });
  })
 
+module.exports.sendNewClient = catchAsync(async (client) => {
+    const addy = await Addy.findById(client.addy._id).populate('forwarder');
+    const fw = await User.findById(addy.forwarder._id);
+
+    const msg = {
+        to: fw.email,
+        from: {
+         "email": "support@addys.io",
+         "name": "Addys"
+       },
+       reply_to: {
+         "email": "support@addys.io",
+         "name": "Addys Support"
+       },
+        templateId: clientTemplates.welcome,
+        dynamic_template_data: {
+           addy: client.addy
+        }
+     };
+     sgMail.send(msg, (error, result) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log("Sendgrid email sent");
+        }
+     });
+
+
+
+
+})

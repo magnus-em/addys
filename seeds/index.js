@@ -8,7 +8,8 @@ const titles = require('./seedHelpers');
 const addresses = require('./addresses.json').addresses
 
 
-const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/devDb?retryWrites=true&w=majority';
+// const uri = 'mongodb+srv://user0:HCexMtrgJ66vXwWr@cluster0.thod1.mongodb.net/devDb?retryWrites=true&w=majority';
+const uri = 'mongodb://localhost:27017/devDb'
 mongoose.connect(uri)
 
 
@@ -60,10 +61,10 @@ const clearUsers = async() => {
 }
 
 
-clearReviews();
-clearPackages();
+// clearReviews();
+// clearPackages();
 clearUsers();
-clearAddys();
+// clearAddys();
 
 
 

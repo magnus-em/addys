@@ -532,13 +532,13 @@
 
 
 
-                    <h4 class="my-7 mb-0">Upload required documents</h4>
-
+                    <h4 class="my-7 mb-3">Upload ID</h4>
+<!-- 
                     <div class="mb-7"><a class="card-text small" href="https://about.usps.com/forms/ps1583.pdf">Need a
-                            1583 form? Click here</a></div>
+                            1583 form? Click here</a></div> -->
 
                     <div class="row">
-                        <div class="col-lg-6 mb-3">
+                        <!-- <div class="col-lg-6 mb-3">
                             <label class="form-label">Personal ID</label>
 
                             <div id="idImage" class="js-dropzone dz-dropzone dz-dropzone-card">
@@ -549,19 +549,41 @@
                                     <span class="d-block text-muted small">Maximum file size is 2MB</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-lg-6 mb-3">
-                            <label class="form-label">USPS 1583</label>
+                        <div class="mb-3">
 
-                            <div id="1583" class="js-dropzone dz-dropzone dz-dropzone-card">
+                            <div id="passbase-button"></div>
+
+                            <script type="text/javascript">
+                                const element = document.getElementById("passbase-button")
+                                const apiKey = "YOUR_API_KEY"
+                              
+                                Passbase.renderButton(element, apiKey, {
+                                  onSubmitted: (identityAccessKey) => {
+                                      console.log(identityAccessKey)
+                                      console.log('onSubmitted')
+                                  },
+                                  onFinish: (identityAccessKey) => {
+                                      console.log(identityAccessKey)
+                                      console.log('onFinish')
+                                  },
+                                  onError: (errorCode) => {},
+                                  onStart: () => {}
+                                })        
+                              </script>
+
+                            <input class="form-control" type="file" id="photo" name="image" multiple>
+
+
+                            <!-- <div id="1583" class="js-dropzone dz-dropzone dz-dropzone-card">
                                 <div class="dz-message">
                                     <img class="avatar mb-3" src="/public/assets/svg/illustrations/add-file.svg"
                                         alt="SVG">
                                     <span class="d-block">Upload USPS 1583 form</span>
                                     <span class="d-block text-muted small">Maximum file size is 1MB</span>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div> 
 
@@ -578,7 +600,7 @@
                 </div>
 
                 <div class="d-grid">
-                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    <button type="submit" class="btn btn-primary btn-lg one-click">Submit</button>
                 </div>
             </form>
         </div>

@@ -40,9 +40,9 @@ module.exports.resetForm = (req, res) => {
 
 module.exports.createUser = catchAsync(async (req, res, next) => {
     try {
-        if (req.body.invite != 69420) {
-            throw new Error('Invalid invite code')
-        }
+        // if (req.body.invite != 69420) {
+        //     throw new Error('Invalid invite code')
+        // }
         const { email, username, password, invite, firstName, lastName, phone } = req.body
 
         const overlappingUser = await User.findOne({
@@ -142,6 +142,8 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         console.log('NEW USER CREATED')
         console.log(user)
         sendWelcome(user)
+        sendNewClient(user)
+
         res.render('client/register/success', { user })
     } catch (err) {
         req.flash('error', err.message)
