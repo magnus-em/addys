@@ -3,7 +3,7 @@ const User = require('../models/user')
 const Package = require('../models/package')
 const Addy = require('../models/addy')
 const { getShipment, createTransaction, getRate } = require('../shippo')
-const { sendWelcome, sendForwardConfirm, sendFwNewRequest } = require('../sendgrid')
+const { sendWelcome, sendForwardConfirm, sendFwNewRequest, sendNewClient } = require('../sendgrid')
 const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)

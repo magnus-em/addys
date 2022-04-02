@@ -12,7 +12,8 @@ const clientTemplates = {
 };
 
 const fwTemplates = {
-    newForwardRequest: 'd-40ee91d3eec14d25abcc4343eb07ea9a'
+    newForwardRequest: 'd-40ee91d3eec14d25abcc4343eb07ea9a',
+    newClient: 'd-66224e5dd34f41cc858e9e43a71660a7'
 }
 
 const supportEmail = 'support@addys.io'
@@ -20,7 +21,7 @@ const supportEmail = 'support@addys.io'
 module.exports.sendWelcome = async function(user) {
     const client = await User.findById(user._id).populate('addy')
 
-    const addy = `${client.addy.street1}, #${client.mailbox}, ${client.addy.city}, ${client.addy.state}, ${client.addy.zip}`
+    const addy = `${client.addy.street1} ${client.addy.street2}, #${client.mailbox}, ${client.addy.city}, ${client.addy.state}, ${client.addy.zip}`
 
     const msg = {
        to: client.email,
@@ -41,7 +42,7 @@ module.exports.sendWelcome = async function(user) {
        if (error) {
            console.log(error);
        } else {
-           console.log("Sendgrid email sent");
+           console.log("sendWelcome email sent");
        }
     });
  }
@@ -220,9 +221,9 @@ module.exports.sendNewClient = catchAsync(async (client) => {
          "email": "support@addys.io",
          "name": "Addys Support"
        },
-        templateId: clientTemplates.welcome,
+        templateId: fwTemplates.newClient,
         dynamic_template_data: {
-           addy: client.addy
+           addy: addy
         }
      };
      sgMail.send(msg, (error, result) => {
