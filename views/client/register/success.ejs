@@ -1,50 +1,76 @@
 <%- layout('layouts/boilerplate') %>
 
-<div id="successMessageContent" class="content-space-t-3">
+  <div id="successMessageContent" class="content-space-t-3">
     <div class="text-center">
       <img class="img-fluid mb-3" src="/public/assets/oc-hi-five.svg" alt="Image Description" style="max-width: 15rem;">
 
       <div class="mb-7">
 
         <div class="overflow-hidden">
-            <div class="container content-space-b-2">
-              <div class="position-relative">
-                <div class="bg-light text-center rounded-2 p-4 p-md-7">
-                    <div class="mb-4">
-                        <h2>Congrats! <br>Here's your new address</h2>
-                    </div>
-      
-                  <!-- Blockquote -->
-                  <figure class="w-md-80 w-lg-50 mx-md-auto">
-                    <blockquote class="blockquote"><%= user.addy.street1 %> <%= user.addy.street2 %> <br>Mailbox #<%= user.mailbox %>, Los Angeles, CA 91820</blockquote>
+          <div class="container content-space-b-2">
+            <div class="position-relative">
+              <div class="bg-light text-center rounded-2 p-4 p-md-7">
+                <div class="mb-4">
+                  <h2>Congrats! <br>Here's your new address</h2>
+                </div>
+
+                <!-- Blockquote -->
+                <figure class="w-md-80 w-lg-50 mx-md-auto">
+                  <blockquote class="blockquote">
+                    <%= user.addy.street1 %>
+                      <%= user.addy.street2 %> <br>Mailbox #<%= user.mailbox %>, <%= user.addy.city %> , <%=
+                              user.addy.state %>
+                              <%= user.addy.zip %>
+                  </blockquote>
+                  <hr>
+                  <h5 class="mt-3">Before you can forward any packages, you have to verify your identity.</h5>
+
+                  <figcaption class="blockquote-footer">
+                    <div class="d-flex justify-content-center">
+                      <div id="passbase-button"></div>
+                      <script type="text/javascript">
+                        Passbase.renderButton(
+                          document.getElementById("passbase-button"),
+                          "i20gNdG3ZldsD9PnvFZr6ZtbNrRTd30jUhjqKqqhEyU0ykDaDNWjtYFAmIDB3HoK",
+                          {
+                            onStart: () => { },
+                            onError: (errorCode) => { },
+                            onFinish: (identityAccessKey) => { },
+                          }
+                        );
+                      </script>
+
+
+
+
                     
-                    <figcaption class="blockquote-footer">
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-white me-3" href="/client/inbox/new">
-                              Go to dashboard <i class="bi-chevron-right small me-1"></i>
-                            </a>
-                            <!-- <a class="btn btn-primary" href="#">
+                      <!-- <a class="btn btn-primary" href="#">
                               <i class="bi-briefcase-fill me-1"></i> Dashboard
                             </a> -->
-                          </div>
-                    </figcaption>
-                  </figure>
-                  <!-- End Blockquote -->
-                </div>
-      
-                <!-- SVG Shape -->
-                <div class="position-relative bottom-0 start-0 w-100" style="max-width: 7rem;">
-                  <div class="mb-n7 ms-n7">
-                    <img class="img-fluid" src="/public/assets/svg/components/dots.svg" alt="Image Description">
-                  </div>
-                </div>
-                <!-- End SVG Shape -->
+                    </div>
+                    <div class="d-flex justify-content-center">
+                      <a class="btn btn-white mt-4" href="/client/inbox/new">
+                        All done <i class="bi-chevron-right small me-1"></i>
+                      </a>
+                    </div>
+                  </figcaption>
+                </figure>
+                <!-- End Blockquote -->
               </div>
+
+              <!-- SVG Shape -->
+              <div class="position-relative bottom-0 start-0 w-100" style="max-width: 7rem;">
+                <div class="mb-n7 ms-n7">
+                  <img class="img-fluid" src="/public/assets/svg/components/dots.svg" alt="Image Description">
+                </div>
+              </div>
+              <!-- End SVG Shape -->
             </div>
           </div>
+        </div>
 
       </div>
 
-      
+
     </div>
   </div>

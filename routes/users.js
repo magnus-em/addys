@@ -8,6 +8,8 @@ const {isClient} = require('../utils/middleware')
 const multer = require('multer')
 const {storage} = require('../cloudinary')
 const upload = multer({storage})
+const bodyParser = require("body-parser");
+const cors = require("cors");
 
 
 router
@@ -71,6 +73,18 @@ router.delete('/client/account/addresses/:id', isClient, user.deleteAddress)
 router.post('/client/account/subscription', isClient, user.changeSubscription)
 router.post('/client/account/subscription/payment', isClient, user.changeSubscriptionPayment)
 router.delete('/client/account/subscription/:id', isClient, user.cancelSubscription)
+
+
+
+router.use(bodyParser.json());
+router.use(bodyParser.text());
+router.use(cors());
+
+router.post('/verification/reviewed', user.verificationReviewed)
+router.post("/passbase-webhooks", user.webhooks);
+  
+
+router.get('/successdemo',user.successDemo)
 
 
 

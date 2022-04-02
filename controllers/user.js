@@ -8,9 +8,13 @@ const shippo = require('shippo')(process.env.SHIPPO_TEST);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const { getSubAmount, getTierQuota, getTierForwardFee } = require('../utils/constants')
+const { PassbaseClient, PassbaseConfiguration } = require("@passbase/node");
+const webhookHelper = require('../passbase/webhookController')
+
 
 
 const { initialAccountCharge, getCustomerProfileIds, createCustomerProfile, deleteCustomerProfile, createCustFromTrx, getCustomerProfile, getCustomerPaymentProfile, createCustomerProfileNoPayment, createCustomerPaymentProfile, chargeRate, deleteCustomerPaymentProfile, createSubscription, getSubscription, chargeUpgrade, changeSubscriptionTier, changeSubscriptionPayment, getTransactionListForCustomer, cancelSubscription } = require('../authnet')
+const user = require('../models/user')
 
 
 
@@ -233,8 +237,8 @@ module.exports.saveAddress = catchAsync(async (req, res) => {
         zip: req.body.zip,
         validate: true
     })
-    if (!shippoAddress.validation_results.is_valid){
-        req.flash('error','Invalid address')
+    if (!shippoAddress.validation_results.is_valid) {
+        req.flash('error', 'Invalid address')
         return res.redirect('/client/account/addresses')
     }
     const address = {
@@ -286,6 +290,10 @@ module.exports.addressForm = catchAsync(async (req, res) => {
         }
         req.flash('error', 'Monthly forward limit reached. Please upgrade your plan or wait for your limit to lower.')
         return res.redirect('/client/inbox/new')
+    }
+
+    if (!user.verified) {req.flash('error', 'You can not forward packages until your account has been verified')
+        return res.redirect('/client/account/personal')
     }
 
     const { id } = req.params
@@ -681,4 +689,43 @@ module.exports.sendEmail = async (req, res) => {
 
 }
 
+module.exports.verificationReviewed = catchAsync(async (req, res) => {
+
+    // try {
+    //     const config = new PassbaseConfiguration({
+    //         apiKey: process.env.PASSBASE_SECRET,
+    //     });
+    //     const client = new PassbaseClient(config);
+    //     const identity = await client.getIdentityById("<uuid>");
+    //     console.log(JSON.stringify(identity, null, 4));
+    // } catch (err) {
+    //     console.error(err);
+    // }
+
+    console.log(req.body) // Call your action on the request here
+    res.status(200).send('webhook received') // Responding is important
+
+})
+
+module.exports.webhooks = catchAsync(async (req,res) => {
+        const webhook = webhookHelper.decryptWebhookIfNeeded(req);
+        console.log(webhook);
+      
+        switch (webhook.event) {
+          case "VERIFICATION_COMPLETED":
+            // Do logic here for VERIFICATION_COMPLETED event
+            break;
+          case "VERIFICATION_REVIEWED":
+            // Do logic here for VERIFICATION_REVIEWED event
+            break;
+          default:
+            console.log("Couldn't process webhook event");
+        }
+
+})
+
+module.exports.successDemo = catchAsync(async (req, res) => {
+    const user = await User.findById(req.user._id).populate('addy')
+    res.render('client/register/success', { user })
+})
 
