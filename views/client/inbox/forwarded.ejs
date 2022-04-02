@@ -16,7 +16,7 @@
               <nav aria-label="breadcrumb">
                 <ol class="breadcrumb breadcrumb-light mb-0">
                   <li class="breadcrumb-item"> 
-                  <%= user.addy.street1 %> #<b><%= user.mailbox %></b>, <%= user.addy.city %>, <%= user.addy.state %>   
+                    <%= user.addy.street1.toUpperCase() %> <%= user.addy.street2.toUpperCase() %> # <%= user.mailbox %><br><%= user.addy.city.toUpperCase() %>, <%= user.addy.state.toUpperCase() %> <%= user.addy.zip %>    
                   </li>
                 </ol>
               </nav>
