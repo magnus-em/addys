@@ -783,8 +783,8 @@ module.exports.createSubscription = function (subscription, customerProfileId, c
 
 		var paymentScheduleType = new ApiContracts.PaymentScheduleType();
 		paymentScheduleType.setInterval(interval);
-		// paymentScheduleType.setStartDate(moment(new Date()).add(1,'months').format("YYYY-MM-DD"));
-		paymentScheduleType.setStartDate(moment(new Date()).format("YYYY-MM-DD"));
+		paymentScheduleType.setStartDate(moment(new Date()).add(1,'months').format("YYYY-MM-DD")); // starts in a month
+		// paymentScheduleType.setStartDate(moment(new Date()).format("YYYY-MM-DD"));
 		paymentScheduleType.setTotalOccurrences(9999);
 
 		var customerProfileIdType = new ApiContracts.CustomerProfileIdType();
@@ -1209,8 +1209,17 @@ module.exports.getTransactionListForCustomer = function (customerProfileId) {
 }
 
 
-module.exports.getListOfSubscriptions = function () {
+module.exports.getListOfSubscriptions = function (searchTypeString) {
+	let searchTypeEnum = ApiContracts.ARBGetSubscriptionListSearchTypeEnum.SUBSCRIPTIONACTIVE;
 	return new Promise((resolve, reject) => {
+		switch (searchTypeString) {
+			case 'ACTIVE':
+				searchTypeEnum = ApiContracts.ARBGetSubscriptionListSearchTypeEnum.SUBSCRIPTIONACTIVE;
+				break;
+			case 'INACTIVE': 
+				searchTypeEnum = ApiContracts.ARBGetSubscriptionListSearchTypeEnum.SUBSCRIPTIONINACTIVE;
+				break;
+		}
 
 		var refId = 4;
 
@@ -1227,7 +1236,7 @@ module.exports.getListOfSubscriptions = function () {
 		listRequest.setMerchantAuthentication(merchantAuthenticationType);
 
 		listRequest.setRefId(refId);
-		listRequest.setSearchType(ApiContracts.ARBGetSubscriptionListSearchTypeEnum.SUBSCRIPTIONACTIVE);
+		listRequest.setSearchType(searchTypeEnum);
 		listRequest.setSorting(sorting);
 		listRequest.setPaging(paging);
 

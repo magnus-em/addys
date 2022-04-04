@@ -33,6 +33,8 @@ router.get('/account/security', admin.security)
 router.post('/account/security/reset', admin.changePassword)
 
 router.get('/subscriptions', admin.indexSubscriptions)
+router.get('/subscriptions/active', admin.activeSubscriptions)
+router.get('/subscriptions/inactive', admin.inactiveSubscriptions)
 
 router.delete('/subscriptions/:id', admin.cancelSubscription)
 

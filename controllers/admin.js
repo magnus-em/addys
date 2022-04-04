@@ -116,6 +116,42 @@ module.exports.indexSubscriptions = catchAsync(async (req,res) => {
     }
     res.render('admin/subscriptions/index', {subList})
 })
+module.exports.activeSubscriptions = catchAsync(async (req,res) => {
+    res.locals.title = 'Active subscriptions'
+    res.locals.description = 'View all active subscriptions'
+    const subResponse = await getListOfSubscriptions('ACTIVE');
+    const allSubList = subResponse.getSubscriptionDetails().getSubscriptionDetail();
+    const subList = []
+    for (let sub of allSubList) {
+        const user = await User.findOne({customerProfileId: sub.customerProfileId})
+        if (!user) {
+            sub.user = null;
+            continue;
+        } else {
+            subList.push(sub)
+        }
+        sub.user = user;
+    }
+    res.render('admin/subscriptions/active', {subList})
+})
+module.exports.inactiveSubscriptions = catchAsync(async (req,res) => {
+    res.locals.title = 'Inactive Subscriptions'
+    res.locals.description = 'View all inactive subscriptions'
+    const subResponse = await getListOfSubscriptions('INACTIVE');
+    const allSubList = subResponse.getSubscriptionDetails().getSubscriptionDetail();
+    const subList = []
+    for (let sub of allSubList) {
+        const user = await User.findOne({customerProfileId: sub.customerProfileId})
+        if (!user) {
+            sub.user = null;
+            continue;
+        } else {
+            subList.push(sub)
+        }
+        sub.user = user;
+    }
+    res.render('admin/subscriptions/inactive', {subList})
+})
 
 module.exports.cancelSubscription = catchAsync(async (req,res) => {
     const {id} = req.params;
