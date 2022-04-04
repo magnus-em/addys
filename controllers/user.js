@@ -526,16 +526,10 @@ module.exports.payments = catchAsync(async (req, res) => {
 
     try {
         if (user.subscription.tier == 'NONE') {
-            // user.subscription.name = 'None'
-            // user.subscription.startDate = 'N/A'
-            // user.subscription.amount = '0'
-            // user.subscription.status = 'Cancelled'
-            const subResponse = await getSubscription(user.subscription.id)
-            const sub = subResponse.getSubscription()
-            user.subscription.name = sub.getName()
-            user.subscription.startDate = sub.getPaymentSchedule().getStartDate().slice(8, 10)
-            user.subscription.amount = sub.getAmount()
-            user.subscription.status = sub.getStatus()
+            user.subscription.name = 'None'
+            user.subscription.startDate = 'N/A'
+            user.subscription.amount = '0'
+            user.subscription.status = 'Cancelled'
         } else {
             const subResponse = await getSubscription(user.subscription.id)
             const sub = subResponse.getSubscription()

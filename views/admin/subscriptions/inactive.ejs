@@ -32,37 +32,50 @@
                         <div id="navbarVerticalNavMenu" class="collapse navbar-collapse">
                             <div class="d-grid gap-4 flex-grow-1">
                                 <div class="d-grid">
-                                    <a class="dropdown-item d-flex justify-content-between" href="#">Actions</a>
+                                    <a class="dropdown-item d-flex justify-content-between active" href="#">Actions</a>
                                     <h5 class="dropdown-header">Packages</h5>
-                                    <a class="dropdown-item d-flex justify-content-between" href="#">All <span
-                                            class="badge text-dark border rounded-pill">30+</span></a>
-                                    <a class="dropdown-item d-flex justify-content-between" href="#">New <span
-                                            class="badge text-dark border rounded-pill">30+</span></a>
-                                    <a class="dropdown-item d-flex justify-content-between" href="#">Pending <span
-                                            class="badge text-dark border rounded-pill">30+</span></a>
-                                    <a class="dropdown-item d-flex justify-content-between" href="#">Forwarded <span
-                                            class="badge text-dark border rounded-pill">30+</span></a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">All 
+                                        <!-- <span
+                                            class="badge text-dark border rounded-pill">30+</span> -->
+                                        </a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">New 
+                                        <!-- <span
+                                            class="badge text-dark border rounded-pill">30+</span> -->
+                                        </a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">Pending
+                                         <!-- <span
+                                            class="badge text-dark border rounded-pill">30+</span> -->
+                                        </a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="#">Forwarded 
+                                        <!-- <span class="badge text-dark border rounded-pill">30+</span> -->
+                                        </a>
                                 </div>
 
                                 <div class="d-grid">
                                     <h5 class="dropdown-header">Clients</h5>
                                     <a class="dropdown-item d-flex justify-content-between" href="/admin/clients">
-                                        All <span class="badge text-dark border rounded-pill">20</span></a>
+                                        All 
+                                        <!-- <span class="badge text-dark border rounded-pill">20</span> -->
+                                    </a>
                                     <a class="dropdown-item d-flex justify-content-between"
                                         href="/admin/fw/pendingpayouts">Pending payouts
-                                        <span class="badge text-dark border rounded-pill">1</span></a>
+                                        <span class="badge text-dark border rounded-pill">1</span>
+                                    </a>
                                 </div>
 
                                 <div class="d-grid">
                                     <h5 class="dropdown-header">Subscriptions</h5>
+                                    <a class="dropdown-item d-flex justify-content-between" href="/admin/subscriptions">
+                                        All 
+                                        <!-- <span class="badge text-dark border rounded-pill">20</span> -->
+                                    </a>
+                                    <a class="dropdown-item d-flex justify-content-between" href="/admin/subscriptions/active">Active
+                                        <!-- <span class="badge text-dark border rounded-pill">10</span> -->
+                                    </a>
                                     <a class="dropdown-item d-flex justify-content-between"
-                                        href="/admin/clients">
-                                        All <span class="badge text-dark border rounded-pill"><%= subList.length %> </span></a>
-                                    <a class="dropdown-item d-flex justify-content-between" href="/admin/clients">Active
-                                        <span class="badge text-dark border rounded-pill">10</span></a>
-                                    <a class="dropdown-item d-flex justify-content-between active"
-                                        href="/admin/fw/pendingpayouts">Cancelled
-                                        <span class="badge text-dark border rounded-pill">1</span></a>
+                                        href="/admin/subscriptions/inactive">Inactive
+                                        <!-- <span class="badge text-dark border rounded-pill">1</span> -->
+                                    </a>
                                 </div>
                             </div>
                         </div>

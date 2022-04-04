@@ -140,48 +140,50 @@
 
                 <!-- Body -->
                 <div class="card-body">
-                  <p class="card-text">While your account remains unverified:
-                  <ul>
-                    <li>You cannot forward packages</li>
-                    <li>You can still ship packages to your addy</li>
-                    <li>If you don't verify your account within a week you may be subject to account closure</li>
-                    <li>identityAccessKey: <%= user.identityAccessKey %>
-                    </li>
-                  </ul>
+                  <%- include('../../partials/flash') %>
+
+                    <p class="card-text">While your account remains unverified:
+                    <ul>
+                      <li>You cannot forward packages</li>
+                      <li>You can still ship packages to your addy</li>
+                      <li>If you don't verify your account within a week you may be subject to account closure</li>
+                      <li>identityAccessKey: <%= user.identityAccessKey %>
+                      </li>
+                    </ul>
 
 
-                  <div class="d-flex justify-content-center">
-                    <div id="passbase-button"></div>
-                    <script type="text/javascript">
-                      const element = document.getElementById("passbase-button")
-                      const apiKey = "<%=process.env.PASSBASE_PUBLIC%>"
+                    <div class="d-flex justify-content-center">
+                      <div id="passbase-button"></div>
+                      <script type="text/javascript">
+                        const element = document.getElementById("passbase-button")
+                        const apiKey = "<%=process.env.PASSBASE_PUBLIC%>"
 
-                      Passbase.renderButton(element, apiKey, {
-                        onSubmitted: (identityAccessKey) => {
-                          console.log(identityAccessKey)
-                          console.log('PASSBASE IDENTITY ACCESS KEY onSubmitted')
-                          console.log(identityAccessKey)
-                          user.identityAccessKey = identityAccessKey;
-                          user.save()
-                        },
-                        onFinish: (identityAccessKey) => {
-                          // Open new window for end user to prevent duplicate verifications
-                          console.log('PASSBASE IDENTITY ACCESS KEY onFinish')
-                          console.log(identityAccessKey)
-                          user.identityAccessKey = identityAccessKey;
-                          user.save()
-                          window.location.href = ("https://addys.io/client/account/personal")
-                        },
-                        onError: (errorCode) => { console.log('PASSBASE ERROR') },
-                        onStart: () => { console.log('PASSBASE STARTED') },
-                        prefillAttributes: {
-                          email: '<%= user.email%>'
-                        }
-                      })        
-                    </script>
+                        Passbase.renderButton(element, apiKey, {
+                          onSubmitted: (identityAccessKey) => {
+                            console.log(identityAccessKey)
+                            console.log('PASSBASE IDENTITY ACCESS KEY onSubmitted')
+                            console.log(identityAccessKey)
+                            user.identityAccessKey = identityAccessKey;
+                            user.save()
+                          },
+                          onFinish: (identityAccessKey) => {
+                            // Open new window for end user to prevent duplicate verifications
+                            console.log('PASSBASE IDENTITY ACCESS KEY onFinish')
+                            console.log(identityAccessKey)
+                            user.identityAccessKey = identityAccessKey;
+                            user.save()
+                            window.location.href = ("https://addys.io/client/account/personal")
+                          },
+                          onError: (errorCode) => { console.log('PASSBASE ERROR') },
+                          onStart: () => { console.log('PASSBASE STARTED') },
+                          prefillAttributes: {
+                            email: '<%= user.email%>'
+                          }
+                        })        
+                      </script>
 
-                  </div>
-                  </form>
+                    </div>
+                    </form>
                 </div>
                 <!-- End Body -->
               </div>
@@ -195,7 +197,9 @@
 
                   <!-- Body -->
                   <div class="card-body">
+                    <% if (user.verified) { %> 
                     <%- include('../../partials/flash') %>
+                    <% } %> 
 
 
 

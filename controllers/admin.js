@@ -4,6 +4,7 @@ const Package = require("../models/package")
 const { Payout } = require("../models/payout")
 const User = require("../models/user")
 const catchAsync = require("../utils/catchAsync")
+const moment = require('moment')
 
 module.exports.overview = catchAsync(async (req,res) => {
     res.render('admin/overview')
@@ -61,7 +62,29 @@ module.exports.allClients = catchAsync(async (req,res) => {
 })
 
 module.exports.indexPendingPayouts = catchAsync(async(req,res) => {
-    const forwarders = await User.find({type: 'FW'})
+    const today = moment();
+    const weekStart = today.startOf('week').toDate()
+    const weekEnd = today.endOf('week').toDate()
+    console.log(weekStart)
+    console.log(weekEnd)
+    const forwarders = await User.find({type: 'FW'}).populate('addy')
+    for (let fw of forwarders) {
+        for (payment of fw.payoutMethods) {
+            if (payment.isPrimary == true) {
+                fw.primaryPayment = payment
+            }
+        }
+
+        const weekPkgs = await Package.find({
+            forwardedDate: {
+                $gte: weekStart,
+                $lte: weekEnd
+            },
+            addy: fw.addy._id
+        })
+        fw.weekPkgs = weekPkgs
+    }
+
     res.render('admin/payouts/pending', {forwarders})
 })
 
@@ -69,7 +92,10 @@ module.exports.submitPayout = catchAsync(async(req,res) => {
     const {id} = req.body
     const {type, username, name, transaction, amount} = req.body
     const payout = new Payout({type,username,name,transaction,amount})
-    const fw = await User.findById()
+    const fw = await User.findById(id)
+    fw.payouts.push(payout)
+    fw.balance = 0;
+    await fw.save()
     res.redirect('/admin/fw/pendingpayouts')
 })
 

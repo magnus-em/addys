@@ -20,7 +20,7 @@ module.exports.pending = catchAsync(async (req,res) => {
 })
 
 module.exports.new = catchAsync(async (req,res) => {
-    res.locals.title = 'Awaiting'
+    res.locals.title = 'Pending'
     res.locals.description = 'Packages that are awaiting a client to submit a forward request'
     const user = await User.findById(req.user._id).populate({path: 'addy', populate: {path: 'packages'}})
     const addy = await Addy.findById(user.addy._id).populate('clients')
@@ -142,15 +142,19 @@ module.exports.payments = catchAsync(async (req,res) => {
         forwardedDate: {
             $gte: weekStart,
             $lte: weekEnd
-        }
+        },
+        addy: addy._id
     })
     console.log('forwarded last week' + weekPkgs)
     res.render('forwarder/account/payments', {fw, moment, weekPkgs, user:fw})
 })
 
 module.exports.addPayoutMethod = catchAsync(async(req,res) => {
-    const {type, username, primary, name} = req.body
+    let {type, username, primary, name} = req.body
     const fw = await User.findById(req.user._id)
+    if (fw.payoutMethods.length == 0) {
+        primary = true;
+    }
     let prim = false;
     if (primary) {
         prim = true
