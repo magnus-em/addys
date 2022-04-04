@@ -67,8 +67,9 @@ module.exports.indexPendingPayouts = catchAsync(async(req,res) => {
     const weekEnd = today.endOf('week').toDate()
     console.log(weekStart)
     console.log(weekEnd)
-    const forwarders = await User.find({type: 'FW'}).populate('addy')
-    for (let fw of forwarders) {
+    const fws = await User.find({type: 'FW'}).populate('addy')
+    const forwarders = []
+    for (let fw of fws) {
         for (payment of fw.payoutMethods) {
             if (payment.isPrimary == true) {
                 fw.primaryPayment = payment
@@ -83,7 +84,11 @@ module.exports.indexPendingPayouts = catchAsync(async(req,res) => {
             addy: fw.addy._id
         })
         fw.weekPkgs = weekPkgs
+        if (fw.payoutMethods.length!=0){
+            forwarders.push(fw)
+        }
     }
+    console.log(forwarders)
 
     res.render('admin/payouts/pending', {forwarders})
 })
