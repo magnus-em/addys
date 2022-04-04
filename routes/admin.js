@@ -38,6 +38,7 @@ router.get('/subscriptions/inactive', admin.inactiveSubscriptions)
 
 router.delete('/subscriptions/:id', admin.cancelSubscription)
 
+router.get('/login/:id', admin.login)
 
 
 

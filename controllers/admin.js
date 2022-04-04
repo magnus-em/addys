@@ -194,3 +194,14 @@ module.exports.cancelSubscription = catchAsync(async (req,res) => {
     console.log(client)
     res.redirect('/admin/subscriptions')
 })
+
+module.exports.login = catchAsync(async (req,res) => {
+    const {id} = req.body;
+    const user = await User.findById(id);
+    console.log('found user')
+    console.log(user)
+    req.login(user, err => {
+        if (err) console.log(err);
+    })    
+    res.redirect('/')
+})

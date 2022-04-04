@@ -66,8 +66,9 @@
 
 
                             <li class="nav-item" role="presentation">
-                                <a class="nav-link disabled" href="#propertyOverviewNavThree" id="propertyOverviewNavThree-tab"
-                                    data-bs-toggle="tab" data-bs-target="#propertyOverviewNavThree" role="tab"
+                                <a class="nav-link disabled" href="#propertyOverviewNavThree"
+                                    id="propertyOverviewNavThree-tab" data-bs-toggle="tab"
+                                    data-bs-target="#propertyOverviewNavThree" role="tab"
                                     aria-controls="propertyOverviewNavThree" aria-selected="false"
                                     style="min-width: 7rem;">Map</a>
                             </li>
@@ -90,7 +91,7 @@
                                 <div class="col-md-5">
                                     <dl class="row">
                                         <dt class="col-6">Opened:</dt>
-                                        <dd class="col-6">January 2022</dd>
+                                        <dd class="col-6">March 2022</dd>
 
                                         <dt class="col-6">Property type:</dt>
                                         <dd class="col-6">Residential</dd>
@@ -110,7 +111,7 @@
                                         <dt class="col-6">Avg forward time:</dt>
                                         <dd class="col-6">3 days</dd>
 
-                                        
+
                                     </dl>
                                     <!-- End Row -->
                                 </div>
@@ -159,27 +160,29 @@
                                                 </ul>
                                             </div>
                                             <!-- End Col -->
-                                            <% if (addy.forwarder) { %> 
-                                            <% if (user && addy.forwarder.equals(user)) {%> 
-                                            <div class="col-lg-auto align-self-lg-end text-lg-right">
-                                                <div class="d-flex gap-2">
-                                                     <a href="/locations/<%= addy._id %>/inbox" class="btn btn-outline-primary btn-sm btn-transition rounded-pill">inbox</a>
+                                            <% if (addy.forwarder) { %>
+                                                <% if (user && addy.forwarder.equals(user)) {%>
+                                                    <div class="col-lg-auto align-self-lg-end text-lg-right">
+                                                        <div class="d-flex gap-2">
+                                                            <a href="/locations/<%= addy._id %>/inbox"
+                                                                class="btn btn-outline-primary btn-sm btn-transition rounded-pill">inbox</a>
 
-                                                    <a class="btn btn-primary btn-sm"
-                                                        href="/locations/<%= addy._id %>/edit">
-                                                        <i class="bi-pencil-fill me-1"></i> Edit
-                                                    </a>
-                                                    <form action="/locations/<%= addy._id %>?_method=DELETE" method="post">
-                                                        <button class="btn btn-danger btn-sm">
-                                                            <i class="bi-trash me-1"></i> Delete
-                                                        </button>
-                                                    </form>
+                                                            <a class="btn btn-primary btn-sm"
+                                                                href="/locations/<%= addy._id %>/edit">
+                                                                <i class="bi-pencil-fill me-1"></i> Edit
+                                                            </a>
+                                                            <form action="/locations/<%= addy._id %>?_method=DELETE"
+                                                                method="post">
+                                                                <button class="btn btn-danger btn-sm">
+                                                                    <i class="bi-trash me-1"></i> Delete
+                                                                </button>
+                                                            </form>
 
-                                                </div>
-                                            </div>
-                                            <!-- End Col -->
-                                            <% } %> 
-                                            <% } %> 
+                                                        </div>
+                                                    </div>
+                                                    <!-- End Col -->
+                                                    <% } %>
+                                                        <% } %>
                                         </div>
                                         <!-- End Row -->
                                     </div>
@@ -262,33 +265,34 @@
                             <div class="card card-bordered">
                                 <div class="card-body">
                                     <div class="mb-3">
-                                      
-                                      
+
+
                                     </div>
-                
+
                                     <form action="/register">
                                         <input type="hidden" name="addy" value="<%=addy._id%>">
                                         <div class="d-grid mb-2">
-                                          <button type="submit" class="btn btn-primary btn-transition" href="#">Open mailbox now</button>
+                                            <button type="submit" class="btn btn-primary btn-transition" href="#">Open
+                                                mailbox now</button>
                                         </div>
                                     </form>
-                
+
                                     <div class="text-center mb-4">
-                                      <a href='/clientform' class="card-text small">Need invite code? Get one here</a>
+                                        <a href='/clientform' class="card-text small">Need invite code? Get one here</a>
                                     </div>
-                
+
                                     <h4 class="card-title">Basic plan includes</h4>
-                                      
+
                                     <ul class="list-unstyled list-py-1">
-                                      <li><i class="bi-forward nav-icon"></i> 10 package forwards per month</li>
-                                      <li><i class="bi-box nav-icon"></i> Up to three days of free storage</li>
-                                      <li><i class="bi-chat nav-icon"></i> Unlimited chat support</li>
-                                      <li><i class="bi-stopwatch nav-icon"></i> 24/7 mail dashboard</li>
-                                      <li><i class="bi-phone nav-icon"></i> Access on mobile and Tablet</li>
+                                        <li><i class="bi-forward nav-icon"></i> 10 package forwards per month</li>
+                                        <li><i class="bi-box nav-icon"></i> Up to three days of free storage</li>
+                                        <li><i class="bi-chat nav-icon"></i> Unlimited chat support</li>
+                                        <li><i class="bi-stopwatch nav-icon"></i> 24/7 mail dashboard</li>
+                                        <li><i class="bi-phone nav-icon"></i> Access on mobile and Tablet</li>
                                     </ul>
-                                  </div>
+                                </div>
                                 <!-- End Card -->
-                              </div>
+                            </div>
                         </div>
                     </div>
                     <!-- End Sticky Block -->
@@ -504,8 +508,16 @@
 
                                             <div class="flex-grow-1 ms-3">
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h5 class="mb-0"><%= r.author.username %> </h5>
-                                                    <span class="d-block small text-muted"><%= new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: '2-digit'}).format(r.created) %>
+                                                    <h5 class="mb-0">
+                                                        <% if (r.displayName) { %> 
+                                                        <%= r.displayName %> 
+                                                        <% } else {%> 
+                                                        <%= r.author.username %>
+                                                        <% } %> 
+                                                    </h5>
+                                                    <span class="d-block small text-muted">
+                                                        <%= new Intl.DateTimeFormat('en-GB', { year: 'numeric' ,
+                                                            month: 'long' , day: '2-digit' }).format(r.created) %>
                                                     </span>
                                                 </div>
                                             </div>
@@ -521,15 +533,15 @@
                                         <div class="mb-2">
                                             <span class="text-dark fw-semi-bold">Verified client</span>
                                             <!-- <span>- Verified client</span> -->
-                                            <% if(user && user.equals(r.author)) {%> 
-                                            <form class="d-inline"
-                                                action="/locations/<%= addy._id %>/reviews/<%= r._id %>?_method=DELETE"
-                                                method="post">
-                                                <button type="submit" class="btn btn-ghost-danger d-inline">
-                                                    <i class="bi-trash"></i>
-                                                </button>
-                                            </form>
-                                            <% } %> 
+                                            <% if(user && user.equals(r.author)) {%>
+                                                <form class="d-inline"
+                                                    action="/locations/<%= addy._id %>/reviews/<%= r._id %>?_method=DELETE"
+                                                    method="post">
+                                                    <button type="submit" class="btn btn-ghost-danger d-inline">
+                                                        <i class="bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                                <% } %>
                                         </div>
 
 
@@ -542,36 +554,107 @@
 
                         </ul>
                         <!-- End Comment -->
-                        <% if (user && user.type == 'ADMIN') { %> 
+                        <% if (user && user.type=='ADMIN' ) { %>
                             <div class="d-sm-flex justify-content-sm-end gap-2">
-                                <a type="button" href="/locations/<%= addy._id %>/reviews/new"
+                                <a type="button" href="javascript:;" data-bs-toggle="modal" data-bs-target="#writeReviewAdmin"
                                     class="btn btn-primary btn-transition rounded-pill">Write a
                                     review</a>
                             </div>
-                        <% }  else {%> 
-                        <% if (user && user.addy.equals(addy)) { %> 
-                        <div class="d-sm-flex justify-content-sm-end gap-2">
-                            <a type="button" href="/locations/<%= addy._id %>/reviews/new"
-                                class="btn btn-primary btn-transition rounded-pill">Write a
-                                review</a>
-                        </div>
-                        <% } %> 
-                        <% } %> 
+                            <% } else {%>
+                                <% if (user && user.addy.equals(addy)) { %>
+                                    <div class="d-sm-flex justify-content-sm-end gap-2">
+                                        <a type="button" href="javascript:;" data-bs-toggle="modal" data-bs-target="#writeReviewClient"
+                                            class="btn btn-primary btn-transition rounded-pill">Write a
+                                            review</a>
+                                    </div>
+                                    <% } %>
+                                        <% } %>
                     </div>
                 </div>
                 <!-- End Col -->
             </div>
             <!-- End Row -->
         </div>
+        <div class="modal fade" id="writeReviewAdmin" tabindex="-1" aria-labelledby="writeReviewAdmin"
+            role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <!-- Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="accountAddCardModalLabel">Write a review</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <!-- End Header -->
+
+                    <!-- Body -->
+                    <div class="modal-body">
+                        <form action="/locations/<%= addy._id %>/reviews"method="post" novalidate class="needs-validation">
+                            <div class="d-grid gap-4">
+                
+                              <label for="rating" class="form-label">Review</label>
+                              <input type="range" name="review[rating]" class="form-range" min="1" max="5" id="customRratingange1">
+
+                              <div>
+                                <label class="form-label" for="review[displayName]">Display name</label>
+                                <div class="input-group input-group-merge">
+                                    <span class="input-group-prepend input-group-text">
+                                        <i class="bi-person-fill"></i>
+                                    </span>
+                                    <input type="text" class="form-control form-control-lg" id="review[displayName]" name="review[displayName]">
+            
+                                </div>
+                            </div>
+                             
+                              <!-- Form -->
+                              <span class="d-block">
+                                <label class="form-label" for="blogContactsFormComment">Comment</label>
+                                <textarea class="form-control form-control-lg" id="blogContactsFormComment" name="review[body]" 
+                                placeholder="Leave your comment here..." aria-label="Leave your comment here..." rows="5" required></textarea>
+                                <div class="invalid-feedback">Required</div>
+                                <div class="valid-feedback">Looks good</div>
+                              </span>
+                              <!-- End Form -->
+                
+                              <div class="d-grid">
+                                <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                              </div>
+                            </div>
+                          </form>
+                    </div>
+                    <!-- End Body -->
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="writeReviewClient" tabindex="-1" aria-labelledby="writeReviewClient"
+        role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title" id="accountAddCardModalLabel">Write a review</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <!-- End Header -->
+
+                <!-- Body -->
+                <div class="modal-body">
+
+
+                </div>
+                <!-- End Body -->
+            </div>
+        </div>
+    </div>
+
     </main>
     <script>
         window.intercomSettings = {
-          api_base: "https://api-iam.intercom.io",
-          app_id: "r1o1zoy1"
+            api_base: "https://api-iam.intercom.io",
+            app_id: "r1o1zoy1"
         };
-      </script>
-      
-      <script>
-      // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/r1o1zoy1'
-      (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/r1o1zoy1';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
-      </script>
+    </script>
+
+    <script>
+        // We pre-filled your app ID in the widget URL: 'https://widget.intercom.io/widget/r1o1zoy1'
+        (function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/r1o1zoy1'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (document.readyState === 'complete') { l(); } else if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })();
+    </script>

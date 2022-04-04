@@ -13,7 +13,8 @@ const reviewSchema = new Schema({
     created: {
         type: Date,
         default: Date.now()
-    } 
+    },
+    displayName: String 
 })
 
 module.exports = mongoose.model("Review", reviewSchema)

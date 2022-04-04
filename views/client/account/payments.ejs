@@ -16,7 +16,10 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb breadcrumb-light mb-0">
                 <li class="breadcrumb-item">
-                  <%= user.addy.street1.toUpperCase() %> <%= user.addy.street2.toUpperCase() %> # <%= user.mailbox %><br><%= user.addy.city.toUpperCase() %>, <%= user.addy.state.toUpperCase() %> <%= user.addy.zip %>    
+                  <%= user.addy.street1.toUpperCase() %>
+                    <%= user.addy.street2.toUpperCase() %> # <%= user.mailbox %><br>
+                        <%= user.addy.city.toUpperCase() %>, <%= user.addy.state.toUpperCase() %>
+                            <%= user.addy.zip %>
 
                 </li>
                 <!-- <li class="breadcrumb-item active">Mailbox #<b><%= user.mailbox %> </b></li> -->
@@ -137,52 +140,55 @@
               <div class="card-body">
                 <%- include('../../partials/flash') %>
 
-                <div class="row">
-                  <div class="col-md mb-4 mb-md-0">
-                    <div class="mb-4">
-                      <div class="row">
+                  <div class="row">
+                    <div class="col-md mb-4 mb-md-0">
+                      <div class="mb-4">
+                        <div class="row">
 
-                        <div class="col">
-                          <span class="card-subtitle">Your plan <span class="badge bg-success ms-1">
-                              <%= user.subscription.status %>
-                            </span></span>
-                          <h5>
-                            <%= user.subscription.name %>
-                          </h5>
-                        </div>
-                        <div class="col">
-                          <span class="card-subtitle">Billed monthly on</span>
-                          <h5>Day <%= user.subscription.startDate %>
-                          </h5>
+                          <div class="col">
+                            <span class="card-subtitle">Your plan <span class="badge bg-success ms-1">
+                                <%= user.subscription.status %>
+                              </span></span>
+                            <h5>
+                              <%= user.subscription.name %>
+                            </h5>
+                          </div>
+                          <div class="col">
+                            <span class="card-subtitle">Billed monthly on</span>
+                            <h5>Day <%= user.subscription.startDate %>
+                            </h5>
+                          </div>
                         </div>
                       </div>
+
+
+                      <div>
+                        <span class="card-subtitle">Total per month</span>
+                        <h3 class="text-primary">$<%= user.subscription.amount %> USD</h3>
+                      </div>
                     </div>
+                    <!-- End Col -->
 
-
-                    <div>
-                      <span class="card-subtitle">Total per month</span>
-                      <h3 class="text-primary">$<%= user.subscription.amount %> USD</h3>
-                    </div>
-                  </div>
-                  <!-- End Col -->
-
-                  <div class="col-md-auto">
-                    <div class="d-grid d-md-flex gap-3">
-                      <% if (user.subscription.tier == 'NONE') {%> 
-                        <a class="btn btn-primary btn-sm btn-transition one-click" data-bs-toggle="modal"
-                        data-bs-target="#signupModal">Buy plan</a>
-                        <% } else  {%> 
-                          <form action="/client/account/subscription/<%= user.subscription.id %>?_method=DELETE" method="post">
-                          <button type="submit" class="btn btn-white btn-sm one-click">Cancel subscription</button>
-                            </form>
+                    <div class="col-md-auto">
+                      <div class="d-grid d-md-flex gap-3">
+                        <% if (user.subscription.tier=='NONE' ) {%>
                           <a class="btn btn-primary btn-sm btn-transition one-click" data-bs-toggle="modal"
-                          data-bs-target="#signupModal">Switch Plan</a>
-                          <% } %> 
+                            data-bs-target="#signupModal">Buy plan</a>
+                          <% } else {%>
+                            <a data-bs-toggle="modal" data-bs-target="#cancelSubModal"
+                              class="btn btn-white btn-sm one-click">Cancel subscription</a>
+                            <!-- <form action="/client/account/subscription/<%= user.subscription.id %>?_method=DELETE"
+                              method="post">
+                              <button type="submit" class="btn btn-white btn-sm one-click">Cancel subscription</button>
+                            </form> -->
+                            <a class="btn btn-primary btn-sm btn-transition one-click" data-bs-toggle="modal"
+                              data-bs-target="#signupModal">Switch Plan</a>
+                            <% } %>
+                      </div>
                     </div>
+                    <!-- End Col -->
                   </div>
-                  <!-- End Col -->
-                </div>
-                <!-- End Row -->
+                  <!-- End Row -->
               </div>
               <!-- End Body -->
 
@@ -198,20 +204,22 @@
 
                   <div class="col-auto">
 
-                    <% if (user.subscription.tier == 'NONE') {%> 
+                    <% if (user.subscription.tier=='NONE' ) {%>
                       None
-                      <% } else { %> 
+                      <% } else { %>
 
-                    <span class="text-dark fw-semi-bold"><%= user.monthlyForwards.length %> </span> 
-                    forwarded of
-                    <% if (user.subscription.tier == 'BASIC') { %> 
-                      10
-                    <% } else if (user.subscription.tier == 'PLUS') {%>
-                     25
-                     <% } else if (user.subscription.tier == 'MAX') { %> 
-                      Unlimited :)
-                      <% } %> 
-                      <% } %> 
+                        <span class="text-dark fw-semi-bold">
+                          <%= user.monthlyForwards.length %>
+                        </span>
+                        forwarded of
+                        <% if (user.subscription.tier=='BASIC' ) { %>
+                          10
+                          <% } else if (user.subscription.tier=='PLUS' ) {%>
+                            25
+                            <% } else if (user.subscription.tier=='MAX' ) { %>
+                              Unlimited :)
+                              <% } %>
+                                <% } %>
                   </div>
                   <!-- End Col -->
                 </div>
@@ -219,8 +227,8 @@
 
                 <!-- Progress -->
                 <div class="progress rounded-pill mb-3">
-                  <div class="progress-bar" role="progressbar" style="width: <%= user.monthlyPercentage  %>%;" aria-valuenow="40" aria-valuemin="0"
-                    aria-valuemax="100"></div>
+                  <div class="progress-bar" role="progressbar" style="width: <%= user.monthlyPercentage  %>%;"
+                    aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
                 <!-- End Progress -->
               </div>
@@ -237,8 +245,8 @@
               <!-- Body -->
               <div class="card-body">
                 <div class="mb-4">
-                  <p>We currently support Visa, American Express, Mastercard, and Discover. Crypto payments coming soon. 
-                    <%= user.subscription.transactions %> 
+                  <p>We currently support Visa, American Express, Mastercard, and Discover. Crypto payments coming soon.
+                    <%= user.subscription.transactions %>
                   </p>
                 </div>
 
@@ -252,8 +260,8 @@
                         <h5>
                           <%= p.firstName %>
                             <%= p.lastName %>
-                              <% if (p.id == user.subscription.payment) { %>
-                                <span class="badge bg-primary ms-1">Subscription</span>
+                              <% if (p.id==user.subscription.payment) { %>
+                                <span class="badge bg-primary ms-1">Primary</span>
                                 <% } %>
                         </h5>
                       </div>
@@ -455,7 +463,6 @@
                         <input type="text" class="form-control form-control-lg" id="billingFirstName" name="billingFirstName" placeholder="Virgil" aria-label="First name" required="">
 
                     </div>
-
                 </div>
                 <!-- End Form -->
             </div>
@@ -678,14 +685,14 @@
 
                       <div class="card-footer text-center">
                         <div class="d-grid mb-2">
-                          <% if (user.subscription.name == 'BASIC'){  %> 
-                          <a type="button" href="#" class="btn btn-ghost-primary">Current plan</a>
-                          <% } else { %> 
-                            <form action="/client/account/subscription" method="post">
-                              <input type="hidden" name="subscription" value="BASIC">
-                              <button type="submit" class="btn btn-primary one-click">Switch to Basic</button>
-                            </form>
-                            <% } %> 
+                          <% if (user.subscription.name=='BASIC' ){ %>
+                            <a type="button" href="#" class="btn btn-ghost-primary">Current plan</a>
+                            <% } else { %>
+                              <form action="/client/account/subscription" method="post">
+                                <input type="hidden" name="subscription" value="BASIC">
+                                <button type="submit" class="btn btn-primary one-click">Switch to Basic</button>
+                              </form>
+                              <% } %>
                         </div>
                       </div>
                     </div>
@@ -725,14 +732,14 @@
 
                         <div class="card-footer text-center">
                           <div class="d-grid mb-2">
-                            <% if (user.subscription.name == 'PLUS'){  %> 
+                            <% if (user.subscription.name=='PLUS' ){ %>
                               <a type="button" href="#" class="btn btn-ghost-primary">Current plan</a>
-                              <% } else { %> 
+                              <% } else { %>
                                 <form action="/client/account/subscription" method="post">
                                   <input type="hidden" name="subscription" value="PLUS">
                                   <button type="submit" class="btn btn-primary one-click">Switch to Plus</button>
                                 </form>
-                                <% } %> 
+                                <% } %>
                           </div>
                         </div>
                       </div>
@@ -786,14 +793,14 @@
 
                       <div class="card-footer text-center">
                         <div class="d-grid mb-2">
-                          <% if (user.subscription.name == 'MAX'){  %> 
+                          <% if (user.subscription.name=='MAX' ){ %>
                             <a type="button" href="#" class="btn btn-ghost-primary">Current plan</a>
-                            <% } else { %> 
+                            <% } else { %>
                               <form action="/client/account/subscription" method="post">
                                 <input type="hidden" name="subscription" value="MAX">
                                 <button type="submit" class="btn btn-primary one-click">Switch to Max</button>
                               </form>
-                              <% } %> 
+                              <% } %>
                         </div>
                       </div>
                     </div>
@@ -810,6 +817,58 @@
 
       </div> -->
               <!-- End Footer -->
+            </div>
+          </div>
+        </div>
+        <!-- End Modal -->
+
+        <!-- Modal -->
+        <div id="cancelSubModal" class="modal fade" tabindex="-1" role="dialog"
+          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <!-- Header -->
+              <div class="modal-header">
+                <h4 class="modal-title" id="accountAddCardModalLabel">Confirm cancellation</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <!-- End Header -->
+
+              <!-- Body -->
+              <div class="modal-body">
+                <p class="card-text">When you cancel your subscription:
+                <ul>
+                  <li>You immediately lose the ability to forward packages</li>
+                  <li>If you wish to resubscribe, you must pay again in full</li>
+                  <li>If you have unforwarded packages at your addy, you will continue to pay daily fees</li>
+                  <li>If packages are left unforwarded for more than a week they may be thrown away</li>
+                  </li>
+                </ul>
+
+              </div>
+              <!-- End Body -->
+
+              <div class="modal-footer">
+                <div class="mb-4">
+                  <!-- Check -->
+
+                  <form action="/client/account/subscription/<%= user.subscription.id %>?_method=DELETE" method="post">
+
+
+
+                    <div class="form-check">
+                      <input type="checkbox" class="form-check-input" id="deleteAccountCheckbox" required>
+                      <label class="form-check-label" for="deleteAccountCheckbox">Confirm that I want to cancel my
+                        subscription.</label>
+                    </div>
+                    <!-- End Check -->
+                  </form>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                  <button type="submit" class="btn btn-danger one-click">Cancel subscription</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
