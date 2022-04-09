@@ -9,7 +9,7 @@ var short = require('short-mongo-id');
 const userSchema = new Schema({
     verified: {
         type: Boolean,
-        default: false
+        default: true
     },
     identityAccessKey: String,
     email: {
