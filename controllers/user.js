@@ -4,7 +4,7 @@ const Package = require('../models/package')
 const Addy = require('../models/addy')
 const { getShipment, createTransaction, getRate } = require('../shippo')
 const { sendWelcome, sendForwardConfirm, sendFwNewRequest, sendNewClient } = require('../sendgrid')
-const shippo = require('shippo')(process.env.SHIPPO_TEST);
+const shippo = require('shippo')(process.env.SHIPPO_LIVE);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const { getSubAmount, getTierQuota, getTierForwardFee } = require('../utils/constants')
@@ -90,7 +90,7 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         await addy.clients.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
 
-        const registeredUser = await User.register(user, password)
+        const registeredUser = await User.register(user, password.toLowerCase())
 
 
         req.login(registeredUser, err => {
