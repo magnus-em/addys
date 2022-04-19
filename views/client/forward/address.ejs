@@ -187,7 +187,7 @@
                                           <% } %>
                                             <%= a.city %>, <%= a.zip %><br>
                                                 <%= a.country %> <img class="avatar avatar-xss avatar-circle me-1"
-                                                    src="/public/assets/svg/flags/1x1/<%= a.country %>.svg"
+                                                    src="/public/assets/svg/flags/1x1/<%= a.country.toLowerCase() %>.svg"
                                                     alt="Great Britain Flag">
                                   </span>
                                 </label>
