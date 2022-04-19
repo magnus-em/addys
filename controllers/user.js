@@ -4,7 +4,7 @@ const Package = require('../models/package')
 const Addy = require('../models/addy')
 const { getShipment, createTransaction, getRate } = require('../shippo')
 const { sendWelcome, sendForwardConfirm, sendFwNewRequest, sendNewClient } = require('../sendgrid')
-const shippo = require('shippo')(process.env.SHIPPO_LIVE);
+const shippo = require('shippo')(process.env.SHIPPO);
 const sgMail = require('@sendgrid/mail')
 sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 const { getSubAmount, getTierQuota, getTierForwardFee } = require('../utils/constants')
@@ -203,8 +203,6 @@ module.exports.changeEmailPhone = catchAsync(async (req, res) => {
     await user.save()
     res.redirect('/client/account/personal')
 })
-
-
 
 module.exports.inbox = catchAsync((async (req, res) => {
     res.locals.title = "New packages"

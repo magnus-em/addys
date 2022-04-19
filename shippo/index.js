@@ -1,4 +1,4 @@
-var shippo = require('shippo')(process.env.SHIPPO_LIVE);
+var shippo = require('shippo')(process.env.SHIPPO);
 
 var addressFrom = {
     "name": "Mr Hippo",
