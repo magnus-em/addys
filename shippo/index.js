@@ -32,7 +32,7 @@ module.exports.getShipment = function (address, addy) {
                 "country": address.country
             },
             "address_from": {
-                "name": "Addy Forwarder",
+                "name": "Your Addy",
                 "street1": addy.street1,
                 "city": addy.city,
                 "state": addy.state,
