@@ -30,6 +30,7 @@
                         <h6 class="text-hover-primary mb-0"><%= client.firstName %> <%= client.lastName %> </h6>
                       </a>
                       <small class="d-block"><%= client.username %> </small>
+                      <small class="d-block"><%= client.email %> </small>
                     </div>
                   </div>
                 </td>
@@ -41,7 +42,7 @@
                   </select> -->
                   <!-- End Select -->
                   <% if (client.addy) { %> 
-                  <h5><%= client.addy.street1 %> </h5>
+                  <h5><%= client.addy.street1 %> <%= client.addy.street2 %>, <%= client.addy.city %>, <%= client.addy.state %>, <%= client.addy.zip %></h5>
                   <% } %> 
                 </td>
                 <td>
