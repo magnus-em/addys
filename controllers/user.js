@@ -90,7 +90,7 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
         await addy.clients.push(user._id)     // if you pass in just the user object here, mongoose goes into a recursive error.
         await addy.save()
 
-        const registeredUser = await User.register(user, password.toLowerCase())
+        const registeredUser = await User.register(user, password)
 
 
         req.login(registeredUser, err => {
