@@ -44,9 +44,9 @@ module.exports.resetForm = (req, res) => {
 
 module.exports.createUser = catchAsync(async (req, res, next) => {
     try {
-        // if (req.body.invite != 69420) {
-        //     throw new Error('Invalid invite code')
-        // }
+        if (req.body.invite != 69420) {
+            throw new Error('Invalid invite code')
+        }
         const { email, username, password, invite, firstName, lastName, phone } = req.body
 
         const overlappingUser = await User.findOne({
@@ -114,29 +114,33 @@ module.exports.createUser = catchAsync(async (req, res, next) => {
             let newPaymentProfileResponse = null;
             try {
                 newPaymentProfileResponse = await createCustomerPaymentProfile(details, createProfile.id, true)
-
             } catch (err) {
                 req.flash('error', err.getMessages().getMessage()[0].getText())
                 return res.redirect(`/register?addy=${req.body.addy}`)
             }
+
             const customerPaymentId = newPaymentProfileResponse.getCustomerPaymentProfileId()
             user.customerPaymentIds.push(customerPaymentId)
+
 
             const subscription = {
                 tier: 'BASIC',
             }
 
-            let newSubscriptionId = null;
-            try {
-                newSubscriptionId = await createSubscription(subscription, user.customerProfileId, customerPaymentId)
-            } catch (err) {
-                req.flash('error', err.getMessages().getMessage()[0].getText())
-                return res.redirect(`/register?addy=${req.body.addy}`)
-            }
+            // let newSubscriptionId = null;
+            // try {
+            //     newSubscriptionId = await createSubscription(subscription, user.customerProfileId, customerPaymentId)
+            //     console.log('after createSubscription')
+            //     console.log(newSubscriptionId)
+            // } catch (err) {
+            //     req.flash('error', err.getMessages().getMessage()[0].getText())
+            //     return res.redirect(`/register?addy=${req.body.addy}`)
+            // }
 
-            subscription.id = newSubscriptionId;
+            // subscription.id = newSubscriptionId;
+            // user.subscription = subscription;
+            // user.subscription.payment = customerPaymentId
             user.subscription = subscription;
-            user.subscription.payment = customerPaymentId
             await user.save()
             console.log('USER POST SAVE WITH SUBSCRIPTION')
             console.log(user)

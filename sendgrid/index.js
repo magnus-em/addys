@@ -26,11 +26,11 @@ module.exports.sendWelcome = async function(user) {
     const msg = {
        to: client.email,
        from: {
-        "email": "support@addys.io",
+        "email": "help@addys.io",
         "name": "Addys"
       },
       reply_to: {
-        "email": "support@addys.io",
+        "email": "help@addys.io",
         "name": "Addys Support"
       },
        templateId: clientTemplates.welcome,
@@ -99,11 +99,11 @@ module.exports.sendClientPackageDroppedOff = catchAsync(async(details) => {
     const msg = {
         to: client.email,
         from: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys"
        },
        reply_to: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys Support"
        },
         templateId: clientTemplates.packageDroppedOff,
@@ -144,11 +144,11 @@ module.exports.sendClientNewPackageArrived = catchAsync(async(package, client) =
     const msg = {
         to: client.email,
         from: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys"
        },
        reply_to: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys Support"
        },
         templateId: clientTemplates.newPackageArrived,
@@ -180,11 +180,11 @@ module.exports.sendFwNewRequest = catchAsync(async(package, client) => {
     const msg = {
         to: fw.email,
         from: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys"
        },
        reply_to: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys Support"
        },
         templateId: fwTemplates.newForwardRequest,
@@ -214,11 +214,11 @@ module.exports.sendNewClient = catchAsync(async (client) => {
     const msg = {
         to: fw.email,
         from: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys"
        },
        reply_to: {
-         "email": "support@addys.io",
+         "email": "help@addys.io",
          "name": "Addys Support"
        },
         templateId: fwTemplates.newClient,

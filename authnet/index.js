@@ -823,6 +823,7 @@ module.exports.createSubscription = function (subscription, customerProfileId, c
 					resolve(response.getSubscriptionId())
 				}
 				else {
+					console.log('Error in createSubscription')
 					console.log('Result Code: ' + response.getMessages().getResultCode());
 					console.log('Error Code: ' + response.getMessages().getMessage()[0].getCode());
 					console.log('Error message: ' + response.getMessages().getMessage()[0].getText());
